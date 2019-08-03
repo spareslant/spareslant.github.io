@@ -26,13 +26,13 @@
   </url>
   
   <url>
-    <loc>http://example.org/tags/html/</loc>
+    <loc>http://example.org/tags/html-generation/</loc>
     <lastmod>2019-07-27T20:39:13+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://example.org/tags/pdf/</loc>
+    <loc>http://example.org/tags/pdf-generation/</loc>
     <lastmod>2019-07-27T20:39:13+01:00</lastmod>
     <priority>0</priority>
   </url>
@@ -40,6 +40,59 @@
   <url>
     <loc>http://example.org/posts/docker-logging-with-rsyslog/</loc>
     <lastmod>2019-07-27T12:15:28+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://example.org/tags/ca/</loc>
+    <lastmod>2019-07-17T21:35:50+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/tags/digital-certificates/</loc>
+    <lastmod>2019-07-17T21:35:50+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/tags/ssl/</loc>
+    <lastmod>2019-07-17T21:35:50+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/posts/ssl-certificate/</loc>
+    <lastmod>2019-07-17T21:35:50+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://example.org/tags/ssl-mutual-authentication/</loc>
+    <lastmod>2019-07-17T21:35:50+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/tags/curl/</loc>
+    <lastmod>2019-07-17T21:35:50+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/tags/openssl/</loc>
+    <lastmod>2019-07-17T21:35:50+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/tags/pki/</loc>
+    <lastmod>2019-07-17T21:35:50+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/tags/x509/</loc>
+    <lastmod>2019-07-17T21:35:50+01:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
