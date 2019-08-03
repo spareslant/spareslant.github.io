@@ -43,6 +43,30 @@
   </url>
   
   <url>
+    <loc>http://example.org/tags/docker/</loc>
+    <lastmod>2019-07-27T12:15:28+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/tags/logging/</loc>
+    <lastmod>2019-07-27T12:15:28+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/tags/rsyslog/</loc>
+    <lastmod>2019-07-27T12:15:28+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/tags/syslog/</loc>
+    <lastmod>2019-07-27T12:15:28+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://example.org/tags/ca/</loc>
     <lastmod>2019-07-17T21:35:50+01:00</lastmod>
     <priority>0</priority>

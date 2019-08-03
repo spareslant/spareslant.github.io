@@ -30,6 +30,42 @@
     </item>
     
     <item>
+      <title>docker</title>
+      <link>http://example.org/tags/docker/</link>
+      <pubDate>Sat, 27 Jul 2019 12:15:28 +0100</pubDate>
+      
+      <guid>http://example.org/tags/docker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>logging</title>
+      <link>http://example.org/tags/logging/</link>
+      <pubDate>Sat, 27 Jul 2019 12:15:28 +0100</pubDate>
+      
+      <guid>http://example.org/tags/logging/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>rsyslog</title>
+      <link>http://example.org/tags/rsyslog/</link>
+      <pubDate>Sat, 27 Jul 2019 12:15:28 +0100</pubDate>
+      
+      <guid>http://example.org/tags/rsyslog/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>syslog</title>
+      <link>http://example.org/tags/syslog/</link>
+      <pubDate>Sat, 27 Jul 2019 12:15:28 +0100</pubDate>
+      
+      <guid>http://example.org/tags/syslog/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>CA</title>
       <link>http://example.org/tags/ca/</link>
       <pubDate>Wed, 17 Jul 2019 21:35:50 +0100</pubDate>
