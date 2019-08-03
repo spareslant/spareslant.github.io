@@ -6,10 +6,46 @@
     <description>Recent content in Tags on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Sat, 27 Jul 2019 20:39:13 +0100</lastBuildDate>
+    <lastBuildDate>Sat, 03 Aug 2019 19:01:43 +0100</lastBuildDate>
     
 	<atom:link href="http://example.org/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>blog</title>
+      <link>http://example.org/tags/blog/</link>
+      <pubDate>Sat, 03 Aug 2019 19:01:43 +0100</pubDate>
+      
+      <guid>http://example.org/tags/blog/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>blog publishing</title>
+      <link>http://example.org/tags/blog-publishing/</link>
+      <pubDate>Sat, 03 Aug 2019 19:01:43 +0100</pubDate>
+      
+      <guid>http://example.org/tags/blog-publishing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>github pages deployment</title>
+      <link>http://example.org/tags/github-pages-deployment/</link>
+      <pubDate>Sat, 03 Aug 2019 19:01:43 +0100</pubDate>
+      
+      <guid>http://example.org/tags/github-pages-deployment/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>hugo</title>
+      <link>http://example.org/tags/hugo/</link>
+      <pubDate>Sat, 03 Aug 2019 19:01:43 +0100</pubDate>
+      
+      <guid>http://example.org/tags/hugo/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>html generation</title>

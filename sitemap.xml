@@ -3,26 +3,55 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://example.org/posts/markup-to-pdf/</loc>
-    <lastmod>2019-07-27T20:39:13+01:00</lastmod>
+    <loc>http://example.org/posts/deploy-hugosite-to-github/</loc>
+    <lastmod>2019-08-03T19:01:43+01:00</lastmod>
   </url>
   
   <url>
     <loc>http://example.org/posts/</loc>
-    <lastmod>2019-07-27T20:39:13+01:00</lastmod>
+    <lastmod>2019-08-03T19:01:43+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://example.org/</loc>
-    <lastmod>2019-07-27T20:39:13+01:00</lastmod>
+    <lastmod>2019-08-03T19:01:43+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://example.org/tags/</loc>
-    <lastmod>2019-07-27T20:39:13+01:00</lastmod>
+    <lastmod>2019-08-03T19:01:43+01:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/tags/blog/</loc>
+    <lastmod>2019-08-03T19:01:43+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/tags/blog-publishing/</loc>
+    <lastmod>2019-08-03T19:01:43+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/tags/github-pages-deployment/</loc>
+    <lastmod>2019-08-03T19:01:43+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/tags/hugo/</loc>
+    <lastmod>2019-08-03T19:01:43+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/posts/markup-to-pdf/</loc>
+    <lastmod>2019-07-27T20:39:13+01:00</lastmod>
   </url>
   
   <url>
