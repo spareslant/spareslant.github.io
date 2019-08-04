@@ -3,26 +3,79 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://example.org/posts/deploy-hugosite-to-github/</loc>
-    <lastmod>2019-08-03T19:01:43+01:00</lastmod>
+    <loc>http://example.org/posts/apache-reverseproxyssl-sslclientauth/</loc>
+    <lastmod>2019-08-04T14:54:01+01:00</lastmod>
   </url>
   
   <url>
     <loc>http://example.org/posts/</loc>
-    <lastmod>2019-08-03T19:01:43+01:00</lastmod>
+    <lastmod>2019-08-04T14:54:01+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/tags/ssl/</loc>
+    <lastmod>2019-08-04T14:54:01+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/tags/ssl-authentication/</loc>
+    <lastmod>2019-08-04T14:54:01+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/tags/ssl-reverse-proxy/</loc>
+    <lastmod>2019-08-04T14:54:01+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://example.org/</loc>
-    <lastmod>2019-08-03T19:01:43+01:00</lastmod>
+    <lastmod>2019-08-04T14:54:01+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://example.org/tags/</loc>
-    <lastmod>2019-08-03T19:01:43+01:00</lastmod>
+    <lastmod>2019-08-04T14:54:01+01:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/tags/apache/</loc>
+    <lastmod>2019-08-04T14:54:01+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/tags/flask/</loc>
+    <lastmod>2019-08-04T14:54:01+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/tags/gunicorn/</loc>
+    <lastmod>2019-08-04T14:54:01+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/tags/proxy/</loc>
+    <lastmod>2019-08-04T14:54:01+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/tags/reverse-proxy/</loc>
+    <lastmod>2019-08-04T14:54:01+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/posts/deploy-hugosite-to-github/</loc>
+    <lastmod>2019-08-03T19:01:43+01:00</lastmod>
   </url>
   
   <url>
@@ -103,12 +156,6 @@
   
   <url>
     <loc>http://example.org/tags/digital-certificates/</loc>
-    <lastmod>2019-07-17T21:35:50+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://example.org/tags/ssl/</loc>
     <lastmod>2019-07-17T21:35:50+01:00</lastmod>
     <priority>0</priority>
   </url>

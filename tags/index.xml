@@ -6,10 +6,82 @@
     <description>Recent content in Tags on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Sat, 03 Aug 2019 19:01:43 +0100</lastBuildDate>
+    <lastBuildDate>Sun, 04 Aug 2019 14:54:01 +0100</lastBuildDate>
     
 	<atom:link href="http://example.org/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>SSL</title>
+      <link>http://example.org/tags/ssl/</link>
+      <pubDate>Sun, 04 Aug 2019 14:54:01 +0100</pubDate>
+      
+      <guid>http://example.org/tags/ssl/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>SSL authentication</title>
+      <link>http://example.org/tags/ssl-authentication/</link>
+      <pubDate>Sun, 04 Aug 2019 14:54:01 +0100</pubDate>
+      
+      <guid>http://example.org/tags/ssl-authentication/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>SSL reverse proxy</title>
+      <link>http://example.org/tags/ssl-reverse-proxy/</link>
+      <pubDate>Sun, 04 Aug 2019 14:54:01 +0100</pubDate>
+      
+      <guid>http://example.org/tags/ssl-reverse-proxy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>apache</title>
+      <link>http://example.org/tags/apache/</link>
+      <pubDate>Sun, 04 Aug 2019 14:54:01 +0100</pubDate>
+      
+      <guid>http://example.org/tags/apache/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>flask</title>
+      <link>http://example.org/tags/flask/</link>
+      <pubDate>Sun, 04 Aug 2019 14:54:01 +0100</pubDate>
+      
+      <guid>http://example.org/tags/flask/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>gunicorn</title>
+      <link>http://example.org/tags/gunicorn/</link>
+      <pubDate>Sun, 04 Aug 2019 14:54:01 +0100</pubDate>
+      
+      <guid>http://example.org/tags/gunicorn/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>proxy</title>
+      <link>http://example.org/tags/proxy/</link>
+      <pubDate>Sun, 04 Aug 2019 14:54:01 +0100</pubDate>
+      
+      <guid>http://example.org/tags/proxy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>reverse proxy</title>
+      <link>http://example.org/tags/reverse-proxy/</link>
+      <pubDate>Sun, 04 Aug 2019 14:54:01 +0100</pubDate>
+      
+      <guid>http://example.org/tags/reverse-proxy/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>blog</title>
@@ -116,15 +188,6 @@
       <pubDate>Wed, 17 Jul 2019 21:35:50 +0100</pubDate>
       
       <guid>http://example.org/tags/digital-certificates/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>SSL</title>
-      <link>http://example.org/tags/ssl/</link>
-      <pubDate>Wed, 17 Jul 2019 21:35:50 +0100</pubDate>
-      
-      <guid>http://example.org/tags/ssl/</guid>
       <description></description>
     </item>
     
