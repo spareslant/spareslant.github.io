@@ -1028,17 +1028,18 @@ As <code>root</code> user enter the following line in <code>/etc/resolv.conf</co
 
 <h4 id="start-a-temp-dns-server-as-following">Start a temp <code>DNS</code> server as following</h4>
 
-<p>DNS server starting.
-<pre>
-$ sudo dnsmasq &ndash;no-daemon &ndash;listen-address=127.0.0.1 &ndash;address=/<span class="hlb">full.domain.name</span>/127.0.0.1 &ndash;log-queries</p>
+<p>DNS server starting.</p>
 
-<p>dnsmasq: started, version 2.80 cachesize 150
+<pre>
+$ sudo dnsmasq --no-daemon --listen-address=127.0.0.1 --address=/<span class="hlb">full.domain.name</span>/127.0.0.1 --log-queries
+
+dnsmasq: started, version 2.80 cachesize 150
 dnsmasq: compile time options: IPv6 GNU-getopt DBus no-i18n IDN2 DHCP DHCPv6 no-Lua TFTP no-conntrack ipset auth DNSSEC loop-detect inotify dumpfile
 dnsmasq: reading /etc/resolv.conf
 dnsmasq: ignoring nameserver 127.0.0.1 - local interface
 dnsmasq: using nameserver 192.168.97.2#53
 dnsmasq: read /etc/hosts - 2 addresses
-</pre></p>
+</pre>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ host myhost.full.domain.name
 myhost.full.domain.name has address <span style="color:#ae81ff">127</span>.0.0.1</code></pre></div>
 <h4 id="fetch-atest-html-file-securely-after-dns-resolution-fix">Fetch <code>atest.html</code> file securely after DNS resolution fix.</h4>
