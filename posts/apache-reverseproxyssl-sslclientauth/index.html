@@ -409,6 +409,7 @@ Listen <span style="color:#ae81ff">7771</span>
 
     SSLProxyEngine On
     SSLProxyVerify require
+    SSLProxyVerifyDepth <span style="color:#ae81ff">5</span>
     <span style="color:#75715e"># SSLProxyCheckPeerCN Off</span>
     SSLProxyCheckPeerName Off
     SSLProxyCACertificateFile /etc/httpd/sslCerts/myCA.crt
@@ -424,6 +425,8 @@ Listen <span style="color:#ae81ff">7771</span>
     &lt;/Location&gt;
 
 &lt;/VirtualHost&gt;</code></pre></div>
+<p><strong>Note</strong>: You may need to inrease <code>SSLVerifyDepth</code> and <code>SSLProxyVerifyDepth</code> to higher number. This represents the depth of you certificate chain (Root and intermediary certs). Number need to be exact. It can be higher but no lower. Lower number will result in error.</p>
+
 <h3 id="start-apache">Start Apache</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo systemctl restart  httpd</code></pre></div>
 <p><strong>Note:</strong> You may need to tweak selinux policy for apache to run at 7771 port. I had disabled selinux for this excersize.</p>
@@ -517,6 +520,8 @@ curl: <span style="color:#f92672">(</span><span style="color:#ae81ff">56</span><
 </span><span style="color:#ae81ff"></span>--key certs/aClientKey.pem 
 
 <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;success&#34;</span>:<span style="color:#e6db74">&#34;request received successfully&#34;</span><span style="color:#f92672">}</span></code></pre></div>
+<p><strong>Note</strong>: You do not need to generate so many certificates. You can generate certificate having both the extensions of <code>TLS Web Server Authentication</code> and <code>TLS client Authentication</code> and that certificate can be deployed at all places.</p>
+
 </div>
 
   
