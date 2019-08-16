@@ -3,210 +3,200 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://example.org/posts/apache-reverseproxyssl-sslclientauth/</loc>
+    <loc>/posts/apache-reverseproxyssl-sslclientauth/</loc>
     <lastmod>2019-08-04T14:54:01+01:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/posts/</loc>
-    <lastmod>2019-08-04T14:54:01+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://example.org/tags/ssl/</loc>
+    <loc>/posts/</loc>
     <lastmod>2019-08-04T14:54:01+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://example.org/tags/ssl-authentication/</loc>
+    <loc>/tags/ssl/</loc>
     <lastmod>2019-08-04T14:54:01+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://example.org/tags/ssl-reverse-proxy/</loc>
+    <loc>/tags/ssl-authentication/</loc>
     <lastmod>2019-08-04T14:54:01+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://example.org/</loc>
+    <loc>/tags/ssl-reverse-proxy/</loc>
     <lastmod>2019-08-04T14:54:01+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://example.org/tags/</loc>
+    <loc>/</loc>
     <lastmod>2019-08-04T14:54:01+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://example.org/tags/apache/</loc>
+    <loc>/tags/</loc>
     <lastmod>2019-08-04T14:54:01+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://example.org/tags/flask/</loc>
+    <loc>/tags/apache/</loc>
     <lastmod>2019-08-04T14:54:01+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://example.org/tags/gunicorn/</loc>
+    <loc>/tags/flask/</loc>
     <lastmod>2019-08-04T14:54:01+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://example.org/tags/proxy/</loc>
+    <loc>/tags/gunicorn/</loc>
     <lastmod>2019-08-04T14:54:01+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://example.org/tags/reverse-proxy/</loc>
+    <loc>/tags/proxy/</loc>
     <lastmod>2019-08-04T14:54:01+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://example.org/posts/deploy-hugosite-to-github/</loc>
+    <loc>/tags/reverse-proxy/</loc>
+    <lastmod>2019-08-04T14:54:01+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/posts/deploy-hugosite-to-github/</loc>
     <lastmod>2019-08-03T19:01:43+01:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/tags/blog/</loc>
-    <lastmod>2019-08-03T19:01:43+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://example.org/tags/blog-publishing/</loc>
+    <loc>/tags/blog/</loc>
     <lastmod>2019-08-03T19:01:43+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://example.org/tags/github-pages-deployment/</loc>
+    <loc>/tags/blog-publishing/</loc>
     <lastmod>2019-08-03T19:01:43+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://example.org/tags/hugo/</loc>
+    <loc>/tags/github-pages-deployment/</loc>
     <lastmod>2019-08-03T19:01:43+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://example.org/posts/markup-to-pdf/</loc>
+    <loc>/tags/hugo/</loc>
+    <lastmod>2019-08-03T19:01:43+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/posts/markup-to-pdf/</loc>
     <lastmod>2019-07-27T20:39:13+01:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/tags/html-generation/</loc>
-    <lastmod>2019-07-27T20:39:13+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://example.org/tags/pdf-generation/</loc>
+    <loc>/tags/html-generation/</loc>
     <lastmod>2019-07-27T20:39:13+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://example.org/posts/docker-logging-with-rsyslog/</loc>
-    <lastmod>2019-07-27T12:15:28+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://example.org/tags/docker/</loc>
-    <lastmod>2019-07-27T12:15:28+01:00</lastmod>
+    <loc>/tags/pdf-generation/</loc>
+    <lastmod>2019-07-27T20:39:13+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://example.org/tags/logging/</loc>
+    <loc>/posts/docker-logging-with-rsyslog/</loc>
     <lastmod>2019-07-27T12:15:28+01:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://example.org/tags/rsyslog/</loc>
+    <loc>/tags/docker/</loc>
     <lastmod>2019-07-27T12:15:28+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://example.org/tags/syslog/</loc>
+    <loc>/tags/logging/</loc>
     <lastmod>2019-07-27T12:15:28+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://example.org/tags/ca/</loc>
+    <loc>/tags/rsyslog/</loc>
+    <lastmod>2019-07-27T12:15:28+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/syslog/</loc>
+    <lastmod>2019-07-27T12:15:28+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/ca/</loc>
     <lastmod>2019-07-17T21:35:50+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://example.org/tags/digital-certificates/</loc>
+    <loc>/tags/digital-certificates/</loc>
     <lastmod>2019-07-17T21:35:50+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://example.org/posts/ssl-certificate/</loc>
+    <loc>/posts/ssl-certificate/</loc>
     <lastmod>2019-07-17T21:35:50+01:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/tags/ssl-mutual-authentication/</loc>
-    <lastmod>2019-07-17T21:35:50+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://example.org/tags/curl/</loc>
+    <loc>/tags/ssl-mutual-authentication/</loc>
     <lastmod>2019-07-17T21:35:50+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://example.org/tags/openssl/</loc>
+    <loc>/tags/curl/</loc>
     <lastmod>2019-07-17T21:35:50+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://example.org/tags/pki/</loc>
+    <loc>/tags/openssl/</loc>
     <lastmod>2019-07-17T21:35:50+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://example.org/tags/x509/</loc>
+    <loc>/tags/pki/</loc>
     <lastmod>2019-07-17T21:35:50+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://example.org/authors/</loc>
+    <loc>/tags/x509/</loc>
+    <lastmod>2019-07-17T21:35:50+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://example.org/categories/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://example.org/series/</loc>
+    <loc>/categories/</loc>
     <priority>0</priority>
   </url>
   

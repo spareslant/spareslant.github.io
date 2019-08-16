@@ -1,230 +1,109 @@
 <!DOCTYPE html>
-<html lang='en'><head>
-  <meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'>
-<meta name='description' content='.hl {color: #f155f1;} .hlb {color: #f155f1; font-weight: bold;} .hlbr {color:#e90001; font-weight: bold;}  Introduction We will be creating our own CA (Certificate Authority), CSR (Certificate Signing Request), signed certificate. We will be creating server side and client side certificate and will verify them using openssl and curl.
-Prepare environment os used $ cat /etc/fedora-release Fedora release 30 (Thirty) $ uname -a Linux localhost.localdomain 5.0.9-301.fc30.x86_64 #1 SMP Tue Apr 23 23:57:35 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux Prepare openssl conf files A reference conf file can be found in /etc/pki/tls/openssl.'>
-<meta name='theme-color' content='#44ccff'>
-
-<meta property='og:title' content='SSL Certificate Mutual Authentication • SpareSlant Technical Blog'>
-<meta property='og:description' content='.hl {color: #f155f1;} .hlb {color: #f155f1; font-weight: bold;} .hlbr {color:#e90001; font-weight: bold;}  Introduction We will be creating our own CA (Certificate Authority), CSR (Certificate Signing Request), signed certificate. We will be creating server side and client side certificate and will verify them using openssl and curl.
-Prepare environment os used $ cat /etc/fedora-release Fedora release 30 (Thirty) $ uname -a Linux localhost.localdomain 5.0.9-301.fc30.x86_64 #1 SMP Tue Apr 23 23:57:35 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux Prepare openssl conf files A reference conf file can be found in /etc/pki/tls/openssl.'>
-<meta property='og:url' content='http://example.org/posts/ssl-certificate/'>
-<meta property='og:site_name' content='SpareSlant Technical Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='posts'><meta property='article:tag' content='SSL'><meta property='article:tag' content='openssl'><meta property='article:tag' content='Digital Certificates'><meta property='article:tag' content='pki'><meta property='article:tag' content='SSL mutual authentication'><meta property='article:tag' content='x509'><meta property='article:tag' content='CA'><meta property='article:tag' content='curl'><meta property='article:published_time' content='2019-07-17T21:35:50&#43;01:00'/><meta property='article:modified_time' content='2019-07-17T21:35:50&#43;01:00'/><meta name='twitter:card' content='summary'>
-
-<meta name="generator" content="Hugo 0.55.6" />
-
-  <title>SSL Certificate Mutual Authentication • SpareSlant Technical Blog</title>
-  <link rel='canonical' href='http://example.org/posts/ssl-certificate/'>
-  
-  
-  <link rel='icon' href='/favicon.ico'>
-<link rel='stylesheet' href='/assets/css/main.fb20af92.css'><link rel='stylesheet' href='/css/custom.css'><style>
-:root{--color-accent:#44ccff;}
-</style>
-
-  
-
+<html class="no-js" lang="en-gb">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>SSL Certificate Mutual Authentication - SpareSlant Technical Blog</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/my.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
 </head>
-<body class='page type-posts has-sidebar'>
-
-  <div class='site'><div id='sidebar' class='sidebar'>
-  <a class='screen-reader-text' href='#main-menu'>Skip to Main Menu</a>
-
-  <div class='container'><section class='widget widget-about sep-after'>
-  <header>
-    
-    <div class='logo'>
-      <a href='/'>
-        <img src='/images/logo.svg'>
-      </a>
-    </div>
-    
-    <h2 class='title site-title '>
-      <a href='/'>
-      SpareSlant Technical Blog
-      </a>
-    </h2>
-    <div class='desc'>
-    Tech Blog
-    </div>
-  </header>
-
-</section>
-<section class='widget widget-search sep-after'>
-  <header>
-    <h4 class='title widget-title'>Search</h4>
-  </header>
-
-  <form action='/search' id='search-form' class='search-form'>
-    <label>
-      <span class='screen-reader-text'>Search</span>
-      <input id='search-term' class='search-term' type='search' name='q' placeholder='Search&hellip;'>
-    </label></form>
-
-</section>
-<section class='widget widget-taxonomy_cloud sep-after'>
-  <header>
-    <h4 class='title widget-title'>Tags</h4>
-  </header>
-
-  <div class='container list-container'>
-  <ul class='list taxonomy-cloud'><li>
-        <a href='/tags/apache/' style='font-size:1em'>apache</a>
-      </li><li>
-        <a href='/tags/blog/' style='font-size:1em'>blog</a>
-      </li><li>
-        <a href='/tags/blog-publishing/' style='font-size:1em'>blog publishing</a>
-      </li><li>
-        <a href='/tags/ca/' style='font-size:1em'>CA</a>
-      </li><li>
-        <a href='/tags/curl/' style='font-size:1em'>curl</a>
-      </li><li>
-        <a href='/tags/digital-certificates/' style='font-size:1em'>Digital Certificates</a>
-      </li><li>
-        <a href='/tags/docker/' style='font-size:1em'>docker</a>
-      </li><li>
-        <a href='/tags/flask/' style='font-size:1em'>flask</a>
-      </li><li>
-        <a href='/tags/github-pages-deployment/' style='font-size:1em'>github pages deployment</a>
-      </li><li>
-        <a href='/tags/gunicorn/' style='font-size:1em'>gunicorn</a>
-      </li><li>
-        <a href='/tags/html-generation/' style='font-size:1em'>html generation</a>
-      </li><li>
-        <a href='/tags/hugo/' style='font-size:1em'>hugo</a>
-      </li><li>
-        <a href='/tags/logging/' style='font-size:1em'>logging</a>
-      </li><li>
-        <a href='/tags/openssl/' style='font-size:1em'>openssl</a>
-      </li><li>
-        <a href='/tags/pdf-generation/' style='font-size:1em'>pdf generation</a>
-      </li><li>
-        <a href='/tags/pki/' style='font-size:1em'>pki</a>
-      </li><li>
-        <a href='/tags/proxy/' style='font-size:1em'>proxy</a>
-      </li><li>
-        <a href='/tags/reverse-proxy/' style='font-size:1em'>reverse proxy</a>
-      </li><li>
-        <a href='/tags/rsyslog/' style='font-size:1em'>rsyslog</a>
-      </li><li>
-        <a href='/tags/ssl/' style='font-size:2em'>SSL</a>
-      </li><li>
-        <a href='/tags/ssl-authentication/' style='font-size:1em'>SSL authentication</a>
-      </li><li>
-        <a href='/tags/ssl-mutual-authentication/' style='font-size:1em'>SSL mutual authentication</a>
-      </li><li>
-        <a href='/tags/ssl-reverse-proxy/' style='font-size:1em'>SSL reverse proxy</a>
-      </li><li>
-        <a href='/tags/syslog/' style='font-size:1em'>syslog</a>
-      </li><li>
-        <a href='/tags/x509/' style='font-size:1em'>x509</a>
-      </li></ul>
-</div>
-
-
-</section>
-</div>
-
-  <div class='sidebar-overlay'></div>
-</div><div class='main'><nav id='main-menu' class='menu main-menu' aria-label='Main Menu'>
-  <div class='container'>
-    <a class='screen-reader-text' href='#content'>Skip to Content</a>
-
-<button id='sidebar-toggler' class='sidebar-toggler' aria-controls='sidebar'>
-  <span class='screen-reader-text'>Toggle Sidebar</span>
-  <span class='open'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
-  
-  <line x1="3" y1="12" x2="21" y2="12" />
-  <line x1="3" y1="6" x2="21" y2="6" />
-  <line x1="3" y1="18" x2="21" y2="18" />
-  
-</svg>
-</span>
-  <span class='close'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
-  
-  <line x1="18" y1="6" x2="6" y2="18" />
-  <line x1="6" y1="6" x2="18" y2="18" />
-  
-</svg>
-</span>
-</button>
-    <ul></ul>
-  </div>
-</nav><div class='header-widgets'>
-        <div class='container'>
-    
-    <style>.widget-breadcrumbs li:after{content:'\2f '}</style>
-  <section class='widget widget-breadcrumbs sep-after'>
-    <nav id='breadcrumbs'>
-      <ol><li><a href='/'>SpareSlant Technical Blog</a></li><li><a href='/posts/'>Posts</a></li><li><span>SSL Certificate Mutual Authentication</span></li></ol>
-    </nav>
-  </section></div>
-      </div>
-
-      <header id='header' class='header site-header'>
-        <div class='container sep-after'>
-          <div class='header-info'><p class='site-title title'>SpareSlant Technical Blog</p><p class='desc site-desc'>Tech Blog</p>
-          </div>
-        </div>
-      </header>
-
-      <main id='content'>
-
-
-<article lang='en' class='entry'>
-  <header class='header entry-header'>
-  <div class='container sep-after'>
-    <div class='header-info'>
-      <h1 class='title'>SSL Certificate Mutual Authentication</h1>
-      
-
-    </div>
-    <div class='entry-meta'>
-  <span class='posted-on'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
-  
-  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-  <line x1="16" y1="2" x2="16" y2="6"/>
-  <line x1="8" y1="2" x2="8" y2="6"/>
-  <line x1="3" y1="10" x2="21" y2="10"/>
-  
-</svg>
-<span class='screen-reader-text'>Posted on </span>
-  <time class='entry-date' datetime='2019-07-17T21:35:50&#43;01:00'>2019, Jul 17</time>
-</span>
-
-  
-  
-<span class='reading-time'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
-  
-  <circle cx="12" cy="12" r="10"/>
-  <polyline points="12 6 12 12 15 15"/>
-  
-</svg>
-13 mins read
-</span>
-
-
-  
-  
-</div>
-
-
-  </div>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="SpareSlant Technical Blog" rel="home">
+				<div class="logo__title">SpareSlant Technical Blog</div>
+				<div class="logo__tagline">SpareSlant tech blog</div>
+			</a>
+		</div>
+		<div class="divider"></div>
+	</div>
 </header>
-
-  
-  
-
-  <div class='container entry-content'>
-  
-
-<style type="text/css">
-.hl {color: #f155f1;}
-.hlb {color: #f155f1; font-weight: bold;}
-.hlbr {color:#e90001; font-weight: bold;}
-</style>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">SSL Certificate Mutual Authentication</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2019-07-17T21:35:50">2019-07-17</time>
+</div>
+</div>
+		</header>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#prepare-environment">Prepare environment</a>
+<ul>
+<li><a href="#os-used">os used</a></li>
+<li><a href="#prepare-openssl-conf-files">Prepare openssl conf files</a>
+<ul>
+<li><a href="#create-following-four-config-files">Create following four config files.</a></li>
+</ul></li>
+<li><a href="#create-self-signed-ca-certificate">Create self signed CA certificate.</a></li>
+<li><a href="#check-ca-certificate">Check CA certificate</a></li>
+<li><a href="#verify-ca-certificate">Verify CA certificate</a></li>
+<li><a href="#create-a-csr-request-for-server">Create a CSR request for server.</a></li>
+<li><a href="#create-a-csr-request-for-client">Create a CSR request for client.</a>
+<ul>
+<li><a href="#check-server-csr-request">Check Server CSR request</a></li>
+<li><a href="#check-client-csr-request">Check client CSR request</a></li>
+</ul></li>
+<li><a href="#sign-server-csr-and-generate-server-certificate">Sign Server CSR and generate server certificate</a>
+<ul>
+<li><a href="#check-signed-server-certificate">check signed server certificate</a></li>
+<li><a href="#verify-server-certificate">Verify server certificate</a></li>
+</ul></li>
+<li><a href="#sign-client-csr-and-generate-client-certificate">Sign client CSR and generate client certificate</a>
+<ul>
+<li><a href="#check-client-certificate">check client certificate</a></li>
+</ul></li>
+<li><a href="#verify-client-server-connectivity-using-certs">Verify Client/Server connectivity using certs.</a></li>
+<li><a href="#attemps-to-connect-and-fetch-a-page-from-server-no-mutual-auth">Attemps to connect and fetch a page from server (NO mutual auth)</a>
+<ul>
+<li>
+<ul>
+<li><a href="#fetch-atest-html-file-insecurely">Fetch <code>atest.html</code> file <code>insecurely</code>.</a></li>
+<li><a href="#fetch-atest-html-file-securely">Fetch <code>atest.html</code> file <code>securely</code>.</a></li>
+<li><a href="#fetch-atest-html-file-with-correct-server-hostname">Fetch <code>atest.html</code> file with correct server hostname</a></li>
+<li><a href="#fixing-dns-resolution-for-myhost-full-domain-name">Fixing DNS resolution for <code>myhost.full.domain.name</code></a></li>
+<li><a href="#start-a-temp-dns-server-as-following">Start a temp <code>DNS</code> server as following</a></li>
+<li><a href="#fetch-atest-html-file-securely-after-dns-resolution-fix">Fetch <code>atest.html</code> file securely after DNS resolution fix.</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#attemps-to-connect-and-fetch-a-page-from-server-with-mutual-auth">Attemps to connect and fetch a page from server (WITH mutual auth)</a>
+<ul>
+<li><a href="#start-openssl-server-in-client-verification-mode">Start openssl server in client verification mode.</a>
+<ul>
+<li><a href="#fetch-atest-html-in-insecure-way">Fetch <code>atest.html</code> in <code>insecure</code> way</a></li>
+<li><a href="#fetch-atest-html-secure-way">Fetch <code>atest.html</code> secure way</a></li>
+<li><a href="#fetch-atest-html-secure-way-using-client-certs-mutual-auth">Fetch <code>atest.html</code> secure way using client certs (mutual auth)</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			
 
 <h1 id="introduction">Introduction</h1>
 
@@ -233,22 +112,28 @@ Prepare environment os used $ cat /etc/fedora-release Fedora release 30 (Thirty)
 <h1 id="prepare-environment">Prepare environment</h1>
 
 <h2 id="os-used">os used</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cat /etc/fedora-release
-Fedora release <span style="color:#ae81ff">30</span> <span style="color:#f92672">(</span>Thirty<span style="color:#f92672">)</span>
+
+<pre><code class="language-bash">$ cat /etc/fedora-release
+Fedora release 30 (Thirty)
 
 $ uname -a
-Linux localhost.localdomain <span style="color:#ae81ff">5</span>.0.9-301.fc30.x86_64 <span style="color:#75715e">#1 SMP Tue Apr 23 23:57:35 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux</span></code></pre></div>
+Linux localhost.localdomain 5.0.9-301.fc30.x86_64 #1 SMP Tue Apr 23 23:57:35 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux
+</code></pre>
+
 <h2 id="prepare-openssl-conf-files">Prepare openssl conf files</h2>
 
 <p>A reference conf file can be found in <code>/etc/pki/tls/openssl.cnf</code> location and by default openssl uses this file. We will be creating our own conf files. One for CA and other one to generate CSRs.</p>
 
 <p><strong>Note:</strong> You do not need to be <code>root</code> to run following commands.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ mkdir -p myPKI
+
+<pre><code class="language-bash">$ mkdir -p myPKI
 $ cd mkPKI
 $ mkdir -p caCert  caDatabase  CSRs  newCreatedCerts  opensslConf  privateKeys
 $ touch caDatabase/index.txt
 $ touch caDatabase/serial
-$ echo <span style="color:#e6db74">&#34;10&#34;</span> &gt; caDatabase/serial</code></pre></div>
+$ echo &quot;10&quot; &gt; caDatabase/serial
+</code></pre>
+
 <h3 id="create-following-four-config-files">Create following four config files.</h3>
 
 <ul>
@@ -418,24 +303,30 @@ DNS.1 = client.full.domain.name
 </ul>
 
 <h2 id="create-self-signed-ca-certificate">Create self signed CA certificate.</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cd myPKI
-$ openssl req -config opensslConf/CA_openssl.cnf <span style="color:#ae81ff">\
-</span><span style="color:#ae81ff"></span>-new -x509 <span style="color:#ae81ff">\
-</span><span style="color:#ae81ff"></span>-out caCert/myCA.crt <span style="color:#ae81ff">\
-</span><span style="color:#ae81ff"></span>-newkey rsa:2048 -keyout caCert/myCAkey.pem <span style="color:#ae81ff">\
-</span><span style="color:#ae81ff"></span>-extensions v3_ca <span style="color:#ae81ff">\
-</span><span style="color:#ae81ff"></span>-days <span style="color:#ae81ff">1000</span> <span style="color:#ae81ff">\
-</span><span style="color:#ae81ff"></span>-subj <span style="color:#e6db74">&#34;/emailAddress=user@junkemail.com/C=GB/ST=London/L=City of London/O=My Organization/OU=Engg/CN=root CA&#34;</span>
+
+<pre><code class="language-bash">$ cd myPKI
+$ openssl req -config opensslConf/CA_openssl.cnf \
+-new -x509 \
+-out caCert/myCA.crt \
+-newkey rsa:2048 -keyout caCert/myCAkey.pem \
+-extensions v3_ca \
+-days 1000 \
+-subj &quot;/emailAddress=user@junkemail.com/C=GB/ST=London/L=City of London/O=My Organization/OU=Engg/CN=root CA&quot;
 
 Generating a RSA private key
 ...........................+++++
 .....................+++++
-writing new private key to <span style="color:#e6db74">&#39;caCert/myCAkey.pem&#39;</span>
+writing new private key to 'caCert/myCAkey.pem'
 Enter PEM pass phrase:
 Verifying - Enter PEM pass phrase:
------</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ls -1 caCert/
+-----
+</code></pre>
+
+<pre><code class="language-bash">$ ls -1 caCert/
 myCA.crt
-myCAkey.pem</code></pre></div>
+myCAkey.pem
+</code></pre>
+
 <h2 id="check-ca-certificate">Check CA certificate</h2>
 
 <pre>
@@ -460,15 +351,15 @@ $ openssl x509 -in caCert/myCA.crt -text -noout
                     72:99:bc:81:e7:12:ba:5c:f0:17:46:45:72:dd:c1:
                     3d:7f:58:4b:f4:85:6e:99:4d:dc:24:e4:c4:01:0b:
                     c3:64:48:8a:89:3f:a8:ef:66:d6:d7:8d:83:58:07:
-                    a2:09:69🇩🇪36:06:de:04:1d:40:5a:1e:8b:31:e1:
+                    a2:09:69:de:36:06:de:04:1d:40:5a:1e:8b:31:e1:
                     7e:2a:8f:79:d8:f0:5d:84:6d:c9:20:80:4a:83:af:
                     60:ec:ff:0c:76:26:bb:30:3d:5b:93:21:f8:1c:0c:
-                    5c🆎4a:07:f7:2f:b2:ca:fd:0c:a7:0f:62:65:78:
+                    5c:ab:4a:07:f7:2f:b2:ca:fd:0c:a7:0f:62:65:78:
                     43:84:98:63:12:6c:59:09:9f:df:4e:7c:00:91:a1:
                     e8:52:3c:54:9f:c2:6a:0a:c5:2c:85:fe:35:f5:83:
                     e6:40:2f:8f:ae:19:84:d8:fc:fc:4c:35:5f:34:8a:
                     9f:f8:2f:76:7a:d4:ba:4b:c5:5b:0a:06:5b:52:27:
-                    d1:f8:c5🇩🇪69:3c:0b:80:e1:53:b3:b5:7b:ca:33:
+                    d1:f8:c5:de:69:3c:0b:80:e1:53:b3:b5:7b:ca:33:
                     9c:d4:ae:72:04:f3:3c:14:e7:8d:71:91:62:52:f8:
                     0e:5a:67:8c:a7:1e:fb:8a:1a:b4:75:0a:68:32:57:
                     ed:ff:6a:93:b8:a8:90:fa:0b:21:c6:8a:71:88:b3:
@@ -488,15 +379,15 @@ $ openssl x509 -in caCert/myCA.crt -text -noout
     Signature Algorithm: sha256WithRSAEncryption
          30:f7:ec:d8:ac:81:55:89:d4:51:89:a7:4a:58:87:b0:7a:3d:
          97:dc:96:4e:1f:77:77:ed:b8:33:af:ee:4e:b6:3c:66:d0:b4:
-         0b:d5:a0:82:f2:34:14:da:32:f7:7b:fb:84:34:39:49:e6🆎
+         0b:d5:a0:82:f2:34:14:da:32:f7:7b:fb:84:34:39:49:e6:ab:
          c6:23:19:9a:0e:f1:f0:dc:f7:d5:12:ad:9b:c2:7a:f6:c5:89:
          f0:c1:c1:77:1c:03:85:6e:fa:b0:3f:a7:63:72:a5:43:a7:c5:
-         ca:fb:61:a8:7c:4a:14:bf:59🆎a9:37:cd:6c:57:f1:3f:0c:
+         ca:fb:61:a8:7c:4a:14:bf:59:ab:a9:37:cd:6c:57:f1:3f:0c:
          36:69:1d:e7:8e:40:95:c8:a7:29:88:72:1c:95:ae:fc:10:93:
          4b:62:01:6f:52:7d:c4:37:ad:23:1a:e5:62:fb:9c:d5:63:89:
          7c:16:d6:1f:f0:41:58:8b:1d:44:5e:c5:8e:29:df:d2:61:e4:
          74:16:9f:73:2d:1d:f7:c0:13:42:fc:80:95:0d:33:30:1a:46:
-         4f💿16:ef:3c:31:ad:2c:e8:d7:a9:c6:c8:55:8f:7f:1a:67:
+         4f:cd:16:ef:3c:31:ad:2c:e8:d7:a9:c6:c8:55:8f:7f:1a:67:
          ee:22:b3:01:9d:61:fa:91:c6:54:ac:e2:d4:fb:a5:ef:39:7c:
          59:40:4f:93:81:f6:ee:4a:19:fa:05:7c:78:13:84:b9:17:25:
          26:20:ca:37:84:04:41:61:22:f3:87:fc:76:3c:72:ef:f7:d6:
@@ -516,9 +407,12 @@ error 18 at 0 depth lookup: self signed certificate
 <p><strong>Note:</strong> Above verification failed because this CA cert is self signed and is NOT issued by certified authority.</p>
 
 <p>Run following command to tell <code>openssl</code> to use our signed CA cert.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ openssl verify -CAfile caCert/myCA.crt -verbose  caCert/myCA.crt
 
-caCert/myCA.crt: OK</code></pre></div>
+<pre><code class="language-bash">$ openssl verify -CAfile caCert/myCA.crt -verbose  caCert/myCA.crt
+
+caCert/myCA.crt: OK
+</code></pre>
+
 <h2 id="create-a-csr-request-for-server">Create a CSR request for server.</h2>
 
 <pre>
@@ -540,8 +434,11 @@ Generating a RSA private key
 writing new private key to 'privateKeys/serverKey.pem'
 -----
 </pre>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ls -1 CSRs/
-server.csr</code></pre></div>
+
+<pre><code class="language-bash">$ ls -1 CSRs/
+server.csr
+</code></pre>
+
 <h2 id="create-a-csr-request-for-client">Create a CSR request for client.</h2>
 
 <pre>
@@ -563,15 +460,18 @@ Generating a RSA private key
 writing new private key to 'privateKeys/myClientKey.pem'
 -----
 </pre>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ls -og privateKeys/
-total <span style="color:#ae81ff">8</span>
--rw-------. <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1704</span> Aug  <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">13</span>:03 myClientKey.pem
--rw-------. <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1704</span> Aug  <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">12</span>:17 serverKey.pem
+
+<pre><code class="language-bash">$ ls -og privateKeys/
+total 8
+-rw-------. 1 1704 Aug  3 13:03 myClientKey.pem
+-rw-------. 1 1704 Aug  3 12:17 serverKey.pem
 
 $ ls -og CSRs/
-total <span style="color:#ae81ff">8</span>
--rw-rw-r--. <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1350</span> Aug  <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">13</span>:03 myClient.csr
--rw-rw-r--. <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1358</span> Aug  <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">12</span>:17 server.csr</code></pre></div>
+total 8
+-rw-rw-r--. 1 1350 Aug  3 13:03 myClient.csr
+-rw-rw-r--. 1 1358 Aug  3 12:17 server.csr
+</code></pre>
+
 <h3 id="check-server-csr-request">Check Server CSR request</h3>
 
 <pre>
@@ -631,7 +531,7 @@ $ openssl <span class="hlb">req</span> -in CSRs/server.csr -text -noout
          72:62:2c:b4:0d:ef:cc:5c:e4:69:31:3a:7b:b6:c8:44:94:b9:
          5c:4f:a9:2b:14:57:4e:f7:5c:5a:a5:a8:e5:61:90:88:3f:30:
          0b:2c:5e:90:08:11:73:7e:c2:94:30:42:3d:8c:41:94:55:56:
-         9b🆎d3:c3:71:ed:64:ea:10:47:d6:2b:0d:3c:9f:f1:a6:64:
+         9b:ab:d3:c3:71:ed:64:ea:10:47:d6:2b:0d:3c:9f:f1:a6:64:
          a5:8a:ca:86:25:d3:17:b5:12:b8:47:ea:34:6b:a4:05:17:0f:
          91:dd:e5:e0:24:ae:a6:1d:ef:10:60:af:72:15:5e:eb:98:30:
          63:f8:b5:2a:1e:fc:1d:b5:1f:01:2c:93:72:48:78:b8:ec:2c:
@@ -657,7 +557,7 @@ $ openssl <span class="hlb">req</span> -in CSRs/myClient.csr -text -noout
                     97:6f:a4:b4:83:b9:88:a4:3a:01:68:b4:75:07:45:
                     63:4c:5b:2c:b4:07:c3:98:10:1e:a0:f8:46:e8:0e:
                     a6:71:04:61:50:aa:8a:31:91:d1:9c:73:ad:e4:3c:
-                    f9:40:de:43:f1:f5:5d:37:13🆎c3:cc:2c:eb:46:
+                    f9:40:de:43:f1:f5:5d:37:13:ab:c3:cc:2c:eb:46:
                     66:81:4a:27:06:c5:bf:8b:07:fd:67:67:58:8b:59:
                     b2:15:db:88:ff:11:23:f8:42:e3:fc:18:55:95:52:
                     30:19:3e:eb:81:04:ec:e0:94:bf:6a:f6:63:dd:34:
@@ -692,7 +592,7 @@ $ openssl <span class="hlb">req</span> -in CSRs/myClient.csr -text -noout
          d9:fd:0b:02:ef:67:14:09:65:be:14:b2:93:70:7a:2b:0b:96:
          38:57:dc:ba:ea:70:91:20:18:dc:fa:d2:49:f1:b4:5b:7c:41:
          c6:c1:2a:6d:7a:49:3f:18:42:49:3d:dc:d2:26:e0:71:9a:44:
-         bb:5d:f6🇩🇪d4:c9:20:96:bc:1e:0e:e5:36:ff:37:9d:92:bd:
+         bb:5d:f6:de:d4:c9:20:96:bc:1e:0e:e5:36:ff:37:9d:92:bd:
          88:5e:1e:af:d4:72:dc:6a:27:41:51:a3:4b:a5:28:11:b1:bc:
          92:48:c5:75:48:79:92:eb:7e:d8:f9:71:03:8d:b3:cb:62:fd:
          76:7f:2d:70:95:93:4c:db:2a:90:0a:e2:61:f8:00:c1:a6:fa:
@@ -755,10 +655,13 @@ Sign the certificate? [y/n]:y
 Write out database with 1 new entries
 Data Base Updated
 </pre>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ls -og  newCreatedCerts/
-total <span style="color:#ae81ff">16</span>
--rw-rw-r--. <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">5035</span> Aug  <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">12</span>:40 <span style="color:#ae81ff">10</span>.pem
--rw-rw-r--. <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">5035</span> Aug  <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">12</span>:40 serverCert.pem</code></pre></div>
+
+<pre><code class="language-bash">$ ls -og  newCreatedCerts/
+total 16
+-rw-rw-r--. 1 5035 Aug  3 12:40 10.pem
+-rw-rw-r--. 1 5035 Aug  3 12:40 serverCert.pem
+</code></pre>
+
 <h3 id="check-signed-server-certificate">check signed server certificate</h3>
 
 <pre>
@@ -826,14 +729,17 @@ $ openssl <span class="hlb">x509</span> -in newCreatedCerts/serverCert.pem -text
          8a:ed:f0:26:64:80:1d:b8:eb:8a:f2:6c:63:09:6d:19:e5:60:
          70:7a:d3:71:17:5c:d3:d1:c0:d0:1a:ec:82:e6:3e:fb:ac:44:
          26:38:d7:63:15:4b:6e:82:6f:fe:fe:9e:fc:e5:3a:6c:37:06:
-         72:1f:c9:dc:e4:69:da:1e:31:30:63:d0:2c💿a1:e8:f0:ce:
+         72:1f:c9:dc:e4:69:da:1e:31:30:63:d0:2c:cd:a1:e8:f0:ce:
          e3:9d:36:a8
 </pre>
 
 <h3 id="verify-server-certificate">Verify server certificate</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ openssl verify  -CAfile caCert/myCA.crt newCreatedCerts/serverCert.pem
 
-newCreatedCerts/serverCert.pem: OK</code></pre></div>
+<pre><code class="language-bash">$ openssl verify  -CAfile caCert/myCA.crt newCreatedCerts/serverCert.pem
+
+newCreatedCerts/serverCert.pem: OK
+</code></pre>
+
 <h2 id="sign-client-csr-and-generate-client-certificate">Sign client CSR and generate client certificate</h2>
 
 <pre>
@@ -885,12 +791,15 @@ Sign the certificate? [y/n]:y
 Write out database with 1 new entries
 Data Base Updated
 </pre>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ls -og newCreatedCerts/
-total <span style="color:#ae81ff">32</span>
--rw-rw-r--. <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">5035</span> Aug  <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">12</span>:40 <span style="color:#ae81ff">10</span>.pem
--rw-rw-r--. <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">5034</span> Aug  <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">13</span>:18 <span style="color:#ae81ff">11</span>.pem
--rw-rw-r--. <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">5034</span> Aug  <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">13</span>:18 myClientCert.pem
--rw-rw-r--. <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">5035</span> Aug  <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">12</span>:40 serverCert.pem</code></pre></div>
+
+<pre><code class="language-bash">$ ls -og newCreatedCerts/
+total 32
+-rw-rw-r--. 1 5035 Aug  3 12:40 10.pem
+-rw-rw-r--. 1 5034 Aug  3 13:18 11.pem
+-rw-rw-r--. 1 5034 Aug  3 13:18 myClientCert.pem
+-rw-rw-r--. 1 5035 Aug  3 12:40 serverCert.pem
+</code></pre>
+
 <h3 id="check-client-certificate">check client certificate</h3>
 
 <pre>
@@ -916,7 +825,7 @@ total <span style="color:#ae81ff">32</span>
                     97:6f:a4:b4:83:b9:88:a4:3a:01:68:b4:75:07:45:
                     63:4c:5b:2c:b4:07:c3:98:10:1e:a0:f8:46:e8:0e:
                     a6:71:04:61:50:aa:8a:31:91:d1:9c:73:ad:e4:3c:
-                    f9:40:de:43:f1:f5:5d:37:13🆎c3:cc:2c:eb:46:
+                    f9:40:de:43:f1:f5:5d:37:13:ab:c3:cc:2c:eb:46:
                     66:81:4a:27:06:c5:bf:8b:07:fd:67:67:58:8b:59:
                     b2:15:db:88:ff:11:23:f8:42:e3:fc:18:55:95:52:
                     30:19:3e:eb:81:04:ec:e0:94:bf:6a:f6:63:dd:34:
@@ -947,7 +856,7 @@ total <span style="color:#ae81ff">32</span>
     Signature Algorithm: sha256WithRSAEncryption
          7d:20:3f:08:50:20:83:2d:27:d2:2e:1c:2d:50:f5:d4:bd:47:
          23:bf:5a:a2:6c:61:7d:3e:67:fd:3a:62:be:50:18:75:84:9b:
-         d2:a4:1f:a2:ad🇩🇪59💿fe:db:f3:95:80:12:c9:62:a3:79:
+         d2:a4:1f:a2:ad:de:59:cd:fe:db:f3:95:80:12:c9:62:a3:79:
          73:c1:01:ed:18:25:1c:b6:4e:10:e9:60:54:18:37:0a:04:be:
          0f:9c:76:ff:63:32:69:d9:26:f4:25:46:c5:88:07:ea:f3:50:
          04:3a:f9:8b:47:02:27:8b:f0:5f:64:59:01:7b:45:8a:6d:9e:
@@ -957,7 +866,7 @@ total <span style="color:#ae81ff">32</span>
          95:d0:4b:95:c1:d7:f9:d5:a4:23:dc:f0:84:f6:35:3b:d4:f8:
          cb:b6:e4:59:da:a3:27:1d:d7:5c:38:96:0c:a6:d1:d9:81:71:
          e6:fb:f8:41:13:c9:4d:9b:81:fb:33:b3:09:76:5b:1d:f7:d0:
-         81:5f:94:14:4f:49:b8:8d:1a:ad:29:bd:fd💿a1:46:71:d9:
+         81:5f:94:14:4f:49:b8:8d:1a:ad:29:bd:fd:cd:a1:46:71:d9:
          0b:9a:50:d3:97:8e:13:a5:d0:5a:1a:65:44:f1:d9:01:1a:65:
          27:16:d1:f0
 </pre>
@@ -967,32 +876,41 @@ total <span style="color:#ae81ff">32</span>
 <p>Please note that our server certificate was created using <code>CN=myhost.full.domain.name</code>. This is imaginary hostname but client must use <code>myhost.full.domain.name</code> to connect to server.</p>
 
 <p>Create a test html file <code>atest.html</code> that will be served by openssl server.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cd myPKI
+
+<pre><code class="language-bash">$ cd myPKI
 $ mkdir -p serveContent
 $ touch serveContent/atest.html
-$ <span style="color:#f92672">(</span> cat <span style="color:#e6db74">&lt;&lt;EOF
-</span><span style="color:#e6db74">openssl page served.
-</span><span style="color:#e6db74">EOF</span>
-<span style="color:#f92672">)</span> &gt; serveContent/atest.html</code></pre></div>
+$ ( cat &lt;&lt;EOF
+openssl page served.
+EOF
+) &gt; serveContent/atest.html
+</code></pre>
+
 <h2 id="attemps-to-connect-and-fetch-a-page-from-server-no-mutual-auth">Attemps to connect and fetch a page from server (NO mutual auth)</h2>
 
 <p>Start a SSL server.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ host myhost.full.domain.name
-Host myhost.full.domain.name not found: <span style="color:#ae81ff">3</span><span style="color:#f92672">(</span>NXDOMAIN<span style="color:#f92672">)</span></code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ openssl s_server <span style="color:#ae81ff">\
-</span><span style="color:#ae81ff"></span>-accept <span style="color:#ae81ff">9999</span> <span style="color:#ae81ff">\
-</span><span style="color:#ae81ff"></span>-CAfile caCert/myCA.crt <span style="color:#ae81ff">\
-</span><span style="color:#ae81ff"></span>-cert newCreatedCerts/serverCert.pem <span style="color:#ae81ff">\
-</span><span style="color:#ae81ff"></span>-key privateKeys/serverKey.pem <span style="color:#ae81ff">\
-</span><span style="color:#ae81ff"></span>-state <span style="color:#ae81ff">\
-</span><span style="color:#ae81ff"></span>-WWW
+
+<pre><code class="language-bash">$ host myhost.full.domain.name
+Host myhost.full.domain.name not found: 3(NXDOMAIN)
+</code></pre>
+
+<pre><code class="language-bash">$ openssl s_server \
+-accept 9999 \
+-CAfile caCert/myCA.crt \
+-cert newCreatedCerts/serverCert.pem \
+-key privateKeys/serverKey.pem \
+-state \
+-WWW
 
 Using default temp DH parameters
-ACCEPT</code></pre></div>
+ACCEPT
+</code></pre>
+
 <h4 id="fetch-atest-html-file-insecurely">Fetch <code>atest.html</code> file <code>insecurely</code>.</h4>
 
 <p>insecure fetch
 <pre>
-$ curl <a href="https://localhost:9999/serveContent/atest.html" target="_blank">https://localhost:9999/serveContent/atest.html</a> <span class="hlb">&ndash;insecure</span>
+$ curl <a href="https://localhost:9999/serveContent/atest.html">https://localhost:9999/serveContent/atest.html</a> <span class="hlb">&ndash;insecure</span>
 openssl page served.
 </pre></p>
 
@@ -1000,10 +918,10 @@ openssl page served.
 
 <p>secure fetch
 <pre>
-$ curl <a href="https://localhost:9999/serveContent/atest.html" target="_blank">https://localhost:9999/serveContent/atest.html</a> <span class="hlb">&ndash;cacert caCert/myCA.crt</span></p>
+$ curl <a href="https://localhost:9999/serveContent/atest.html">https://localhost:9999/serveContent/atest.html</a> <span class="hlb">&ndash;cacert caCert/myCA.crt</span></p>
 
 <p>curl: (60) SSL: no alternative certificate subject name matches target host name &lsquo;localhost&rsquo;
-More details here: <a href="https://curl.haxx.se/docs/sslcerts.html" target="_blank">https://curl.haxx.se/docs/sslcerts.html</a></p>
+More details here: <a href="https://curl.haxx.se/docs/sslcerts.html">https://curl.haxx.se/docs/sslcerts.html</a></p>
 
 <p>curl failed to verify the legitimacy of the server and therefore could not
 establish a secure connection to it. To learn more about this situation and
@@ -1015,9 +933,12 @@ how to fix it, please visit the web page mentioned above.
 <h4 id="fetch-atest-html-file-with-correct-server-hostname">Fetch <code>atest.html</code> file with correct server hostname</h4>
 
 <p>using correct server name</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl https://myhost.full.domain.name:9999/serveContent/atest.html --cacert caCert/myCA.crt
 
-curl: <span style="color:#f92672">(</span><span style="color:#ae81ff">6</span><span style="color:#f92672">)</span> Could not resolve host: myhost.full.domain.name</code></pre></div>
+<pre><code class="language-bash">$ curl https://myhost.full.domain.name:9999/serveContent/atest.html --cacert caCert/myCA.crt
+
+curl: (6) Could not resolve host: myhost.full.domain.name
+</code></pre>
+
 <h4 id="fixing-dns-resolution-for-myhost-full-domain-name">Fixing DNS resolution for <code>myhost.full.domain.name</code></h4>
 
 <p>fix DNS resolution
@@ -1040,13 +961,16 @@ dnsmasq: ignoring nameserver 127.0.0.1 - local interface
 dnsmasq: using nameserver 192.168.97.2#53
 dnsmasq: read /etc/hosts - 2 addresses
 </pre>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ host myhost.full.domain.name
-myhost.full.domain.name has address <span style="color:#ae81ff">127</span>.0.0.1</code></pre></div>
+
+<pre><code class="language-bash">$ host myhost.full.domain.name
+myhost.full.domain.name has address 127.0.0.1
+</code></pre>
+
 <h4 id="fetch-atest-html-file-securely-after-dns-resolution-fix">Fetch <code>atest.html</code> file securely after DNS resolution fix.</h4>
 
 <p>secure fetch.
 <pre>
-$ curl <a href="https://myhost.full.domain.name:9999/serveContent/atest.html" target="_blank">https://myhost.full.domain.name:9999/serveContent/atest.html</a> &ndash;cacert <span class="hlb">caCert/myCA.crt</span>
+$ curl <a href="https://myhost.full.domain.name:9999/serveContent/atest.html">https://myhost.full.domain.name:9999/serveContent/atest.html</a> &ndash;cacert <span class="hlb">caCert/myCA.crt</span>
 openssl page served.
 </pre></p>
 
@@ -1072,95 +996,78 @@ ACCEPT
 <h4 id="fetch-atest-html-in-insecure-way">Fetch <code>atest.html</code> in <code>insecure</code> way</h4>
 
 <p>insecure fetch</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl https://myhost.full.domain.name:9999/serveContent/atest.html <span style="color:#ae81ff">\
-</span><span style="color:#ae81ff"></span>--insecure
 
-curl: <span style="color:#f92672">(</span><span style="color:#ae81ff">56</span><span style="color:#f92672">)</span> OpenSSL SSL_read: error:1409445C:SSL routines:ssl3_read_bytes:tlsv13 alert certificate required, errno <span style="color:#ae81ff">0</span></code></pre></div>
+<pre><code class="language-bash">$ curl https://myhost.full.domain.name:9999/serveContent/atest.html \
+--insecure
+
+curl: (56) OpenSSL SSL_read: error:1409445C:SSL routines:ssl3_read_bytes:tlsv13 alert certificate required, errno 0
+</code></pre>
+
 <h4 id="fetch-atest-html-secure-way">Fetch <code>atest.html</code> secure way</h4>
 
 <p>secure fetch</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl https://myhost.full.domain.name:9999/serveContent/atest.html <span style="color:#ae81ff">\
-</span><span style="color:#ae81ff"></span>--cacert caCert/myCA.crt
 
-curl: <span style="color:#f92672">(</span><span style="color:#ae81ff">56</span><span style="color:#f92672">)</span> OpenSSL SSL_read: error:1409445C:SSL routines:ssl3_read_bytes:tlsv13 alert certificate required, errno <span style="color:#ae81ff">0</span></code></pre></div>
+<pre><code class="language-bash">$ curl https://myhost.full.domain.name:9999/serveContent/atest.html \
+--cacert caCert/myCA.crt
+
+curl: (56) OpenSSL SSL_read: error:1409445C:SSL routines:ssl3_read_bytes:tlsv13 alert certificate required, errno 0
+</code></pre>
+
 <h4 id="fetch-atest-html-secure-way-using-client-certs-mutual-auth">Fetch <code>atest.html</code> secure way using client certs (mutual auth)</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl https://myhost.full.domain.name:9999/serveContent/atest.html <span style="color:#ae81ff">\
-</span><span style="color:#ae81ff"></span>--cacert caCert/myCA.crt <span style="color:#ae81ff">\
-</span><span style="color:#ae81ff"></span>--cert newCreatedCerts/myClientCert.pem <span style="color:#ae81ff">\
-</span><span style="color:#ae81ff"></span>--key privateKeys/myClientKey.pem
 
-openssl page served.</code></pre></div>
+<pre><code class="language-bash">$ curl https://myhost.full.domain.name:9999/serveContent/atest.html \
+--cacert caCert/myCA.crt \
+--cert newCreatedCerts/myClientCert.pem \
+--key privateKeys/myClientKey.pem
+
+openssl page served.
+</code></pre>
+
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/ssl/" rel="tag">SSL</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/openssl/" rel="tag">openssl</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/digital-certificates/" rel="tag">Digital Certificates</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/pki/" rel="tag">pki</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/ssl-mutual-authentication/" rel="tag">SSL mutual authentication</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/x509/" rel="tag">x509</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/ca/" rel="tag">CA</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/curl/" rel="tag">curl</a></li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<div class="authorbox__header">
+		<span class="authorbox__name">About SpareSlant</span>
+	</div>
 </div>
 
-  
-<footer class='entry-footer'>
-  <div class='container sep-before'><div class='tags'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
-  
-  <path d="M20.59,13.41l-7.17,7.17a2,2,0,0,1-2.83,0L2,12V2H12l8.59,8.59A2,2,0,0,1,20.59,13.41Z"/>
-  <line x1="7" y1="7" x2="7" y2="7"/>
-  
-</svg>
-<span class='screen-reader-text'>Tags: </span><a class='tag' href='/tags/ssl/'>SSL</a>, <a class='tag' href='/tags/openssl/'>openssl</a>, <a class='tag' href='/tags/digital-certificates/'>Digital Certificates</a>, <a class='tag' href='/tags/pki/'>pki</a>, <a class='tag' href='/tags/ssl-mutual-authentication/'>SSL mutual authentication</a>, <a class='tag' href='/tags/x509/'>x509</a>, <a class='tag' href='/tags/ca/'>CA</a>, <a class='tag' href='/tags/curl/'>curl</a></div>
-
-  </div>
-</footer>
-
-
-</article>
-
-<nav class='entry-nav'>
-  <div class='container'><div class='next-entry sep-before'>
-      <a href='/posts/docker-logging-with-rsyslog/'>
-        <span class='screen-reader-text'>Next post: </span>Docker Logging With Rsyslog<span aria-hidden='true'>Next <svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
-  
-  <line x1="4" y1="12" x2="20" y2="12"/>
-  <polyline points="14 6 20 12 14 18"/>
-  
-</svg>
-</span>
-      </a>
-    </div></div>
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/posts/docker-logging-with-rsyslog/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">Docker Logging With Rsyslog</p></a>
+	</div>
 </nav>
 
 
-
-
-      </main>
-
-      <footer id='footer' class='footer'>
-        <div class='container sep-before'><div class='copyright'>
-  <p> &copy; 2019 SpareSlant </p>
-</div>
-
-        </div>
-      </footer>
-
-    </div>
-  </div><script>window.__assets_js_src ="/assets/js/"</script>
-
-<script src='http://example.org/assets/js/main.9e5c4cf4.js'></script><script src='/js/custom.js'></script>
-</body>
-
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2019 SpareSlant.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

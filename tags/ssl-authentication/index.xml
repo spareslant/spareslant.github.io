@@ -2,22 +2,23 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>SSL authentication on SpareSlant Technical Blog</title>
-    <link>http://example.org/tags/ssl-authentication/</link>
+    <link>/tags/ssl-authentication/</link>
     <description>Recent content in SSL authentication on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
     <lastBuildDate>Sun, 04 Aug 2019 14:54:01 +0100</lastBuildDate>
     
-	<atom:link href="http://example.org/tags/ssl-authentication/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/ssl-authentication/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Apache ReverseProxySSL SSLClientAuth</title>
-      <link>http://example.org/posts/apache-reverseproxyssl-sslclientauth/</link>
+      <link>/posts/apache-reverseproxyssl-sslclientauth/</link>
       <pubDate>Sun, 04 Aug 2019 14:54:01 +0100</pubDate>
       
-      <guid>http://example.org/posts/apache-reverseproxyssl-sslclientauth/</guid>
-      <description>.hl {color: #f155f1;} .hlb {color: #f155f1; font-weight: bold;} .hlbr {color:#e90001; font-weight: bold;}  Introduction We will be configuring Apache in reverse proxy mode. Apache will be accepting connections on secure port with SSL client authentication and forward that request to a backend application server Gunicorn. Communication between apache and gunicorn will also be on secure port and SSL authenticated. Gunicorn will run a simple flask app that will be writing some text to file.</description>
+      <guid>/posts/apache-reverseproxyssl-sslclientauth/</guid>
+      <description>Introduction We will be configuring Apache in reverse proxy mode. Apache will be accepting connections on secure port with SSL client authentication and forward that request to a backend application server Gunicorn. Communication between apache and gunicorn will also be on secure port and SSL authenticated. Gunicorn will run a simple flask app that will be writing some text to file.
+Purpose of this excersize is to introduce end to end secure communication from client to apache to app server with SSL client authentication at every stage.</description>
     </item>
     
   </channel>

@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>hugo on SpareSlant Technical Blog</title>
-    <link>http://example.org/tags/hugo/</link>
+    <link>/tags/hugo/</link>
     <description>Recent content in hugo on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
     <lastBuildDate>Sat, 03 Aug 2019 19:01:43 +0100</lastBuildDate>
     
-	<atom:link href="http://example.org/tags/hugo/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/hugo/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Deploy HugoSite to Github</title>
-      <link>http://example.org/posts/deploy-hugosite-to-github/</link>
+      <link>/posts/deploy-hugosite-to-github/</link>
       <pubDate>Sat, 03 Aug 2019 19:01:43 +0100</pubDate>
       
-      <guid>http://example.org/posts/deploy-hugosite-to-github/</guid>
-      <description>.hl {color: #f155f1;} .hlb {color: #f155f1; font-weight: bold;} .hlbr {color:#e90001; font-weight: bold;}  Run HTTP server to serve file locally to check the contents $ hugo server -D Do following change in md files that need to be published.  change draft: true to draft: false  Run HTTP server in prod mode and make sure all required files are being served. $ hugo server Git commit the changes $ git add &amp;lt;files&amp;gt; $ git commit $ git push origin master Prepare contents to be deployed to GITHUB $ cd MyTechnialBlog/ $ ls -og total 8 drwxr-xr-x 3 96 17 Jul 21:25 archetypes -rw-r--r-- 1 2067 17 Jul 21:40 config.</description>
+      <guid>/posts/deploy-hugosite-to-github/</guid>
+      <description>Run HTTP server to serve file locally to check the contents $ hugo server -D  Do following change in md files that need to be published.  change draft: true to draft: false  Run HTTP server in prod mode and make sure all required files are being served. $ hugo server  Git commit the changes $ git add &amp;lt;files&amp;gt; $ git commit $ git push origin master  Prepare contents to be deployed to GITHUB $ cd MyTechnialBlog/ $ ls -og total 8 drwxr-xr-x 3 96 17 Jul 21:25 archetypes -rw-r--r-- 1 2067 17 Jul 21:40 config.</description>
     </item>
     
   </channel>

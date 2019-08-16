@@ -1,229 +1,87 @@
 <!DOCTYPE html>
-<html lang='en'><head>
-  <meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'>
-<meta name='description' content='.hl {color: #f155f1;} .hlb {color: #f155f1; font-weight: bold;}  Introduction This document will describe a simple strategy to logging for docker container using Rsyslog. Often we may have to run multiple containers on single machine. We may require logging for different container in different directories or files. This can be achieved using Rsyslog. Approach below is very generic and flexible and can be modified as per requirement easily.
-Running Docker with syslog logging I use following command to run docker container.'>
-<meta name='theme-color' content='#44ccff'>
-
-<meta property='og:title' content='Docker Logging With Rsyslog • SpareSlant Technical Blog'>
-<meta property='og:description' content='.hl {color: #f155f1;} .hlb {color: #f155f1; font-weight: bold;}  Introduction This document will describe a simple strategy to logging for docker container using Rsyslog. Often we may have to run multiple containers on single machine. We may require logging for different container in different directories or files. This can be achieved using Rsyslog. Approach below is very generic and flexible and can be modified as per requirement easily.
-Running Docker with syslog logging I use following command to run docker container.'>
-<meta property='og:url' content='http://example.org/posts/docker-logging-with-rsyslog/'>
-<meta property='og:site_name' content='SpareSlant Technical Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='posts'><meta property='article:tag' content='docker'><meta property='article:tag' content='rsyslog'><meta property='article:tag' content='syslog'><meta property='article:tag' content='logging'><meta property='article:published_time' content='2019-07-27T12:15:28&#43;01:00'/><meta property='article:modified_time' content='2019-07-27T12:15:28&#43;01:00'/><meta name='twitter:card' content='summary'>
-
-<meta name="generator" content="Hugo 0.55.6" />
-
-  <title>Docker Logging With Rsyslog • SpareSlant Technical Blog</title>
-  <link rel='canonical' href='http://example.org/posts/docker-logging-with-rsyslog/'>
-  
-  
-  <link rel='icon' href='/favicon.ico'>
-<link rel='stylesheet' href='/assets/css/main.fb20af92.css'><link rel='stylesheet' href='/css/custom.css'><style>
-:root{--color-accent:#44ccff;}
-</style>
-
-  
-
+<html class="no-js" lang="en-gb">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Docker Logging With Rsyslog - SpareSlant Technical Blog</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/my.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
 </head>
-<body class='page type-posts has-sidebar'>
-
-  <div class='site'><div id='sidebar' class='sidebar'>
-  <a class='screen-reader-text' href='#main-menu'>Skip to Main Menu</a>
-
-  <div class='container'><section class='widget widget-about sep-after'>
-  <header>
-    
-    <div class='logo'>
-      <a href='/'>
-        <img src='/images/logo.svg'>
-      </a>
-    </div>
-    
-    <h2 class='title site-title '>
-      <a href='/'>
-      SpareSlant Technical Blog
-      </a>
-    </h2>
-    <div class='desc'>
-    Tech Blog
-    </div>
-  </header>
-
-</section>
-<section class='widget widget-search sep-after'>
-  <header>
-    <h4 class='title widget-title'>Search</h4>
-  </header>
-
-  <form action='/search' id='search-form' class='search-form'>
-    <label>
-      <span class='screen-reader-text'>Search</span>
-      <input id='search-term' class='search-term' type='search' name='q' placeholder='Search&hellip;'>
-    </label></form>
-
-</section>
-<section class='widget widget-taxonomy_cloud sep-after'>
-  <header>
-    <h4 class='title widget-title'>Tags</h4>
-  </header>
-
-  <div class='container list-container'>
-  <ul class='list taxonomy-cloud'><li>
-        <a href='/tags/apache/' style='font-size:1em'>apache</a>
-      </li><li>
-        <a href='/tags/blog/' style='font-size:1em'>blog</a>
-      </li><li>
-        <a href='/tags/blog-publishing/' style='font-size:1em'>blog publishing</a>
-      </li><li>
-        <a href='/tags/ca/' style='font-size:1em'>CA</a>
-      </li><li>
-        <a href='/tags/curl/' style='font-size:1em'>curl</a>
-      </li><li>
-        <a href='/tags/digital-certificates/' style='font-size:1em'>Digital Certificates</a>
-      </li><li>
-        <a href='/tags/docker/' style='font-size:1em'>docker</a>
-      </li><li>
-        <a href='/tags/flask/' style='font-size:1em'>flask</a>
-      </li><li>
-        <a href='/tags/github-pages-deployment/' style='font-size:1em'>github pages deployment</a>
-      </li><li>
-        <a href='/tags/gunicorn/' style='font-size:1em'>gunicorn</a>
-      </li><li>
-        <a href='/tags/html-generation/' style='font-size:1em'>html generation</a>
-      </li><li>
-        <a href='/tags/hugo/' style='font-size:1em'>hugo</a>
-      </li><li>
-        <a href='/tags/logging/' style='font-size:1em'>logging</a>
-      </li><li>
-        <a href='/tags/openssl/' style='font-size:1em'>openssl</a>
-      </li><li>
-        <a href='/tags/pdf-generation/' style='font-size:1em'>pdf generation</a>
-      </li><li>
-        <a href='/tags/pki/' style='font-size:1em'>pki</a>
-      </li><li>
-        <a href='/tags/proxy/' style='font-size:1em'>proxy</a>
-      </li><li>
-        <a href='/tags/reverse-proxy/' style='font-size:1em'>reverse proxy</a>
-      </li><li>
-        <a href='/tags/rsyslog/' style='font-size:1em'>rsyslog</a>
-      </li><li>
-        <a href='/tags/ssl/' style='font-size:2em'>SSL</a>
-      </li><li>
-        <a href='/tags/ssl-authentication/' style='font-size:1em'>SSL authentication</a>
-      </li><li>
-        <a href='/tags/ssl-mutual-authentication/' style='font-size:1em'>SSL mutual authentication</a>
-      </li><li>
-        <a href='/tags/ssl-reverse-proxy/' style='font-size:1em'>SSL reverse proxy</a>
-      </li><li>
-        <a href='/tags/syslog/' style='font-size:1em'>syslog</a>
-      </li><li>
-        <a href='/tags/x509/' style='font-size:1em'>x509</a>
-      </li></ul>
-</div>
-
-
-</section>
-</div>
-
-  <div class='sidebar-overlay'></div>
-</div><div class='main'><nav id='main-menu' class='menu main-menu' aria-label='Main Menu'>
-  <div class='container'>
-    <a class='screen-reader-text' href='#content'>Skip to Content</a>
-
-<button id='sidebar-toggler' class='sidebar-toggler' aria-controls='sidebar'>
-  <span class='screen-reader-text'>Toggle Sidebar</span>
-  <span class='open'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
-  
-  <line x1="3" y1="12" x2="21" y2="12" />
-  <line x1="3" y1="6" x2="21" y2="6" />
-  <line x1="3" y1="18" x2="21" y2="18" />
-  
-</svg>
-</span>
-  <span class='close'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
-  
-  <line x1="18" y1="6" x2="6" y2="18" />
-  <line x1="6" y1="6" x2="18" y2="18" />
-  
-</svg>
-</span>
-</button>
-    <ul></ul>
-  </div>
-</nav><div class='header-widgets'>
-        <div class='container'>
-    
-    <style>.widget-breadcrumbs li:after{content:'\2f '}</style>
-  <section class='widget widget-breadcrumbs sep-after'>
-    <nav id='breadcrumbs'>
-      <ol><li><a href='/'>SpareSlant Technical Blog</a></li><li><a href='/posts/'>Posts</a></li><li><span>Docker Logging With Rsyslog</span></li></ol>
-    </nav>
-  </section></div>
-      </div>
-
-      <header id='header' class='header site-header'>
-        <div class='container sep-after'>
-          <div class='header-info'><p class='site-title title'>SpareSlant Technical Blog</p><p class='desc site-desc'>Tech Blog</p>
-          </div>
-        </div>
-      </header>
-
-      <main id='content'>
-
-
-<article lang='en-GB' class='entry'>
-  <header class='header entry-header'>
-  <div class='container sep-after'>
-    <div class='header-info'>
-      <h1 class='title'>Docker Logging With Rsyslog</h1>
-      
-
-    </div>
-    <div class='entry-meta'>
-  <span class='posted-on'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
-  
-  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-  <line x1="16" y1="2" x2="16" y2="6"/>
-  <line x1="8" y1="2" x2="8" y2="6"/>
-  <line x1="3" y1="10" x2="21" y2="10"/>
-  
-</svg>
-<span class='screen-reader-text'>Posted on </span>
-  <time class='entry-date' datetime='2019-07-27T12:15:28&#43;01:00'>2019, Jul 27</time>
-</span>
-
-  
-  
-<span class='reading-time'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
-  
-  <circle cx="12" cy="12" r="10"/>
-  <polyline points="12 6 12 12 15 15"/>
-  
-</svg>
-6 mins read
-</span>
-
-
-  
-  
-</div>
-
-
-  </div>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="SpareSlant Technical Blog" rel="home">
+				<div class="logo__title">SpareSlant Technical Blog</div>
+				<div class="logo__tagline">SpareSlant tech blog</div>
+			</a>
+		</div>
+		<div class="divider"></div>
+	</div>
 </header>
-
-  
-  
-
-  <div class='container entry-content'>
-  
-
-<style type="text/css">
-.hl {color: #f155f1;}
-.hlb {color: #f155f1; font-weight: bold;}
-</style>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Docker Logging With Rsyslog</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2019-07-27T12:15:28">2019-07-27</time>
+</div>
+</div>
+		</header>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#running-docker-with-syslog-logging">Running Docker with syslog logging</a></li>
+<li><a href="#what-we-want">What we want:</a>
+<ul>
+<li><a href="#version-of-rsyslog-used">Version of Rsyslog used</a></li>
+<li><a href="#configure-rsyslog">Configure rsyslog:</a>
+<ul>
+<li><a href="#details-of-regular-expressions-used-above">Details of regular expressions used above:</a>
+<ul>
+<li><a href="#note1">NOTE1:</a></li>
+<li><a href="#note2">NOTE2:</a></li>
+</ul></li>
+<li><a href="#restart-rsyslog">Restart rsyslog:</a></li>
+<li><a href="#other-ways">Other ways:</a>
+<ul>
+<li><a href="#using-latest-template-syntax-string-type-and-field-values">Using Latest template syntax, String type and Field values.</a></li>
+</ul></li>
+<li><a href="#using-old-template-syntax-and-using-field-values">Using old template syntax and Using field values.</a></li>
+<li><a href="#using-latest-template-syntax-and-list-type">Using latest template syntax and list type</a>
+<ul>
+<li><a href="#a-consolidated-file-describing-all-above-scenarios-is-below">A consolidated file describing all above scenarios is below:</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			
 
 <h2 id="introduction">Introduction</h2>
 
@@ -249,50 +107,59 @@ docker run --rm --log-driver=syslog  --log-opt tag=<span class="hl">"{{.ImageNam
 <p>Take a look at pattern in above output i.e <code>docker/ubuntu/trusting_dubinsky/b7d1373fccaf[20642]</code>. This is called <code>syslog tag</code> and rsyslog will store this pattern in its property variable which can be accessed by referring to <code>syslogtag</code> in <code>rsyslog.conf</code> file. We will exploit this property to generate dynamic filenames and directory structure.</p>
 
 <h3 id="version-of-rsyslog-used">Version of Rsyslog used</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ rsyslogd -v
-        rsyslogd <span style="color:#ae81ff">8</span>.16.0, compiled with:
+
+<pre><code class="language-bash">$ rsyslogd -v
+        rsyslogd 8.16.0, compiled with:
         PLATFORM:                               x86_64-pc-linux-gnu
-        PLATFORM <span style="color:#f92672">(</span>lsb_release -d<span style="color:#f92672">)</span>:
+        PLATFORM (lsb_release -d):
         FEATURE_REGEXP:                         Yes
-        GSSAPI Kerberos <span style="color:#ae81ff">5</span> support:              Yes
-        FEATURE_DEBUG <span style="color:#f92672">(</span>debug build, slow code<span style="color:#f92672">)</span>: No
+        GSSAPI Kerberos 5 support:              Yes
+        FEATURE_DEBUG (debug build, slow code): No
         32bit Atomic operations supported:      Yes
         64bit Atomic operations supported:      Yes
         memory allocator:                       system default
-        Runtime Instrumentation <span style="color:#f92672">(</span>slow code<span style="color:#f92672">)</span>:    No
+        Runtime Instrumentation (slow code):    No
         uuid support:                           Yes
-        Number of Bits in RainerScript integers: <span style="color:#ae81ff">64</span></code></pre></div>
+        Number of Bits in RainerScript integers: 64
+</code></pre>
+
 <h3 id="configure-rsyslog">Configure rsyslog:</h3>
 
 <p>Create a regular file <code>/etc/rsyslog.d/40-dockerapp.conf</code>. We will put our configuration in this file. rsyslog comes with various defaults in <code>/etc/rsyslog.conf</code> and <code>/etc/rsyslog.d/50-default.conf</code>. We named our file as <code>40-dockerapp.conf</code>, because we want to get it executed before <code>50-default.conf</code>. Populate <code>/etc/rsyslog.d/40-dockerapp.conf</code> file with following contents.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># To create logging directories/filenames dynamically.</span>
-template<span style="color:#f92672">(</span>name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Dockerlogfiles&#34;</span> type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;string&#34;</span> string<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/var/log/company/dockerapps/%syslogtag:R,ERE,2,FIELD:docker/(.*)/(.*)/(.*)\\[--end%/%syslogtag:R,ERE,3,FIELD:docker/(.*)/(.*)/(.*)\\[--end%/docker.log&#34;</span><span style="color:#f92672">)</span>
 
-<span style="color:#75715e"># To format message that will be forwarded to remote syslog server</span>
-template <span style="color:#f92672">(</span>name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;LongTagForwardFormat&#34;</span> type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;string&#34;</span> string<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&lt;%PRI%&gt;%TIMESTAMP:::date-rfc3339% %HOSTNAME% %syslogtag:::sp-if-no-1st-sp%%syslogtag%%msg:::sp-if-no-1st-sp%%msg%&#34;</span><span style="color:#f92672">)</span>
+<pre><code class="language-bash"># To create logging directories/filenames dynamically.
+template(name=&quot;Dockerlogfiles&quot; type=&quot;string&quot; string=&quot;/var/log/company/dockerapps/%syslogtag:R,ERE,2,FIELD:docker/(.*)/(.*)/(.*)\\[--end%/%syslogtag:R,ERE,3,FIELD:docker/(.*)/(.*)/(.*)\\[--end%/docker.log&quot;)
 
-<span style="color:#66d9ef">if</span> $syslogtag startswith <span style="color:#e6db74">&#34;docker&#34;</span> <span style="color:#66d9ef">then</span> <span style="color:#f92672">{</span>
+# To format message that will be forwarded to remote syslog server
+template (name=&quot;LongTagForwardFormat&quot; type=&quot;string&quot; string=&quot;&lt;%PRI%&gt;%TIMESTAMP:::date-rfc3339% %HOSTNAME% %syslogtag:::sp-if-no-1st-sp%%syslogtag%%msg:::sp-if-no-1st-sp%%msg%&quot;)
 
-    <span style="color:#75715e"># Local logging</span>
-    action<span style="color:#f92672">(</span>name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;localFiles&#34;</span> type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;omfile&#34;</span> DynaFile<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Dockerlogfiles&#34;</span><span style="color:#f92672">)</span>
+if $syslogtag startswith &quot;docker&quot; then {
 
-    <span style="color:#75715e"># Remote logging to remote syslog server.</span> 
-    action<span style="color:#f92672">(</span>name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;forwardToOtherSyslog&#34;</span> type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;omfwd&#34;</span> Target<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;IP ADDRESS of Target Syslog server&#34;</span> Port<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;514&#34;</span> Protocol<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;udp&#34;</span> template<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;LongTagForwardFormat&#34;</span><span style="color:#f92672">)</span>
+    # Local logging
+    action(name=&quot;localFiles&quot; type=&quot;omfile&quot; DynaFile=&quot;Dockerlogfiles&quot;)
+
+    # Remote logging to remote syslog server. 
+    action(name=&quot;forwardToOtherSyslog&quot; type=&quot;omfwd&quot; Target=&quot;IP ADDRESS of Target Syslog server&quot; Port=&quot;514&quot; Protocol=&quot;udp&quot; template=&quot;LongTagForwardFormat&quot;)
     &amp;~
-<span style="color:#f92672">}</span></code></pre></div>
+}
+</code></pre>
+
 <p>Above template will generate filenames dynamically based on syslogtag pattern shown above in output. In this case we are using regular expressions. <code>&amp;~</code> will stop the processing of further rules for the message. If <code>&amp;~</code> is missing, then <code>50-default.conf</code> will pickup the message, process it and will send it to <code>/var/log/syslog</code> file as well. So we will eventually end up having duplicate syslog entries in two different files.</p>
 
 <h4 id="details-of-regular-expressions-used-above">Details of regular expressions used above:</h4>
 
 <p><em>regex details</em></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">%syslogtag:R,ERE,1,FIELD:docker/<span style="color:#f92672">(</span>.*<span style="color:#f92672">)</span>/<span style="color:#f92672">(</span>.*<span style="color:#f92672">)</span>/<span style="color:#f92672">(</span>.*<span style="color:#f92672">)</span><span style="color:#ae81ff">\\</span><span style="color:#f92672">[</span>--end%  <span style="color:#f92672">==</span> will generate <span style="color:#f92672">==</span>&gt; ImageName
-%syslogtag:R,ERE,2,FIELD:docker/<span style="color:#f92672">(</span>.*<span style="color:#f92672">)</span>/<span style="color:#f92672">(</span>.*<span style="color:#f92672">)</span>/<span style="color:#f92672">(</span>.*<span style="color:#f92672">)</span><span style="color:#ae81ff">\\</span><span style="color:#f92672">[</span>--end%  <span style="color:#f92672">==</span> will generate <span style="color:#f92672">==</span>&gt; ContainerName
-%syslogtag:R,ERE,3,FIELD:docker/<span style="color:#f92672">(</span>.*<span style="color:#f92672">)</span>/<span style="color:#f92672">(</span>.*<span style="color:#f92672">)</span>/<span style="color:#f92672">(</span>.*<span style="color:#f92672">)</span><span style="color:#ae81ff">\\</span><span style="color:#f92672">[</span>--end%  <span style="color:#f92672">==</span> will generate <span style="color:#f92672">==</span>&gt; ContainerID
 
-Note: more accurately above statements are actually called property replacers using regex</code></pre></div>
+<pre><code class="language-bash">%syslogtag:R,ERE,1,FIELD:docker/(.*)/(.*)/(.*)\\[--end%  == will generate ==&gt; ImageName
+%syslogtag:R,ERE,2,FIELD:docker/(.*)/(.*)/(.*)\\[--end%  == will generate ==&gt; ContainerName
+%syslogtag:R,ERE,3,FIELD:docker/(.*)/(.*)/(.*)\\[--end%  == will generate ==&gt; ContainerID
+
+Note: more accurately above statements are actually called property replacers using regex
+</code></pre>
+
 <h5 id="note1">NOTE1:</h5>
 
-<p>Rsyslog limits length of <code>syslogtag</code> to 32 characters when message is sent to remote rsyslog server(32 char limit is NOT there for local logging though).My tags are longer than 32 characters. Therefore I used another template that will not restrict the limit to 32 when sending the message to remote server. This template is taken from <a href="http://www.rsyslog.com/sende-messages-with-tags-larger-than-32-characters/" target="_blank">http://www.rsyslog.com/sende-messages-with-tags-larger-than-32-characters/</a>.
+<p>Rsyslog limits length of <code>syslogtag</code> to 32 characters when message is sent to remote rsyslog server(32 char limit is NOT there for local logging though).My tags are longer than 32 characters. Therefore I used another template that will not restrict the limit to 32 when sending the message to remote server. This template is taken from <a href="http://www.rsyslog.com/sende-messages-with-tags-larger-than-32-characters/">http://www.rsyslog.com/sende-messages-with-tags-larger-than-32-characters/</a>.
 However I have modified this template.</p>
 
 <h5 id="note2">NOTE2:</h5>
@@ -313,181 +180,156 @@ While forwarding above syslogtag (i.e message containing this syslogtag) to remo
 <h5 id="using-latest-template-syntax-string-type-and-field-values">Using Latest template syntax, String type and Field values.</h5>
 
 <p><em>template syntax</em></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># Using Latest template syntax (String type and Field values)</span>
-<span style="color:#75715e">#        /%syslogtag:F,47:1% =&gt; represents docker in $syslogtag . 47 is ASCII decimal value of / character</span>
-<span style="color:#75715e">#        /%syslogtag:F,47:2% =&gt; represents ImageNAme. 47 is ASCII decimal value of / character</span>
-<span style="color:#75715e">#        /%syslogtag:F,47:3% =&gt; represents ContainerName.</span>
-<span style="color:#75715e">#        /%syslogtag:F,47:4% =&gt; represents ContainerID.</span>
-template<span style="color:#f92672">(</span>name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Dockerlogfiles&#34;</span> type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;string&#34;</span> string<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/var/log/company/dockerapps/%syslogtag:F,47:2%/%syslogtag:F,47:3%/docker.log&#34;</span><span style="color:#f92672">)</span></code></pre></div>
+
+<pre><code class="language-bash"># Using Latest template syntax (String type and Field values)
+#        /%syslogtag:F,47:1% =&gt; represents docker in $syslogtag . 47 is ASCII decimal value of / character
+#        /%syslogtag:F,47:2% =&gt; represents ImageNAme. 47 is ASCII decimal value of / character
+#        /%syslogtag:F,47:3% =&gt; represents ContainerName.
+#        /%syslogtag:F,47:4% =&gt; represents ContainerID.
+template(name=&quot;Dockerlogfiles&quot; type=&quot;string&quot; string=&quot;/var/log/company/dockerapps/%syslogtag:F,47:2%/%syslogtag:F,47:3%/docker.log&quot;)
+</code></pre>
+
 <h4 id="using-old-template-syntax-and-using-field-values">Using old template syntax and Using field values.</h4>
 
 <p><em>old template syntax</em></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#        /%syslogtag:F,47:1% =&gt; represents &#34;docker&#34; in $syslogtag . 47 is ASCII decimal value of / character</span>
-<span style="color:#75715e">#        /%syslogtag:F,47:2% =&gt; represents ImageNAme. 47 is ASCII decimal value of / character</span>
-<span style="color:#75715e">#        /%syslogtag:F,47:3% =&gt; represents ContainerName.</span>
-<span style="color:#75715e">#        /%syslogtag:F,47:4% =&gt; represents ContainerID.</span>
-<span style="color:#75715e"># $template Dockerlogfiles, &#34;/var/log/company/dockerapps/%syslogtag:F,47:2%/docker.log&#34;</span>
-$template Dockerlogfiles, <span style="color:#e6db74">&#34;/var/log/company/dockerapps/%syslogtag:F,47:2%/%syslogtag:F,47:3%/docker.log&#34;</span></code></pre></div>
+
+<pre><code class="language-bash">#        /%syslogtag:F,47:1% =&gt; represents &quot;docker&quot; in $syslogtag . 47 is ASCII decimal value of / character
+#        /%syslogtag:F,47:2% =&gt; represents ImageNAme. 47 is ASCII decimal value of / character
+#        /%syslogtag:F,47:3% =&gt; represents ContainerName.
+#        /%syslogtag:F,47:4% =&gt; represents ContainerID.
+# $template Dockerlogfiles, &quot;/var/log/company/dockerapps/%syslogtag:F,47:2%/docker.log&quot;
+$template Dockerlogfiles, &quot;/var/log/company/dockerapps/%syslogtag:F,47:2%/%syslogtag:F,47:3%/docker.log&quot;
+</code></pre>
+
 <h4 id="using-latest-template-syntax-and-list-type">Using latest template syntax and list type</h4>
 
 <p><em>Template syntax list type</em></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#     regex.expression=&#34;docker/\\(.*\\)/\\(.*\\)/\\(.*\\)\\[&#34; regex.submatch=&#34;1&#34;) == will generate ==&gt; imagename</span>
-<span style="color:#75715e">#     regex.expression=&#34;docker/\\(.*\\)/\\(.*\\)/\\(.*\\)\\[&#34; regex.submatch=&#34;2&#34;) == will generate ==&gt; containername</span>
-<span style="color:#75715e">#     regex.expression=&#34;docker/\\(.*\\)/\\(.*\\)/\\(.*\\)\\[&#34; regex.submatch=&#34;2&#34;) == will generate ==&gt; containerid</span>
-template<span style="color:#f92672">(</span>name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Dockerlogfiles&#34;</span> type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;list&#34;</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-   constant<span style="color:#f92672">(</span>value<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/var/log/company/dockerapps/&#34;</span><span style="color:#f92672">)</span>
-   property<span style="color:#f92672">(</span>name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;syslogtag&#34;</span> securepath<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;replace&#34;</span> <span style="color:#ae81ff">\
-</span><span style="color:#ae81ff"></span>            regex.expression<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;docker/\\(.*\\)/\\(.*\\)/\\(.*\\)\\[&#34;</span> regex.submatch<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;2&#34;</span><span style="color:#f92672">)</span><span style="color:#ae81ff">\
-</span><span style="color:#ae81ff"></span>   constant<span style="color:#f92672">(</span>value<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/docker.log&#34;</span><span style="color:#f92672">)</span>
-<span style="color:#f92672">}</span></code></pre></div>
+
+<pre><code class="language-bash">#     regex.expression=&quot;docker/\\(.*\\)/\\(.*\\)/\\(.*\\)\\[&quot; regex.submatch=&quot;1&quot;) == will generate ==&gt; imagename
+#     regex.expression=&quot;docker/\\(.*\\)/\\(.*\\)/\\(.*\\)\\[&quot; regex.submatch=&quot;2&quot;) == will generate ==&gt; containername
+#     regex.expression=&quot;docker/\\(.*\\)/\\(.*\\)/\\(.*\\)\\[&quot; regex.submatch=&quot;2&quot;) == will generate ==&gt; containerid
+template(name=&quot;Dockerlogfiles&quot; type=&quot;list&quot;) {
+   constant(value=&quot;/var/log/company/dockerapps/&quot;)
+   property(name=&quot;syslogtag&quot; securepath=&quot;replace&quot; \
+            regex.expression=&quot;docker/\\(.*\\)/\\(.*\\)/\\(.*\\)\\[&quot; regex.submatch=&quot;2&quot;)\
+   constant(value=&quot;/docker.log&quot;)
+}
+</code></pre>
+
 <h5 id="a-consolidated-file-describing-all-above-scenarios-is-below">A consolidated file describing all above scenarios is below:</h5>
 
 <p><em>Full file</em></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># We assume that a syslogtag generated by docker container is of following format</span>
-<span style="color:#75715e">#        docker/ImageNAme/ContainerName/ContainerID</span>
-<span style="color:#75715e"># An exmaple docker command to generate above tag is</span>
-<span style="color:#75715e">#        docker run --rm --log-driver=syslog  --log-opt tag=&#34;{{.ImageName}}/{{.Name}}/{{.ID}}&#34; ubuntu echo atestwithouttag</span>
-<span style="color:#75715e">#    Above command will log following similar message</span>
-<span style="color:#75715e">#        Jun  7 15:58:27 machine docker/ubuntu/trusting_dubinsky/b7d1373fccaf[20642]: atestwithouttag</span>
+
+<pre><code class="language-bash"># We assume that a syslogtag generated by docker container is of following format
+#        docker/ImageNAme/ContainerName/ContainerID
+# An exmaple docker command to generate above tag is
+#        docker run --rm --log-driver=syslog  --log-opt tag=&quot;{{.ImageName}}/{{.Name}}/{{.ID}}&quot; ubuntu echo atestwithouttag
+#    Above command will log following similar message
+#        Jun  7 15:58:27 machine docker/ubuntu/trusting_dubinsky/b7d1373fccaf[20642]: atestwithouttag
 
 
 
-<span style="color:#75715e"># A very Simple way to filter messages</span>
-<span style="color:#75715e">#:syslogtag, ereregex, &#34;docker/ubuntu&#34; /var/log/docker-syslog/syslog.log</span>
+# A very Simple way to filter messages
+#:syslogtag, ereregex, &quot;docker/ubuntu&quot; /var/log/docker-syslog/syslog.log
 
 
-<span style="color:#75715e"># To create logging directories/filenames dynamically.</span>
-<span style="color:#75715e"># Using latest template syntax (string type and regex). Below will create log file like : /var/log/company/dockerapps//docker.log</span>
-<span style="color:#75715e">#     %syslogtag:R,ERE,1,FIELD:docker/(.*)/(.*)/(.*)\\[--end%  == will generate ==&gt; imageName</span>
-<span style="color:#75715e">#     %syslogtag:R,ERE,2,FIELD:docker/(.*)/(.*)/(.*)\\[--end%  == will generate ==&gt; containerName</span>
-<span style="color:#75715e">#     %syslogtag:R,ERE,3,FIELD:docker/(.*)/(.*)/(.*)\\[--end%  == will generate ==&gt; containerID</span>
-<span style="color:#75715e"># template(name=&#34;Dockerlogfiles&#34; type=&#34;string&#34; string=&#34;/var/log/company/dockerapps/%syslogtag:R,ERE,2,FIELD:docker/(.*)/(.*)/(.*)\\[--end%/docker.log&#34;)</span>
-template<span style="color:#f92672">(</span>name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Dockerlogfiles&#34;</span> type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;string&#34;</span> string<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/var/log/company/dockerapps/%syslogtag:R,ERE,2,FIELD:docker/(.*)/(.*)/(.*)\\[--end%/%syslogtag:R,ERE,3,FIELD:docker/(.*)/(.*)/(.*)\\[--end%/docker.log&#34;</span><span style="color:#f92672">)</span>
+# To create logging directories/filenames dynamically.
+# Using latest template syntax (string type and regex). Below will create log file like : /var/log/company/dockerapps//docker.log
+#     %syslogtag:R,ERE,1,FIELD:docker/(.*)/(.*)/(.*)\\[--end%  == will generate ==&gt; imageName
+#     %syslogtag:R,ERE,2,FIELD:docker/(.*)/(.*)/(.*)\\[--end%  == will generate ==&gt; containerName
+#     %syslogtag:R,ERE,3,FIELD:docker/(.*)/(.*)/(.*)\\[--end%  == will generate ==&gt; containerID
+# template(name=&quot;Dockerlogfiles&quot; type=&quot;string&quot; string=&quot;/var/log/company/dockerapps/%syslogtag:R,ERE,2,FIELD:docker/(.*)/(.*)/(.*)\\[--end%/docker.log&quot;)
+template(name=&quot;Dockerlogfiles&quot; type=&quot;string&quot; string=&quot;/var/log/company/dockerapps/%syslogtag:R,ERE,2,FIELD:docker/(.*)/(.*)/(.*)\\[--end%/%syslogtag:R,ERE,3,FIELD:docker/(.*)/(.*)/(.*)\\[--end%/docker.log&quot;)
 
-<span style="color:#75715e"># To format message that will be forwarded to remote syslog server</span>
-template <span style="color:#f92672">(</span>name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;LongTagForwardFormat&#34;</span> type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;string&#34;</span> string<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&lt;%PRI%&gt;%TIMESTAMP:::date-rfc3339% %HOSTNAME% %syslogtag:::sp-if-no-1st-sp%%syslogtag%%msg:::sp-if-no-1st-sp%%msg%&#34;</span><span style="color:#f92672">)</span>
+# To format message that will be forwarded to remote syslog server
+template (name=&quot;LongTagForwardFormat&quot; type=&quot;string&quot; string=&quot;&lt;%PRI%&gt;%TIMESTAMP:::date-rfc3339% %HOSTNAME% %syslogtag:::sp-if-no-1st-sp%%syslogtag%%msg:::sp-if-no-1st-sp%%msg%&quot;)
 
-<span style="color:#75715e"># Using Latest template syntax (String type and Field values)</span>
-<span style="color:#75715e">#        /%syslogtag:F,47:1% =&gt; represents docker in $syslogtag . 47 is ASCII decimal value of / character</span>
-<span style="color:#75715e">#        /%syslogtag:F,47:2% =&gt; represents ImageNAme. 47 is ASCII decimal value of / character</span>
-<span style="color:#75715e">#        /%syslogtag:F,47:3% =&gt; represents ContainerName.</span>
-<span style="color:#75715e">#        /%syslogtag:F,47:4% =&gt; represents ContainerID.</span>
-<span style="color:#75715e"># template(name=&#34;Dockerlogfiles&#34; type=&#34;string&#34; string=&#34;/var/log/company/dockerapps/%syslogtag:F,47:2%/%syslogtag:F,47:3%/docker.log&#34;)</span>
-
-
-
-<span style="color:#75715e"># Using old template syntax and Using field values.</span>
-<span style="color:#75715e">#        /%syslogtag:F,47:1% =&gt; represents &#34;docker&#34; in $syslogtag . 47 is ASCII decimal value of / character</span>
-<span style="color:#75715e">#        /%syslogtag:F,47:2% =&gt; represents ImageNAme. 47 is ASCII decimal value of / character</span>
-<span style="color:#75715e">#        /%syslogtag:F,47:3% =&gt; represents ContainerName.</span>
-<span style="color:#75715e">#        /%syslogtag:F,47:4% =&gt; represents ContainerID.</span>
-<span style="color:#75715e"># $template Dockerlogfiles, &#34;/var/log/company/dockerapps/%syslogtag:F,47:2%/docker.log&#34;</span>
-<span style="color:#75715e"># $template Dockerlogfiles, &#34;/var/log/company/dockerapps/%syslogtag:F,47:2%/%syslogtag:F,47:3%/docker.log&#34;</span>
+# Using Latest template syntax (String type and Field values)
+#        /%syslogtag:F,47:1% =&gt; represents docker in $syslogtag . 47 is ASCII decimal value of / character
+#        /%syslogtag:F,47:2% =&gt; represents ImageNAme. 47 is ASCII decimal value of / character
+#        /%syslogtag:F,47:3% =&gt; represents ContainerName.
+#        /%syslogtag:F,47:4% =&gt; represents ContainerID.
+# template(name=&quot;Dockerlogfiles&quot; type=&quot;string&quot; string=&quot;/var/log/company/dockerapps/%syslogtag:F,47:2%/%syslogtag:F,47:3%/docker.log&quot;)
 
 
 
+# Using old template syntax and Using field values.
+#        /%syslogtag:F,47:1% =&gt; represents &quot;docker&quot; in $syslogtag . 47 is ASCII decimal value of / character
+#        /%syslogtag:F,47:2% =&gt; represents ImageNAme. 47 is ASCII decimal value of / character
+#        /%syslogtag:F,47:3% =&gt; represents ContainerName.
+#        /%syslogtag:F,47:4% =&gt; represents ContainerID.
+# $template Dockerlogfiles, &quot;/var/log/company/dockerapps/%syslogtag:F,47:2%/docker.log&quot;
+# $template Dockerlogfiles, &quot;/var/log/company/dockerapps/%syslogtag:F,47:2%/%syslogtag:F,47:3%/docker.log&quot;
 
-<span style="color:#75715e"># Using latest template method (list type)</span>
-<span style="color:#75715e">#     regex.expression=&#34;docker/\\(.*\\)/\\(.*\\)/\\(.*\\)\\[&#34; regex.submatch=&#34;1&#34;) == will generate ==&gt; imageName</span>
-<span style="color:#75715e">#     regex.expression=&#34;docker/\\(.*\\)/\\(.*\\)/\\(.*\\)\\[&#34; regex.submatch=&#34;2&#34;) == will generate ==&gt; containerName</span>
-<span style="color:#75715e">#     regex.expression=&#34;docker/\\(.*\\)/\\(.*\\)/\\(.*\\)\\[&#34; regex.submatch=&#34;2&#34;) == will generate ==&gt; containerID</span>
-<span style="color:#75715e">#template(name=&#34;Dockerlogfiles&#34; type=&#34;list&#34;) {</span>
-<span style="color:#75715e">#   constant(value=&#34;/var/log/company/dockerapps/&#34;)</span>
-<span style="color:#75715e">#   property(name=&#34;syslogtag&#34; securepath=&#34;replace&#34; \</span>
-<span style="color:#75715e">#            regex.expression=&#34;docker/\\(.*\\)/\\(.*\\)/\\(.*\\)\\[&#34; regex.submatch=&#34;2&#34;)\</span>
-<span style="color:#75715e">#   constant(value=&#34;/docker.log&#34;)</span>
+
+
+
+# Using latest template method (list type)
+#     regex.expression=&quot;docker/\\(.*\\)/\\(.*\\)/\\(.*\\)\\[&quot; regex.submatch=&quot;1&quot;) == will generate ==&gt; imageName
+#     regex.expression=&quot;docker/\\(.*\\)/\\(.*\\)/\\(.*\\)\\[&quot; regex.submatch=&quot;2&quot;) == will generate ==&gt; containerName
+#     regex.expression=&quot;docker/\\(.*\\)/\\(.*\\)/\\(.*\\)\\[&quot; regex.submatch=&quot;2&quot;) == will generate ==&gt; containerID
+#template(name=&quot;Dockerlogfiles&quot; type=&quot;list&quot;) {
+#   constant(value=&quot;/var/log/company/dockerapps/&quot;)
+#   property(name=&quot;syslogtag&quot; securepath=&quot;replace&quot; \
+#            regex.expression=&quot;docker/\\(.*\\)/\\(.*\\)/\\(.*\\)\\[&quot; regex.submatch=&quot;2&quot;)\
+#   constant(value=&quot;/docker.log&quot;)
 #
-<span style="color:#75715e">#}</span>
+#}
 
-<span style="color:#66d9ef">if</span> $syslogtag startswith <span style="color:#e6db74">&#34;docker&#34;</span> <span style="color:#66d9ef">then</span> <span style="color:#f92672">{</span>
-    <span style="color:#75715e"># Local logging</span>
-    action<span style="color:#f92672">(</span>name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;localFiles&#34;</span> type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;omfile&#34;</span> DynaFile<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Dockerlogfiles&#34;</span><span style="color:#f92672">)</span>
+if $syslogtag startswith &quot;docker&quot; then {
+    # Local logging
+    action(name=&quot;localFiles&quot; type=&quot;omfile&quot; DynaFile=&quot;Dockerlogfiles&quot;)
 
-    <span style="color:#75715e"># Remote logging to remote syslog server.</span> 
-    action<span style="color:#f92672">(</span>name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;forwardToOtherSyslog&#34;</span> type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;omfwd&#34;</span> Target<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;IP ADDRESS of Target Syslog server&#34;</span> Port<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;514&#34;</span> Protocol<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;udp&#34;</span> template<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;LongTagForwardFormat&#34;</span><span style="color:#f92672">)</span>
+    # Remote logging to remote syslog server. 
+    action(name=&quot;forwardToOtherSyslog&quot; type=&quot;omfwd&quot; Target=&quot;IP ADDRESS of Target Syslog server&quot; Port=&quot;514&quot; Protocol=&quot;udp&quot; template=&quot;LongTagForwardFormat&quot;)
     &amp;~
-<span style="color:#f92672">}</span></code></pre></div>
+}
+</code></pre>
+
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/docker/" rel="tag">docker</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/rsyslog/" rel="tag">rsyslog</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/syslog/" rel="tag">syslog</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/logging/" rel="tag">logging</a></li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<div class="authorbox__header">
+		<span class="authorbox__name">About SpareSlant</span>
+	</div>
 </div>
 
-  
-<footer class='entry-footer'>
-  <div class='container sep-before'><div class='tags'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
-  
-  <path d="M20.59,13.41l-7.17,7.17a2,2,0,0,1-2.83,0L2,12V2H12l8.59,8.59A2,2,0,0,1,20.59,13.41Z"/>
-  <line x1="7" y1="7" x2="7" y2="7"/>
-  
-</svg>
-<span class='screen-reader-text'>Tags: </span><a class='tag' href='/tags/docker/'>docker</a>, <a class='tag' href='/tags/rsyslog/'>rsyslog</a>, <a class='tag' href='/tags/syslog/'>syslog</a>, <a class='tag' href='/tags/logging/'>logging</a></div>
-
-  </div>
-</footer>
-
-
-</article>
-
-<nav class='entry-nav'>
-  <div class='container'><div class='prev-entry sep-before'>
-      <a href='/posts/ssl-certificate/'>
-        <span aria-hidden='true'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
-  
-  <line x1="20" y1="12" x2="4" y2="12"/>
-  <polyline points="10 18 4 12 10 6"/>
-  
-</svg>
- Previous</span>
-        <span class='screen-reader-text'>Previous post: </span>SSL Certificate Mutual Authentication</a>
-    </div><div class='next-entry sep-before'>
-      <a href='/posts/markup-to-pdf/'>
-        <span class='screen-reader-text'>Next post: </span>Markup to Pdf/HTML<span aria-hidden='true'>Next <svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
-  
-  <line x1="4" y1="12" x2="20" y2="12"/>
-  <polyline points="14 6 20 12 14 18"/>
-  
-</svg>
-</span>
-      </a>
-    </div></div>
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/posts/ssl-certificate/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">SSL Certificate Mutual Authentication</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/posts/markup-to-pdf/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">Markup to Pdf/HTML</p></a>
+	</div>
 </nav>
 
 
-
-
-      </main>
-
-      <footer id='footer' class='footer'>
-        <div class='container sep-before'><div class='copyright'>
-  <p> &copy; 2019 SpareSlant </p>
-</div>
-
-        </div>
-      </footer>
-
-    </div>
-  </div><script>window.__assets_js_src ="/assets/js/"</script>
-
-<script src='http://example.org/assets/js/main.9e5c4cf4.js'></script><script src='/js/custom.js'></script>
-</body>
-
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2019 SpareSlant.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

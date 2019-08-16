@@ -2,23 +2,23 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>pki on SpareSlant Technical Blog</title>
-    <link>http://example.org/tags/pki/</link>
+    <link>/tags/pki/</link>
     <description>Recent content in pki on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
     <lastBuildDate>Wed, 17 Jul 2019 21:35:50 +0100</lastBuildDate>
     
-	<atom:link href="http://example.org/tags/pki/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/pki/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>SSL Certificate Mutual Authentication</title>
-      <link>http://example.org/posts/ssl-certificate/</link>
+      <link>/posts/ssl-certificate/</link>
       <pubDate>Wed, 17 Jul 2019 21:35:50 +0100</pubDate>
       
-      <guid>http://example.org/posts/ssl-certificate/</guid>
-      <description>.hl {color: #f155f1;} .hlb {color: #f155f1; font-weight: bold;} .hlbr {color:#e90001; font-weight: bold;}  Introduction We will be creating our own CA (Certificate Authority), CSR (Certificate Signing Request), signed certificate. We will be creating server side and client side certificate and will verify them using openssl and curl.
-Prepare environment os used $ cat /etc/fedora-release Fedora release 30 (Thirty) $ uname -a Linux localhost.localdomain 5.0.9-301.fc30.x86_64 #1 SMP Tue Apr 23 23:57:35 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux Prepare openssl conf files A reference conf file can be found in /etc/pki/tls/openssl.</description>
+      <guid>/posts/ssl-certificate/</guid>
+      <description>Introduction We will be creating our own CA (Certificate Authority), CSR (Certificate Signing Request), signed certificate. We will be creating server side and client side certificate and will verify them using openssl and curl.
+Prepare environment os used $ cat /etc/fedora-release Fedora release 30 (Thirty) $ uname -a Linux localhost.localdomain 5.0.9-301.fc30.x86_64 #1 SMP Tue Apr 23 23:57:35 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux  Prepare openssl conf files A reference conf file can be found in /etc/pki/tls/openssl.</description>
     </item>
     
   </channel>

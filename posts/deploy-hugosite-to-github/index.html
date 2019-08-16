@@ -1,231 +1,82 @@
 <!DOCTYPE html>
-<html lang='en'><head>
-  <meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'>
-<meta name='description' content='.hl {color: #f155f1;} .hlb {color: #f155f1; font-weight: bold;} .hlbr {color:#e90001; font-weight: bold;}  Run HTTP server to serve file locally to check the contents $ hugo server -D Do following change in md files that need to be published.  change draft: true to draft: false  Run HTTP server in prod mode and make sure all required files are being served. $ hugo server Git commit the changes $ git add &lt;files&gt; $ git commit $ git push origin master Prepare contents to be deployed to GITHUB $ cd MyTechnialBlog/ $ ls -og total 8 drwxr-xr-x 3 96 17 Jul 21:25 archetypes -rw-r--r-- 1 2067 17 Jul 21:40 config.'>
-<meta name='theme-color' content='#44ccff'>
-
-<meta property='og:title' content='Deploy HugoSite to Github • SpareSlant Technical Blog'>
-<meta property='og:description' content='.hl {color: #f155f1;} .hlb {color: #f155f1; font-weight: bold;} .hlbr {color:#e90001; font-weight: bold;}  Run HTTP server to serve file locally to check the contents $ hugo server -D Do following change in md files that need to be published.  change draft: true to draft: false  Run HTTP server in prod mode and make sure all required files are being served. $ hugo server Git commit the changes $ git add &lt;files&gt; $ git commit $ git push origin master Prepare contents to be deployed to GITHUB $ cd MyTechnialBlog/ $ ls -og total 8 drwxr-xr-x 3 96 17 Jul 21:25 archetypes -rw-r--r-- 1 2067 17 Jul 21:40 config.'>
-<meta property='og:url' content='http://example.org/posts/deploy-hugosite-to-github/'>
-<meta property='og:site_name' content='SpareSlant Technical Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='posts'><meta property='article:tag' content='hugo'><meta property='article:tag' content='github pages deployment'><meta property='article:tag' content='blog'><meta property='article:tag' content='blog publishing'><meta property='article:published_time' content='2019-08-03T19:01:43&#43;01:00'/><meta property='article:modified_time' content='2019-08-03T19:01:43&#43;01:00'/><meta name='twitter:card' content='summary'>
-
-<meta name="generator" content="Hugo 0.55.6" />
-
-  <title>Deploy HugoSite to Github • SpareSlant Technical Blog</title>
-  <link rel='canonical' href='http://example.org/posts/deploy-hugosite-to-github/'>
-  
-  
-  <link rel='icon' href='/favicon.ico'>
-<link rel='stylesheet' href='/assets/css/main.fb20af92.css'><link rel='stylesheet' href='/css/custom.css'><style>
-:root{--color-accent:#44ccff;}
-</style>
-
-  
-
+<html class="no-js" lang="en-gb">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Deploy HugoSite to Github - SpareSlant Technical Blog</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/my.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
 </head>
-<body class='page type-posts has-sidebar'>
-
-  <div class='site'><div id='sidebar' class='sidebar'>
-  <a class='screen-reader-text' href='#main-menu'>Skip to Main Menu</a>
-
-  <div class='container'><section class='widget widget-about sep-after'>
-  <header>
-    
-    <div class='logo'>
-      <a href='/'>
-        <img src='/images/logo.svg'>
-      </a>
-    </div>
-    
-    <h2 class='title site-title '>
-      <a href='/'>
-      SpareSlant Technical Blog
-      </a>
-    </h2>
-    <div class='desc'>
-    Tech Blog
-    </div>
-  </header>
-
-</section>
-<section class='widget widget-search sep-after'>
-  <header>
-    <h4 class='title widget-title'>Search</h4>
-  </header>
-
-  <form action='/search' id='search-form' class='search-form'>
-    <label>
-      <span class='screen-reader-text'>Search</span>
-      <input id='search-term' class='search-term' type='search' name='q' placeholder='Search&hellip;'>
-    </label></form>
-
-</section>
-<section class='widget widget-taxonomy_cloud sep-after'>
-  <header>
-    <h4 class='title widget-title'>Tags</h4>
-  </header>
-
-  <div class='container list-container'>
-  <ul class='list taxonomy-cloud'><li>
-        <a href='/tags/apache/' style='font-size:1em'>apache</a>
-      </li><li>
-        <a href='/tags/blog/' style='font-size:1em'>blog</a>
-      </li><li>
-        <a href='/tags/blog-publishing/' style='font-size:1em'>blog publishing</a>
-      </li><li>
-        <a href='/tags/ca/' style='font-size:1em'>CA</a>
-      </li><li>
-        <a href='/tags/curl/' style='font-size:1em'>curl</a>
-      </li><li>
-        <a href='/tags/digital-certificates/' style='font-size:1em'>Digital Certificates</a>
-      </li><li>
-        <a href='/tags/docker/' style='font-size:1em'>docker</a>
-      </li><li>
-        <a href='/tags/flask/' style='font-size:1em'>flask</a>
-      </li><li>
-        <a href='/tags/github-pages-deployment/' style='font-size:1em'>github pages deployment</a>
-      </li><li>
-        <a href='/tags/gunicorn/' style='font-size:1em'>gunicorn</a>
-      </li><li>
-        <a href='/tags/html-generation/' style='font-size:1em'>html generation</a>
-      </li><li>
-        <a href='/tags/hugo/' style='font-size:1em'>hugo</a>
-      </li><li>
-        <a href='/tags/logging/' style='font-size:1em'>logging</a>
-      </li><li>
-        <a href='/tags/openssl/' style='font-size:1em'>openssl</a>
-      </li><li>
-        <a href='/tags/pdf-generation/' style='font-size:1em'>pdf generation</a>
-      </li><li>
-        <a href='/tags/pki/' style='font-size:1em'>pki</a>
-      </li><li>
-        <a href='/tags/proxy/' style='font-size:1em'>proxy</a>
-      </li><li>
-        <a href='/tags/reverse-proxy/' style='font-size:1em'>reverse proxy</a>
-      </li><li>
-        <a href='/tags/rsyslog/' style='font-size:1em'>rsyslog</a>
-      </li><li>
-        <a href='/tags/ssl/' style='font-size:2em'>SSL</a>
-      </li><li>
-        <a href='/tags/ssl-authentication/' style='font-size:1em'>SSL authentication</a>
-      </li><li>
-        <a href='/tags/ssl-mutual-authentication/' style='font-size:1em'>SSL mutual authentication</a>
-      </li><li>
-        <a href='/tags/ssl-reverse-proxy/' style='font-size:1em'>SSL reverse proxy</a>
-      </li><li>
-        <a href='/tags/syslog/' style='font-size:1em'>syslog</a>
-      </li><li>
-        <a href='/tags/x509/' style='font-size:1em'>x509</a>
-      </li></ul>
-</div>
-
-
-</section>
-</div>
-
-  <div class='sidebar-overlay'></div>
-</div><div class='main'><nav id='main-menu' class='menu main-menu' aria-label='Main Menu'>
-  <div class='container'>
-    <a class='screen-reader-text' href='#content'>Skip to Content</a>
-
-<button id='sidebar-toggler' class='sidebar-toggler' aria-controls='sidebar'>
-  <span class='screen-reader-text'>Toggle Sidebar</span>
-  <span class='open'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
-  
-  <line x1="3" y1="12" x2="21" y2="12" />
-  <line x1="3" y1="6" x2="21" y2="6" />
-  <line x1="3" y1="18" x2="21" y2="18" />
-  
-</svg>
-</span>
-  <span class='close'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
-  
-  <line x1="18" y1="6" x2="6" y2="18" />
-  <line x1="6" y1="6" x2="18" y2="18" />
-  
-</svg>
-</span>
-</button>
-    <ul></ul>
-  </div>
-</nav><div class='header-widgets'>
-        <div class='container'>
-    
-    <style>.widget-breadcrumbs li:after{content:'\2f '}</style>
-  <section class='widget widget-breadcrumbs sep-after'>
-    <nav id='breadcrumbs'>
-      <ol><li><a href='/'>SpareSlant Technical Blog</a></li><li><a href='/posts/'>Posts</a></li><li><span>Deploy HugoSite to Github</span></li></ol>
-    </nav>
-  </section></div>
-      </div>
-
-      <header id='header' class='header site-header'>
-        <div class='container sep-after'>
-          <div class='header-info'><p class='site-title title'>SpareSlant Technical Blog</p><p class='desc site-desc'>Tech Blog</p>
-          </div>
-        </div>
-      </header>
-
-      <main id='content'>
-
-
-<article lang='en' class='entry'>
-  <header class='header entry-header'>
-  <div class='container sep-after'>
-    <div class='header-info'>
-      <h1 class='title'>Deploy HugoSite to Github</h1>
-      
-
-    </div>
-    <div class='entry-meta'>
-  <span class='posted-on'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
-  
-  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-  <line x1="16" y1="2" x2="16" y2="6"/>
-  <line x1="8" y1="2" x2="8" y2="6"/>
-  <line x1="3" y1="10" x2="21" y2="10"/>
-  
-</svg>
-<span class='screen-reader-text'>Posted on </span>
-  <time class='entry-date' datetime='2019-08-03T19:01:43&#43;01:00'>2019, Aug 03</time>
-</span>
-
-  
-  
-<span class='reading-time'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
-  
-  <circle cx="12" cy="12" r="10"/>
-  <polyline points="12 6 12 12 15 15"/>
-  
-</svg>
-One min read
-</span>
-
-
-  
-  
-</div>
-
-
-  </div>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="SpareSlant Technical Blog" rel="home">
+				<div class="logo__title">SpareSlant Technical Blog</div>
+				<div class="logo__tagline">SpareSlant tech blog</div>
+			</a>
+		</div>
+		<div class="divider"></div>
+	</div>
 </header>
-
-  
-  
-
-  <div class='container entry-content'>
-  
-
-<style type="text/css">
-.hl {color: #f155f1;}
-.hlb {color: #f155f1; font-weight: bold;}
-.hlbr {color:#e90001; font-weight: bold;}
-</style>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Deploy HugoSite to Github</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2019-08-03T19:01:43">2019-08-03</time>
+</div>
+</div>
+		</header>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#run-http-server-to-serve-file-locally-to-check-the-contents">Run HTTP server to serve file locally to check the contents</a></li>
+<li><a href="#do-following-change-in-md-files-that-need-to-be-published">Do following change in md files that need to be published.</a></li>
+<li><a href="#run-http-server-in-prod-mode-and-make-sure-all-required-files-are-being-served">Run HTTP server in prod mode and make sure all required files are being served.</a></li>
+<li><a href="#git-commit-the-changes"><code>Git</code> commit the changes</a></li>
+<li><a href="#prepare-contents-to-be-deployed-to-github">Prepare contents to be deployed to <code>GITHUB</code></a></li>
+<li><a href="#clone-remote-spareslant-github-io-repo">clone remote <code>spareslant.github.io</code> repo.</a></li>
+<li><a href="#build-site-to-be-deployed">Build site to be deployed.</a></li>
+<li><a href="#commit-new-changes-in-spareslant-github-io">commit new changes in <code>../spareslant.github.io</code>.</a></li>
+<li><a href="#publish-site-by-pushing-the-contents-to-repo">Publish site by pushing the contents to repo.</a></li>
+<li><a href="#check-published-changes-at-following-link">check published changes at following link</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			
 
 <h3 id="run-http-server-to-serve-file-locally-to-check-the-contents">Run HTTP server to serve file locally to check the contents</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ hugo server -D</code></pre></div>
+
+<pre><code class="language-bash">$ hugo server -D
+</code></pre>
+
 <h3 id="do-following-change-in-md-files-that-need-to-be-published">Do following change in md files that need to be published.</h3>
 
 <pre>
@@ -233,121 +84,106 @@ change <span class="hlbr">draft: true</span> to <span class="hlb">draft: false</
 </pre>
 
 <h3 id="run-http-server-in-prod-mode-and-make-sure-all-required-files-are-being-served">Run HTTP server in prod mode and make sure all required files are being served.</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ hugo server</code></pre></div>
+
+<pre><code class="language-bash">$ hugo server
+</code></pre>
+
 <h3 id="git-commit-the-changes"><code>Git</code> commit the changes</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ git add &lt;files&gt;
+
+<pre><code class="language-bash">$ git add &lt;files&gt;
 $ git commit
-$ git push origin master</code></pre></div>
+$ git push origin master
+</code></pre>
+
 <h3 id="prepare-contents-to-be-deployed-to-github">Prepare contents to be deployed to <code>GITHUB</code></h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cd MyTechnialBlog/
+
+<pre><code class="language-bash">$ cd MyTechnialBlog/
 
 $ ls -og
-total <span style="color:#ae81ff">8</span>
-drwxr-xr-x  <span style="color:#ae81ff">3</span>     <span style="color:#ae81ff">96</span> <span style="color:#ae81ff">17</span> Jul <span style="color:#ae81ff">21</span>:25 archetypes
--rw-r--r--  <span style="color:#ae81ff">1</span>   <span style="color:#ae81ff">2067</span> <span style="color:#ae81ff">17</span> Jul <span style="color:#ae81ff">21</span>:40 config.toml
-drwxr-xr-x  <span style="color:#ae81ff">3</span>     <span style="color:#ae81ff">96</span> <span style="color:#ae81ff">27</span> Jul <span style="color:#ae81ff">21</span>:29 content
-drwxr-xr-x  <span style="color:#ae81ff">2</span>     <span style="color:#ae81ff">64</span> <span style="color:#ae81ff">17</span> Jul <span style="color:#ae81ff">21</span>:25 data
-drwxr-xr-x  <span style="color:#ae81ff">2</span>     <span style="color:#ae81ff">64</span> <span style="color:#ae81ff">17</span> Jul <span style="color:#ae81ff">21</span>:25 layouts
-drwxr-xr-x  <span style="color:#ae81ff">3</span>     <span style="color:#ae81ff">96</span> <span style="color:#ae81ff">17</span> Jul <span style="color:#ae81ff">21</span>:35 resources
-drwxr-xr-x  <span style="color:#ae81ff">2</span>     <span style="color:#ae81ff">64</span> <span style="color:#ae81ff">17</span> Jul <span style="color:#ae81ff">21</span>:25 static
-drwxr-xr-x  <span style="color:#ae81ff">3</span>     <span style="color:#ae81ff">96</span> <span style="color:#ae81ff">17</span> Jul <span style="color:#ae81ff">21</span>:27 themes</code></pre></div>
+total 8
+drwxr-xr-x  3     96 17 Jul 21:25 archetypes
+-rw-r--r--  1   2067 17 Jul 21:40 config.toml
+drwxr-xr-x  3     96 27 Jul 21:29 content
+drwxr-xr-x  2     64 17 Jul 21:25 data
+drwxr-xr-x  2     64 17 Jul 21:25 layouts
+drwxr-xr-x  3     96 17 Jul 21:35 resources
+drwxr-xr-x  2     64 17 Jul 21:25 static
+drwxr-xr-x  3     96 17 Jul 21:27 themes
+
+</code></pre>
+
 <h3 id="clone-remote-spareslant-github-io-repo">clone remote <code>spareslant.github.io</code> repo.</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd ../spareslant.github.io
-git clone git clone https://github.com/spareslant/spareslant.github.io.git</code></pre></div>
+
+<pre><code class="language-bash">cd ../spareslant.github.io
+git clone https://github.com/spareslant/spareslant.github.io.git
+</code></pre>
+
 <h3 id="build-site-to-be-deployed">Build site to be deployed.</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cd MyTechnialBlog/
-$ hugo -d ../spareslant.github.io/</code></pre></div>
+
+<pre><code class="language-bash">$ cd MyTechnialBlog/
+$ hugo -d ../spareslant.github.io/
+</code></pre>
+
 <h3 id="commit-new-changes-in-spareslant-github-io">commit new changes in <code>../spareslant.github.io</code>.</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cd ../spareslant.github.io/
+
+<pre><code class="language-bash">$ cd ../spareslant.github.io/
 $ git add .
-$ git commit</code></pre></div>
+$ git commit
+</code></pre>
+
 <h3 id="publish-site-by-pushing-the-contents-to-repo">Publish site by pushing the contents to repo.</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ git push origin master</code></pre></div>
+
+<pre><code class="language-bash">$ git push origin master
+</code></pre>
+
 <h3 id="check-published-changes-at-following-link">check published changes at following link</h3>
 
-<p><code>https://spareslant.github.io/</code></p>
+<p><a href="https://spareslant.github.io/">https://spareslant.github.io/</a></p>
 
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/hugo/" rel="tag">hugo</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/github-pages-deployment/" rel="tag">github pages deployment</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/blog/" rel="tag">blog</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/blog-publishing/" rel="tag">blog publishing</a></li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<div class="authorbox__header">
+		<span class="authorbox__name">About SpareSlant</span>
+	</div>
 </div>
 
-  
-<footer class='entry-footer'>
-  <div class='container sep-before'><div class='tags'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
-  
-  <path d="M20.59,13.41l-7.17,7.17a2,2,0,0,1-2.83,0L2,12V2H12l8.59,8.59A2,2,0,0,1,20.59,13.41Z"/>
-  <line x1="7" y1="7" x2="7" y2="7"/>
-  
-</svg>
-<span class='screen-reader-text'>Tags: </span><a class='tag' href='/tags/hugo/'>hugo</a>, <a class='tag' href='/tags/github-pages-deployment/'>github pages deployment</a>, <a class='tag' href='/tags/blog/'>blog</a>, <a class='tag' href='/tags/blog-publishing/'>blog publishing</a></div>
-
-  </div>
-</footer>
-
-
-</article>
-
-<nav class='entry-nav'>
-  <div class='container'><div class='prev-entry sep-before'>
-      <a href='/posts/markup-to-pdf/'>
-        <span aria-hidden='true'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
-  
-  <line x1="20" y1="12" x2="4" y2="12"/>
-  <polyline points="10 18 4 12 10 6"/>
-  
-</svg>
- Previous</span>
-        <span class='screen-reader-text'>Previous post: </span>Markup to Pdf/HTML</a>
-    </div><div class='next-entry sep-before'>
-      <a href='/posts/apache-reverseproxyssl-sslclientauth/'>
-        <span class='screen-reader-text'>Next post: </span>Apache ReverseProxySSL SSLClientAuth<span aria-hidden='true'>Next <svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
-  
-  <line x1="4" y1="12" x2="20" y2="12"/>
-  <polyline points="14 6 20 12 14 18"/>
-  
-</svg>
-</span>
-      </a>
-    </div></div>
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/posts/markup-to-pdf/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Markup to Pdf/HTML</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/posts/apache-reverseproxyssl-sslclientauth/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">Apache ReverseProxySSL SSLClientAuth</p></a>
+	</div>
 </nav>
 
 
-
-
-      </main>
-
-      <footer id='footer' class='footer'>
-        <div class='container sep-before'><div class='copyright'>
-  <p> &copy; 2019 SpareSlant </p>
-</div>
-
-        </div>
-      </footer>
-
-    </div>
-  </div><script>window.__assets_js_src ="/assets/js/"</script>
-
-<script src='http://example.org/assets/js/main.9e5c4cf4.js'></script><script src='/js/custom.js'></script>
-</body>
-
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2019 SpareSlant.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
