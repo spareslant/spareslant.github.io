@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en-gb">
 <head>
-	<meta name="generator" content="Hugo 0.55.6" />
+	<meta name="generator" content="Hugo 0.62.0" />
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -72,7 +72,7 @@ Purpose of this excersize is to introduce end to end secure communication from c
 </div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		Run HTTP server to serve file locally to check the contents $ hugo server -D  Do following change in md files that need to be published.  change draft: true to draft: false  Run HTTP server in prod mode and make sure all required files are being served. $ hugo server  Git commit the changes $ git add &lt;files&gt; $ git commit $ git push origin master  Prepare contents to be deployed to GITHUB $ cd MyTechnialBlog/ $ ls -og total 8 drwxr-xr-x 3 96 17 Jul 21:25 archetypes -rw-r--r-- 1 2067 17 Jul 21:40 config.
+		Run HTTP server to serve file locally to check the contents $ hugo server -D Do following change in md files that need to be published. Run HTTP server in prod mode and make sure all required files are being served. $ hugo server Git commit the changes $ git add &lt;files&gt; $ git commit $ git push origin master Prepare contents to be deployed to GITHUB $ cd MyTechnialBlog/ $ ls -og total 8 drwxr-xr-x 3 96 17 Jul 21:25 archetypes -rw-r--r-- 1 2067 17 Jul 21:40 config.
 	</div>
 	<div class="list__footer clearfix">
 		<a class="list__footer-readmore btn" href="/posts/deploy-hugosite-to-github/">Read more…</a>
@@ -94,9 +94,8 @@ Purpose of this excersize is to introduce end to end secure communication from c
 	<div class="content list__excerpt post__content clearfix">
 		Introduction This documents shows the various ways to generate PDF and self contained HTML files.
 Using VSCode extension. Install VSCode and install extension Markdown PDF. Write a new markup page in VSCode. When done, right click on the editor and you will see the options to export to PDF and HTML.
- pros
- Easy installation and generation of PDF Line wraps in code blocks.  cons
- Not very eye pleasing.
+  pros
+ Easy installation and generation of PDF Line wraps in code blocks.    cons
 	</div>
 	<div class="list__footer clearfix">
 		<a class="list__footer-readmore btn" href="/posts/markup-to-pdf/">Read more…</a>
@@ -138,7 +137,7 @@ Running Docker with syslog logging I use following command to run docker contain
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		Introduction We will be creating our own CA (Certificate Authority), CSR (Certificate Signing Request), signed certificate. We will be creating server side and client side certificate and will verify them using openssl and curl.
-Prepare environment os used $ cat /etc/fedora-release Fedora release 30 (Thirty) $ uname -a Linux localhost.localdomain 5.0.9-301.fc30.x86_64 #1 SMP Tue Apr 23 23:57:35 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux  Prepare openssl conf files A reference conf file can be found in /etc/pki/tls/openssl.
+Prepare environment os used $ cat /etc/fedora-release Fedora release 30 (Thirty) $ uname -a Linux localhost.localdomain 5.0.9-301.fc30.x86_64 #1 SMP Tue Apr 23 23:57:35 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux Prepare openssl conf files A reference conf file can be found in /etc/pki/tls/openssl.
 	</div>
 	<div class="list__footer clearfix">
 		<a class="list__footer-readmore btn" href="/posts/ssl-certificate/">Read more…</a>
@@ -205,7 +204,7 @@ Prepare environment os used $ cat /etc/fedora-release Fedora release 30 (Thirty)
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2019 SpareSlant.
+			&copy; 2020 SpareSlant.
 			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
 		</div>
 	</div>

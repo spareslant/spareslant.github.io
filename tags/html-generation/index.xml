@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>html generation on SpareSlant Technical Blog</title>
@@ -19,9 +19,8 @@
       <guid>/posts/markup-to-pdf/</guid>
       <description>Introduction This documents shows the various ways to generate PDF and self contained HTML files.
 Using VSCode extension. Install VSCode and install extension Markdown PDF. Write a new markup page in VSCode. When done, right click on the editor and you will see the options to export to PDF and HTML.
- pros
- Easy installation and generation of PDF Line wraps in code blocks.  cons
- Not very eye pleasing.</description>
+  pros
+ Easy installation and generation of PDF Line wraps in code blocks.    cons</description>
     </item>
     
   </channel>

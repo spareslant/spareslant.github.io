@@ -1,6 +1,11 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>/tags/apache/</loc>
+    <lastmod>2019-08-04T14:54:01+01:00</lastmod>
+  </url>
   
   <url>
     <loc>/posts/apache-reverseproxyssl-sslclientauth/</loc>
@@ -8,69 +13,63 @@
   </url>
   
   <url>
-    <loc>/posts/</loc>
-    <lastmod>2019-08-04T14:54:01+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/ssl/</loc>
-    <lastmod>2019-08-04T14:54:01+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/ssl-authentication/</loc>
-    <lastmod>2019-08-04T14:54:01+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/ssl-reverse-proxy/</loc>
-    <lastmod>2019-08-04T14:54:01+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/</loc>
-    <lastmod>2019-08-04T14:54:01+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
-    <lastmod>2019-08-04T14:54:01+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/apache/</loc>
-    <lastmod>2019-08-04T14:54:01+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/tags/flask/</loc>
     <lastmod>2019-08-04T14:54:01+01:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>/tags/gunicorn/</loc>
     <lastmod>2019-08-04T14:54:01+01:00</lastmod>
-    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/posts/</loc>
+    <lastmod>2019-08-04T14:54:01+01:00</lastmod>
   </url>
   
   <url>
     <loc>/tags/proxy/</loc>
     <lastmod>2019-08-04T14:54:01+01:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>/tags/reverse-proxy/</loc>
     <lastmod>2019-08-04T14:54:01+01:00</lastmod>
-    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/</loc>
+    <lastmod>2019-08-04T14:54:01+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/ssl/</loc>
+    <lastmod>2019-08-04T14:54:01+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/ssl-authentication/</loc>
+    <lastmod>2019-08-04T14:54:01+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/ssl-reverse-proxy/</loc>
+    <lastmod>2019-08-04T14:54:01+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2019-08-04T14:54:01+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/blog/</loc>
+    <lastmod>2019-08-03T19:01:43+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/blog-publishing/</loc>
+    <lastmod>2019-08-03T19:01:43+01:00</lastmod>
   </url>
   
   <url>
@@ -79,27 +78,18 @@
   </url>
   
   <url>
-    <loc>/tags/blog/</loc>
-    <lastmod>2019-08-03T19:01:43+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/blog-publishing/</loc>
-    <lastmod>2019-08-03T19:01:43+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/tags/github-pages-deployment/</loc>
     <lastmod>2019-08-03T19:01:43+01:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>/tags/hugo/</loc>
     <lastmod>2019-08-03T19:01:43+01:00</lastmod>
-    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/html-generation/</loc>
+    <lastmod>2019-07-27T20:39:13+01:00</lastmod>
   </url>
   
   <url>
@@ -108,15 +98,13 @@
   </url>
   
   <url>
-    <loc>/tags/html-generation/</loc>
+    <loc>/tags/pdf-generation/</loc>
     <lastmod>2019-07-27T20:39:13+01:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/pdf-generation/</loc>
-    <lastmod>2019-07-27T20:39:13+01:00</lastmod>
-    <priority>0</priority>
+    <loc>/tags/docker/</loc>
+    <lastmod>2019-07-27T12:15:28+01:00</lastmod>
   </url>
   
   <url>
@@ -125,39 +113,43 @@
   </url>
   
   <url>
-    <loc>/tags/docker/</loc>
-    <lastmod>2019-07-27T12:15:28+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/tags/logging/</loc>
     <lastmod>2019-07-27T12:15:28+01:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>/tags/rsyslog/</loc>
     <lastmod>2019-07-27T12:15:28+01:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>/tags/syslog/</loc>
     <lastmod>2019-07-27T12:15:28+01:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>/tags/ca/</loc>
     <lastmod>2019-07-17T21:35:50+01:00</lastmod>
-    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/curl/</loc>
+    <lastmod>2019-07-17T21:35:50+01:00</lastmod>
   </url>
   
   <url>
     <loc>/tags/digital-certificates/</loc>
     <lastmod>2019-07-17T21:35:50+01:00</lastmod>
-    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/openssl/</loc>
+    <lastmod>2019-07-17T21:35:50+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/pki/</loc>
+    <lastmod>2019-07-17T21:35:50+01:00</lastmod>
   </url>
   
   <url>
@@ -168,36 +160,15 @@
   <url>
     <loc>/tags/ssl-mutual-authentication/</loc>
     <lastmod>2019-07-17T21:35:50+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/curl/</loc>
-    <lastmod>2019-07-17T21:35:50+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/openssl/</loc>
-    <lastmod>2019-07-17T21:35:50+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/pki/</loc>
-    <lastmod>2019-07-17T21:35:50+01:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>/tags/x509/</loc>
     <lastmod>2019-07-17T21:35:50+01:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/</loc>
-    <priority>0</priority>
   </url>
   
 </urlset>

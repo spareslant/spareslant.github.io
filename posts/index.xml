@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on SpareSlant Technical Blog</title>
@@ -27,7 +27,7 @@ Purpose of this excersize is to introduce end to end secure communication from c
       <pubDate>Sat, 03 Aug 2019 19:01:43 +0100</pubDate>
       
       <guid>/posts/deploy-hugosite-to-github/</guid>
-      <description>Run HTTP server to serve file locally to check the contents $ hugo server -D  Do following change in md files that need to be published.  change draft: true to draft: false  Run HTTP server in prod mode and make sure all required files are being served. $ hugo server  Git commit the changes $ git add &amp;lt;files&amp;gt; $ git commit $ git push origin master  Prepare contents to be deployed to GITHUB $ cd MyTechnialBlog/ $ ls -og total 8 drwxr-xr-x 3 96 17 Jul 21:25 archetypes -rw-r--r-- 1 2067 17 Jul 21:40 config.</description>
+      <description>Run HTTP server to serve file locally to check the contents $ hugo server -D Do following change in md files that need to be published. Run HTTP server in prod mode and make sure all required files are being served. $ hugo server Git commit the changes $ git add &amp;lt;files&amp;gt; $ git commit $ git push origin master Prepare contents to be deployed to GITHUB $ cd MyTechnialBlog/ $ ls -og total 8 drwxr-xr-x 3 96 17 Jul 21:25 archetypes -rw-r--r-- 1 2067 17 Jul 21:40 config.</description>
     </item>
     
     <item>
@@ -38,9 +38,8 @@ Purpose of this excersize is to introduce end to end secure communication from c
       <guid>/posts/markup-to-pdf/</guid>
       <description>Introduction This documents shows the various ways to generate PDF and self contained HTML files.
 Using VSCode extension. Install VSCode and install extension Markdown PDF. Write a new markup page in VSCode. When done, right click on the editor and you will see the options to export to PDF and HTML.
- pros
- Easy installation and generation of PDF Line wraps in code blocks.  cons
- Not very eye pleasing.</description>
+  pros
+ Easy installation and generation of PDF Line wraps in code blocks.    cons</description>
     </item>
     
     <item>
@@ -60,7 +59,7 @@ Running Docker with syslog logging I use following command to run docker contain
       
       <guid>/posts/ssl-certificate/</guid>
       <description>Introduction We will be creating our own CA (Certificate Authority), CSR (Certificate Signing Request), signed certificate. We will be creating server side and client side certificate and will verify them using openssl and curl.
-Prepare environment os used $ cat /etc/fedora-release Fedora release 30 (Thirty) $ uname -a Linux localhost.localdomain 5.0.9-301.fc30.x86_64 #1 SMP Tue Apr 23 23:57:35 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux  Prepare openssl conf files A reference conf file can be found in /etc/pki/tls/openssl.</description>
+Prepare environment os used $ cat /etc/fedora-release Fedora release 30 (Thirty) $ uname -a Linux localhost.localdomain 5.0.9-301.fc30.x86_64 #1 SMP Tue Apr 23 23:57:35 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux Prepare openssl conf files A reference conf file can be found in /etc/pki/tls/openssl.</description>
     </item>
     
   </channel>

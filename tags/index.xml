@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on SpareSlant Technical Blog</title>
@@ -10,33 +10,6 @@
     
 	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>SSL</title>
-      <link>/tags/ssl/</link>
-      <pubDate>Sun, 04 Aug 2019 14:54:01 +0100</pubDate>
-      
-      <guid>/tags/ssl/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>SSL authentication</title>
-      <link>/tags/ssl-authentication/</link>
-      <pubDate>Sun, 04 Aug 2019 14:54:01 +0100</pubDate>
-      
-      <guid>/tags/ssl-authentication/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>SSL reverse proxy</title>
-      <link>/tags/ssl-reverse-proxy/</link>
-      <pubDate>Sun, 04 Aug 2019 14:54:01 +0100</pubDate>
-      
-      <guid>/tags/ssl-reverse-proxy/</guid>
-      <description></description>
-    </item>
     
     <item>
       <title>apache</title>
@@ -80,6 +53,33 @@
       <pubDate>Sun, 04 Aug 2019 14:54:01 +0100</pubDate>
       
       <guid>/tags/reverse-proxy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>SSL</title>
+      <link>/tags/ssl/</link>
+      <pubDate>Sun, 04 Aug 2019 14:54:01 +0100</pubDate>
+      
+      <guid>/tags/ssl/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>SSL authentication</title>
+      <link>/tags/ssl-authentication/</link>
+      <pubDate>Sun, 04 Aug 2019 14:54:01 +0100</pubDate>
+      
+      <guid>/tags/ssl-authentication/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>SSL reverse proxy</title>
+      <link>/tags/ssl-reverse-proxy/</link>
+      <pubDate>Sun, 04 Aug 2019 14:54:01 +0100</pubDate>
+      
+      <guid>/tags/ssl-reverse-proxy/</guid>
       <description></description>
     </item>
     
@@ -183,29 +183,20 @@
     </item>
     
     <item>
-      <title>Digital Certificates</title>
-      <link>/tags/digital-certificates/</link>
-      <pubDate>Wed, 17 Jul 2019 21:35:50 +0100</pubDate>
-      
-      <guid>/tags/digital-certificates/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>SSL mutual authentication</title>
-      <link>/tags/ssl-mutual-authentication/</link>
-      <pubDate>Wed, 17 Jul 2019 21:35:50 +0100</pubDate>
-      
-      <guid>/tags/ssl-mutual-authentication/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>curl</title>
       <link>/tags/curl/</link>
       <pubDate>Wed, 17 Jul 2019 21:35:50 +0100</pubDate>
       
       <guid>/tags/curl/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Digital Certificates</title>
+      <link>/tags/digital-certificates/</link>
+      <pubDate>Wed, 17 Jul 2019 21:35:50 +0100</pubDate>
+      
+      <guid>/tags/digital-certificates/</guid>
       <description></description>
     </item>
     
@@ -224,6 +215,15 @@
       <pubDate>Wed, 17 Jul 2019 21:35:50 +0100</pubDate>
       
       <guid>/tags/pki/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>SSL mutual authentication</title>
+      <link>/tags/ssl-mutual-authentication/</link>
+      <pubDate>Wed, 17 Jul 2019 21:35:50 +0100</pubDate>
+      
+      <guid>/tags/ssl-mutual-authentication/</guid>
       <description></description>
     </item>
     

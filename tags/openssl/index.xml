@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>openssl on SpareSlant Technical Blog</title>
@@ -18,7 +18,7 @@
       
       <guid>/posts/ssl-certificate/</guid>
       <description>Introduction We will be creating our own CA (Certificate Authority), CSR (Certificate Signing Request), signed certificate. We will be creating server side and client side certificate and will verify them using openssl and curl.
-Prepare environment os used $ cat /etc/fedora-release Fedora release 30 (Thirty) $ uname -a Linux localhost.localdomain 5.0.9-301.fc30.x86_64 #1 SMP Tue Apr 23 23:57:35 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux  Prepare openssl conf files A reference conf file can be found in /etc/pki/tls/openssl.</description>
+Prepare environment os used $ cat /etc/fedora-release Fedora release 30 (Thirty) $ uname -a Linux localhost.localdomain 5.0.9-301.fc30.x86_64 #1 SMP Tue Apr 23 23:57:35 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux Prepare openssl conf files A reference conf file can be found in /etc/pki/tls/openssl.</description>
     </item>
     
   </channel>
