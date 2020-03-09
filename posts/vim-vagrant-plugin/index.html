@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-gb">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Vim Vagrant Plugin using Vundle - SpareSlant Technical Blog</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/my.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="SpareSlant Technical Blog" rel="home">
+				<div class="logo__title">SpareSlant Technical Blog</div>
+				<div class="logo__tagline">SpareSlant tech blog</div>
+			</a>
+		</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Vim Vagrant Plugin using Vundle</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2020-02-25T17:13:09">2020-02-25</time>
+</div>
+</div>
+		</header>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#a-sample-vimrc-file-after-installing-vundle-is-below">A sample .vimrc file after installing Vundle is below.</a></li>
+    <li><a href="#preparation-of-vagrantfile-plugin-for-vundle">Preparation of Vagrantfile plugin for Vundle</a></li>
+    <li><a href="#make-changes-to-homevimrc-file">Make changes to $HOME/.vimrc file</a></li>
+    <li><a href="#activate-vagrantfile-plugin">Activate vagrantfile plugin</a></li>
+  </ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<h2 id="introduction">Introduction</h2>
+<p>We will be installing <em>VIM</em> vagrant plugin using <em>Vundle</em>. This assumes that you have already configured your <em>VIM</em> to use <em>Vundle</em></p>
+<h2 id="a-sample-vimrc-file-after-installing-vundle-is-below">A sample <code>.vimrc</code> file after installing <code>Vundle</code> is below.</h2>
+<p><code>Vundle</code> installation can be done by following this link <a href="https://github.com/VundleVim/Vundle.vim">https://github.com/VundleVim/Vundle.vim</a> .</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<h2 id="preparation-of-vagrantfile-plugin-for-vundle">Preparation of <code>Vagrantfile</code> plugin for <code>Vundle</code></h2>
+<p>Create following structure of directories and files.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir -p $HOME/.vim/vagrantfile/plugin
+touch $HOME/.vim/vagrantfile/plugin/vagrantfile.vim
+curl https://raw.githubusercontent.com/hashicorp/vagrant/master/contrib/vim/vagrantfile.vim -o $HOME/.vim/vagrantfile/plugin/vagrantfile.vim
+cd $HOME/.vim/vagrantfile 
+git init .
+</code></pre></div><p>Note: It is important to have above structure and initialized it as a git repo.</p>
+<h2 id="make-changes-to-homevimrc-file">Make changes to <code>$HOME/.vimrc</code> file</h2>
+<p>Add following line to <code>$HOME/.vimrc</code> file.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">Plugin <span style="color:#e6db74">&#39;file:///&lt;/full/path/to/home/dir&gt;/.vim/vagrantfile&#39;</span>
+</code></pre></div><p><code>.vimrc</code> file will look like below:</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<h2 id="activate-vagrantfile-plugin">Activate <code>vagrantfile</code> plugin</h2>
+<p>Run following command to install the plugin and activate it.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vim +PluginInstall +qall
+</code></pre></div>
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/vim/" rel="tag">vim</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/vagrantfile-plugin/" rel="tag">vagrantfile plugin</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/vundle/" rel="tag">Vundle</a></li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<div class="authorbox__header">
+		<span class="authorbox__name">About SpareSlant</span>
+	</div>
+</div>
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/posts/apache-reverseproxyssl-sslclientauth/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Apache ReverseProxySSL SSLClientAuth</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2020 SpareSlant.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
+</html>

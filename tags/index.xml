@@ -6,10 +6,37 @@
     <description>Recent content in Tags on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Sun, 04 Aug 2019 14:54:01 +0100</lastBuildDate>
+    <lastBuildDate>Tue, 25 Feb 2020 17:13:09 +0000</lastBuildDate>
     
 	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>vagrantfile plugin</title>
+      <link>/tags/vagrantfile-plugin/</link>
+      <pubDate>Tue, 25 Feb 2020 17:13:09 +0000</pubDate>
+      
+      <guid>/tags/vagrantfile-plugin/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vim</title>
+      <link>/tags/vim/</link>
+      <pubDate>Tue, 25 Feb 2020 17:13:09 +0000</pubDate>
+      
+      <guid>/tags/vim/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Vundle</title>
+      <link>/tags/vundle/</link>
+      <pubDate>Tue, 25 Feb 2020 17:13:09 +0000</pubDate>
+      
+      <guid>/tags/vundle/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>apache</title>

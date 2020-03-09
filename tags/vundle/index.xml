@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Vundle on SpareSlant Technical Blog</title>
+    <link>/tags/vundle/</link>
+    <description>Recent content in Vundle on SpareSlant Technical Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <lastBuildDate>Tue, 25 Feb 2020 17:13:09 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/vundle/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Vim Vagrant Plugin using Vundle</title>
+      <link>/posts/vim-vagrant-plugin/</link>
+      <pubDate>Tue, 25 Feb 2020 17:13:09 +0000</pubDate>
+      
+      <guid>/posts/vim-vagrant-plugin/</guid>
+      <description>Introduction We will be installing VIM vagrant plugin using Vundle. This assumes that you have already configured your VIM to use Vundle
+A sample .vimrc file after installing Vundle is below. Vundle installation can be done by following this link https://github.com/VundleVim/Vundle.vim .
+Preparation of Vagrantfile plugin for Vundle Create following structure of directories and files.
+mkdir -p $HOME/.vim/vagrantfile/plugin touch $HOME/.vim/vagrantfile/plugin/vagrantfile.vim curl https://raw.githubusercontent.com/hashicorp/vagrant/master/contrib/vim/vagrantfile.vim -o $HOME/.vim/vagrantfile/plugin/vagrantfile.vim cd $HOME/.vim/vagrantfile git init . Note: It is important to have above structure and initialized it as a git repo.</description>
+    </item>
+    
+  </channel>
+</rss>
