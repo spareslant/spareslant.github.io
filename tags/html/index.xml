@@ -1,26 +1,26 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>html on SpareSlant Technical Blog</title>
-    <link>http://example.org/tags/html/</link>
+    <link>/tags/html/</link>
     <description>Recent content in html on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Sat, 27 Jul 2019 20:39:13 +0100</lastBuildDate>
+    <lastBuildDate>Tue, 10 Mar 2020 11:12:00 +0000</lastBuildDate>
     
-	<atom:link href="http://example.org/tags/html/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/html/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Markup to Pdf/HTML</title>
-      <link>http://example.org/posts/markup-to-pdf/</link>
-      <pubDate>Sat, 27 Jul 2019 20:39:13 +0100</pubDate>
+      <title>Convert markup to blogger compatible html</title>
+      <link>/posts/convert_markup_to_blogger_compatible_html/</link>
+      <pubDate>Tue, 10 Mar 2020 11:12:00 +0000</pubDate>
       
-      <guid>http://example.org/posts/markup-to-pdf/</guid>
-      <description>.hl {color: #f155f1;} .hlb {color: #f155f1; font-weight: bold;}  Introduction This documents shows the various ways to generate PDF and self contained HTML files.
-Using VSCode extension. Install VSCode and install extension Markdown PDF. Write a new markup page in VSCode. When done, right click on the editor and you will see the options to export to PDF and HTML.
- pros
- Easy installation and generation of PDF Line wraps in code blocks.</description>
+      <guid>/posts/convert_markup_to_blogger_compatible_html/</guid>
+      <description>Introduction We will be converting a markup file to a blogger compatible html.
+Use pandoc Install pandoc using URL https://pandoc.org/installing.html . Create a workspace and clone following git repos in that workspace area.
+mkdir $HOME/panDocs cd $HOME/panDocs git clone https://github.com/tajmone/pandoc-goodies.git  pandoc-goodies is to generate html files.  Create a sample markup file. Create a markup file in $HOME/panDocs say markupContents.md with following contents.
+ # A top Level Heading This is a heading.</description>
     </item>
     
   </channel>

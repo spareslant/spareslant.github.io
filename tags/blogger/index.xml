@@ -6,10 +6,22 @@
     <description>Recent content in blogger on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Tue, 10 Mar 2020 00:34:42 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 10 Mar 2020 11:12:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/blogger/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Convert markup to blogger compatible html</title>
+      <link>/posts/convert_markup_to_blogger_compatible_html/</link>
+      <pubDate>Tue, 10 Mar 2020 11:12:00 +0000</pubDate>
+      
+      <guid>/posts/convert_markup_to_blogger_compatible_html/</guid>
+      <description>Introduction We will be converting a markup file to a blogger compatible html.
+Use pandoc Install pandoc using URL https://pandoc.org/installing.html . Create a workspace and clone following git repos in that workspace area.
+mkdir $HOME/panDocs cd $HOME/panDocs git clone https://github.com/tajmone/pandoc-goodies.git  pandoc-goodies is to generate html files.  Create a sample markup file. Create a markup file in $HOME/panDocs say markupContents.md with following contents.
+ # A top Level Heading This is a heading.</description>
+    </item>
     
     <item>
       <title>Blogger ruby cli</title>

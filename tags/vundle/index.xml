@@ -19,8 +19,7 @@
       <guid>/posts/vim-vagrant-plugin/</guid>
       <description>Introduction We will be installing VIM vagrant plugin using Vundle. This assumes that you have already configured your VIM to use Vundle
 A sample .vimrc file after installing Vundle is below. Vundle installation can be done by following this link https://github.com/VundleVim/Vundle.vim .
-Preparation of Vagrantfile plugin for Vundle Create following structure of directories and files.
-mkdir -p $HOME/.vim/vagrantfile/plugin touch $HOME/.vim/vagrantfile/plugin/vagrantfile.vim curl https://raw.githubusercontent.com/hashicorp/vagrant/master/contrib/vim/vagrantfile.vim -o $HOME/.vim/vagrantfile/plugin/vagrantfile.vim cd $HOME/.vim/vagrantfile git init . Note: It is important to have above structure and initialized it as a git repo.</description>
+set nocompatible &amp;quot; be iMproved, required filetype off &amp;quot; required &amp;quot; set the runtime path to include Vundle and initialize set rtp+=~/.vim/bundle/Vundle.vim call vundle#begin() Plugin &#39;VundleVim/Vundle.vim&#39; &amp;quot; All of your Plugins must be added before the following line call vundle#end() &amp;quot; required set tabstop=4 set expandtab set softtabstop=4 set shiftwidth=4 filetype indent on syntax on &amp;quot; color desert &amp;quot; color lettuce Preparation of Vagrantfile plugin for Vundle Create following structure of directories and files.</description>
     </item>
     
   </channel>

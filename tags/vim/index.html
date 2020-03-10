@@ -54,8 +54,7 @@
 	<div class="content list__excerpt post__content clearfix">
 		Introduction We will be installing VIM vagrant plugin using Vundle. This assumes that you have already configured your VIM to use Vundle
 A sample .vimrc file after installing Vundle is below. Vundle installation can be done by following this link https://github.com/VundleVim/Vundle.vim .
-Preparation of Vagrantfile plugin for Vundle Create following structure of directories and files.
-mkdir -p $HOME/.vim/vagrantfile/plugin touch $HOME/.vim/vagrantfile/plugin/vagrantfile.vim curl https://raw.githubusercontent.com/hashicorp/vagrant/master/contrib/vim/vagrantfile.vim -o $HOME/.vim/vagrantfile/plugin/vagrantfile.vim cd $HOME/.vim/vagrantfile git init . Note: It is important to have above structure and initialized it as a git repo.
+set nocompatible &quot; be iMproved, required filetype off &quot; required &quot; set the runtime path to include Vundle and initialize set rtp+=~/.vim/bundle/Vundle.vim call vundle#begin() Plugin 'VundleVim/Vundle.vim' &quot; All of your Plugins must be added before the following line call vundle#end() &quot; required set tabstop=4 set expandtab set softtabstop=4 set shiftwidth=4 filetype indent on syntax on &quot; color desert &quot; color lettuce Preparation of Vagrantfile plugin for Vundle Create following structure of directories and files.
 	</div>
 	<div class="list__footer clearfix">
 		<a class="list__footer-readmore btn" href="/posts/vim-vagrant-plugin/">Read more…</a>
@@ -79,11 +78,11 @@ mkdir -p $HOME/.vim/vagrantfile/plugin touch $HOME/.vim/vagrantfile/plugin/vagra
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/posts/convert_markup_to_blogger_compatible_html/">Convert markup to blogger compatible html</a></li>
 			<li class="widget__item"><a class="widget__link" href="/posts/blogger_ruby_cli/">Blogger ruby cli</a></li>
 			<li class="widget__item"><a class="widget__link" href="/posts/blogger_python_cli/">Blogger python cli</a></li>
 			<li class="widget__item"><a class="widget__link" href="/posts/vim-vagrant-plugin/">Vim Vagrant Plugin using Vundle</a></li>
 			<li class="widget__item"><a class="widget__link" href="/posts/apache-reverseproxyssl-sslclientauth/">Apache ReverseProxySSL SSLClientAuth</a></li>
-			<li class="widget__item"><a class="widget__link" href="/posts/deploy-hugosite-to-github/">Deploy HugoSite to Github</a></li>
 		</ul>
 	</div>
 </div>
@@ -93,8 +92,9 @@ mkdir -p $HOME/.vim/vagrantfile/plugin touch $HOME/.vim/vagrantfile/plugin/vagra
 		<a class="widget-taglist__link widget__link btn" href="/tags/apache" title="Apache">Apache (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/blog" title="Blog">Blog (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/blog-publishing" title="Blog publishing">Blog publishing (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/blogger" title="Blogger">Blogger (2)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/blogger" title="Blogger">Blogger (3)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/blogger-api" title="Blogger api">Blogger api (2)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/blogger-html" title="Blogger html">Blogger html (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/ca" title="Ca">Ca (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/curl" title="Curl">Curl (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/digital-certificates" title="Digital certificates">Digital certificates (1)</a>
@@ -103,7 +103,8 @@ mkdir -p $HOME/.vim/vagrantfile/plugin touch $HOME/.vim/vagrantfile/plugin/vagra
 		<a class="widget-taglist__link widget__link btn" href="/tags/github-pages-deployment" title="Github pages deployment">Github pages deployment (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/google-api" title="Google api">Google api (2)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/gunicorn" title="Gunicorn">Gunicorn (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/html-generation" title="Html generation">Html generation (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/html" title="Html">Html (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/html-generation" title="Html generation">Html generation (2)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/hugo" title="Hugo">Hugo (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/logging" title="Logging">Logging (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/openssl" title="Openssl">Openssl (1)</a>

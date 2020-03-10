@@ -75,11 +75,7 @@
 	</div>
 </div>
 <div class="content post__content clearfix">
-			<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<h1 id="introduction">Introduction</h1>
+			<h1 id="introduction">Introduction</h1>
 <p>We will be configuring <code>Apache</code> in reverse proxy mode. <code>Apache</code> will be accepting connections on secure port with SSL client authentication and forward that request to a backend application server <code>Gunicorn</code>. Communication between <code>apache</code> and <code>gunicorn</code> will also be on secure port and SSL authenticated. <code>Gunicorn</code> will run a simple <code>flask</code> app that will be writing some text to file.</p>
 <p>Purpose of this excersize is to introduce end to end secure communication from client to apache to app server with SSL client authentication at every stage. Please note that this exercise represents just the minimal configuration to work and no other authentication mechanism will be mentioned.</p>
 <p><strong>Note:</strong> we will be using self-signed CA authority and all certificates will be signed by this authority.</p>

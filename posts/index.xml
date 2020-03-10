@@ -6,10 +6,22 @@
     <description>Recent content in Posts on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Tue, 10 Mar 2020 00:34:42 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 10 Mar 2020 11:12:00 +0000</lastBuildDate>
     
 	<atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Convert markup to blogger compatible html</title>
+      <link>/posts/convert_markup_to_blogger_compatible_html/</link>
+      <pubDate>Tue, 10 Mar 2020 11:12:00 +0000</pubDate>
+      
+      <guid>/posts/convert_markup_to_blogger_compatible_html/</guid>
+      <description>Introduction We will be converting a markup file to a blogger compatible html.
+Use pandoc Install pandoc using URL https://pandoc.org/installing.html . Create a workspace and clone following git repos in that workspace area.
+mkdir $HOME/panDocs cd $HOME/panDocs git clone https://github.com/tajmone/pandoc-goodies.git  pandoc-goodies is to generate html files.  Create a sample markup file. Create a markup file in $HOME/panDocs say markupContents.md with following contents.
+ # A top Level Heading This is a heading.</description>
+    </item>
     
     <item>
       <title>Blogger ruby cli</title>
@@ -39,8 +51,7 @@ Account Preparation  You need to have a google account (gmail) (Paid account NOT
       <guid>/posts/vim-vagrant-plugin/</guid>
       <description>Introduction We will be installing VIM vagrant plugin using Vundle. This assumes that you have already configured your VIM to use Vundle
 A sample .vimrc file after installing Vundle is below. Vundle installation can be done by following this link https://github.com/VundleVim/Vundle.vim .
-Preparation of Vagrantfile plugin for Vundle Create following structure of directories and files.
-mkdir -p $HOME/.vim/vagrantfile/plugin touch $HOME/.vim/vagrantfile/plugin/vagrantfile.vim curl https://raw.githubusercontent.com/hashicorp/vagrant/master/contrib/vim/vagrantfile.vim -o $HOME/.vim/vagrantfile/plugin/vagrantfile.vim cd $HOME/.vim/vagrantfile git init . Note: It is important to have above structure and initialized it as a git repo.</description>
+set nocompatible &amp;quot; be iMproved, required filetype off &amp;quot; required &amp;quot; set the runtime path to include Vundle and initialize set rtp+=~/.vim/bundle/Vundle.vim call vundle#begin() Plugin &#39;VundleVim/Vundle.vim&#39; &amp;quot; All of your Plugins must be added before the following line call vundle#end() &amp;quot; required set tabstop=4 set expandtab set softtabstop=4 set shiftwidth=4 filetype indent on syntax on &amp;quot; color desert &amp;quot; color lettuce Preparation of Vagrantfile plugin for Vundle Create following structure of directories and files.</description>
     </item>
     
     <item>
@@ -59,7 +70,7 @@ Purpose of this excersize is to introduce end to end secure communication from c
       <pubDate>Sat, 03 Aug 2019 19:01:43 +0100</pubDate>
       
       <guid>/posts/deploy-hugosite-to-github/</guid>
-      <description>Run HTTP server to serve file locally to check the contents $ hugo server -D Do following change in md files that need to be published. Run HTTP server in prod mode and make sure all required files are being served. $ hugo server Git commit the changes $ git add &amp;lt;files&amp;gt; $ git commit $ git push origin master Prepare contents to be deployed to GITHUB $ cd MyTechnialBlog/ $ ls -og total 8 drwxr-xr-x 3 96 17 Jul 21:25 archetypes -rw-r--r-- 1 2067 17 Jul 21:40 config.</description>
+      <description>Run HTTP server to serve file locally to check the contents $ hugo server -D Do following change in md files that need to be published. change draft: true to draft: false Run HTTP server in prod mode and make sure all required files are being served. $ hugo server Git commit the changes $ git add &amp;lt;files&amp;gt; $ git commit $ git push origin master Prepare contents to be deployed to GITHUB $ cd MyTechnialBlog/ $ ls -og total 8 drwxr-xr-x 3 96 17 Jul 21:25 archetypes -rw-r--r-- 1 2067 17 Jul 21:40 config.</description>
     </item>
     
     <item>

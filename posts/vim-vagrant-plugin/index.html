@@ -59,17 +59,30 @@
 	</div>
 </div>
 <div class="content post__content clearfix">
-			<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<h2 id="introduction">Introduction</h2>
+			<h2 id="introduction">Introduction</h2>
 <p>We will be installing <em>VIM</em> vagrant plugin using <em>Vundle</em>. This assumes that you have already configured your <em>VIM</em> to use <em>Vundle</em></p>
 <h2 id="a-sample-vimrc-file-after-installing-vundle-is-below">A sample <code>.vimrc</code> file after installing <code>Vundle</code> is below.</h2>
 <p><code>Vundle</code> installation can be done by following this link <a href="https://github.com/VundleVim/Vundle.vim">https://github.com/VundleVim/Vundle.vim</a> .</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<h2 id="preparation-of-vagrantfile-plugin-for-vundle">Preparation of <code>Vagrantfile</code> plugin for <code>Vundle</code></h2>
+<pre><code>set nocompatible              &quot; be iMproved, required
+filetype off                  &quot; required
+
+&quot; set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+
+&quot; All of your Plugins must be added before the following line
+call vundle#end()            &quot; required
+
+set tabstop=4
+set expandtab
+set softtabstop=4
+set shiftwidth=4
+filetype indent on
+syntax on
+&quot; color desert
+&quot; color lettuce
+</code></pre><h2 id="preparation-of-vagrantfile-plugin-for-vundle">Preparation of <code>Vagrantfile</code> plugin for <code>Vundle</code></h2>
 <p>Create following structure of directories and files.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir -p $HOME/.vim/vagrantfile/plugin
 touch $HOME/.vim/vagrantfile/plugin/vagrantfile.vim
@@ -81,9 +94,27 @@ git init .
 <p>Add following line to <code>$HOME/.vimrc</code> file.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">Plugin <span style="color:#e6db74">&#39;file:///&lt;/full/path/to/home/dir&gt;/.vim/vagrantfile&#39;</span>
 </code></pre></div><p><code>.vimrc</code> file will look like below:</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<h2 id="activate-vagrantfile-plugin">Activate <code>vagrantfile</code> plugin</h2>
+<pre><code>set nocompatible              &quot; be iMproved, required
+filetype off                  &quot; required
+
+&quot; set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'file:///&lt;/full/path/to/home/dir&gt;/.vim/vagrantfile'
+
+&quot; All of your Plugins must be added before the following line
+call vundle#end()            &quot; required
+
+set tabstop=4
+set expandtab
+set softtabstop=4
+set shiftwidth=4
+filetype indent on
+syntax on
+&quot; color desert
+&quot; color lettuce
+</code></pre><h2 id="activate-vagrantfile-plugin">Activate <code>vagrantfile</code> plugin</h2>
 <p>Run following command to install the plugin and activate it.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vim +PluginInstall +qall
 </code></pre></div>
