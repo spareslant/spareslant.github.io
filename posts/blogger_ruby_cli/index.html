@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-gb">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Blogger ruby cli - SpareSlant Technical Blog</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/my.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="SpareSlant Technical Blog" rel="home">
+				<div class="logo__title">SpareSlant Technical Blog</div>
+				<div class="logo__tagline">SpareSlant tech blog</div>
+			</a>
+		</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Blogger ruby cli</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2020-03-10T00:34:42">2020-03-10</time>
+</div>
+</div>
+		</header>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#account-preparation">Account Preparation</a></li>
+    <li><a href="#python-environment-creation">Python environment creation</a>
+      <ul>
+        <li><a href="#install-required-libraries">Install required libraries.</a></li>
+        <li><a href="#copy-credential-script">Copy credential script.</a></li>
+        <li><a href="#create-ruby-script-bloggerclirb">Create Ruby script bloggerCli.rb</a></li>
+        <li><a href="#create-a-test-file-to-be-uploaded">Create a test file to be uploaded.</a></li>
+        <li><a href="#run-the-script">Run the script.</a></li>
+        <li><a href="#references-used">References used:</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<h2 id="introduction">Introduction</h2>
+<p>We will be creating a commandLine utility in <code>python</code> to upload a post in Google blogger.</p>
+<h2 id="account-preparation">Account Preparation</h2>
+<ul>
+<li>You need to have a <code>google</code> account (gmail) (Paid account NOT required).</li>
+<li>Once you have a google account, Login to <em><a href="https://console.developers.google.com/apis/credentials">https://console.developers.google.com/apis/credentials</a></em> and create a new <code>Project</code> here.</li>
+<li>Click on <code>Dashboard</code> on left hand column, and click on <code>+ ENABLE APIS AND SERVICES</code>.
+<ul>
+<li>Type in <code>blogger</code> in search bar, and select <code>Blogger API v3</code> and then click <code>ENABLE</code>.`</li>
+</ul>
+</li>
+<li>Click on <code>OAuth consent screen</code> on left hand column, and select <code>User Type</code> to <code>External</code> and click <code>CREATE</code>.
+<ul>
+<li>On next screen type in <code>Application Name</code> as <code>Blogger CLI</code> (It can be any string).</li>
+<li>Click on <code>Add Scope</code> and select both the <code>Blogger API v3</code> options and click <code>ADD</code> and click <code>Save</code>.</li>
+</ul>
+</li>
+<li>Click on <code>Credentials</code> on the left hand side and you will be presented with following two options of creating credentials for Blogger API.
+<ul>
+<li>API Keys</li>
+<li>OAuth 2.0 Client IDs</li>
+<li>Service Accounts</li>
+<li>Click on <code>+ CREATE CREDENTAILS</code> on the top and select <code>OAuth Client ID</code> from drop down menu.
+<ul>
+<li>Select <code>Application Type</code> to <code>other</code>.</li>
+<li>Type in <code>Name</code> to <code>Python Blogger CLI</code> (it can be any string) and click create.</li>
+<li>You will see an entry with name <code>Python Blogger CLI</code> under <code>OAuth 2.0 Client IDs</code>.</li>
+<li>Download the credential files by clicking on a <em>down arrow</em> button.</li>
+<li>This will be a <code>json</code> file and we need it to authenticate it with google <code>OAuth2.0</code> services.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Login to blogger site <em><a href="https://www.blogger.com">https://www.blogger.com</a></em>
+<ul>
+<li>Sign-in to blogger.</li>
+<li>Enter a display name you like.</li>
+<li>Create a <code>NEW BLOG</code> and give it a name you like in <code>Ttile</code></li>
+<li>Type in address. It has to be a unique e.g somethingrandom23455.blogspot.com and click <code>create blog</code></li>
+<li>On next screen, look at the address bar of browser, it will be like <em><a href="https://www.blogger.com/blogger.g?blogID=3342324243435#allposts">https://www.blogger.com/blogger.g?blogID=3342324243435#allposts</a></em></li>
+<li>Note down blog ID (a string after <strong>blogID=</strong>, excluding #allposts) in above URL. We need this ID to put in ruby script.</li>
+</ul>
+</li>
+</ul>
+<h2 id="python-environment-creation">Python environment creation</h2>
+<p>I am using following python version.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ruby --version
+ruby 2.7.0p0 <span style="color:#f92672">(</span>2019-12-25 revision 647ee6f091<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>x86_64-darwin19<span style="color:#f92672">]</span>
+</code></pre></div><p>We will be creating a python virtual environment.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir BloggerCli
+cd BloggerCli
+mkdir ruby-cli
+</code></pre></div><h3 id="install-required-libraries">Install required libraries.</h3>
+<p>Create a file <code>ruby-cli/Gemfile</code> with following contents.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">source <span style="color:#e6db74">&#39;https://rubygems.org&#39;</span>
+gem <span style="color:#e6db74">&#39;google-api-client&#39;</span>
+gem <span style="color:#e6db74">&#39;googleauth&#39;</span>
+gem <span style="color:#e6db74">&#39;launchy&#39;</span>
+gem <span style="color:#e6db74">&#39;slop&#39;</span>
+</code></pre></div><p>Run following commands to install above gems.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd ruby-cli
+bundler
+</code></pre></div><h3 id="copy-credential-script">Copy credential script.</h3>
+<p>Copy above downloaded credential json file in <code>ruby-cli</code> folder and rename it to <code>OAuth2.0_secret.json</code>.</p>
+<p><strong>Note:</strong> You can rename it any name.</p>
+<h3 id="create-ruby-script-bloggerclirb">Create Ruby script <code>bloggerCli.rb</code></h3>
+<p>Create following ruby script in <code>ruby-cli</code> folder.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e">#! /usr/bin/ruby</span>
+
+<span style="color:#75715e"># https://github.com/googleapis/google-api-ruby-client</span>
+<span style="color:#75715e"># https://github.com/googleapis/google-api-ruby-client/blob/master/docs/oauth-server.md</span>
+<span style="color:#75715e"># https://github.com/googleapis/google-api-ruby-client/blob/master/docs/oauth-installed.md</span>
+<span style="color:#75715e"># https://github.com/googleapis/google-auth-library-ruby</span>
+<span style="color:#75715e"># https://googleapis.dev/ruby/google-api-client/latest/Google/Apis/BloggerV3/BloggerService.html</span>
+<span style="color:#75715e"># https://developers.google.com/identity/protocols/googlescopes</span>
+<span style="color:#75715e"># https://console.developers.google.com/apis/credentials</span>
+<span style="color:#75715e"># https://www.rubydoc.info/gems/slop/4.8.0</span>
+
+<span style="color:#75715e"># Note: This script does NOT check the duplicate title of posts while inserting the post in Blog.</span>
+
+require <span style="color:#e6db74">&#39;googleauth&#39;</span>
+require <span style="color:#e6db74">&#39;google/apis/blogger_v3&#39;</span>
+require <span style="color:#e6db74">&#39;googleauth/stores/file_token_store&#39;</span>
+require <span style="color:#e6db74">&#39;launchy&#39;</span>
+require <span style="color:#e6db74">&#39;slop&#39;</span>
+
+opts <span style="color:#f92672">=</span> <span style="color:#66d9ef">Slop</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Options</span><span style="color:#f92672">.</span>new
+opts<span style="color:#f92672">.</span>banner <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">usage: </span><span style="color:#e6db74">#{</span><span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>basename(__FILE__)<span style="color:#e6db74">}</span><span style="color:#e6db74"> -f &lt;html file&gt; -t &lt;post title&gt; -l &lt;label_string1&gt; -l &lt;label_string2&gt; -l .. -l ..</span><span style="color:#e6db74">&#34;</span>
+opts<span style="color:#f92672">.</span>string <span style="color:#e6db74">&#39;-f&#39;</span>, <span style="color:#e6db74">&#39;--uploadfile&#39;</span>, <span style="color:#e6db74">&#39;html file&#39;</span>, <span style="color:#e6db74">required</span>: <span style="color:#66d9ef">true</span>
+opts<span style="color:#f92672">.</span>string <span style="color:#e6db74">&#39;-t&#39;</span>, <span style="color:#e6db74">&#39;--title&#39;</span>, <span style="color:#e6db74">&#39;Post Title&#39;</span>, <span style="color:#e6db74">required</span>: <span style="color:#66d9ef">true</span>
+opts<span style="color:#f92672">.</span>string <span style="color:#e6db74">&#39;-e&#39;</span>, <span style="color:#e6db74">&#39;--email&#39;</span>, <span style="color:#e6db74">&#39;Account email id&#39;</span>, <span style="color:#e6db74">required</span>: <span style="color:#66d9ef">true</span>
+opts<span style="color:#f92672">.</span>string <span style="color:#e6db74">&#39;-b&#39;</span>, <span style="color:#e6db74">&#39;--blogid&#39;</span>, <span style="color:#e6db74">&#39;Blog id&#39;</span>, <span style="color:#e6db74">required</span>: <span style="color:#66d9ef">true</span>
+opts<span style="color:#f92672">.</span>array <span style="color:#e6db74">&#39;-l&#39;</span>, <span style="color:#e6db74">&#39;--labels&#39;</span>, <span style="color:#e6db74">&#39;comma separated labels&#39;</span>, <span style="color:#e6db74">delimiter</span>: <span style="color:#e6db74">&#39;,&#39;</span>
+
+parser <span style="color:#f92672">=</span> <span style="color:#66d9ef">Slop</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Parser</span><span style="color:#f92672">.</span>new(opts)
+<span style="color:#66d9ef">begin</span>
+    result <span style="color:#f92672">=</span> parser<span style="color:#f92672">.</span>parse(<span style="color:#66d9ef">ARGV</span>)
+<span style="color:#66d9ef">rescue</span> <span style="color:#66d9ef">Slop</span><span style="color:#f92672">::</span><span style="color:#66d9ef">MissingRequiredOption</span>, <span style="color:#66d9ef">Slop</span><span style="color:#f92672">::</span><span style="color:#66d9ef">MissingRequiredOption</span>
+    puts opts
+    <span style="color:#66d9ef">raise</span>
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">BLOG_ID</span> <span style="color:#f92672">=</span> result<span style="color:#f92672">[</span><span style="color:#e6db74">:blogid</span><span style="color:#f92672">]</span>
+<span style="color:#66d9ef">ACCOUNT_EMAIL</span> <span style="color:#f92672">=</span> result<span style="color:#f92672">[</span><span style="color:#e6db74">:email</span><span style="color:#f92672">]</span>
+<span style="color:#66d9ef">FILE_TO_POST</span> <span style="color:#f92672">=</span> result<span style="color:#f92672">[</span><span style="color:#e6db74">:uploadfile</span><span style="color:#f92672">]</span>
+<span style="color:#66d9ef">POST_TITLE</span> <span style="color:#f92672">=</span> result<span style="color:#f92672">[</span><span style="color:#e6db74">:title</span><span style="color:#f92672">]</span>
+<span style="color:#66d9ef">LABELS_FOR_POST</span> <span style="color:#f92672">=</span> result<span style="color:#f92672">[</span><span style="color:#e6db74">:labels</span><span style="color:#f92672">]</span>
+
+<span style="color:#66d9ef">SCOPE</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;https://www.googleapis.com/auth/blogger&#39;</span>
+<span style="color:#66d9ef">OOB_URI</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;urn:ietf:wg:oauth:2.0:oob&#39;</span>
+<span style="color:#66d9ef">SERVICE_ACCOUNT_FILE</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;blogger-api-credentials.json&#39;</span>
+<span style="color:#66d9ef">OAUTH2_ACCOUNT_FILE</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;OAuth2.0_secret.json&#39;</span>
+
+
+<span style="color:#75715e"># create an API client from service account</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e"></span><span style="color:#f92672"></span><span style="color:#a6e22e">create_client_from_serviceAccount</span>(scope, service_account_cred)
+    authorizer <span style="color:#f92672">=</span> <span style="color:#66d9ef">Google</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Auth</span><span style="color:#f92672">::</span><span style="color:#66d9ef">ServiceAccountCredentials</span><span style="color:#f92672">.</span>make_creds(
+                    <span style="color:#e6db74">json_key_io</span>: <span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>open(service_account_cred), <span style="color:#e6db74">scope</span>: scope)
+
+    authorizer<span style="color:#f92672">.</span>fetch_access_token!
+    blogger <span style="color:#f92672">=</span> <span style="color:#66d9ef">Google</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Apis</span><span style="color:#f92672">::</span><span style="color:#66d9ef">BloggerV3</span><span style="color:#f92672">::</span><span style="color:#66d9ef">BloggerService</span><span style="color:#f92672">.</span>new
+    blogger<span style="color:#f92672">.</span>authorization <span style="color:#f92672">=</span> authorizer
+    <span style="color:#66d9ef">return</span> blogger
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#75715e"># create an API client from an AOUTH2.0 account.</span>
+<span style="color:#75715e"># Following function will create a new file called tokens.yaml</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e"></span><span style="color:#f92672"></span><span style="color:#a6e22e">create_client_from_outhAccount</span>(scope, oob_uri, user_id, oauth_cred_file)
+    <span style="color:#75715e">#oob_uri = &#39;urn:ietf:wg:oauth:2.0:oob&#39;</span>
+    <span style="color:#75715e">#user_id = &#39;eyemole@gmail.com&#39;</span>
+    client_id <span style="color:#f92672">=</span> <span style="color:#66d9ef">Google</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Auth</span><span style="color:#f92672">::</span><span style="color:#66d9ef">ClientId</span><span style="color:#f92672">.</span>from_file(oauth_cred_file)
+    token_store <span style="color:#f92672">=</span> <span style="color:#66d9ef">Google</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Auth</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Stores</span><span style="color:#f92672">::</span><span style="color:#66d9ef">FileTokenStore</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">:file</span> <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> <span style="color:#e6db74">&#39;tokens.yaml&#39;</span>)
+    authorizer <span style="color:#f92672">=</span> <span style="color:#66d9ef">Google</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Auth</span><span style="color:#f92672">::</span><span style="color:#66d9ef">UserAuthorizer</span><span style="color:#f92672">.</span>new(client_id, scope, token_store)
+    credentials <span style="color:#f92672">=</span> authorizer<span style="color:#f92672">.</span>get_credentials(user_id)
+    <span style="color:#66d9ef">if</span> credentials<span style="color:#f92672">.</span>nil?
+        url <span style="color:#f92672">=</span> authorizer<span style="color:#f92672">.</span>get_authorization_url(<span style="color:#e6db74">base_url</span>: oob_uri )
+        <span style="color:#66d9ef">Launchy</span><span style="color:#f92672">.</span>open(url)
+        print <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">enter the code you got from browser here and press Enter: </span><span style="color:#e6db74">&#34;</span>
+        <span style="color:#75715e"># code = gets</span>
+        code <span style="color:#f92672">=</span> <span style="color:#66d9ef">STDIN</span><span style="color:#f92672">.</span>gets<span style="color:#f92672">.</span>chomp
+        credentials <span style="color:#f92672">=</span> authorizer<span style="color:#f92672">.</span>get_and_store_credentials_from_code(<span style="color:#e6db74">user_id</span>: user_id, <span style="color:#e6db74">code</span>: code, <span style="color:#e6db74">base_url</span>: oob_uri)
+    <span style="color:#66d9ef">end</span>
+    blogger <span style="color:#f92672">=</span> <span style="color:#66d9ef">Google</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Apis</span><span style="color:#f92672">::</span><span style="color:#66d9ef">BloggerV3</span><span style="color:#f92672">::</span><span style="color:#66d9ef">BloggerService</span><span style="color:#f92672">.</span>new
+    blogger<span style="color:#f92672">.</span>authorization <span style="color:#f92672">=</span> credentials
+    <span style="color:#66d9ef">return</span> blogger
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#75715e"># From a service account you cannot create a new post in blogger. It might need some special permissions that I am not aware of.</span>
+<span style="color:#75715e"># However, Service account can read posts and fetch them.</span>
+<span style="color:#75715e"># blogger = create_client_from_serviceAccount(scope, SERVICE_ACCOUNT_FILE)</span>
+
+<span style="color:#75715e"># Below will open a browser window to authenticate yourself.</span>
+blogger <span style="color:#f92672">=</span> create_client_from_outhAccount(<span style="color:#66d9ef">SCOPE</span>, <span style="color:#66d9ef">OOB_URI</span>, <span style="color:#66d9ef">ACCOUNT_EMAIL</span>, <span style="color:#66d9ef">OAUTH2_ACCOUNT_FILE</span>)
+
+blog <span style="color:#f92672">=</span> blogger<span style="color:#f92672">.</span>get_blog(<span style="color:#66d9ef">BLOG_ID</span>)
+<span style="color:#75715e"># puts &#34;blog URL = #{blog.url}&#34;</span>
+puts <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Total posts in this blog = </span><span style="color:#e6db74">#{</span>blog<span style="color:#f92672">.</span>posts<span style="color:#f92672">.</span>total_items<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+
+puts <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">========== Inserting a new Post ========</span><span style="color:#e6db74">&#34;</span>
+
+contents <span style="color:#f92672">=</span> <span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>read(<span style="color:#66d9ef">FILE_TO_POST</span>)
+
+new_post <span style="color:#f92672">=</span> <span style="color:#66d9ef">Google</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Apis</span><span style="color:#f92672">::</span><span style="color:#66d9ef">BloggerV3</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Post</span><span style="color:#f92672">.</span>new
+new_post<span style="color:#f92672">.</span>kind <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">blogger</span><span style="color:#e6db74">#</span><span style="color:#e6db74">post</span><span style="color:#e6db74">&#34;</span>
+new_post<span style="color:#f92672">.</span>title <span style="color:#f92672">=</span> <span style="color:#66d9ef">POST_TITLE</span>
+new_post<span style="color:#f92672">.</span>content <span style="color:#f92672">=</span> contents
+new_post<span style="color:#f92672">.</span>labels <span style="color:#f92672">=</span> <span style="color:#66d9ef">LABELS_FOR_POST</span>
+blogger<span style="color:#f92672">.</span>insert_post(<span style="color:#66d9ef">BLOG_ID</span>, new_post)
+
+blog <span style="color:#f92672">=</span> blogger<span style="color:#f92672">.</span>get_blog(<span style="color:#66d9ef">BLOG_ID</span>)
+puts <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Total posts in this blog = </span><span style="color:#e6db74">#{</span>blog<span style="color:#f92672">.</span>posts<span style="color:#f92672">.</span>total_items<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+
+<span style="color:#75715e">#posts.items.each do |post|</span>
+<span style="color:#75715e">#    puts post.to_json</span>
+<span style="color:#75715e">#end</span>
+</code></pre></div><h3 id="create-a-test-file-to-be-uploaded">Create a test file to be uploaded.</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">echo <span style="color:#e6db74">&#39;This is a first post&#39;</span> &gt; sometext.txt
+</code></pre></div><p><strong>Note</strong>: You can create an HTML file as well.</p>
+<h3 id="run-the-script">Run the script.</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ruby bloggerCli.rb -f sometext.txt -t <span style="color:#e6db74">&#34;My First Post&#34;</span> -e <span style="color:#e6db74">&#34;&lt;userAccount&gt;@gmail.com&#34;</span> -b <span style="color:#e6db74">&#34;3434533535534&#34;</span> -l label1,label2
+enter the code you got from browser here and press Enter: 6/xQEBsJRhTZfthVP9ZSNsasaa7Y78HSDj2sd7aG
+Total posts in this blog <span style="color:#f92672">=</span> 0
+<span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span> Inserting a new Post <span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span>
+Total posts in this blog <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</code></pre></div><p><strong>Note-1</strong>: While running above script, this will open a browser and wil ask you to login to your google account.</p>
+<p><strong>Note-2</strong>: Above run will create a <code>tokens.yaml</code> file. On subsequent runs, browser window will not open due to presence of tokens.yaml file. If you remove this file, then you will have to authenticate again in the browser.</p>
+<h3 id="references-used">References used:</h3>
+<ul>
+<li><a href="https://github.com/googleapis/google-api-ruby-client">https://github.com/googleapis/google-api-ruby-client</a></li>
+<li><a href="https://github.com/googleapis/google-api-ruby-client/blob/master/docs/oauth-server.md">https://github.com/googleapis/google-api-ruby-client/blob/master/docs/oauth-server.md</a></li>
+<li><a href="https://github.com/googleapis/google-api-ruby-client/blob/master/docs/oauth-installed.md">https://github.com/googleapis/google-api-ruby-client/blob/master/docs/oauth-installed.md</a></li>
+<li><a href="https://github.com/googleapis/google-auth-library-ruby">https://github.com/googleapis/google-auth-library-ruby</a></li>
+<li><a href="https://googleapis.dev/ruby/google-api-client/latest/Google/Apis/BloggerV3/BloggerService.html">https://googleapis.dev/ruby/google-api-client/latest/Google/Apis/BloggerV3/BloggerService.html</a></li>
+<li><a href="https://developers.google.com/identity/protocols/googlescopes">https://developers.google.com/identity/protocols/googlescopes</a></li>
+<li><a href="https://console.developers.google.com/apis/credentials">https://console.developers.google.com/apis/credentials</a></li>
+<li><a href="https://www.rubydoc.info/gems/slop/4.8.0">https://www.rubydoc.info/gems/slop/4.8.0</a></li>
+</ul>
+
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/blogger/" rel="tag">blogger</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/python/" rel="tag">python</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/google-api/" rel="tag">google API</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/blogger-api/" rel="tag">blogger API</a></li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<div class="authorbox__header">
+		<span class="authorbox__name">About SpareSlant</span>
+	</div>
+</div>
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/posts/blogger_python_cli/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Blogger python cli</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2020 SpareSlant.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
+</html>
