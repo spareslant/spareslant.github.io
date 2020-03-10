@@ -70,26 +70,32 @@
 <p>We will be creating a commandLine utility in <code>python</code> to upload a post in Google blogger.</p>
 <h2 id="account-preparation">Account Preparation</h2>
 <ul>
-<li>You need to have a <code>google</code> account (gmail) (Paid account NOT required).</li>
-<li>Once you have a google account, Login to <em><a href="https://console.developers.google.com/apis/credentials">https://console.developers.google.com/apis/credentials</a></em> and create a new <code>Project</code> here.</li>
-<li>Click on <code>Dashboard</code> on left hand column, and click on <code>+ ENABLE APIS AND SERVICES</code>.
+<li>
+<p>You need to have a <code>google</code> account (gmail) (Paid account NOT required).</p>
+</li>
+<li>
+<p>Once you have a google account, Login to <em><a href="https://console.developers.google.com/apis/credentials">https://console.developers.google.com/apis/credentials</a></em> and create a new <code>Project</code> here.</p>
+</li>
+<li>
+<p>Click on <code>Dashboard</code> on left hand column, and click on <code>+ ENABLE APIS AND SERVICES</code>.</p>
 <ul>
 <li>Type in <code>blogger</code> in search bar, and select <code>Blogger API v3</code> and then click <code>ENABLE</code>.`</li>
 </ul>
 </li>
-<li>Click on <code>OAuth consent screen</code> on left hand column, and select <code>User Type</code> to <code>External</code> and click <code>CREATE</code>.
+<li>
+<p>Click on <code>OAuth consent screen</code> on left hand column, and select <code>User Type</code> to <code>External</code> and click <code>CREATE</code>.</p>
 <ul>
 <li>On next screen type in <code>Application Name</code> as <code>Blogger CLI</code> (It can be any string).</li>
 <li>Click on <code>Add Scope</code> and select both the <code>Blogger API v3</code> options and click <code>ADD</code> and click <code>Save</code>.</li>
 </ul>
 </li>
-<li>Click on <code>Credentials</code> on the left hand side and you will be presented with following two options of creating credentials for Blogger API.
+<li>
+<p>Click on <code>Credentials</code> on the left hand side and you will be presented with following two options of creating credentials for Blogger API.</p>
 <ul>
 <li>API Keys</li>
 <li>OAuth 2.0 Client IDs</li>
 <li>Service Accounts</li>
-<li>Click on <code>+ CREATE CREDENTAILS</code> on the top and select <code>OAuth Client ID</code> from drop down menu.
-<ul>
+<li>Click on <code>+ CREATE CREDENTAILS</code> on the top and select <code>OAuth Client ID</code> from drop down menu.</li>
 <li>Select <code>Application Type</code> to <code>other</code>.</li>
 <li>Type in <code>Name</code> to <code>Python Blogger CLI</code> (it can be any string) and click create.</li>
 <li>You will see an entry with name <code>Python Blogger CLI</code> under <code>OAuth 2.0 Client IDs</code>.</li>
@@ -97,9 +103,8 @@
 <li>This will be a <code>json</code> file and we need it to authenticate it with google <code>OAuth2.0</code> services.</li>
 </ul>
 </li>
-</ul>
-</li>
-<li>Login to blogger site <em><a href="https://www.blogger.com">https://www.blogger.com</a></em>
+<li>
+<p>Login to blogger site <em><a href="https://www.blogger.com">https://www.blogger.com</a></em></p>
 <ul>
 <li>Sign-in to blogger.</li>
 <li>Enter a display name you like.</li>
