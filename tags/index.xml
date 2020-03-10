@@ -6,10 +6,37 @@
     <description>Recent content in Tags on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Tue, 10 Mar 2020 11:12:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 10 Mar 2020 17:50:49 +0000</lastBuildDate>
     
 	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Ruby</title>
+      <link>/tags/ruby/</link>
+      <pubDate>Tue, 10 Mar 2020 17:50:49 +0000</pubDate>
+      
+      <guid>/tags/ruby/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Vagrant</title>
+      <link>/tags/vagrant/</link>
+      <pubDate>Tue, 10 Mar 2020 17:50:49 +0000</pubDate>
+      
+      <guid>/tags/vagrant/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Vagrantfile</title>
+      <link>/tags/vagrantfile/</link>
+      <pubDate>Tue, 10 Mar 2020 17:50:49 +0000</pubDate>
+      
+      <guid>/tags/vagrantfile/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>blogger</title>

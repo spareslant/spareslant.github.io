@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Vagrantfile on SpareSlant Technical Blog</title>
+    <link>/tags/vagrantfile/</link>
+    <description>Recent content in Vagrantfile on SpareSlant Technical Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <lastBuildDate>Tue, 10 Mar 2020 17:50:49 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/vagrantfile/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Multiple Vms Vagrantfile</title>
+      <link>/posts/multiple-vms-vagrantfile/</link>
+      <pubDate>Tue, 10 Mar 2020 17:50:49 +0000</pubDate>
+      
+      <guid>/posts/multiple-vms-vagrantfile/</guid>
+      <description>Introduction A Vagrantfile for multiple VMS.
+Prepare Environment mkdir Vagrant_VMS cd Vagrant_VMS vagrant init Populate Vagrantfile with following contents. all_hosts = [ { vagrant_hostname: &amp;#34;amachine&amp;#34;, full_hostname: &amp;#34;amachine.virtual.machine&amp;#34;, vmbox: &amp;#34;fedora/31-cloud-base&amp;#34;, vmbox_version: &amp;#34;31.20191023.0&amp;#34;, ip: &amp;#34;10.0.0.10&amp;#34;, memory: 2048, cpus: 1 }, # { # vagrant_hostname: &amp;#34;anotherMachine&amp;#34;, # full_hostname: &amp;#34;another.virtual.machine&amp;#34;, # vmbox: &amp;#34;fedora/31-cloud-base&amp;#34;, # vmbox_version: &amp;#34;31.20191023.0&amp;#34;, # ip: &amp;#34;10.0.0.12&amp;#34;, # memory: 2048, # cpus: 1 # }, ] # individual machine names must be mentioned is below command line in # order to bring machines.</description>
+    </item>
+    
+  </channel>
+</rss>
