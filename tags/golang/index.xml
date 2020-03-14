@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Golang on SpareSlant Technical Blog</title>
+    <link>/tags/golang/</link>
+    <description>Recent content in Golang on SpareSlant Technical Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <lastBuildDate>Sat, 14 Mar 2020 21:16:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Blogger Go Cli</title>
+      <link>/posts/blogger-go-cli/</link>
+      <pubDate>Sat, 14 Mar 2020 21:16:00 +0000</pubDate>
+      
+      <guid>/posts/blogger-go-cli/</guid>
+      <description>Introduction We will be creating a commandLine utility in Go to upload a post in Google blogger.
+Account Preparation   You need to have a google account (gmail) (Paid account NOT required).
+  Once you have a google account, Login to https://console.developers.google.com/apis/credentials and create a new Project here.
+  Click on Dashboard on left hand column, and click on + ENABLE APIS AND SERVICES.
+ Type in blogger in search bar, and select Blogger API v3 and then click ENABLE.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -6,10 +6,55 @@
     <description>Recent content in Tags on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Tue, 10 Mar 2020 17:50:49 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Mar 2020 21:16:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>blogger</title>
+      <link>/tags/blogger/</link>
+      <pubDate>Sat, 14 Mar 2020 21:16:00 +0000</pubDate>
+      
+      <guid>/tags/blogger/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>blogger API</title>
+      <link>/tags/blogger-api/</link>
+      <pubDate>Sat, 14 Mar 2020 21:16:00 +0000</pubDate>
+      
+      <guid>/tags/blogger-api/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Go</title>
+      <link>/tags/go/</link>
+      <pubDate>Sat, 14 Mar 2020 21:16:00 +0000</pubDate>
+      
+      <guid>/tags/go/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Golang</title>
+      <link>/tags/golang/</link>
+      <pubDate>Sat, 14 Mar 2020 21:16:00 +0000</pubDate>
+      
+      <guid>/tags/golang/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>google API</title>
+      <link>/tags/google-api/</link>
+      <pubDate>Sat, 14 Mar 2020 21:16:00 +0000</pubDate>
+      
+      <guid>/tags/google-api/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Ruby</title>
@@ -39,15 +84,6 @@
     </item>
     
     <item>
-      <title>blogger</title>
-      <link>/tags/blogger/</link>
-      <pubDate>Tue, 10 Mar 2020 11:12:00 +0000</pubDate>
-      
-      <guid>/tags/blogger/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>blogger HTML</title>
       <link>/tags/blogger-html/</link>
       <pubDate>Tue, 10 Mar 2020 11:12:00 +0000</pubDate>
@@ -71,24 +107,6 @@
       <pubDate>Tue, 10 Mar 2020 11:12:00 +0000</pubDate>
       
       <guid>/tags/html-generation/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>blogger API</title>
-      <link>/tags/blogger-api/</link>
-      <pubDate>Tue, 10 Mar 2020 00:34:42 +0000</pubDate>
-      
-      <guid>/tags/blogger-api/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>google API</title>
-      <link>/tags/google-api/</link>
-      <pubDate>Tue, 10 Mar 2020 00:34:42 +0000</pubDate>
-      
-      <guid>/tags/google-api/</guid>
       <description></description>
     </item>
     
