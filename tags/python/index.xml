@@ -13,10 +13,10 @@
     
     <item>
       <title>Blogger ruby cli</title>
-      <link>/posts/blogger_ruby_cli/</link>
+      <link>/posts/blogger-ruby-cli/</link>
       <pubDate>Tue, 10 Mar 2020 00:34:42 +0000</pubDate>
       
-      <guid>/posts/blogger_ruby_cli/</guid>
+      <guid>/posts/blogger-ruby-cli/</guid>
       <description>Introduction We will be creating a commandLine utility in ruby to upload a post in Google blogger.
 Account Preparation   You need to have a google account (gmail) (Paid account NOT required).
   Once you have a google account, Login to https://console.developers.google.com/apis/credentials and create a new Project here.
@@ -26,10 +26,10 @@ Account Preparation   You need to have a google account (gmail) (Paid account NO
     
     <item>
       <title>Blogger python cli</title>
-      <link>/posts/blogger_python_cli/</link>
+      <link>/posts/blogger-python-cli/</link>
       <pubDate>Mon, 09 Mar 2020 18:46:41 +0000</pubDate>
       
-      <guid>/posts/blogger_python_cli/</guid>
+      <guid>/posts/blogger-python-cli/</guid>
       <description>Introduction We will be creating a commandLine utility in python to upload a post in Google blogger.
 Account Preparation   You need to have a google account (gmail) (Paid account NOT required).
   Once you have a google account, Login to https://console.developers.google.com/apis/credentials and create a new Project here.

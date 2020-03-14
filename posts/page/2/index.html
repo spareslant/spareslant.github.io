@@ -4,14 +4,14 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Vundle - SpareSlant Technical Blog</title>
+	<title>Posts - SpareSlant Technical Blog</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
 	
 	
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
-	<link rel="alternate" type="application/rss+xml" href="/tags/vundle/index.xml" title="SpareSlant Technical Blog">
+	<link rel="alternate" type="application/rss+xml" href="/posts/index.xml" title="SpareSlant Technical Blog">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
 	<link rel="stylesheet" href="/css/style.css">
 	<link rel="stylesheet" href="/css/my.css">
@@ -36,31 +36,35 @@
 			
 <main class="main list" role="main">
 	<header class="main__header">
-		<h1 class="main__title">Vundle</h1>
+		<h1 class="main__title">Posts</h1>
 	</header><article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
-			<a href="/posts/vim-vagrant-plugin/" rel="bookmark">
-			Vim Vagrant Plugin using Vundle
+			<a href="/posts/ssl-certificate/" rel="bookmark">
+			SSL Certificate Mutual Authentication
 			</a>
 		</h3>
 		<div class="list__meta meta">
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
-	<time class="meta__text" datetime="2020-02-25T17:13:09">2020-02-25</time>
+	<time class="meta__text" datetime="2019-07-17T21:35:50">2019-07-17</time>
 </div>
 </div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		Introduction We will be installing VIM vagrant plugin using Vundle. This assumes that you have already configured your VIM to use Vundle
-A sample .vimrc file after installing Vundle is below. Vundle installation can be done by following this link https://github.com/VundleVim/Vundle.vim .
-set nocompatible &quot; be iMproved, required filetype off &quot; required &quot; set the runtime path to include Vundle and initialize set rtp+=~/.vim/bundle/Vundle.vim call vundle#begin() Plugin 'VundleVim/Vundle.vim' &quot; All of your Plugins must be added before the following line call vundle#end() &quot; required set tabstop=4 set expandtab set softtabstop=4 set shiftwidth=4 filetype indent on syntax on &quot; color desert &quot; color lettuce Preparation of Vagrantfile plugin for Vundle Create following structure of directories and files.
+		Introduction We will be creating our own CA (Certificate Authority), CSR (Certificate Signing Request), signed certificate. We will be creating server side and client side certificate and will verify them using openssl and curl.
+Prepare environment os used $ cat /etc/fedora-release Fedora release 30 (Thirty) $ uname -a Linux localhost.localdomain 5.0.9-301.fc30.x86_64 #1 SMP Tue Apr 23 23:57:35 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux Prepare openssl conf files A reference conf file can be found in /etc/pki/tls/openssl.
 	</div>
 	<div class="list__footer clearfix">
-		<a class="list__footer-readmore btn" href="/posts/vim-vagrant-plugin/">Read more…</a>
+		<a class="list__footer-readmore btn" href="/posts/ssl-certificate/">Read more…</a>
 	</div>
 </article>
 </main>
+
+<div class="pagination">
+	<a class="pagination__item pagination__item--prev btn" href="/posts/">«</a>
+	<span class="pagination__item pagination__item--current">2/2</span>
+</div>
 
 
 			</div>

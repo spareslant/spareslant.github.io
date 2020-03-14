@@ -3,22 +3,27 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/posts/blogger-go-cli/</loc>
+    <lastmod>2020-03-14T21:16:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/</loc>
+    <lastmod>2020-03-14T21:16:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/</loc>
+    <lastmod>2020-03-14T21:16:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/posts/multiple-vms-vagrantfile/</loc>
     <lastmod>2020-03-10T17:50:49+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/posts/</loc>
-    <lastmod>2020-03-10T17:50:49+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/tags/ruby/</loc>
-    <lastmod>2020-03-10T17:50:49+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/</loc>
     <lastmod>2020-03-10T17:50:49+00:00</lastmod>
   </url>
   
@@ -68,7 +73,7 @@
   </url>
   
   <url>
-    <loc>/posts/blogger_ruby_cli/</loc>
+    <loc>/posts/blogger-ruby-cli/</loc>
     <lastmod>2020-03-10T00:34:42+00:00</lastmod>
   </url>
   
@@ -83,7 +88,7 @@
   </url>
   
   <url>
-    <loc>/posts/blogger_python_cli/</loc>
+    <loc>/posts/blogger-python-cli/</loc>
     <lastmod>2020-03-09T18:46:41+00:00</lastmod>
   </url>
   

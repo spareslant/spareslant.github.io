@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-gb">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Blogger Go Cli - SpareSlant Technical Blog</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/my.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="SpareSlant Technical Blog" rel="home">
+				<div class="logo__title">SpareSlant Technical Blog</div>
+				<div class="logo__tagline">SpareSlant tech blog</div>
+			</a>
+		</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Blogger Go Cli</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2020-03-14T21:16:00">2020-03-14</time>
+</div>
+</div>
+		</header>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#account-preparation">Account Preparation</a></li>
+    <li><a href="#go-development-environment-creation">Go development environment creation</a>
+      <ul>
+        <li><a href="#setup-following-go-development-directory-structure">Setup following Go development directory structure.</a></li>
+        <li><a href="#install-required-libraries">Install required libraries.</a></li>
+        <li><a href="#copy-credential-file">Copy credential file.</a></li>
+        <li><a href="#create-go-file-bloggercligo-clisrcbloggerbloggercligo-file-with-following-contents">Create Go file BloggerCli/go-cli/src/blogger/bloggerCli.go file with following contents.</a></li>
+        <li><a href="#run-the-script">Run the script</a></li>
+        <li><a href="#references-used">References used</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<h2 id="introduction">Introduction</h2>
+<p>We will be creating a commandLine utility in <code>Go</code> to upload a post in Google blogger.</p>
+<h2 id="account-preparation">Account Preparation</h2>
+<ul>
+<li>
+<p>You need to have a <code>google</code> account (gmail) (Paid account NOT required).</p>
+</li>
+<li>
+<p>Once you have a google account, Login to <em><a href="https://console.developers.google.com/apis/credentials">https://console.developers.google.com/apis/credentials</a></em> and create a new <code>Project</code> here.</p>
+</li>
+<li>
+<p>Click on <code>Dashboard</code> on left hand column, and click on <code>+ ENABLE APIS AND SERVICES</code>.</p>
+<ul>
+<li>Type in <code>blogger</code> in search bar, and select <code>Blogger API v3</code> and then click <code>ENABLE</code>.`</li>
+</ul>
+</li>
+<li>
+<p>Click on <code>OAuth consent screen</code> on left hand column, and select <code>User Type</code> to <code>External</code> and click <code>CREATE</code>.</p>
+<ul>
+<li>On next screen type in <code>Application Name</code> as <code>Blogger CLI</code> (It can be any string).</li>
+<li>Click on <code>Add Scope</code> and select both the <code>Blogger API v3</code> options and click <code>ADD</code> and click <code>Save</code>.</li>
+</ul>
+</li>
+<li>
+<p>Click on <code>Credentials</code> on the left hand side and you will be presented with following two options of creating credentials for Blogger API.</p>
+<ul>
+<li>API Keys</li>
+<li>OAuth 2.0 Client IDs</li>
+<li>Service Accounts</li>
+<li>Click on <code>+ CREATE CREDENTAILS</code> on the top and select <code>OAuth Client ID</code> from drop down menu.</li>
+<li>Select <code>Application Type</code> to <code>other</code>.</li>
+<li>Type in <code>Name</code> to <code>CLI Utility</code> (it can be any string) and click create.</li>
+<li>You will see an entry with name <code>CLI Utility</code> under <code>OAuth 2.0 Client IDs</code>.</li>
+<li>Download the credential files by clicking on a <em>down arrow</em> button.</li>
+<li>This will be a <code>json</code> file and we need it to authenticate it with google <code>OAuth2.0</code> services.</li>
+</ul>
+</li>
+<li>
+<p>Login to blogger site <em><a href="https://www.blogger.com">https://www.blogger.com</a></em></p>
+<ul>
+<li>Sign-in to blogger.</li>
+<li>Enter a display name you like.</li>
+<li>Create a <code>NEW BLOG</code> and give it a name you like in <code>Ttile</code></li>
+<li>Type in address. It has to be a unique e.g somethingrandom23455.blogspot.com and click <code>create blog</code></li>
+<li>On next screen, look at the address bar of browser, it will be like <em><a href="https://www.blogger.com/blogger.g?blogID=3342324243435#allposts">https://www.blogger.com/blogger.g?blogID=3342324243435#allposts</a></em></li>
+<li>Note down blog ID (a string after <strong>blogID=</strong>, excluding #allposts) in above URL. We need this ID to put in <code>Go</code> script.</li>
+</ul>
+</li>
+</ul>
+<h2 id="go-development-environment-creation">Go development environment creation</h2>
+<p>I am using following <code>Go</code> version.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ go version
+go version go1.13.8 darwin/amd64
+</code></pre></div><h3 id="setup-following-go-development-directory-structure">Setup following <code>Go</code> development directory structure.</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir -p BloggerCli/go-cli
+touch BloggerCli/go-cli/createAndActivateGoWorkSpace.sh
+</code></pre></div><p>Populate <code>BloggerCli/go-cli/createAndActivateGoWorkSpace.sh</code> with following contents</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#! /bin/bash
+</span><span style="color:#75715e"></span><span style="color:#75715e"># current directory is workspace</span>
+WORKSPACE<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>pwd<span style="color:#66d9ef">)</span>
+cd <span style="color:#e6db74">&#34;</span>$WORKSPACE<span style="color:#e6db74">&#34;</span>
+mkdir -p src bin pkg
+export GOPATH<span style="color:#f92672">=</span>$WORKSPACE
+</code></pre></div><p>Create directory structure</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd BloggerCli/go-cli
+source ./createAndActivateGoWorkSpace.sh
+mkdir src/blogger
+</code></pre></div><h3 id="install-required-libraries">Install required libraries.</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">go get -v google.golang.org/api/blogger/v3
+go get -v golang.org/x/oauth2/google
+</code></pre></div><h3 id="copy-credential-file">Copy credential file.</h3>
+<p>Copy above downloaded credential json file in <code>BloggerCli/go-cli/src/blogger</code> folder and rename it to <code>OAuth2.0_secret.json</code>.</p>
+<p><strong>Note:</strong> You can rename it any name</p>
+<h3 id="create-go-file-bloggercligo-clisrcbloggerbloggercligo-file-with-following-contents">Create <code>Go</code> file <code>BloggerCli/go-cli/src/blogger/bloggerCli.go</code> file with following contents.</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#75715e">/*
+</span><span style="color:#75715e">https://pkg.go.dev/google.golang.org/api/blogger/v3?tab=doc
+</span><span style="color:#75715e">https://godoc.org/google.golang.org/api/option
+</span><span style="color:#75715e">https://pkg.go.dev/golang.org/x/oauth2/google?tab=doc
+</span><span style="color:#75715e">https://pkg.go.dev/golang.org/x/oauth2?tab=doc#Config.AuthCodeURL
+</span><span style="color:#75715e">*/</span>
+
+<span style="color:#f92672">import</span> (
+	<span style="color:#e6db74">&#34;context&#34;</span>
+	<span style="color:#e6db74">&#34;flag&#34;</span>
+	<span style="color:#e6db74">&#34;fmt&#34;</span>
+	<span style="color:#e6db74">&#34;io/ioutil&#34;</span>
+	<span style="color:#e6db74">&#34;log&#34;</span>
+	<span style="color:#e6db74">&#34;os&#34;</span>
+	<span style="color:#e6db74">&#34;strings&#34;</span>
+
+	<span style="color:#e6db74">&#34;golang.org/x/oauth2&#34;</span>
+	<span style="color:#e6db74">&#34;golang.org/x/oauth2/google&#34;</span>
+
+	<span style="color:#e6db74">&#34;google.golang.org/api/blogger/v3&#34;</span>
+	<span style="color:#e6db74">&#34;google.golang.org/api/option&#34;</span>
+)
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">printNoOfPosts</span>(<span style="color:#a6e22e">postListCall</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">blogger</span>.<span style="color:#a6e22e">PostsListCall</span>) {
+	<span style="color:#a6e22e">postList</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">postListCall</span>.<span style="color:#a6e22e">Do</span>()
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#a6e22e">err</span>)
+	}
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Total posts in this blog: %d\n&#34;</span>, len(<span style="color:#a6e22e">postList</span>.<span style="color:#a6e22e">Items</span>))
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">checkErrorAndExit</span>(<span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>) {
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#a6e22e">err</span>)
+	}
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">getBloggerClient</span>() <span style="color:#f92672">*</span><span style="color:#a6e22e">blogger</span>.<span style="color:#a6e22e">Service</span> {
+	<span style="color:#a6e22e">ctx</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>()
+
+	<span style="color:#a6e22e">contents</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ioutil</span>.<span style="color:#a6e22e">ReadFile</span>(<span style="color:#e6db74">&#34;OAuth2.0_secret.json&#34;</span>)
+	<span style="color:#a6e22e">checkErrorAndExit</span>(<span style="color:#a6e22e">err</span>)
+
+	<span style="color:#a6e22e">conf</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">google</span>.<span style="color:#a6e22e">ConfigFromJSON</span>(<span style="color:#a6e22e">contents</span>, <span style="color:#a6e22e">blogger</span>.<span style="color:#a6e22e">BloggerScope</span>)
+	<span style="color:#a6e22e">checkErrorAndExit</span>(<span style="color:#a6e22e">err</span>)
+
+	<span style="color:#a6e22e">url</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">conf</span>.<span style="color:#a6e22e">AuthCodeURL</span>(<span style="color:#e6db74">&#34;state&#34;</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Visit the URL for the auth dialog: %v\n&#34;</span>, <span style="color:#a6e22e">url</span>)
+
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">code</span> <span style="color:#66d9ef">string</span>
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Enter the code obtained from above here: &#34;</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Scanln</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">code</span>)
+
+	<span style="color:#a6e22e">token</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">conf</span>.<span style="color:#a6e22e">Exchange</span>(<span style="color:#a6e22e">oauth2</span>.<span style="color:#a6e22e">NoContext</span>, <span style="color:#a6e22e">code</span>)
+	<span style="color:#a6e22e">checkErrorAndExit</span>(<span style="color:#a6e22e">err</span>)
+
+	<span style="color:#a6e22e">bloggerService</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">blogger</span>.<span style="color:#a6e22e">NewService</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">option</span>.<span style="color:#a6e22e">WithTokenSource</span>(<span style="color:#a6e22e">conf</span>.<span style="color:#a6e22e">TokenSource</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">token</span>)))
+	<span style="color:#a6e22e">checkErrorAndExit</span>(<span style="color:#a6e22e">err</span>)
+
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">bloggerService</span>
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">checkMandatoryArguments</span>(<span style="color:#a6e22e">args</span> []<span style="color:#f92672">*</span><span style="color:#66d9ef">string</span>) {
+
+	<span style="color:#a6e22e">allArgsExists</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">true</span>
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">val</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">args</span> {
+		<span style="color:#66d9ef">if</span> len(<span style="color:#f92672">*</span><span style="color:#a6e22e">val</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {
+			<span style="color:#a6e22e">allArgsExists</span> = <span style="color:#a6e22e">allArgsExists</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#66d9ef">false</span>
+		} <span style="color:#66d9ef">else</span> {
+			<span style="color:#a6e22e">allArgsExists</span> = <span style="color:#a6e22e">allArgsExists</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#66d9ef">true</span>
+		}
+	}
+
+	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">allArgsExists</span> {
+		<span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">PrintDefaults</span>()
+		<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Exit</span>(<span style="color:#ae81ff">2</span>)
+	}
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+
+	<span style="color:#a6e22e">fileToUpload</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">String</span>(<span style="color:#e6db74">&#34;f&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#e6db74">&#34;html file to upload (mandatory)&#34;</span>)
+	<span style="color:#a6e22e">title</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">String</span>(<span style="color:#e6db74">&#34;t&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#e6db74">&#34;Post title (mandatory)&#34;</span>)
+	<span style="color:#a6e22e">blogid</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">String</span>(<span style="color:#e6db74">&#34;b&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#e6db74">&#34;Blod ID (mandatory)&#34;</span>)
+	<span style="color:#a6e22e">labels</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">String</span>(<span style="color:#e6db74">&#34;l&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#e6db74">&#34;comma separated list of labels (optional)&#34;</span>)
+	<span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">Parse</span>()
+
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">NFlag</span>() <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {
+		<span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">PrintDefaults</span>()
+		<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Exit</span>(<span style="color:#ae81ff">1</span>)
+	}
+
+	<span style="color:#a6e22e">mandatoryArgs</span> <span style="color:#f92672">:=</span> []<span style="color:#f92672">*</span><span style="color:#66d9ef">string</span>{<span style="color:#a6e22e">fileToUpload</span>, <span style="color:#a6e22e">title</span>, <span style="color:#a6e22e">blogid</span>}
+	<span style="color:#a6e22e">checkMandatoryArguments</span>(<span style="color:#a6e22e">mandatoryArgs</span>)
+
+	<span style="color:#a6e22e">BlogID</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">blogid</span>
+
+	<span style="color:#a6e22e">bloggerService</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">getBloggerClient</span>()
+	<span style="color:#a6e22e">postService</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">bloggerService</span>.<span style="color:#a6e22e">Posts</span>
+	<span style="color:#a6e22e">postListCall</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">postService</span>.<span style="color:#a6e22e">List</span>(<span style="color:#a6e22e">BlogID</span>).<span style="color:#a6e22e">MaxResults</span>(<span style="color:#ae81ff">500</span>)
+	<span style="color:#a6e22e">printNoOfPosts</span>(<span style="color:#a6e22e">postListCall</span>)
+
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;============= Inserting a new Post ===============&#34;</span>)
+
+	<span style="color:#a6e22e">labelsSlice</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Split</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">labels</span>, <span style="color:#e6db74">&#34;,&#34;</span>)
+	<span style="color:#a6e22e">contents</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ioutil</span>.<span style="color:#a6e22e">ReadFile</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">fileToUpload</span>)
+	<span style="color:#a6e22e">checkErrorAndExit</span>(<span style="color:#a6e22e">err</span>)
+
+	<span style="color:#a6e22e">newPost</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">blogger</span>.<span style="color:#a6e22e">Post</span>{
+		<span style="color:#a6e22e">Content</span>: string(<span style="color:#a6e22e">contents</span>),
+		<span style="color:#a6e22e">Labels</span>:  <span style="color:#a6e22e">labelsSlice</span>,
+		<span style="color:#a6e22e">Title</span>:   <span style="color:#f92672">*</span><span style="color:#a6e22e">title</span>,
+	}
+
+	<span style="color:#a6e22e">postInsertCall</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">postService</span>.<span style="color:#a6e22e">Insert</span>(<span style="color:#a6e22e">BlogID</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">newPost</span>)
+	<span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">postErr</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">postInsertCall</span>.<span style="color:#a6e22e">Do</span>()
+	<span style="color:#a6e22e">checkErrorAndExit</span>(<span style="color:#a6e22e">postErr</span>)
+	<span style="color:#a6e22e">printNoOfPosts</span>(<span style="color:#a6e22e">postListCall</span>)
+
+}
+</code></pre></div><h3 id="run-the-script">Run the script</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cd BloggerCli/go-cli/src/blogger
+
+$ go run bloggerCli.go -b <span style="color:#ae81ff">232343232322</span> -f sometext.html -t <span style="color:#e6db74">&#34;A some post test&#34;</span> -l <span style="color:#e6db74">&#34;label1,label2&#34;</span>
+Visit the URL <span style="color:#66d9ef">for</span> the auth dialog: https://accounts.google.com/o/oauth2/auth?client_id<span style="color:#f92672">=</span>566343445-c4pv4srn6ms7ddbn956Hjj8.apps.googleusercontent.com&amp;redirect_uri<span style="color:#f92672">=</span>urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&amp;response_type<span style="color:#f92672">=</span>code&amp;scope<span style="color:#f92672">=</span>https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fblogger&amp;state<span style="color:#f92672">=</span>state
+Enter the code obtained from above here: 9/rf7hM-sds98JnHgsdK90OiYhsss790NHdsaDs
+Total posts in this blog: 50
+<span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span> Inserting a new Post <span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span>
+Total posts in this blog: <span style="color:#ae81ff">51</span>
+</code></pre></div><p><strong>Note:</strong> You need to open the <code>URL</code> mentioned in the above output in a browser and authorize the request. This will return a <code>code</code> that need to enter above.</p>
+<h3 id="references-used">References used</h3>
+<ul>
+<li><a href="https://pkg.go.dev/google.golang.org/api/blogger/v3?tab=doc">https://pkg.go.dev/google.golang.org/api/blogger/v3?tab=doc</a></li>
+<li><a href="https://godoc.org/google.golang.org/api/option">https://godoc.org/google.golang.org/api/option</a></li>
+<li><a href="https://pkg.go.dev/golang.org/x/oauth2/google?tab=doc">https://pkg.go.dev/golang.org/x/oauth2/google?tab=doc</a></li>
+<li><a href="https://pkg.go.dev/golang.org/x/oauth2?tab=doc#Config.AuthCodeURL">https://pkg.go.dev/golang.org/x/oauth2?tab=doc#Config.AuthCodeURL</a></li>
+</ul>
+
+		</div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<div class="authorbox__header">
+		<span class="authorbox__name">About SpareSlant</span>
+	</div>
+</div>
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/posts/multiple-vms-vagrantfile/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Multiple Vms Vagrantfile</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2020 SpareSlant.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
+</html>

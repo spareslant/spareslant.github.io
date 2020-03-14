@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-gb">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Blogger python cli - SpareSlant Technical Blog</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/my.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="SpareSlant Technical Blog" rel="home">
+				<div class="logo__title">SpareSlant Technical Blog</div>
+				<div class="logo__tagline">SpareSlant tech blog</div>
+			</a>
+		</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Blogger python cli</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2020-03-09T18:46:41">2020-03-09</time>
+</div>
+</div>
+		</header>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#account-preparation">Account Preparation</a></li>
+    <li><a href="#python-environment-creation">Python environment creation</a>
+      <ul>
+        <li><a href="#install-required-libraries">Install required libraries.</a></li>
+        <li><a href="#copy-credential-script">Copy credential script.</a></li>
+        <li><a href="#create-python-script-bloggerclipy">Create Python script bloggerCli.py</a></li>
+        <li><a href="#create-a-test-file-to-be-uploaded">Create a test file to be uploaded.</a></li>
+        <li><a href="#run-the-script">Run the script.</a></li>
+        <li><a href="#references-used">References used:</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<h2 id="introduction">Introduction</h2>
+<p>We will be creating a commandLine utility in <code>python</code> to upload a post in Google blogger.</p>
+<h2 id="account-preparation">Account Preparation</h2>
+<ul>
+<li>
+<p>You need to have a <code>google</code> account (gmail) (Paid account NOT required).</p>
+</li>
+<li>
+<p>Once you have a google account, Login to <em><a href="https://console.developers.google.com/apis/credentials">https://console.developers.google.com/apis/credentials</a></em> and create a new <code>Project</code> here.</p>
+</li>
+<li>
+<p>Click on <code>Dashboard</code> on left hand column, and click on <code>+ ENABLE APIS AND SERVICES</code>.</p>
+<ul>
+<li>Type in <code>blogger</code> in search bar, and select <code>Blogger API v3</code> and then click <code>ENABLE</code>.`</li>
+</ul>
+</li>
+<li>
+<p>Click on <code>OAuth consent screen</code> on left hand column, and select <code>User Type</code> to <code>External</code> and click <code>CREATE</code>.</p>
+<ul>
+<li>On next screen type in <code>Application Name</code> as <code>Blogger CLI</code> (It can be any string).</li>
+<li>Click on <code>Add Scope</code> and select both the <code>Blogger API v3</code> options and click <code>ADD</code> and click <code>Save</code>.</li>
+</ul>
+</li>
+<li>
+<p>Click on <code>Credentials</code> on the left hand side and you will be presented with following two options of creating credentials for Blogger API.</p>
+<ul>
+<li>API Keys</li>
+<li>OAuth 2.0 Client IDs</li>
+<li>Service Accounts</li>
+<li>Click on <code>+ CREATE CREDENTAILS</code> on the top and select <code>OAuth Client ID</code> from drop down menu.</li>
+<li>Select <code>Application Type</code> to <code>other</code>.</li>
+<li>Type in <code>Name</code> to <code>Python Blogger CLI</code> (it can be any string) and click create.</li>
+<li>You will see an entry with name <code>Python Blogger CLI</code> under <code>OAuth 2.0 Client IDs</code>.</li>
+<li>Download the credential files by clicking on a <em>down arrow</em> button.</li>
+<li>This will be a <code>json</code> file and we need it to authenticate it with google <code>OAuth2.0</code> services.</li>
+</ul>
+</li>
+<li>
+<p>Login to blogger site <em><a href="https://www.blogger.com">https://www.blogger.com</a></em></p>
+<ul>
+<li>Sign-in to blogger.</li>
+<li>Enter a display name you like.</li>
+<li>Create a <code>NEW BLOG</code> and give it a name you like in <code>Ttile</code></li>
+<li>Type in address. It has to be a unique e.g somethingrandom23455.blogspot.com and click <code>create blog</code></li>
+<li>On next screen, look at the address bar of browser, it will be like <em><a href="https://www.blogger.com/blogger.g?blogID=3342324243435#allposts">https://www.blogger.com/blogger.g?blogID=3342324243435#allposts</a></em></li>
+<li>Note down blog ID (a string after <strong>blogID=</strong>, excluding #allposts) in above URL. We need this ID to put in python script.</li>
+</ul>
+</li>
+</ul>
+<h2 id="python-environment-creation">Python environment creation</h2>
+<p>I am using following python version.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ python --version
+Python 3.7.0
+</code></pre></div><p>We will be creating a python virtual environment.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir BloggerCli
+cd BloggerCli
+python -m venv python-2.7.0
+source python-2.7.0/bin/activate
+</code></pre></div><h3 id="install-required-libraries">Install required libraries.</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pip install google-api-python-client
+pip install --upgrade google-auth-oauthlib
+</code></pre></div><h3 id="copy-credential-script">Copy credential script.</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir python-cli
+</code></pre></div><p>Copy above downloaded credential json file in <code>python-cli</code> folder and rename it to <code>OAuth2.0_secret.json</code>.</p>
+<p><strong>Note:</strong> You can rename it any name.</p>
+<h3 id="create-python-script-bloggerclipy">Create Python script <code>bloggerCli.py</code></h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd python-cli
+</code></pre></div><p>Create following python script in <code>python-cli</code> folder.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#! /Users/&lt;username&gt;/BloggerCli/python-2.7.0/bin/python</span>
+
+<span style="color:#75715e"># https://github.com/googleapis/google-api-python-client/blob/master/docs/README.md</span>
+<span style="color:#75715e"># https://github.com/googleapis/google-api-python-client/blob/master/docs/oauth-server.md</span>
+<span style="color:#75715e"># https://github.com/googleapis/google-api-python-client/blob/master/docs/oauth-installed.md</span>
+<span style="color:#75715e"># http://googleapis.github.io/google-api-python-client/docs/dyn/blogger_v3.html</span>
+<span style="color:#75715e"># http://googleapis.github.io/google-api-python-client/docs/dyn/blogger_v3.posts.html</span>
+<span style="color:#75715e"># https://developers.google.com/identity/protocols/googlescopes</span>
+<span style="color:#75715e"># https://console.developers.google.com/apis/credentials</span>
+<span style="color:#75715e"># pip install --upgrade google-auth-oauthlib</span>
+
+<span style="color:#75715e"># Note: This script does NOT check the duplicate title of posts while inserting the post in Blog.</span>
+
+<span style="color:#f92672">from</span> google.oauth2 <span style="color:#f92672">import</span> service_account
+<span style="color:#f92672">import</span> googleapiclient.discovery
+<span style="color:#f92672">from</span> google_auth_oauthlib.flow <span style="color:#f92672">import</span> InstalledAppFlow
+<span style="color:#f92672">import</span> os
+<span style="color:#f92672">import</span> sys
+<span style="color:#f92672">import</span> argparse
+
+
+usage <span style="color:#f92672">=</span> f<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{os.path.basename(__file__)} -f &lt;html file&gt; -t &lt;post title&gt; -l &lt;label_string1&gt; -l &lt;label_string2&gt; -l .. -l ..</span><span style="color:#e6db74">&#34;</span>
+
+parser <span style="color:#f92672">=</span> argparse<span style="color:#f92672">.</span>ArgumentParser(prog<span style="color:#f92672">=</span>os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>basename(__file__), usage<span style="color:#f92672">=</span>usage, description<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Upload a post to Blogger</span><span style="color:#e6db74">&#39;</span>)
+parser<span style="color:#f92672">.</span>add_argument(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">-f</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">--uploadfile</span><span style="color:#e6db74">&#39;</span>, action<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">store</span><span style="color:#e6db74">&#39;</span>, dest<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">fileToPost</span><span style="color:#e6db74">&#39;</span>, help<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">html file to post</span><span style="color:#e6db74">&#39;</span>, required<span style="color:#f92672">=</span>True)
+parser<span style="color:#f92672">.</span>add_argument(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">-l</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">--labels</span><span style="color:#e6db74">&#39;</span>, action<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">append</span><span style="color:#e6db74">&#39;</span>, dest<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">labels</span><span style="color:#e6db74">&#39;</span>, default<span style="color:#f92672">=</span>[], help<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">-l &lt;label1&gt; -l &lt;label2&gt;</span><span style="color:#e6db74">&#39;</span>)
+parser<span style="color:#f92672">.</span>add_argument(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">-t</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">--title</span><span style="color:#e6db74">&#39;</span>, action<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">store</span><span style="color:#e6db74">&#39;</span>, dest<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">title</span><span style="color:#e6db74">&#39;</span>, help<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">-t &lt;Post Title string&gt;</span><span style="color:#e6db74">&#39;</span>, required<span style="color:#f92672">=</span>True)
+parser<span style="color:#f92672">.</span>add_argument(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">-b</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">--blogid</span><span style="color:#e6db74">&#39;</span>, action<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">store</span><span style="color:#e6db74">&#39;</span>, dest<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">blogid</span><span style="color:#e6db74">&#39;</span>, help<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">-b &lt;blogid string&gt;</span><span style="color:#e6db74">&#39;</span>, required<span style="color:#f92672">=</span>True)
+arguments <span style="color:#f92672">=</span> parser<span style="color:#f92672">.</span>parse_args()
+
+<span style="color:#66d9ef">if</span> len(sys<span style="color:#f92672">.</span>argv) <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
+    parser<span style="color:#f92672">.</span>print_help()
+    parser<span style="color:#f92672">.</span>error(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">You must specify command line flags as mentioned above.</span><span style="color:#e6db74">&#34;</span>)
+
+
+FILE_TO_POST <span style="color:#f92672">=</span> arguments<span style="color:#f92672">.</span>fileToPost
+LABELS_FOR_POST <span style="color:#f92672">=</span> arguments<span style="color:#f92672">.</span>labels
+POST_TITLE <span style="color:#f92672">=</span> arguments<span style="color:#f92672">.</span>title
+BLOG_ID <span style="color:#f92672">=</span> arguments<span style="color:#f92672">.</span>blogid
+
+SCOPES <span style="color:#f92672">=</span> [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">https://www.googleapis.com/auth/blogger</span><span style="color:#e6db74">&#39;</span>]
+SERVICE_ACCOUNT_FILE <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">blogger-api-credentials.json</span><span style="color:#e6db74">&#39;</span>
+OAUTH2_ACCOUNT_FILE <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">OAuth2.0_secret.json</span><span style="color:#e6db74">&#39;</span>
+FLOW_SERVER_PORT <span style="color:#f92672">=</span> <span style="color:#ae81ff">9090</span>
+API_SERVICE_NAME <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">blogger</span><span style="color:#e6db74">&#39;</span>
+API_SERVICE_VERSION <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">v3</span><span style="color:#e6db74">&#39;</span>
+
+<span style="color:#75715e"># create a API client from service account</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">create_client_from_serviceAccount</span>():
+    credentials <span style="color:#f92672">=</span> service_account<span style="color:#f92672">.</span>Credentials<span style="color:#f92672">.</span>from_service_account_file( SERVICE_ACCOUNT_FILE, scopes<span style="color:#f92672">=</span>SCOPES)
+
+    blogger <span style="color:#f92672">=</span> googleapiclient<span style="color:#f92672">.</span>discovery<span style="color:#f92672">.</span>build(API_SERVICE_NAME, API_SERVICE_VERSION, credentials<span style="color:#f92672">=</span>credentials)
+    <span style="color:#66d9ef">return</span> blogger
+
+<span style="color:#75715e"># create a client from an AOUTH2.0 account.</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">create_client_from_outhAccount</span>():
+    flow <span style="color:#f92672">=</span> InstalledAppFlow<span style="color:#f92672">.</span>from_client_secrets_file(OAUTH2_ACCOUNT_FILE, scopes<span style="color:#f92672">=</span>SCOPES)
+    credentials <span style="color:#f92672">=</span> flow<span style="color:#f92672">.</span>run_local_server(host<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">localhost</span><span style="color:#e6db74">&#39;</span>, port<span style="color:#f92672">=</span>FLOW_SERVER_PORT, authorization_prompt_message<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Please visit this URL: {url}</span><span style="color:#e6db74">&#39;</span>, 
+                        success_message<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">The auth flow is complete; you may close this window.</span><span style="color:#e6db74">&#39;</span>, open_browser<span style="color:#f92672">=</span>True)
+    blogger <span style="color:#f92672">=</span> googleapiclient<span style="color:#f92672">.</span>discovery<span style="color:#f92672">.</span>build(API_SERVICE_NAME, API_SERVICE_VERSION, credentials<span style="color:#f92672">=</span>credentials)
+    <span style="color:#66d9ef">return</span> blogger
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">print_number_of_posts</span>(postList):
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">items</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">in</span> postList:
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">No of posts in blog = 0</span><span style="color:#e6db74">&#34;</span>)
+    <span style="color:#66d9ef">else</span>:    
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">No of posts in blog = {}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(len(postList[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">items</span><span style="color:#e6db74">&#39;</span>])))
+
+<span style="color:#75715e"># From a service account you cannot create a new post in blogger. It might need some special permissions that I am not aware of.</span>
+<span style="color:#75715e"># However, Service account can read posts and fetch them.</span>
+<span style="color:#75715e"># blogger = create_client_from_serviceAccount()</span>
+
+<span style="color:#75715e"># Below will open a browser window to authenticate yourself.</span>
+blogger <span style="color:#f92672">=</span> create_client_from_outhAccount()
+
+postList <span style="color:#f92672">=</span> blogger<span style="color:#f92672">.</span>posts()<span style="color:#f92672">.</span>list(blogId<span style="color:#f92672">=</span>BLOG_ID)<span style="color:#f92672">.</span>execute()
+print_number_of_posts(postList)
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">====== Inserting a new post =======</span><span style="color:#e6db74">&#34;</span>)
+
+<span style="color:#66d9ef">with</span> open(FILE_TO_POST) <span style="color:#66d9ef">as</span> f:
+    contents <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>read()
+
+blogBody <span style="color:#f92672">=</span> {
+    <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">content</span><span style="color:#e6db74">&#34;</span>: contents,
+    <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">kind</span><span style="color:#e6db74">&#34;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">blogger#post</span><span style="color:#e6db74">&#34;</span>,
+    <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">title</span><span style="color:#e6db74">&#34;</span>: POST_TITLE,
+    <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">labels</span><span style="color:#e6db74">&#34;</span>: LABELS_FOR_POST,
+        }
+
+result <span style="color:#f92672">=</span> blogger<span style="color:#f92672">.</span>posts()<span style="color:#f92672">.</span>insert(blogId<span style="color:#f92672">=</span>BLOG_ID, body<span style="color:#f92672">=</span>blogBody)<span style="color:#f92672">.</span>execute()
+postList <span style="color:#f92672">=</span> blogger<span style="color:#f92672">.</span>posts()<span style="color:#f92672">.</span>list(blogId<span style="color:#f92672">=</span>BLOG_ID)<span style="color:#f92672">.</span>execute()
+print_number_of_posts(postList)
+</code></pre></div><h3 id="create-a-test-file-to-be-uploaded">Create a test file to be uploaded.</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">echo <span style="color:#e6db74">&#39;This is a first post&#39;</span> &gt; sometext.txt
+</code></pre></div><p><strong>Note</strong>: You can create an HTML file as well.</p>
+<h3 id="run-the-script">Run the script.</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ./bloggerCli.py -f sometext.txt -t <span style="color:#e6db74">&#34;My First Post&#34;</span> -b <span style="color:#ae81ff">34456769666334</span> -l label1 -l label2 -l label3
+Please visit this URL: https://accounts.google.com/o/oauth2/auth?response_type<span style="color:#f92672">=</span>code&amp;client_id<span style="color:#f92672">=</span>26652434353-e9u77isb2sdsd4343sdsd343434.apps.googleusercontent.com&amp;redirect_uri<span style="color:#f92672">=</span>http%3A%2F%2Flocalhost%3A9090%2F&amp;scope<span style="color:#f92672">=</span>https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fblogger&amp;state<span style="color:#f92672">=</span>BkaXVyiW15sdsdsdADH7sadsH8hS&amp;access_type<span style="color:#f92672">=</span>offline
+No of posts in blog <span style="color:#f92672">=</span> 0
+<span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span> Inserting a new post <span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span>
+No of posts in blog <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</code></pre></div><p><strong>Note-1</strong>: While running above script, this will open a browser and wil ask you to login to your google account.</p>
+<p><strong>Note-2</strong>: You may need to change the <em>FLOW_SERVER_PORT</em> in above script.</p>
+<h3 id="references-used">References used:</h3>
+<ul>
+<li><a href="https://github.com/googleapis/google-api-python-client/blob/master/docs/README.md">https://github.com/googleapis/google-api-python-client/blob/master/docs/README.md</a></li>
+<li><a href="https://github.com/googleapis/google-api-python-client/blob/master/docs/oauth-server.md">https://github.com/googleapis/google-api-python-client/blob/master/docs/oauth-server.md</a></li>
+<li><a href="https://github.com/googleapis/google-api-python-client/blob/master/docs/oauth-installed.md">https://github.com/googleapis/google-api-python-client/blob/master/docs/oauth-installed.md</a></li>
+<li><a href="http://googleapis.github.io/google-api-python-client/docs/dyn/blogger_v3.html">http://googleapis.github.io/google-api-python-client/docs/dyn/blogger_v3.html</a></li>
+<li><a href="http://googleapis.github.io/google-api-python-client/docs/dyn/blogger_v3.posts.html">http://googleapis.github.io/google-api-python-client/docs/dyn/blogger_v3.posts.html</a></li>
+<li><a href="https://developers.google.com/identity/protocols/googlescopes">https://developers.google.com/identity/protocols/googlescopes</a></li>
+<li><a href="https://console.developers.google.com/apis/credentials">https://console.developers.google.com/apis/credentials</a></li>
+</ul>
+
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/blogger/" rel="tag">blogger</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/python/" rel="tag">python</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/google-api/" rel="tag">google API</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/blogger-api/" rel="tag">blogger API</a></li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<div class="authorbox__header">
+		<span class="authorbox__name">About SpareSlant</span>
+	</div>
+</div>
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/posts/vim-vagrant-plugin/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Vim Vagrant Plugin using Vundle</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/posts/blogger-ruby-cli/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">Blogger ruby cli</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2020 SpareSlant.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
+</html>
