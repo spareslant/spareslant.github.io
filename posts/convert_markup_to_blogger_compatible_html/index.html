@@ -50,7 +50,12 @@
 		<nav id="TableOfContents">
   <ul>
     <li><a href="#introduction">Introduction</a></li>
-    <li><a href="#use-pandoc">Use pandoc</a></li>
+    <li><a href="#install-pandoc-and-github-html5-template">Install pandoc and GitHUB html5 Template</a>
+      <ul>
+        <li><a href="#modify-above-github-html5-template-source-code-for-blogger">Modify above GitHUB html5 template source code for blogger.</a></li>
+        <li><a href="#compile-scss-file">Compile scss file.</a></li>
+      </ul>
+    </li>
     <li><a href="#create-a-sample-markup-file">Create a sample markup file.</a></li>
     <li><a href="#create-a-conversion-script">Create a conversion script.</a>
       <ul>
@@ -69,12 +74,54 @@
 <div class="content post__content clearfix">
 			<h2 id="introduction">Introduction</h2>
 <p>We will be converting a <code>markup</code> file to a <code>blogger</code> compatible <code>html</code>.</p>
-<h2 id="use-pandoc">Use pandoc</h2>
+<h2 id="install-pandoc-and-github-html5-template">Install <code>pandoc</code> and <code>GitHUB html5</code> Template</h2>
 <p>Install <code>pandoc</code> using URL <em><a href="https://pandoc.org/installing.html">https://pandoc.org/installing.html</a></em> . Create a workspace and clone following git repos in that workspace area.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir $HOME/panDocs
 cd $HOME/panDocs
 git clone https://github.com/tajmone/pandoc-goodies.git
-</code></pre></div><ul>
+cd pandoc-goodies/templates/html5/github/src
+</code></pre></div><h3 id="modify-above-github-html5-template-source-code-for-blogger">Modify above <code>GitHUB html5 template</code> source code for blogger.</h3>
+<p>Make the <code>padding</code> and <code>max-width</code> changes in <code>_github-markdown.scss</code> file as follows:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff">$ git diff templates/html5/github/src/_github-markdown.scss
+diff --git a/templates/html5/github/src/_github-markdown.scss b/templates/html5/github/src/_github-markdown.scss
+index 479b5fc..54c9abb 100644
+<span style="color:#f92672">--- a/templates/html5/github/src/_github-markdown.scss
+</span><span style="color:#f92672"></span><span style="color:#a6e22e">+++ b/templates/html5/github/src/_github-markdown.scss
+</span><span style="color:#a6e22e"></span><span style="color:#75715e">@@ -48,9 +48,9 @@
+</span><span style="color:#75715e"></span>   word-wrap: break-word;
+   box-sizing: border-box;
+   min-width: 200px;
+<span style="color:#f92672">-  max-width: 980px;
+</span><span style="color:#f92672"></span><span style="color:#a6e22e">+  max-width: 100%;
+</span><span style="color:#a6e22e"></span>   margin: 0 auto;
+<span style="color:#f92672">-  padding: 45px;
+</span><span style="color:#f92672"></span><span style="color:#a6e22e">+  padding: 45px 5px;
+</span><span style="color:#a6e22e"></span>
+   a {
+     color: #0366d6;
+</code></pre></div><p>Change the css source file name in <code>src/css-injector.js</code> as follows:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff">$ git diff css-injector.js
+diff --git a/templates/html5/github/src/css-injector.js b/templates/html5/github/src/css-injector.js
+index 861494d..14b5597 100644
+<span style="color:#f92672">--- a/templates/html5/github/src/css-injector.js
+</span><span style="color:#f92672"></span><span style="color:#a6e22e">+++ b/templates/html5/github/src/css-injector.js
+</span><span style="color:#a6e22e"></span><span style="color:#75715e">@@ -16,7 +16,7 @@ This script will:
+</span><span style="color:#75715e"></span> */
+
+ templateFile  = &#34;GitHub_source.html5&#34; // Template with CSS-injection placeholder
+<span style="color:#f92672">-cssFile       = &#34;GitHub.min.css&#34;      // CSS source to inject into placeholder
+</span><span style="color:#f92672"></span><span style="color:#a6e22e">+cssFile       = &#34;GitHub.css&#34;      // CSS source to inject into placeholder
+</span><span style="color:#a6e22e"></span> outFile       = &#34;../GitHub.html5&#34;     // Final template output file
+ placeHolder   = &#34;{{CSS-INJECT}}&#34;      // Placeholder string for CSS-injection
+</code></pre></div><h3 id="compile-scss-file">Compile scss file.</h3>
+<p>Note: You need to install <code>node</code> on your system in order to compile.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd pandoc-goodies/templates/html5/github/src
+npm init -y
+npm install node-sass
+./node_modules/node-sass/bin/node-sass --source-map true --output-style<span style="color:#f92672">=</span>expanded --indent-type space GitHub.scss &gt; GitHub.css
+node css-injector.js
+</code></pre></div><p><strong>Note</strong>: You can clone pre-compiled code from <code>https://github.com/spareslant/markup_to_GitHUB_HTML5_and_PDF.git</code> as well.</p>
+<ul>
 <li><code>pandoc-goodies</code> is to generate <code>html</code> files.</li>
 </ul>
 <h2 id="create-a-sample-markup-file">Create a sample markup file.</h2>

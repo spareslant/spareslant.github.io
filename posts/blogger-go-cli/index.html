@@ -57,7 +57,13 @@
         <li><a href="#install-required-libraries">Install required libraries.</a></li>
         <li><a href="#copy-credential-file">Copy credential file.</a></li>
         <li><a href="#create-go-file-bloggercligo-clisrcbloggerbloggercligo-file-with-following-contents">Create Go file BloggerCli/go-cli/src/blogger/bloggerCli.go file with following contents.</a></li>
-        <li><a href="#run-the-script">Run the script</a></li>
+        <li><a href="#create-a-test-file-to-be-uploaded">Create a test file to be uploaded.</a></li>
+      </ul>
+    </li>
+    <li><a href="#run-the-script">Run the script</a>
+      <ul>
+        <li><a href="#create-a-new-post">Create a New Post</a></li>
+        <li><a href="#update-a-post">Update a Post</a></li>
         <li><a href="#references-used">References used</a></li>
       </ul>
     </li>
@@ -129,6 +135,7 @@ WORKSPACE<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</spa
 cd <span style="color:#e6db74">&#34;</span>$WORKSPACE<span style="color:#e6db74">&#34;</span>
 mkdir -p src bin pkg
 export GOPATH<span style="color:#f92672">=</span>$WORKSPACE
+export GOBIN<span style="color:#f92672">=</span>$WORKSPACE/bin
 </code></pre></div><p>Create directory structure</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd BloggerCli/go-cli
 source ./createAndActivateGoWorkSpace.sh
@@ -165,18 +172,17 @@ go get -v golang.org/x/oauth2/google
 	<span style="color:#e6db74">&#34;google.golang.org/api/option&#34;</span>
 )
 
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">printNoOfPosts</span>(<span style="color:#a6e22e">postListCall</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">blogger</span>.<span style="color:#a6e22e">PostsListCall</span>) {
-	<span style="color:#a6e22e">postList</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">postListCall</span>.<span style="color:#a6e22e">Do</span>()
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#a6e22e">err</span>)
-	}
-	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Total posts in this blog: %d\n&#34;</span>, len(<span style="color:#a6e22e">postList</span>.<span style="color:#a6e22e">Items</span>))
-}
-
 <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">checkErrorAndExit</span>(<span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>) {
 	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
 		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#a6e22e">err</span>)
 	}
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">printNoOfPosts</span>(<span style="color:#a6e22e">postsService</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">blogger</span>.<span style="color:#a6e22e">PostsService</span>, <span style="color:#a6e22e">BlogID</span> <span style="color:#66d9ef">string</span>) {
+	<span style="color:#a6e22e">postListCall</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">postsService</span>.<span style="color:#a6e22e">List</span>(<span style="color:#a6e22e">BlogID</span>).<span style="color:#a6e22e">MaxResults</span>(<span style="color:#ae81ff">500</span>)
+	<span style="color:#a6e22e">postList</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">postListCall</span>.<span style="color:#a6e22e">Do</span>()
+	<span style="color:#a6e22e">checkErrorAndExit</span>(<span style="color:#a6e22e">err</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Total posts in this blog: %d\n&#34;</span>, len(<span style="color:#a6e22e">postList</span>.<span style="color:#a6e22e">Items</span>))
 }
 
 <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">getBloggerClient</span>() <span style="color:#f92672">*</span><span style="color:#a6e22e">blogger</span>.<span style="color:#a6e22e">Service</span> {
@@ -189,10 +195,11 @@ go get -v golang.org/x/oauth2/google
 	<span style="color:#a6e22e">checkErrorAndExit</span>(<span style="color:#a6e22e">err</span>)
 
 	<span style="color:#a6e22e">url</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">conf</span>.<span style="color:#a6e22e">AuthCodeURL</span>(<span style="color:#e6db74">&#34;state&#34;</span>)
-	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Visit the URL for the auth dialog: %v\n&#34;</span>, <span style="color:#a6e22e">url</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Visit the following URL for the auth dialog:&#34;</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;\n%v\n&#34;</span>, <span style="color:#a6e22e">url</span>)
 
 	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">code</span> <span style="color:#66d9ef">string</span>
-	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Enter the code obtained from above here: &#34;</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;\nEnter the code obtained from above here: &#34;</span>)
 	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Scanln</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">code</span>)
 
 	<span style="color:#a6e22e">token</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">conf</span>.<span style="color:#a6e22e">Exchange</span>(<span style="color:#a6e22e">oauth2</span>.<span style="color:#a6e22e">NoContext</span>, <span style="color:#a6e22e">code</span>)
@@ -221,12 +228,80 @@ go get -v golang.org/x/oauth2/google
 	}
 }
 
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">createNewPost</span>(<span style="color:#a6e22e">title</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">labels</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">fileToUpload</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">string</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">blogger</span>.<span style="color:#a6e22e">Post</span> {
+
+	<span style="color:#a6e22e">labelsSlice</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Split</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">labels</span>, <span style="color:#e6db74">&#34;,&#34;</span>)
+	<span style="color:#a6e22e">contents</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ioutil</span>.<span style="color:#a6e22e">ReadFile</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">fileToUpload</span>)
+	<span style="color:#a6e22e">checkErrorAndExit</span>(<span style="color:#a6e22e">err</span>)
+
+	<span style="color:#a6e22e">newPost</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">blogger</span>.<span style="color:#a6e22e">Post</span>{}
+
+	<span style="color:#66d9ef">if</span> len(<span style="color:#f92672">*</span><span style="color:#a6e22e">labels</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {
+		<span style="color:#a6e22e">newPost</span> = <span style="color:#a6e22e">blogger</span>.<span style="color:#a6e22e">Post</span>{
+			<span style="color:#a6e22e">Content</span>: string(<span style="color:#a6e22e">contents</span>),
+			<span style="color:#a6e22e">Title</span>:   <span style="color:#f92672">*</span><span style="color:#a6e22e">title</span>,
+		}
+	} <span style="color:#66d9ef">else</span> {
+		<span style="color:#a6e22e">newPost</span> = <span style="color:#a6e22e">blogger</span>.<span style="color:#a6e22e">Post</span>{
+			<span style="color:#a6e22e">Content</span>: string(<span style="color:#a6e22e">contents</span>),
+			<span style="color:#a6e22e">Labels</span>:  <span style="color:#a6e22e">labelsSlice</span>,
+			<span style="color:#a6e22e">Title</span>:   <span style="color:#f92672">*</span><span style="color:#a6e22e">title</span>,
+		}
+	}
+	<span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">newPost</span>
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">insertAPost</span>(<span style="color:#a6e22e">title</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">labels</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">fileToUpload</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">BlogID</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">postsService</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">blogger</span>.<span style="color:#a6e22e">PostsService</span>) {
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;============= Inserting a new Post ===============&#34;</span>)
+
+	<span style="color:#a6e22e">newPost</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">createNewPost</span>(<span style="color:#a6e22e">title</span>, <span style="color:#a6e22e">labels</span>, <span style="color:#a6e22e">fileToUpload</span>)
+
+	<span style="color:#a6e22e">postInsertCall</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">postsService</span>.<span style="color:#a6e22e">Insert</span>(<span style="color:#a6e22e">BlogID</span>, <span style="color:#a6e22e">newPost</span>)
+	<span style="color:#a6e22e">post</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">postInsertCall</span>.<span style="color:#a6e22e">Do</span>()
+	<span style="color:#a6e22e">checkErrorAndExit</span>(<span style="color:#a6e22e">err</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;A new post added to Blog with following details&#34;</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Title: %s\nPostID: %s\n&#34;</span>, <span style="color:#a6e22e">post</span>.<span style="color:#a6e22e">Title</span>, <span style="color:#a6e22e">post</span>.<span style="color:#a6e22e">Id</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;=================================================&#34;</span>)
+	<span style="color:#a6e22e">printNoOfPosts</span>(<span style="color:#a6e22e">postsService</span>, <span style="color:#a6e22e">BlogID</span>)
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">updateAPost</span>(<span style="color:#a6e22e">title</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">labels</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">fileToUpload</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">BlogID</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">postsService</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">blogger</span>.<span style="color:#a6e22e">PostsService</span>, <span style="color:#a6e22e">postID</span> <span style="color:#66d9ef">string</span>) {
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;============= updating a Post ===============&#34;</span>)
+
+	<span style="color:#75715e">// Search post from Title if postID not specified.
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> len(<span style="color:#a6e22e">postID</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {
+		<span style="color:#a6e22e">postsSearchCall</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">postsService</span>.<span style="color:#a6e22e">Search</span>(<span style="color:#a6e22e">BlogID</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">title</span>)
+		<span style="color:#a6e22e">postsList</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">postsSearchCall</span>.<span style="color:#a6e22e">Do</span>()
+		<span style="color:#a6e22e">checkErrorAndExit</span>(<span style="color:#a6e22e">err</span>)
+		<span style="color:#66d9ef">if</span> len(<span style="color:#a6e22e">postsList</span>.<span style="color:#a6e22e">Items</span>) &gt; <span style="color:#ae81ff">1</span> {
+			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Following multiple posts found for title = %s\n&#34;</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">title</span>)
+			<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">post</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">postsList</span>.<span style="color:#a6e22e">Items</span> {
+				<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">post</span>.<span style="color:#a6e22e">Title</span>)
+			}
+			<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#e6db74">&#34;\n\nERROR: Not updating post. Title must identify a single post only. Try specifying PostID&#34;</span>)
+		} <span style="color:#66d9ef">else</span> {
+			<span style="color:#a6e22e">postID</span> = <span style="color:#a6e22e">postsList</span>.<span style="color:#a6e22e">Items</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">Id</span>
+		}
+	}
+
+	<span style="color:#a6e22e">newPost</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">createNewPost</span>(<span style="color:#a6e22e">title</span>, <span style="color:#a6e22e">labels</span>, <span style="color:#a6e22e">fileToUpload</span>)
+	<span style="color:#a6e22e">postsPatchCall</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">postsService</span>.<span style="color:#a6e22e">Patch</span>(<span style="color:#a6e22e">BlogID</span>, <span style="color:#a6e22e">postID</span>, <span style="color:#a6e22e">newPost</span>)
+	<span style="color:#a6e22e">post</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">postsPatchCall</span>.<span style="color:#a6e22e">Do</span>()
+	<span style="color:#a6e22e">checkErrorAndExit</span>(<span style="color:#a6e22e">err</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Following post has been updated in Blog with following details&#34;</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Title: %s\nPostID: %s\n&#34;</span>, <span style="color:#a6e22e">post</span>.<span style="color:#a6e22e">Title</span>, <span style="color:#a6e22e">post</span>.<span style="color:#a6e22e">Id</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;=================================================&#34;</span>)
+	<span style="color:#a6e22e">printNoOfPosts</span>(<span style="color:#a6e22e">postsService</span>, <span style="color:#a6e22e">BlogID</span>)
+}
+
 <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
 
 	<span style="color:#a6e22e">fileToUpload</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">String</span>(<span style="color:#e6db74">&#34;f&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#e6db74">&#34;html file to upload (mandatory)&#34;</span>)
 	<span style="color:#a6e22e">title</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">String</span>(<span style="color:#e6db74">&#34;t&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#e6db74">&#34;Post title (mandatory)&#34;</span>)
 	<span style="color:#a6e22e">blogid</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">String</span>(<span style="color:#e6db74">&#34;b&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#e6db74">&#34;Blod ID (mandatory)&#34;</span>)
 	<span style="color:#a6e22e">labels</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">String</span>(<span style="color:#e6db74">&#34;l&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#e6db74">&#34;comma separated list of labels (optional)&#34;</span>)
+	<span style="color:#a6e22e">modify</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">Bool</span>(<span style="color:#e6db74">&#34;m&#34;</span>, <span style="color:#66d9ef">false</span>, <span style="color:#e6db74">&#34;Modify a post contents (optional: modifies post in mentioned in -t )&#34;</span>)
+	<span style="color:#a6e22e">postID</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">String</span>(<span style="color:#e6db74">&#34;p&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#e6db74">&#34;post ID (optional: To be specified when updating a post)&#34;</span>)
 	<span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">Parse</span>()
 
 	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">NFlag</span>() <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {
@@ -238,38 +313,48 @@ go get -v golang.org/x/oauth2/google
 	<span style="color:#a6e22e">checkMandatoryArguments</span>(<span style="color:#a6e22e">mandatoryArgs</span>)
 
 	<span style="color:#a6e22e">BlogID</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">blogid</span>
+	<span style="color:#a6e22e">PostID</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">postID</span>
 
 	<span style="color:#a6e22e">bloggerService</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">getBloggerClient</span>()
-	<span style="color:#a6e22e">postService</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">bloggerService</span>.<span style="color:#a6e22e">Posts</span>
-	<span style="color:#a6e22e">postListCall</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">postService</span>.<span style="color:#a6e22e">List</span>(<span style="color:#a6e22e">BlogID</span>).<span style="color:#a6e22e">MaxResults</span>(<span style="color:#ae81ff">500</span>)
-	<span style="color:#a6e22e">printNoOfPosts</span>(<span style="color:#a6e22e">postListCall</span>)
+	<span style="color:#a6e22e">postsService</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">bloggerService</span>.<span style="color:#a6e22e">Posts</span>
 
-	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;============= Inserting a new Post ===============&#34;</span>)
+	<span style="color:#a6e22e">printNoOfPosts</span>(<span style="color:#a6e22e">postsService</span>, <span style="color:#a6e22e">BlogID</span>)
 
-	<span style="color:#a6e22e">labelsSlice</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Split</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">labels</span>, <span style="color:#e6db74">&#34;,&#34;</span>)
-	<span style="color:#a6e22e">contents</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ioutil</span>.<span style="color:#a6e22e">ReadFile</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">fileToUpload</span>)
-	<span style="color:#a6e22e">checkErrorAndExit</span>(<span style="color:#a6e22e">err</span>)
-
-	<span style="color:#a6e22e">newPost</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">blogger</span>.<span style="color:#a6e22e">Post</span>{
-		<span style="color:#a6e22e">Content</span>: string(<span style="color:#a6e22e">contents</span>),
-		<span style="color:#a6e22e">Labels</span>:  <span style="color:#a6e22e">labelsSlice</span>,
-		<span style="color:#a6e22e">Title</span>:   <span style="color:#f92672">*</span><span style="color:#a6e22e">title</span>,
+	<span style="color:#66d9ef">if</span> !<span style="color:#f92672">*</span><span style="color:#a6e22e">modify</span> {
+		<span style="color:#a6e22e">insertAPost</span>(<span style="color:#a6e22e">title</span>, <span style="color:#a6e22e">labels</span>, <span style="color:#a6e22e">fileToUpload</span>, <span style="color:#a6e22e">BlogID</span>, <span style="color:#a6e22e">postsService</span>)
+	} <span style="color:#66d9ef">else</span> {
+		<span style="color:#a6e22e">updateAPost</span>(<span style="color:#a6e22e">title</span>, <span style="color:#a6e22e">labels</span>, <span style="color:#a6e22e">fileToUpload</span>, <span style="color:#a6e22e">BlogID</span>, <span style="color:#a6e22e">postsService</span>, <span style="color:#a6e22e">PostID</span>)
 	}
-
-	<span style="color:#a6e22e">postInsertCall</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">postService</span>.<span style="color:#a6e22e">Insert</span>(<span style="color:#a6e22e">BlogID</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">newPost</span>)
-	<span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">postErr</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">postInsertCall</span>.<span style="color:#a6e22e">Do</span>()
-	<span style="color:#a6e22e">checkErrorAndExit</span>(<span style="color:#a6e22e">postErr</span>)
-	<span style="color:#a6e22e">printNoOfPosts</span>(<span style="color:#a6e22e">postListCall</span>)
-
 }
-</code></pre></div><h3 id="run-the-script">Run the script</h3>
+</code></pre></div><h3 id="create-a-test-file-to-be-uploaded">Create a test file to be uploaded.</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">echo <span style="color:#e6db74">&#39;This is a first post&#39;</span> &gt; sometext.txt
+</code></pre></div><p><strong>Note</strong>: You can create an HTML file as well.</p>
+<h2 id="run-the-script">Run the script</h2>
+<h3 id="create-a-new-post">Create a New Post</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cd BloggerCli/go-cli/src/blogger
 
-$ go run bloggerCli.go -b <span style="color:#ae81ff">232343232322</span> -f sometext.html -t <span style="color:#e6db74">&#34;A some post test&#34;</span> -l <span style="color:#e6db74">&#34;label1,label2&#34;</span>
-Visit the URL <span style="color:#66d9ef">for</span> the auth dialog: https://accounts.google.com/o/oauth2/auth?client_id<span style="color:#f92672">=</span>566343445-c4pv4srn6ms7ddbn956Hjj8.apps.googleusercontent.com&amp;redirect_uri<span style="color:#f92672">=</span>urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&amp;response_type<span style="color:#f92672">=</span>code&amp;scope<span style="color:#f92672">=</span>https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fblogger&amp;state<span style="color:#f92672">=</span>state
+$ go run bloggerCli.go -b <span style="color:#ae81ff">232343232322</span> -f sometext.txt -t <span style="color:#e6db74">&#34;A new Post&#34;</span> -l <span style="color:#e6db74">&#34;label1,label2&#34;</span>
+Visit the URL <span style="color:#66d9ef">for</span> the auth dialog: https://accounts.google.com/o/oauth2/auth?client_id<span style="color:#f92672">=</span>99999999-ccc55566666iiioo999ddd.apps.googleusercontent.com&amp;redirect_uri<span style="color:#f92672">=</span>urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&amp;response_type<span style="color:#f92672">=</span>code&amp;scope<span style="color:#f92672">=</span>https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fblogger&amp;state<span style="color:#f92672">=</span>state
 Enter the code obtained from above here: 9/rf7hM-sds98JnHgsdK90OiYhsss790NHdsaDs
-Total posts in this blog: 50
+Total posts in this blog: 51
 <span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span> Inserting a new Post <span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span>
+A new post added to Blog with following details
+Title: A new Post
+PostID: 2344555555555999
+<span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span>
+Total posts in this blog: <span style="color:#ae81ff">52</span>
+</code></pre></div><h3 id="update-a-post">Update a Post</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cd BloggerCli/go-cli/src/blogger
+
+$ go run bloggerCli.go -b <span style="color:#ae81ff">232343232322</span> -f sometext.txt -t <span style="color:#e6db74">&#34;Multiple Vms Vagrantfile&#34;</span> -m
+Visit the URL <span style="color:#66d9ef">for</span> the auth dialog: https://accounts.google.com/o/oauth2/auth?client_id<span style="color:#f92672">=</span>99999999-ccc55566666iiioo999ddd.apps.googleusercontent.com&amp;redirect_uri<span style="color:#f92672">=</span>urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&amp;response_type<span style="color:#f92672">=</span>code&amp;scope<span style="color:#f92672">=</span>https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fblogger&amp;state<span style="color:#f92672">=</span>state
+Enter the code obtained from above here: 9/rf7hM-sds98JnHgsdK90OiYhsss790NHdsaDs
+Total posts in this blog: 51
+<span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span> updating a Post <span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span>
+Following post has been updated in Blog with following details
+Title: Multiple Vms Vagrantfile
+PostID: 334556669992323
+<span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span>
 Total posts in this blog: <span style="color:#ae81ff">51</span>
 </code></pre></div><p><strong>Note:</strong> You need to open the <code>URL</code> mentioned in the above output in a browser and authorize the request. This will return a <code>code</code> that need to enter above.</p>
 <h3 id="references-used">References used</h3>

@@ -31,9 +31,9 @@ Account Preparation   You need to have a google account (gmail) (Paid account NO
       
       <guid>/posts/convert_markup_to_blogger_compatible_html/</guid>
       <description>Introduction We will be converting a markup file to a blogger compatible html.
-Use pandoc Install pandoc using URL https://pandoc.org/installing.html . Create a workspace and clone following git repos in that workspace area.
-mkdir $HOME/panDocs cd $HOME/panDocs git clone https://github.com/tajmone/pandoc-goodies.git  pandoc-goodies is to generate html files.  Create a sample markup file. Create a markup file in $HOME/panDocs say markupContents.md with following contents.
- # A top Level Heading This is a heading.</description>
+Install pandoc and GitHUB html5 Template Install pandoc using URL https://pandoc.org/installing.html . Create a workspace and clone following git repos in that workspace area.
+mkdir $HOME/panDocs cd $HOME/panDocs git clone https://github.com/tajmone/pandoc-goodies.git cd pandoc-goodies/templates/html5/github/src Modify above GitHUB html5 template source code for blogger. Make the padding and max-width changes in _github-markdown.scss file as follows:
+$ git diff templates/html5/github/src/_github-markdown.scss diff --git a/templates/html5/github/src/_github-markdown.</description>
     </item>
     
     <item>
