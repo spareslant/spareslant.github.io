@@ -6,10 +6,49 @@
     <description>Recent content on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Sat, 14 Mar 2020 21:16:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Mar 2020 21:26:03 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Saltstack: Call runner from minion</title>
+      <link>/posts/saltstack-call-runner-from-minion/</link>
+      <pubDate>Sun, 15 Mar 2020 21:26:03 +0000</pubDate>
+      
+      <guid>/posts/saltstack-call-runner-from-minion/</guid>
+      <description>Introduction: Sometimes a minion may need to execute something which is central to whole system. e.g. Minion may need to update an external common Database whose write access is given only to master. Therefore minion may need to ask salt-master to execute on its behalf. This can be done by
+ Minion calling runner on salt-master runner executing a custom execution module that provides access to DB  As a custom execution module needs to be executed on salt-master, therefore salt-minion also needs to be installed on salt-master.</description>
+    </item>
+    
+    <item>
+      <title>Saltstack: Call runner from minion (jinja conditionals)</title>
+      <link>/posts/saltstack-call-runner-from-minion-jinja/</link>
+      <pubDate>Sun, 15 Mar 2020 21:05:23 +0000</pubDate>
+      
+      <guid>/posts/saltstack-call-runner-from-minion-jinja/</guid>
+      <description>Introduction Sometimes a minion may need to execute something which is central to whole system but based on some condition. e.g. Minion may need to update an external common Database whose write access is given only to master. Therefore minion may need to ask salt-master to execute on its behalf. This can be done by
+ Minion calling runner on salt-master runner executing a custom execution module that provides access to DB  As a custom execution module needs to be executed on salt-master, therefore salt-minion also needs to be installed on salt-master.</description>
+    </item>
+    
+    <item>
+      <title>Very Simple Template Substitutions Using Python Perl</title>
+      <link>/posts/very-simple-template-substitutions-using-python-perl/</link>
+      <pubDate>Sun, 15 Mar 2020 20:50:05 +0000</pubDate>
+      
+      <guid>/posts/very-simple-template-substitutions-using-python-perl/</guid>
+      <description>Introduction It is quite common to treat text files as templates which contains place holders that will be replaced by some real values. Python jinja or Ruby erb template engines are there to resolve for these kind of issues. They are quite feature rich. Following is a very simple Template substitution program in Python and Perl that does similar kind of job. Its very basic but works for simple scenarios.</description>
+    </item>
+    
+    <item>
+      <title>Minimal Working Tmux Config</title>
+      <link>/posts/minimal-working-tmux-config/</link>
+      <pubDate>Sun, 15 Mar 2020 20:33:04 +0000</pubDate>
+      
+      <guid>/posts/minimal-working-tmux-config/</guid>
+      <description>Minimal working tmux config Populate $HOME/.tmux.conf with following contents
+set -g default-terminal &amp;quot;screen-256color&amp;quot; set -g history-limit 5000 #setw -g status-utf8 on set -g status-bg colour15 setw -g display-time 5000 setw -g window-status-format &amp;quot;&amp;lt;#I.#P #W&amp;gt;&amp;quot; setw -g window-status-current-format &amp;quot;|#I.#P#F #W|&amp;quot; setw -g window-status-last-style fg=red setw -g window-status-current-style fg=brightcyan,bg=black setw -g pane-border-style fg=red,bg=black set -g allow-rename off set -g mode-keys vi Launch tmux tmux -u Note: -u is specified for terminals where locale is not set to UTF-8</description>
+    </item>
     
     <item>
       <title>Blogger Go Cli</title>

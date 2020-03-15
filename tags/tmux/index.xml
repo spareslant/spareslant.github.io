@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>tmux on SpareSlant Technical Blog</title>
+    <link>/tags/tmux/</link>
+    <description>Recent content in tmux on SpareSlant Technical Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <lastBuildDate>Sun, 15 Mar 2020 20:33:04 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/tmux/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Minimal Working Tmux Config</title>
+      <link>/posts/minimal-working-tmux-config/</link>
+      <pubDate>Sun, 15 Mar 2020 20:33:04 +0000</pubDate>
+      
+      <guid>/posts/minimal-working-tmux-config/</guid>
+      <description>Minimal working tmux config Populate $HOME/.tmux.conf with following contents
+set -g default-terminal &amp;quot;screen-256color&amp;quot; set -g history-limit 5000 #setw -g status-utf8 on set -g status-bg colour15 setw -g display-time 5000 setw -g window-status-format &amp;quot;&amp;lt;#I.#P #W&amp;gt;&amp;quot; setw -g window-status-current-format &amp;quot;|#I.#P#F #W|&amp;quot; setw -g window-status-last-style fg=red setw -g window-status-current-style fg=brightcyan,bg=black setw -g pane-border-style fg=red,bg=black set -g allow-rename off set -g mode-keys vi Launch tmux tmux -u Note: -u is specified for terminals where locale is not set to UTF-8</description>
+    </item>
+    
+  </channel>
+</rss>

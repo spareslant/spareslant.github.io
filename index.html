@@ -39,6 +39,86 @@
 	<article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
+			<a href="/posts/saltstack-call-runner-from-minion/" rel="bookmark">
+			Saltstack: Call runner from minion
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2020-03-15T21:26:03">2020-03-15</time>
+</div>
+</div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Introduction: Sometimes a minion may need to execute something which is central to whole system. e.g. Minion may need to update an external common Database whose write access is given only to master. Therefore minion may need to ask salt-master to execute on its behalf. This can be done by
+ Minion calling runner on salt-master runner executing a custom execution module that provides access to DB  As a custom execution module needs to be executed on salt-master, therefore salt-minion also needs to be installed on salt-master.
+	</div>
+	<div class="list__footer clearfix">
+		<a class="list__footer-readmore btn" href="/posts/saltstack-call-runner-from-minion/">Read more…</a>
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/posts/saltstack-call-runner-from-minion-jinja/" rel="bookmark">
+			Saltstack: Call runner from minion (jinja conditionals)
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2020-03-15T21:05:23">2020-03-15</time>
+</div>
+</div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Introduction Sometimes a minion may need to execute something which is central to whole system but based on some condition. e.g. Minion may need to update an external common Database whose write access is given only to master. Therefore minion may need to ask salt-master to execute on its behalf. This can be done by
+ Minion calling runner on salt-master runner executing a custom execution module that provides access to DB  As a custom execution module needs to be executed on salt-master, therefore salt-minion also needs to be installed on salt-master.
+	</div>
+	<div class="list__footer clearfix">
+		<a class="list__footer-readmore btn" href="/posts/saltstack-call-runner-from-minion-jinja/">Read more…</a>
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/posts/very-simple-template-substitutions-using-python-perl/" rel="bookmark">
+			Very Simple Template Substitutions Using Python Perl
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2020-03-15T20:50:05">2020-03-15</time>
+</div>
+</div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Introduction It is quite common to treat text files as templates which contains place holders that will be replaced by some real values. Python jinja or Ruby erb template engines are there to resolve for these kind of issues. They are quite feature rich. Following is a very simple Template substitution program in Python and Perl that does similar kind of job. Its very basic but works for simple scenarios.
+	</div>
+	<div class="list__footer clearfix">
+		<a class="list__footer-readmore btn" href="/posts/very-simple-template-substitutions-using-python-perl/">Read more…</a>
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/posts/minimal-working-tmux-config/" rel="bookmark">
+			Minimal Working Tmux Config
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2020-03-15T20:33:04">2020-03-15</time>
+</div>
+</div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Minimal working tmux config Populate $HOME/.tmux.conf with following contents
+set -g default-terminal &quot;screen-256color&quot; set -g history-limit 5000 #setw -g status-utf8 on set -g status-bg colour15 setw -g display-time 5000 setw -g window-status-format &quot;&lt;#I.#P #W&gt;&quot; setw -g window-status-current-format &quot;|#I.#P#F #W|&quot; setw -g window-status-last-style fg=red setw -g window-status-current-style fg=brightcyan,bg=black setw -g pane-border-style fg=red,bg=black set -g allow-rename off set -g mode-keys vi Launch tmux tmux -u Note: -u is specified for terminals where locale is not set to UTF-8
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
 			<a href="/posts/blogger-go-cli/" rel="bookmark">
 			Blogger Go Cli
 			</a>
@@ -174,91 +254,6 @@ set nocompatible &quot; be iMproved, required filetype off &quot; required &quot
 	<div class="list__footer clearfix">
 		<a class="list__footer-readmore btn" href="/posts/vim-vagrant-plugin/">Read more…</a>
 	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/posts/apache-reverseproxyssl-sslclientauth/" rel="bookmark">
-			Apache ReverseProxySSL SSLClientAuth
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
-	<time class="meta__text" datetime="2019-08-04T14:54:01">2019-08-04</time>
-</div>
-</div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		Introduction We will be configuring Apache in reverse proxy mode. Apache will be accepting connections on secure port with SSL client authentication and forward that request to a backend application server Gunicorn. Communication between apache and gunicorn will also be on secure port and SSL authenticated. Gunicorn will run a simple flask app that will be writing some text to file.
-Purpose of this excersize is to introduce end to end secure communication from client to apache to app server with SSL client authentication at every stage.
-	</div>
-	<div class="list__footer clearfix">
-		<a class="list__footer-readmore btn" href="/posts/apache-reverseproxyssl-sslclientauth/">Read more…</a>
-	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/posts/deploy-hugosite-to-github/" rel="bookmark">
-			Deploy HugoSite to Github
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
-	<time class="meta__text" datetime="2019-08-03T19:01:43">2019-08-03</time>
-</div>
-</div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		Run HTTP server to serve file locally to check the contents $ hugo server -D Do following change in md files that need to be published. change draft: true to draft: false Run HTTP server in prod mode and make sure all required files are being served. $ hugo server Git commit the changes $ git add &lt;files&gt; $ git commit $ git push origin master Prepare contents to be deployed to GITHUB $ cd MyTechnialBlog/ $ ls -og total 8 drwxr-xr-x 3 96 17 Jul 21:25 archetypes -rw-r--r-- 1 2067 17 Jul 21:40 config.
-	</div>
-	<div class="list__footer clearfix">
-		<a class="list__footer-readmore btn" href="/posts/deploy-hugosite-to-github/">Read more…</a>
-	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/posts/markup-to-pdf/" rel="bookmark">
-			Markup to Pdf/HTML
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
-	<time class="meta__text" datetime="2019-07-27T20:39:13">2019-07-27</time>
-</div>
-</div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		Introduction This documents shows the various ways to generate PDF and self contained HTML files.
-Using VSCode extension. Install VSCode and install extension Markdown PDF. Write a new markup page in VSCode. When done, right click on the editor and you will see the options to export to PDF and HTML.
-  pros
- Easy installation and generation of PDF Line wraps in code blocks.    cons
-	</div>
-	<div class="list__footer clearfix">
-		<a class="list__footer-readmore btn" href="/posts/markup-to-pdf/">Read more…</a>
-	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/posts/docker-logging-with-rsyslog/" rel="bookmark">
-			Docker Logging With Rsyslog
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
-	<time class="meta__text" datetime="2019-07-27T12:15:28">2019-07-27</time>
-</div>
-</div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		Introduction This document will describe a simple strategy to logging for docker container using Rsyslog. Often we may have to run multiple containers on single machine. We may require logging for different container in different directories or files. This can be achieved using Rsyslog. Approach below is very generic and flexible and can be modified as per requirement easily.
-Running Docker with syslog logging I use following command to run docker container.
-	</div>
-	<div class="list__footer clearfix">
-		<a class="list__footer-readmore btn" href="/posts/docker-logging-with-rsyslog/">Read more…</a>
-	</div>
 </article>
 </main>
 
@@ -282,11 +277,11 @@ Running Docker with syslog logging I use following command to run docker contain
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/posts/saltstack-call-runner-from-minion/">Saltstack: Call runner from minion</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/saltstack-call-runner-from-minion-jinja/">Saltstack: Call runner from minion (jinja conditionals)</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/very-simple-template-substitutions-using-python-perl/">Very Simple Template Substitutions Using Python Perl</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/minimal-working-tmux-config/">Minimal Working Tmux Config</a></li>
 			<li class="widget__item"><a class="widget__link" href="/posts/blogger-go-cli/">Blogger Go Cli</a></li>
-			<li class="widget__item"><a class="widget__link" href="/posts/multiple-vms-vagrantfile/">Multiple Vms Vagrantfile</a></li>
-			<li class="widget__item"><a class="widget__link" href="/posts/convert_markup_to_blogger_compatible_html/">Convert markup to blogger compatible html</a></li>
-			<li class="widget__item"><a class="widget__link" href="/posts/blogger-ruby-cli/">Blogger ruby cli</a></li>
-			<li class="widget__item"><a class="widget__link" href="/posts/blogger-python-cli/">Blogger python cli</a></li>
 		</ul>
 	</div>
 </div>
@@ -312,6 +307,7 @@ Running Docker with syslog logging I use following command to run docker contain
 		<a class="widget-taglist__link widget__link btn" href="/tags/html" title="Html">Html (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/html-generation" title="Html generation">Html generation (2)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/hugo" title="Hugo">Hugo (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/jinja" title="Jinja">Jinja (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/logging" title="Logging">Logging (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/openssl" title="Openssl">Openssl (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/pdf-generation" title="Pdf generation">Pdf generation (1)</a>
@@ -321,11 +317,16 @@ Running Docker with syslog logging I use following command to run docker contain
 		<a class="widget-taglist__link widget__link btn" href="/tags/reverse-proxy" title="Reverse proxy">Reverse proxy (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/rsyslog" title="Rsyslog">Rsyslog (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/ruby" title="Ruby">Ruby (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/runner" title="Runner">Runner (2)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/salt" title="Salt">Salt (2)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/saltstack" title="Saltstack">Saltstack (2)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/ssl" title="Ssl">Ssl (2)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/ssl-authentication" title="Ssl authentication">Ssl authentication (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/ssl-mutual-authentication" title="Ssl mutual authentication">Ssl mutual authentication (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/ssl-reverse-proxy" title="Ssl reverse proxy">Ssl reverse proxy (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/syslog" title="Syslog">Syslog (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/terminal" title="Terminal">Terminal (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tmux" title="Tmux">Tmux (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/vagrant" title="Vagrant">Vagrant (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/vagrantfile" title="Vagrantfile">Vagrantfile (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/vagrantfile-plugin" title="Vagrantfile plugin">Vagrantfile plugin (1)</a>

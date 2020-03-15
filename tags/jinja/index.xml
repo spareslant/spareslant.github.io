@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>jinja on SpareSlant Technical Blog</title>
+    <link>/tags/jinja/</link>
+    <description>Recent content in jinja on SpareSlant Technical Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <lastBuildDate>Sun, 15 Mar 2020 21:05:23 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/jinja/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Saltstack: Call runner from minion (jinja conditionals)</title>
+      <link>/posts/saltstack-call-runner-from-minion-jinja/</link>
+      <pubDate>Sun, 15 Mar 2020 21:05:23 +0000</pubDate>
+      
+      <guid>/posts/saltstack-call-runner-from-minion-jinja/</guid>
+      <description>Introduction Sometimes a minion may need to execute something which is central to whole system but based on some condition. e.g. Minion may need to update an external common Database whose write access is given only to master. Therefore minion may need to ask salt-master to execute on its behalf. This can be done by
+ Minion calling runner on salt-master runner executing a custom execution module that provides access to DB  As a custom execution module needs to be executed on salt-master, therefore salt-minion also needs to be installed on salt-master.</description>
+    </item>
+    
+  </channel>
+</rss>

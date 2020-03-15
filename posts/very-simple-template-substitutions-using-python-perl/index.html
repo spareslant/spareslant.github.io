@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-gb">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Very Simple Template Substitutions Using Python Perl - SpareSlant Technical Blog</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/my.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="SpareSlant Technical Blog" rel="home">
+				<div class="logo__title">SpareSlant Technical Blog</div>
+				<div class="logo__tagline">SpareSlant tech blog</div>
+			</a>
+		</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Very Simple Template Substitutions Using Python Perl</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2020-03-15T20:50:05">2020-03-15</time>
+</div>
+</div>
+		</header>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#using-python">Using Python</a></li>
+    <li><a href="#using-shell-and-perl">Using Shell and Perl</a></li>
+  </ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<h2 id="introduction">Introduction</h2>
+<p>It is quite common to treat text files as templates which contains place holders that will be replaced by some real values. Python jinja or Ruby erb template engines are there to resolve for these kind of issues. They are quite feature rich. Following is a very simple Template substitution program in Python and Perl that does similar kind of job. Its very basic but works for simple scenarios.</p>
+<h2 id="using-python">Using Python</h2>
+<p>Consider following text file <code>test_file.txt</code> with place holders in it.</p>
+<pre><code>This is a %TEST1% . Another %TEST1%  %TEST1%
+Now this is a %TEST2%.
+</code></pre><p>Following is the file <code>var.py</code> containing values of above place holder.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#a6e22e">TEST1</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;test_string1&#34;</span>
+<span style="color:#a6e22e">TEST2</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;test_string2&#34;</span>
+</code></pre></div><p>Following is the python program that will replace above values in <code>test_file.txt</code> from <code>var.py</code> file.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#! /usr/bin/env python</span>
+
+<span style="color:#f92672">import</span> re
+<span style="color:#f92672">import</span> fileinput
+<span style="color:#f92672">import</span> sys
+<span style="color:#f92672">from</span> var <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">print_data_vars</span>(matchObj):
+    <span style="color:#66d9ef">return</span> globals()[matchObj<span style="color:#f92672">.</span>group(<span style="color:#ae81ff">1</span>)]
+
+<span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> fileinput<span style="color:#f92672">.</span>input(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">test_file</span><span style="color:#e6db74">&#39;</span>, inplace<span style="color:#f92672">=</span>True):
+    line <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>sub(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%</span><span style="color:#e6db74">(.+?)</span><span style="color:#e6db74">%</span><span style="color:#e6db74">&#39;</span>, print_data_vars, line)
+    sys<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>write(line)
+</code></pre></div><p>when above program is run , it will replace placeholders with values in existing <code>test_file.txt</code> file.</p>
+<h2 id="using-shell-and-perl">Using Shell and Perl</h2>
+<p>Assuming <code>var.py</code> and <code>test_file.txt</code> contents are same as above, same effect can also be achieved using <code>shell</code> and <code>perl</code> combination as follows.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#! /usr/bin/env bash
+</span><span style="color:#75715e"></span>set -a
+source ./var.py
+set +a
+perl -i -wpl -e <span style="color:#e6db74">&#39;s!%(.+?)%!$ENV{$1}!g&#39;</span> test_file
+</code></pre></div>
+		</div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<div class="authorbox__header">
+		<span class="authorbox__name">About SpareSlant</span>
+	</div>
+</div>
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/posts/minimal-working-tmux-config/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Minimal Working Tmux Config</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/posts/saltstack-call-runner-from-minion-jinja/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">Saltstack: Call runner from minion (jinja conditionals)</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2020 SpareSlant.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
+</html>

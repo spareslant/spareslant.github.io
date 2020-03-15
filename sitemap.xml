@@ -3,6 +3,71 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/posts/</loc>
+    <lastmod>2020-03-15T21:26:03+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/runner/</loc>
+    <lastmod>2020-03-15T21:26:03+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/salt/</loc>
+    <lastmod>2020-03-15T21:26:03+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/saltstack/</loc>
+    <lastmod>2020-03-15T21:26:03+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/saltstack-call-runner-from-minion/</loc>
+    <lastmod>2020-03-15T21:26:03+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/</loc>
+    <lastmod>2020-03-15T21:26:03+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2020-03-15T21:26:03+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/jinja/</loc>
+    <lastmod>2020-03-15T21:05:23+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/saltstack-call-runner-from-minion-jinja/</loc>
+    <lastmod>2020-03-15T21:05:23+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/very-simple-template-substitutions-using-python-perl/</loc>
+    <lastmod>2020-03-15T20:50:05+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/minimal-working-tmux-config/</loc>
+    <lastmod>2020-03-15T20:33:04+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/terminal/</loc>
+    <lastmod>2020-03-15T20:33:04+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/tmux/</loc>
+    <lastmod>2020-03-15T20:33:04+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/tags/blogger/</loc>
     <lastmod>2020-03-14T21:16:00+00:00</lastmod>
   </url>
@@ -29,21 +94,6 @@
   
   <url>
     <loc>/tags/google-api/</loc>
-    <lastmod>2020-03-14T21:16:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/posts/</loc>
-    <lastmod>2020-03-14T21:16:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/</loc>
-    <lastmod>2020-03-14T21:16:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
     <lastmod>2020-03-14T21:16:00+00:00</lastmod>
   </url>
   

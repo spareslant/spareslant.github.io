@@ -6,10 +6,64 @@
     <description>Recent content in Tags on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Sat, 14 Mar 2020 21:16:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Mar 2020 21:26:03 +0000</lastBuildDate>
     
 	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>runner</title>
+      <link>/tags/runner/</link>
+      <pubDate>Sun, 15 Mar 2020 21:26:03 +0000</pubDate>
+      
+      <guid>/tags/runner/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>salt</title>
+      <link>/tags/salt/</link>
+      <pubDate>Sun, 15 Mar 2020 21:26:03 +0000</pubDate>
+      
+      <guid>/tags/salt/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>SaltStack</title>
+      <link>/tags/saltstack/</link>
+      <pubDate>Sun, 15 Mar 2020 21:26:03 +0000</pubDate>
+      
+      <guid>/tags/saltstack/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>jinja</title>
+      <link>/tags/jinja/</link>
+      <pubDate>Sun, 15 Mar 2020 21:05:23 +0000</pubDate>
+      
+      <guid>/tags/jinja/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>terminal</title>
+      <link>/tags/terminal/</link>
+      <pubDate>Sun, 15 Mar 2020 20:33:04 +0000</pubDate>
+      
+      <guid>/tags/terminal/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tmux</title>
+      <link>/tags/tmux/</link>
+      <pubDate>Sun, 15 Mar 2020 20:33:04 +0000</pubDate>
+      
+      <guid>/tags/tmux/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>blogger</title>
