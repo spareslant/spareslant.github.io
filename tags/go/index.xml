@@ -13,17 +13,6 @@
     
     <item>
       <title>Remote OpenStack Instances Using Goose library (using Nova networking)</title>
-      <link>/posts/openstack-instances-using-goose-library.blogger/</link>
-      <pubDate>Mon, 16 Mar 2020 23:04:49 +0000</pubDate>
-      
-      <guid>/posts/openstack-instances-using-goose-library.blogger/</guid>
-      <description>Introduction: Following program uses goose library to spin instances in OpenStack environment. Program will also assign a public IP to first instance.
-Requirments: An already running OpenStack environment. You can get a free playground for OpenStack to play with at http://trystack.org/. At minimum you need following information.
-Auth URL : It may look like this http://10.0.2.15:5000/v2.0 UserName : This is a user in OpenStack. default: admin Password : This is an API password.</description>
-    </item>
-    
-    <item>
-      <title>Remote OpenStack Instances Using Goose library (using Nova networking)</title>
       <link>/posts/openstack-instances-using-goose-library/</link>
       <pubDate>Mon, 16 Mar 2020 23:04:49 +0000</pubDate>
       
