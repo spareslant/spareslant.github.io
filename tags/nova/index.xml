@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Nova on SpareSlant Technical Blog</title>
+    <link>/tags/nova/</link>
+    <description>Recent content in Nova on SpareSlant Technical Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <lastBuildDate>Mon, 16 Mar 2020 22:46:24 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/nova/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Remote OpenStack instances using Gophercloud Library (using Nova Networking)</title>
+      <link>/posts/openstack-instances-using-gophercloud-nova-networking/</link>
+      <pubDate>Mon, 16 Mar 2020 22:46:24 +0000</pubDate>
+      
+      <guid>/posts/openstack-instances-using-gophercloud-nova-networking/</guid>
+      <description>Introduction: Following program uses gophercloud library to spin instances in OpenStack environment.
+Requirments: An already running OpenStack environment. You can get a free playground for OpenStack to play with at http://trystack.org/. At minimum you need following information.
+Auth URL : It may look like this http://10.0.2.15:5000/v2.0 UserName : This is a user in OpenStack. default: admin Password : This is an API password. API password can be different from user password.</description>
+    </item>
+    
+  </channel>
+</rss>

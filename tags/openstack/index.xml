@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>openstack on SpareSlant Technical Blog</title>
+    <link>/tags/openstack/</link>
+    <description>Recent content in openstack on SpareSlant Technical Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <lastBuildDate>Mon, 16 Mar 2020 23:04:49 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/openstack/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Remote OpenStack Instances Using Goose library (using Nova networking)</title>
+      <link>/posts/openstack-instances-using-goose-library.blogger/</link>
+      <pubDate>Mon, 16 Mar 2020 23:04:49 +0000</pubDate>
+      
+      <guid>/posts/openstack-instances-using-goose-library.blogger/</guid>
+      <description>Introduction: Following program uses goose library to spin instances in OpenStack environment. Program will also assign a public IP to first instance.
+Requirments: An already running OpenStack environment. You can get a free playground for OpenStack to play with at http://trystack.org/. At minimum you need following information.
+Auth URL : It may look like this http://10.0.2.15:5000/v2.0 UserName : This is a user in OpenStack. default: admin Password : This is an API password.</description>
+    </item>
+    
+    <item>
+      <title>Remote OpenStack Instances Using Goose library (using Nova networking)</title>
+      <link>/posts/openstack-instances-using-goose-library/</link>
+      <pubDate>Mon, 16 Mar 2020 23:04:49 +0000</pubDate>
+      
+      <guid>/posts/openstack-instances-using-goose-library/</guid>
+      <description>Introduction: Following program uses goose library to spin instances in OpenStack environment. Program will also assign a public IP to first instance.
+Requirments: An already running OpenStack environment. You can get a free playground for OpenStack to play with at http://trystack.org/. At minimum you need following information.
+Auth URL : It may look like this http://10.0.2.15:5000/v2.0 UserName : This is a user in OpenStack. default: admin Password : This is an API password.</description>
+    </item>
+    
+    <item>
+      <title>Remote OpenStack instances using Gophercloud Library (using Nova Networking)</title>
+      <link>/posts/openstack-instances-using-gophercloud-nova-networking/</link>
+      <pubDate>Mon, 16 Mar 2020 22:46:24 +0000</pubDate>
+      
+      <guid>/posts/openstack-instances-using-gophercloud-nova-networking/</guid>
+      <description>Introduction: Following program uses gophercloud library to spin instances in OpenStack environment.
+Requirments: An already running OpenStack environment. You can get a free playground for OpenStack to play with at http://trystack.org/. At minimum you need following information.
+Auth URL : It may look like this http://10.0.2.15:5000/v2.0 UserName : This is a user in OpenStack. default: admin Password : This is an API password. API password can be different from user password.</description>
+    </item>
+    
+    <item>
+      <title>Remote OpenStack Instances using Gophercloud (using neutron networking)</title>
+      <link>/posts/remote-openstack-instances-gophercloud-neutron/</link>
+      <pubDate>Mon, 16 Mar 2020 22:24:21 +0000</pubDate>
+      
+      <guid>/posts/remote-openstack-instances-gophercloud-neutron/</guid>
+      <description>Introduction: Following program uses gophercloud library to spin instances in OpenStack environment. This program uses Neutron Networking. This program will also assign FloatingIP to very first instance.
+Requirments: An already running OpenStack environment. You can get a free playground for OpenStack to play with at http://trystack.org/. At minimum you need following information.
+Auth URL : It may look like this http://10.0.2.15:5000/v2.0 UserName : This is a user in OpenStack. default: admin Password : This is an API password.</description>
+    </item>
+    
+  </channel>
+</rss>

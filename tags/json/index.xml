@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>json on SpareSlant Technical Blog</title>
+    <link>/tags/json/</link>
+    <description>Recent content in json on SpareSlant Technical Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <lastBuildDate>Mon, 16 Mar 2020 22:09:29 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/json/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Json Full Paths From Root Node to Leaf</title>
+      <link>/posts/json-full-paths-from-root-node-to-leaf/</link>
+      <pubDate>Mon, 16 Mar 2020 22:09:29 +0000</pubDate>
+      
+      <guid>/posts/json-full-paths-from-root-node-to-leaf/</guid>
+      <description>Introduction: Often there is a requirement to create full paths from root node to leaf node in JSON file. Following python program will generate these paths.
+Sample JSON file sample_json_file.json is below:
+{ &amp;#34;data&amp;#34;: [ { &amp;#34;id&amp;#34;: &amp;#34;X999_Y999&amp;#34;, &amp;#34;from&amp;#34;: { &amp;#34;name&amp;#34;: &amp;#34;Tom Brady&amp;#34;, &amp;#34;id&amp;#34;: &amp;#34;X12&amp;#34; }, &amp;#34;message&amp;#34;: &amp;#34;Looking forward to 2010!&amp;#34;, &amp;#34;actions&amp;#34;: [ { &amp;#34;name&amp;#34;: &amp;#34;Comment&amp;#34;, &amp;#34;link&amp;#34;: &amp;#34;http://www.facebook.com/X999/posts/Y999&amp;#34; }, { &amp;#34;name&amp;#34;: &amp;#34;Like&amp;#34;, &amp;#34;link&amp;#34;: &amp;#34;http://www.facebook.com/X999/posts/Y999&amp;#34; } ], &amp;#34;type&amp;#34;: &amp;#34;status&amp;#34;, &amp;#34;created_time&amp;#34;: &amp;#34;2010-08-02T21:27:44+0000&amp;#34;, &amp;#34;updated_time&amp;#34;: &amp;#34;2010-08-02T21:27:44+0000&amp;#34; }, { &amp;#34;id&amp;#34;: &amp;#34;X998_Y998&amp;#34;, &amp;#34;from&amp;#34;: { &amp;#34;name&amp;#34;: &amp;#34;Peyton Manning&amp;#34;, &amp;#34;id&amp;#34;: &amp;#34;X18&amp;#34; }, &amp;#34;message&amp;#34;: &amp;#34;Where&amp;#39;s my contract?</description>
+    </item>
+    
+  </channel>
+</rss>

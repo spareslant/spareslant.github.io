@@ -3,8 +3,88 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/tags/go/</loc>
+    <lastmod>2020-03-16T23:04:49+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/goose/</loc>
+    <lastmod>2020-03-16T23:04:49+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/openstack/</loc>
+    <lastmod>2020-03-16T23:04:49+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/posts/</loc>
-    <lastmod>2020-03-16T13:41:26+00:00</lastmod>
+    <lastmod>2020-03-16T23:04:49+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/openstack-instances-using-goose-library.blogger/</loc>
+    <lastmod>2020-03-16T23:04:49+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/openstack-instances-using-goose-library/</loc>
+    <lastmod>2020-03-16T23:04:49+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/</loc>
+    <lastmod>2020-03-16T23:04:49+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2020-03-16T23:04:49+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/gophercloud/</loc>
+    <lastmod>2020-03-16T22:46:24+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/nova/</loc>
+    <lastmod>2020-03-16T22:46:24+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/openstack-instances-using-gophercloud-nova-networking/</loc>
+    <lastmod>2020-03-16T22:46:24+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/neutron/</loc>
+    <lastmod>2020-03-16T22:24:21+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/remote-openstack-instances-gophercloud-neutron/</loc>
+    <lastmod>2020-03-16T22:24:21+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/json/</loc>
+    <lastmod>2020-03-16T22:09:29+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/json-full-paths-from-root-node-to-leaf/</loc>
+    <lastmod>2020-03-16T22:09:29+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/python/</loc>
+    <lastmod>2020-03-16T22:09:29+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/recursion/</loc>
+    <lastmod>2020-03-16T22:09:29+00:00</lastmod>
   </url>
   
   <url>
@@ -19,16 +99,6 @@
   
   <url>
     <loc>/posts/saltstack-custom-execution-module-with-arguments/</loc>
-    <lastmod>2020-03-16T13:41:26+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/</loc>
-    <lastmod>2020-03-16T13:41:26+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
     <lastmod>2020-03-16T13:41:26+00:00</lastmod>
   </url>
   
@@ -98,11 +168,6 @@
   </url>
   
   <url>
-    <loc>/tags/go/</loc>
-    <lastmod>2020-03-14T21:16:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/tags/golang/</loc>
     <lastmod>2020-03-14T21:16:00+00:00</lastmod>
   </url>
@@ -154,11 +219,6 @@
   
   <url>
     <loc>/posts/blogger-ruby-cli/</loc>
-    <lastmod>2020-03-10T00:34:42+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/python/</loc>
     <lastmod>2020-03-10T00:34:42+00:00</lastmod>
   </url>
   

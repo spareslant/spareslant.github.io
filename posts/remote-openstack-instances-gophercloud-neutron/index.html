@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-gb">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Remote OpenStack Instances using Gophercloud (using neutron networking) - SpareSlant Technical Blog</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/my.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="SpareSlant Technical Blog" rel="home">
+				<div class="logo__title">SpareSlant Technical Blog</div>
+				<div class="logo__tagline">SpareSlant tech blog</div>
+			</a>
+		</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Remote OpenStack Instances using Gophercloud (using neutron networking)</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2020-03-16T22:24:21">2020-03-16</time>
+</div>
+</div>
+		</header>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction:</a></li>
+    <li><a href="#requirments">Requirments:</a></li>
+  </ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<h2 id="introduction">Introduction:</h2>
+<p>Following program uses <code>gophercloud</code> library to spin instances in OpenStack environment. This program uses <code>Neutron</code> Networking. This program will also assign <code>FloatingIP</code> to very first instance.</p>
+<h2 id="requirments">Requirments:</h2>
+<p>An already running OpenStack environment. You can get a free playground for OpenStack to play with at <code>http://trystack.org/</code>. At minimum you need following information.</p>
+<pre><code>Auth URL : It may look like this http://10.0.2.15:5000/v2.0
+UserName : This is a user in OpenStack. default: admin
+Password : This is an API password. API password can be different from user password.
+Tenant   : This is more like a project/Account or Organization. A tenant can have multiple users associated with it.. default: admin
+Region   : Default region is set to RegionOne.
+</code></pre><p>In <code>trystack.org</code> this information can be found at <strong><a href="https://x86.trystack.org/dashboard/project/access_and_security/">https://x86.trystack.org/dashboard/project/access_and_security/</a></strong> and click on Download OpenStack RC file. Contents of RC file will have all the required information.</p>
+<p>Following is the source code.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+        <span style="color:#e6db74">&#34;crypto/rand&#34;</span>
+        <span style="color:#e6db74">&#34;flag&#34;</span>
+        <span style="color:#e6db74">&#34;fmt&#34;</span>
+        <span style="color:#e6db74">&#34;github.com/rackspace/gophercloud&#34;</span>
+        <span style="color:#e6db74">&#34;github.com/rackspace/gophercloud/openstack&#34;</span>
+        <span style="color:#e6db74">&#34;github.com/rackspace/gophercloud/openstack/compute/v2/flavors&#34;</span>
+        <span style="color:#e6db74">&#34;github.com/rackspace/gophercloud/openstack/compute/v2/images&#34;</span>
+        <span style="color:#e6db74">&#34;github.com/rackspace/gophercloud/openstack/compute/v2/servers&#34;</span>
+        <span style="color:#e6db74">&#34;github.com/rackspace/gophercloud/openstack/networking/v2/extensions/layer3/floatingips&#34;</span>
+        <span style="color:#e6db74">&#34;github.com/rackspace/gophercloud/openstack/networking/v2/networks&#34;</span>
+        <span style="color:#e6db74">&#34;github.com/rackspace/gophercloud/openstack/networking/v2/ports&#34;</span>
+        <span style="color:#e6db74">&#34;os&#34;</span>
+        <span style="color:#e6db74">&#34;strconv&#34;</span>
+)
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">checkErrorAndExit</span>(<span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>) {
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+                <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Error: %v\n&#34;</span>, <span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">Error</span>())
+                <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Exit</span>(<span style="color:#ae81ff">3</span>)
+        }
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">checkErrorAndContinue</span>(<span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>) {
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+                <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Error: %v\n&#34;</span>, <span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">Error</span>())
+        }
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">generateRandomString</span>() <span style="color:#66d9ef">string</span> {
+        <span style="color:#a6e22e">b</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">byte</span>, <span style="color:#ae81ff">8</span>)
+        <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">rand</span>.<span style="color:#a6e22e">Read</span>(<span style="color:#a6e22e">b</span>)
+        <span style="color:#a6e22e">checkErrorAndExit</span>(<span style="color:#a6e22e">err</span>)
+        <span style="color:#a6e22e">name</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;%X&#34;</span>, <span style="color:#a6e22e">b</span>[<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">4</span>])
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">name</span>
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+
+        <span style="color:#a6e22e">user</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">String</span>(<span style="color:#e6db74">&#34;user&#34;</span>, <span style="color:#e6db74">&#34;admin&#34;</span>, <span style="color:#e6db74">&#34;OS Username&#34;</span>)
+        <span style="color:#a6e22e">pass</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">String</span>(<span style="color:#e6db74">&#34;password&#34;</span>, <span style="color:#e6db74">&#34;acf0d596fbb44b1d&#34;</span>, <span style="color:#e6db74">&#34;Password&#34;</span>)
+        <span style="color:#a6e22e">authUrl</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">String</span>(<span style="color:#e6db74">&#34;authurl&#34;</span>, <span style="color:#e6db74">&#34;http://10.0.2.15:5000/v2.0&#34;</span>, <span style="color:#e6db74">&#34;AUTH URL&#34;</span>)
+        <span style="color:#a6e22e">tenant</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">String</span>(<span style="color:#e6db74">&#34;tenant&#34;</span>, <span style="color:#e6db74">&#34;admin&#34;</span>, <span style="color:#e6db74">&#34;Tenant Name&#34;</span>)
+        <span style="color:#a6e22e">region</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">String</span>(<span style="color:#e6db74">&#34;region&#34;</span>, <span style="color:#e6db74">&#34;RegionOne&#34;</span>, <span style="color:#e6db74">&#34;Region for VM&#34;</span>)
+        <span style="color:#a6e22e">defaultRun</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">Bool</span>(<span style="color:#e6db74">&#34;runwithdefaultvalues&#34;</span>, <span style="color:#66d9ef">false</span>, <span style="color:#e6db74">&#34;Use this flag to use default values&#34;</span>)
+        <span style="color:#a6e22e">image</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">String</span>(<span style="color:#e6db74">&#34;image&#34;</span>, <span style="color:#e6db74">&#34;cirros&#34;</span>, <span style="color:#e6db74">&#34;Image to be used&#34;</span>)
+        <span style="color:#a6e22e">flavor</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">String</span>(<span style="color:#e6db74">&#34;flavor&#34;</span>, <span style="color:#e6db74">&#34;m1.tiny&#34;</span>, <span style="color:#e6db74">&#34;Size of VM&#34;</span>)
+        <span style="color:#a6e22e">private_network</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">String</span>(<span style="color:#e6db74">&#34;private_network&#34;</span>, <span style="color:#e6db74">&#34;private&#34;</span>, <span style="color:#e6db74">&#34;private network for VM&#34;</span>)
+        <span style="color:#a6e22e">public_network</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">String</span>(<span style="color:#e6db74">&#34;public_network&#34;</span>, <span style="color:#e6db74">&#34;public&#34;</span>, <span style="color:#e6db74">&#34;public network for VM&#34;</span>)
+        <span style="color:#a6e22e">securityGroup</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">String</span>(<span style="color:#e6db74">&#34;securitygroup&#34;</span>, <span style="color:#e6db74">&#34;default&#34;</span>, <span style="color:#e6db74">&#34;Security Group for VM&#34;</span>)
+
+        <span style="color:#a6e22e">hostNamePrefix</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">String</span>(<span style="color:#e6db74">&#34;hostnameprefix&#34;</span>, <span style="color:#a6e22e">generateRandomString</span>(), <span style="color:#e6db74">&#34;Hostname Prefix. default: randomly generated.&#34;</span>)
+        <span style="color:#a6e22e">total</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">String</span>(<span style="color:#e6db74">&#34;total&#34;</span>, <span style="color:#e6db74">&#34;5&#34;</span>, <span style="color:#e6db74">&#34;Total number of instances&#34;</span>)
+
+        <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">Parse</span>()
+
+        <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Setenv</span>(<span style="color:#e6db74">&#34;OS_USERNAME&#34;</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">user</span>)
+        <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Setenv</span>(<span style="color:#e6db74">&#34;OS_PASSWORD&#34;</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">pass</span>)
+        <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Setenv</span>(<span style="color:#e6db74">&#34;OS_AUTH_URL&#34;</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">authUrl</span>)
+        <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Setenv</span>(<span style="color:#e6db74">&#34;OS_TENANT_NAME&#34;</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">tenant</span>)
+        <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Setenv</span>(<span style="color:#e6db74">&#34;OS_REGION_NAME&#34;</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">region</span>)
+
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">NFlag</span>() <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {
+                <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">PrintDefaults</span>()
+                <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Exit</span>(<span style="color:#ae81ff">1</span>)
+        } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">defaultRun</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">true</span> {
+                <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Creating VMs: &#34;</span>)
+        } <span style="color:#66d9ef">else</span> {
+                <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Creating VMs: &#34;</span>)
+        }
+
+        <span style="color:#a6e22e">authOpts</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">openstack</span>.<span style="color:#a6e22e">AuthOptionsFromEnv</span>()
+        <span style="color:#a6e22e">checkErrorAndExit</span>(<span style="color:#a6e22e">err</span>)
+
+        <span style="color:#a6e22e">provider</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">openstack</span>.<span style="color:#a6e22e">AuthenticatedClient</span>(<span style="color:#a6e22e">authOpts</span>)
+        <span style="color:#a6e22e">checkErrorAndExit</span>(<span style="color:#a6e22e">err</span>)
+
+        <span style="color:#a6e22e">otherOpts</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">gophercloud</span>.<span style="color:#a6e22e">EndpointOpts</span>{<span style="color:#a6e22e">Region</span>: <span style="color:#f92672">*</span><span style="color:#a6e22e">region</span>}
+        <span style="color:#a6e22e">client</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">openstack</span>.<span style="color:#a6e22e">NewComputeV2</span>(<span style="color:#a6e22e">provider</span>, <span style="color:#a6e22e">otherOpts</span>)
+
+        <span style="color:#a6e22e">imageID</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">images</span>.<span style="color:#a6e22e">IDFromName</span>(<span style="color:#a6e22e">client</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">image</span>)
+        <span style="color:#a6e22e">checkErrorAndExit</span>(<span style="color:#a6e22e">err</span>)
+
+        <span style="color:#a6e22e">flavorID</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">flavors</span>.<span style="color:#a6e22e">IDFromName</span>(<span style="color:#a6e22e">client</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">flavor</span>)
+        <span style="color:#a6e22e">checkErrorAndExit</span>(<span style="color:#a6e22e">err</span>)
+
+        <span style="color:#a6e22e">netClient</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">openstack</span>.<span style="color:#a6e22e">NewNetworkV2</span>(<span style="color:#a6e22e">provider</span>, <span style="color:#a6e22e">gophercloud</span>.<span style="color:#a6e22e">EndpointOpts</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;neutron&#34;</span>, <span style="color:#a6e22e">Region</span>: <span style="color:#f92672">*</span><span style="color:#a6e22e">region</span>})
+        <span style="color:#a6e22e">checkErrorAndExit</span>(<span style="color:#a6e22e">err</span>)
+
+        <span style="color:#a6e22e">privateNetworkID</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">networks</span>.<span style="color:#a6e22e">IDFromName</span>(<span style="color:#a6e22e">netClient</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">private_network</span>)
+        <span style="color:#a6e22e">checkErrorAndExit</span>(<span style="color:#a6e22e">err</span>)
+
+        <span style="color:#a6e22e">publicNetworkID</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">networks</span>.<span style="color:#a6e22e">IDFromName</span>(<span style="color:#a6e22e">netClient</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">public_network</span>)
+        <span style="color:#a6e22e">checkErrorAndExit</span>(<span style="color:#a6e22e">err</span>)
+
+        <span style="color:#a6e22e">portOpts</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ports</span>.<span style="color:#a6e22e">CreateOpts</span>{<span style="color:#a6e22e">NetworkID</span>: <span style="color:#a6e22e">privateNetworkID</span>,
+                <span style="color:#a6e22e">AdminStateUp</span>: <span style="color:#a6e22e">ports</span>.<span style="color:#a6e22e">Up</span>}
+
+        <span style="color:#a6e22e">netport</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ports</span>.<span style="color:#a6e22e">Create</span>(<span style="color:#a6e22e">netClient</span>, <span style="color:#a6e22e">portOpts</span>).<span style="color:#a6e22e">Extract</span>()
+        <span style="color:#a6e22e">checkErrorAndExit</span>(<span style="color:#a6e22e">err</span>)
+
+        <span style="color:#a6e22e">network1</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">servers</span>.<span style="color:#a6e22e">Network</span>{<span style="color:#a6e22e">UUID</span>: <span style="color:#a6e22e">privateNetworkID</span>}
+        <span style="color:#a6e22e">network2</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">servers</span>.<span style="color:#a6e22e">Network</span>{<span style="color:#a6e22e">Port</span>: <span style="color:#a6e22e">netport</span>.<span style="color:#a6e22e">ID</span>}
+
+        <span style="color:#a6e22e">allNetworks</span> <span style="color:#f92672">:=</span> []<span style="color:#a6e22e">servers</span>.<span style="color:#a6e22e">Network</span>{<span style="color:#a6e22e">network1</span>}
+        <span style="color:#a6e22e">allPortNetworks</span> <span style="color:#f92672">:=</span> []<span style="color:#a6e22e">servers</span>.<span style="color:#a6e22e">Network</span>{<span style="color:#a6e22e">network2</span>}
+
+        <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Obtaining free floating IP: &#34;</span>)
+
+        <span style="color:#a6e22e">floatingIPOpts</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">floatingips</span>.<span style="color:#a6e22e">CreateOpts</span>{<span style="color:#a6e22e">FloatingNetworkID</span>: <span style="color:#a6e22e">publicNetworkID</span>,
+                <span style="color:#a6e22e">PortID</span>: <span style="color:#a6e22e">netport</span>.<span style="color:#a6e22e">ID</span>}
+
+        <span style="color:#a6e22e">floatingIP</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">floatingips</span>.<span style="color:#a6e22e">Create</span>(<span style="color:#a6e22e">netClient</span>, <span style="color:#a6e22e">floatingIPOpts</span>).<span style="color:#a6e22e">Extract</span>()
+        <span style="color:#a6e22e">checkErrorAndExit</span>(<span style="color:#a6e22e">err</span>)
+
+        <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%s found.\n&#34;</span>, <span style="color:#a6e22e">floatingIP</span>.<span style="color:#a6e22e">FloatingIP</span>)
+
+        <span style="color:#a6e22e">noOfInstances</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Atoi</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">total</span>)
+        <span style="color:#a6e22e">checkErrorAndExit</span>(<span style="color:#a6e22e">err</span>)
+
+        <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">1</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;=</span> <span style="color:#a6e22e">noOfInstances</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+                <span style="color:#a6e22e">networks</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">allNetworks</span>
+                <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> {
+                        <span style="color:#a6e22e">networks</span> = <span style="color:#a6e22e">allPortNetworks</span>
+                } <span style="color:#66d9ef">else</span> {
+                        <span style="color:#a6e22e">networks</span> = <span style="color:#a6e22e">allNetworks</span>
+                }
+                <span style="color:#a6e22e">vmName</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">hostNamePrefix</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Itoa</span>(<span style="color:#a6e22e">i</span>)
+                <span style="color:#a6e22e">serverCreateOpts</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">servers</span>.<span style="color:#a6e22e">CreateOpts</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#a6e22e">vmName</span>,
+                        <span style="color:#a6e22e">FlavorRef</span>:      <span style="color:#a6e22e">flavorID</span>,
+                        <span style="color:#a6e22e">ImageRef</span>:       <span style="color:#a6e22e">imageID</span>,
+                        <span style="color:#a6e22e">Networks</span>:       <span style="color:#a6e22e">networks</span>,
+                        <span style="color:#a6e22e">UserData</span>:       []<span style="color:#66d9ef">byte</span>{},
+                        <span style="color:#a6e22e">SecurityGroups</span>: []<span style="color:#66d9ef">string</span>{<span style="color:#f92672">*</span><span style="color:#a6e22e">securityGroup</span>}}
+
+                <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">servers</span>.<span style="color:#a6e22e">Create</span>(<span style="color:#a6e22e">client</span>, <span style="color:#a6e22e">serverCreateOpts</span>).<span style="color:#a6e22e">Extract</span>()
+                <span style="color:#a6e22e">checkErrorAndContinue</span>(<span style="color:#a6e22e">err</span>)
+                <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%s VM creation request sent successfully.\n Details: { flavor=%s, image=%s, network=%s, sec_group=%s }\n&#34;</span>, <span style="color:#a6e22e">vmName</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">flavor</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">image</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">private_network</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">securityGroup</span>)
+
+                <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;===================================&#34;</span>)
+        }
+
+}
+</code></pre></div><p>Create a file <code>launchOpenStackInstances.go</code> and populate it with above contents. Use following steps on Linux and MacOS to compile/build it.</p>
+<ul>
+<li>Make sure GO Lang compiler is installed.</li>
+<li>Place go source code in a directory. (most likely home directory)</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir MYGO
+export GOPATH<span style="color:#f92672">=</span>$HOME/MYGO
+go get github.com/rackspace/gophercloud
+go build launchOpenStackInstances.go
+</code></pre></div><ul>
+<li>An executable with name <code>launchOpenStackInstances</code> will be there .</li>
+</ul>
+<p>Below is the sample run:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># ./launchOpenStackInstances.go -authurl=http://10.1.0.10:5000/v2.0 -flavor=m1.tiny -image=cirros -private_network=private_network -public_network=public_network -user=admin -password=106d84bf40fb4413 -total=2</span>
+Creating VMs:
+Obtaining free floating IP: 10.1.0.159 found.
+5F52A0801 VM creation request sent successfully.
+ Details: <span style="color:#f92672">{</span> flavor<span style="color:#f92672">=</span>m1.tiny, image<span style="color:#f92672">=</span>cirros, network<span style="color:#f92672">=</span>private_network, sec_group<span style="color:#f92672">=</span>default <span style="color:#f92672">}</span>
+<span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span>
+5F52A0802 VM creation request sent successfully.
+ Details: <span style="color:#f92672">{</span> flavor<span style="color:#f92672">=</span>m1.tiny, image<span style="color:#f92672">=</span>cirros, network<span style="color:#f92672">=</span>private_network, sec_group<span style="color:#f92672">=</span>default <span style="color:#f92672">}</span>
+<span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span>
+</code></pre></div><p><strong>Observation 1:</strong> This program uses <code>Neutron</code> Networking.</p>
+<p><strong>Observation 2:</strong> Compare this program with the program using <code>Nova</code> Networking. There is no infinite loop required to assign <code>floatingIP</code> in this program.</p>
+
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/go/" rel="tag">Go</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/gophercloud/" rel="tag">gopherCloud</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/openstack/" rel="tag">openstack</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/neutron/" rel="tag">neutron</a></li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<div class="authorbox__header">
+		<span class="authorbox__name">About SpareSlant</span>
+	</div>
+</div>
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/posts/json-full-paths-from-root-node-to-leaf/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Json Full Paths From Root Node to Leaf</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/posts/openstack-instances-using-gophercloud-nova-networking/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">Remote OpenStack instances using Gophercloud Library (using Nova Networking)</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2020 SpareSlant.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
+</html>
