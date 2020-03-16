@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-gb">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>SaltStack: Execute custom execution module on Master using runner - SpareSlant Technical Blog</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/my.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="SpareSlant Technical Blog" rel="home">
+				<div class="logo__title">SpareSlant Technical Blog</div>
+				<div class="logo__tagline">SpareSlant tech blog</div>
+			</a>
+		</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">SaltStack: Execute custom execution module on Master using runner</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2020-03-16T08:37:22">2020-03-16</time>
+</div>
+</div>
+		</header>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction:</a></li>
+    <li><a href="#pre-requisites">Pre-Requisites</a></li>
+    <li><a href="#preparation">Preparation</a></li>
+    <li><a href="#execution">Execution</a></li>
+  </ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<h2 id="introduction">Introduction:</h2>
+<p>Execution modules are meant to executed on minions(clients). Therefore only a handful of execution/state modules are visible to salt-master. But sometimes we may need to execute our custom execution module on Master itself (most likely via runner). In order to do this salt-minion must be installed on Salt-Master box. And configure it to accept the commands from salt-master. This will be configured as a normal salt-minion. Nothing special needs to be done.
+We will create</p>
+<ul>
+<li>A custom execution module that accepts two arguments</li>
+<li>A custom runner module that accepts two arguments</li>
+</ul>
+<h2 id="pre-requisites">Pre-Requisites</h2>
+<ul>
+<li>salt-master installed and configured on a machine. I used fedora-24 VM.</li>
+<li>salt-minion installed and configured to accept command from salt-master.</li>
+</ul>
+<h2 id="preparation">Preparation</h2>
+<p><code>/etc/salt/master</code> file used:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">log_level: debug
+
+fileserver_backend:
+  - roots
+
+file_roots:
+  base:
+    - /srv/salt
+
+runner_dirs:
+  - /srv/salt/_runners
+</code></pre></div><p><code>/etc/salt/minion</code> file used:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">master: salt
+</code></pre></div><p><strong>Note:</strong> In <code>/etc/salt/master</code> file, <code>log_level</code> is set to <code>debug</code>. Normally this will be <code>info</code>.</p>
+<p><code>my_module.py</code> will be our execution module</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir /srv/salt/_modules
+touch /srv/salt/_modules/my_module.py
+mkdir /srv/salt/_runners
+touch /srv/salt/_runners/my_runner.py
+</code></pre></div><p>Contents of <code>/srv/salt/_modules/my_module.py</code> are as follows:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#! /usr/bin/env python</span>
+
+<span style="color:#75715e"># Below virtual name can be any string.</span>
+__virtualname__ <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">my_module</span><span style="color:#e6db74">&#39;</span>
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__virtual__</span>():
+    <span style="color:#66d9ef">return</span> __virtualname__
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">my_module_function</span>(arg1, arg2):
+    modified_arg1 <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">_</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">%</span> (arg1, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">modified</span><span style="color:#e6db74">&#39;</span>)
+    modified_arg2 <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">_</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">%</span> (arg2, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">modified</span><span style="color:#e6db74">&#39;</span>)
+    <span style="color:#66d9ef">return</span> modified_arg1, modified_arg2
+</code></pre></div><p>Contents of <code>/srv/salt/_runners/my_runner.py</code> are as follows:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e">#! /usr/bin/env python</span>
+import salt.client
+import salt.loader
+import salt.config
+
+
+def my_runner_function(arg1, arg2):
+    __opts__ = salt.config.minion_config(<span style="color:#e6db74">&#39;/etc/salt/master&#39;</span>)
+    mods = salt.loader.minion_mods(__opts__)
+    ret1, ret2 = mods[<span style="color:#e6db74">&#39;my_module.my_module_function&#39;</span>](arg1, arg2)
+    return ret1, ret2
+</code></pre></div><h2 id="execution">Execution</h2>
+<p>Run following command to sync all modules with all minions:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@salt-master# salt <span style="color:#e6db74">&#39;*&#39;</span> saltutil.sync_all
+fedora2.vagrant.box:
+    ----------
+    beacons:
+    engines:
+    grains:
+    log_handlers:
+    modules:
+        - modules.custom_module
+        - modules.my_module
+    output:
+    proxymodules:
+    renderers:
+    returners:
+    sdb:
+    states:
+    utils:
+fedora.vagrant.box:
+    ----------
+    beacons:
+    engines:
+    grains:
+    log_handlers:
+    modules:
+        - modules.custom_module
+        - modules.my_module
+    output:
+    proxymodules:
+    renderers:
+    returners:
+    sdb:
+    states:
+    utils:
+</code></pre></div><p>Above runner can be called from command line as follows:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@salt-master# salt-run my_runner.my_runner_function <span style="color:#e6db74">&#39;a_string&#39;</span> <span style="color:#e6db74">&#39;b_string&#39;</span>
+- a_string_modified
+- b_string_modified
+<span style="color:#f92672">[</span>INFO    <span style="color:#f92672">]</span> Runner completed: <span style="color:#ae81ff">20170109185717568738</span>
+</code></pre></div>
+		</div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<div class="authorbox__header">
+		<span class="authorbox__name">About SpareSlant</span>
+	</div>
+</div>
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/posts/saltstack-call-runner-from-minion/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Saltstack: Call runner from minion</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/posts/saltstack-call-state-modules-from-runner/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">SaltStack: execute state modules on Master and minions from runner</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2020 SpareSlant.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
+</html>

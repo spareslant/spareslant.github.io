@@ -6,10 +6,42 @@
     <description>Recent content on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Sun, 15 Mar 2020 21:26:03 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 16 Mar 2020 13:41:26 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Saltstack Custom Execution Module With Arguments</title>
+      <link>/posts/saltstack-custom-execution-module-with-arguments/</link>
+      <pubDate>Mon, 16 Mar 2020 13:41:26 +0000</pubDate>
+      
+      <guid>/posts/saltstack-custom-execution-module-with-arguments/</guid>
+      <description>Introduction: We will be creating a simple SaltStack execution module. And will see how can this module be called
+ from a state file from command line  Pre-Requisites  salt-master installed and configured on a machine. I used fedora-24 VM. salt-minion installed and configured to accept command from salt-master.  /etc/salt/master file used:
+log_level: debug fileserver_backend: - roots file_roots: base: - /srv/salt /etc/salt/minion file used:
+master: salt Note: In /etc/salt/master file, log_level is set to debug.</description>
+    </item>
+    
+    <item>
+      <title>SaltStack: execute state modules on Master and minions from runner</title>
+      <link>/posts/saltstack-call-state-modules-from-runner/</link>
+      <pubDate>Mon, 16 Mar 2020 13:21:12 +0000</pubDate>
+      
+      <guid>/posts/saltstack-call-state-modules-from-runner/</guid>
+      <description>Introduction: We will be creating a SaltStack runner module. This runner module will
+ call a state module on salt-master itself execute a state file (hence state module) on a client machine  Pre-Requisites  salt-master installed and configured on a machine. I used fedora-24 VM. salt-minion installed and configured to accept command from salt-master.  /etc/salt/master file used:
+log_level: debug fileserver_backend: - roots file_roots: base: - /srv/salt runner_dirs: - /srv/salt/_runners /etc/salt/minion file used:</description>
+    </item>
+    
+    <item>
+      <title>SaltStack: Execute custom execution module on Master using runner</title>
+      <link>/posts/saltstack-execute-custom-execution/</link>
+      <pubDate>Mon, 16 Mar 2020 08:37:22 +0000</pubDate>
+      
+      <guid>/posts/saltstack-execute-custom-execution/</guid>
+      <description>Introduction: Execution modules are meant to executed on minions(clients). Therefore only a handful of execution/state modules are visible to salt-master. But sometimes we may need to execute our custom execution module on Master itself (most likely via runner). In order to do this salt-minion must be installed on Salt-Master box. And configure it to accept the commands from salt-master. This will be configured as a normal salt-minion. Nothing special needs to be done.</description>
+    </item>
     
     <item>
       <title>Saltstack: Call runner from minion</title>

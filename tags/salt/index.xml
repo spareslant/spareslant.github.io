@@ -6,10 +6,22 @@
     <description>Recent content in salt on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Sun, 15 Mar 2020 21:26:03 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 16 Mar 2020 13:41:26 +0000</lastBuildDate>
     
 	<atom:link href="/tags/salt/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Saltstack Custom Execution Module With Arguments</title>
+      <link>/posts/saltstack-custom-execution-module-with-arguments/</link>
+      <pubDate>Mon, 16 Mar 2020 13:41:26 +0000</pubDate>
+      
+      <guid>/posts/saltstack-custom-execution-module-with-arguments/</guid>
+      <description>Introduction: We will be creating a simple SaltStack execution module. And will see how can this module be called
+ from a state file from command line  Pre-Requisites  salt-master installed and configured on a machine. I used fedora-24 VM. salt-minion installed and configured to accept command from salt-master.  /etc/salt/master file used:
+log_level: debug fileserver_backend: - roots file_roots: base: - /srv/salt /etc/salt/minion file used:
+master: salt Note: In /etc/salt/master file, log_level is set to debug.</description>
+    </item>
     
     <item>
       <title>Saltstack: Call runner from minion</title>
