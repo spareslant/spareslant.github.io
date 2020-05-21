@@ -68,19 +68,19 @@
 <li>salt-minion installed and configured to accept command from salt-master.</li>
 </ul>
 <p><code>/etc/salt/master</code> file used:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">log_level: debug
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">log_level</span>: debug
 
-fileserver_backend:
+<span style="color:#66d9ef">fileserver_backend</span>:
   - roots
 
-file_roots:
-  base:
+<span style="color:#66d9ef">file_roots</span>:
+  <span style="color:#66d9ef">base</span>:
     - /srv/salt
 
-runner_dirs:
+<span style="color:#66d9ef">runner_dirs</span>:
   - /srv/salt/_runners
 </code></pre></div><p><code>/etc/salt/minion</code> file used:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">master: salt
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">master</span>: salt
 </code></pre></div><p><strong>Note1:</strong> In <code>/etc/salt/master</code> file, <code>log_level</code> is set to <code>debug</code>. Normally this will be <code>info</code>.</p>
 <p><strong>Note2:</strong> we have to explicitly specify runners directory. In case of executions modules and state modules this is not required. we also need to restart salt-master if any entry is added to <code>/etc/salt/master</code> file.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir /srv/salt/_runners
@@ -94,9 +94,9 @@ touch /srv/salt/_runners/custom_runner.py
 client <span style="color:#f92672">=</span> salt<span style="color:#f92672">.</span>client<span style="color:#f92672">.</span>LocalClient()
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">call_state_mod_on_saltmaster_from_runner</span>():
-    __opts__ <span style="color:#f92672">=</span> salt<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>minion_config(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">/etc/salt/master</span><span style="color:#e6db74">&#39;</span>)
+    __opts__ <span style="color:#f92672">=</span> salt<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>minion_config(<span style="color:#e6db74">&#39;/etc/salt/master&#39;</span>)
     __grains__ <span style="color:#f92672">=</span> salt<span style="color:#f92672">.</span>loader<span style="color:#f92672">.</span>grains(__opts__)
-    __opts__[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">grains</span><span style="color:#e6db74">&#39;</span>] <span style="color:#f92672">=</span> __grains__
+    __opts__[<span style="color:#e6db74">&#39;grains&#39;</span>] <span style="color:#f92672">=</span> __grains__
     __utils__ <span style="color:#f92672">=</span> salt<span style="color:#f92672">.</span>loader<span style="color:#f92672">.</span>utils(__opts__)
     __salt__ <span style="color:#f92672">=</span> salt<span style="color:#f92672">.</span>loader<span style="color:#f92672">.</span>minion_mods(__opts__, utils<span style="color:#f92672">=</span>__utils__)
 
@@ -113,7 +113,7 @@ client <span style="color:#f92672">=</span> salt<span style="color:#f92672">.</s
     <span style="color:#75715e">#    print(mod)</span>
 
     <span style="color:#75715e"># Note that salt.wait_for_event is a state module that is available. But pkg.installed state module is not available.</span>
-    ret <span style="color:#f92672">=</span> state_mods[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">salt.wait_for_event</span><span style="color:#e6db74">&#39;</span>](name<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">myevent/test</span><span style="color:#e6db74">&#39;</span>, id_list<span style="color:#f92672">=</span>[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">fedora</span><span style="color:#e6db74">&#39;</span>], timeout<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>)
+    ret <span style="color:#f92672">=</span> state_mods[<span style="color:#e6db74">&#39;salt.wait_for_event&#39;</span>](name<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;myevent/test&#39;</span>, id_list<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;fedora&#39;</span>], timeout<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>)
     <span style="color:#75715e">#pprint.pprint(ret)</span>
     <span style="color:#66d9ef">return</span> ret
 
@@ -121,12 +121,12 @@ client <span style="color:#f92672">=</span> salt<span style="color:#f92672">.</s
     <span style="color:#75715e">#ret = client.cmd(&#39;*&#39;, &#39;state.sls&#39;, [&#39;first&#39;])</span>
 
     <span style="color:#75715e"># Another Variation</span>
-    ret <span style="color:#f92672">=</span> client<span style="color:#f92672">.</span>cmd(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">*</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">state.sls</span><span style="color:#e6db74">&#39;</span>, kwarg<span style="color:#f92672">=</span>{<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">mods</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">first</span><span style="color:#e6db74">&#39;</span>})
+    ret <span style="color:#f92672">=</span> client<span style="color:#f92672">.</span>cmd(<span style="color:#e6db74">&#39;*&#39;</span>, <span style="color:#e6db74">&#39;state.sls&#39;</span>, kwarg<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#39;mods&#39;</span>: <span style="color:#e6db74">&#39;first&#39;</span>})
     <span style="color:#75715e">#pprint.pprint(ret)</span>
     <span style="color:#66d9ef">return</span> ret
 
 
-<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">__main__</span><span style="color:#e6db74">&#39;</span>:
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
     <span style="color:#75715e">#call_state_mod_from_runner()</span>
     execute_state_mod_on_minion_from_runner()
 </code></pre></div><p>Now we are ready to execute this runner.</p>

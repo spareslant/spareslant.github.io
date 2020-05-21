@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-gb">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>elasticSearch - SpareSlant Technical Blog</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="alternate" type="application/rss+xml" href="/tags/elasticsearch/index.xml" title="SpareSlant Technical Blog">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/my.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="SpareSlant Technical Blog" rel="home">
+				<div class="logo__title">SpareSlant Technical Blog</div>
+				<div class="logo__tagline">SpareSlant tech blog</div>
+			</a>
+		</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main list" role="main">
+	<header class="main__header">
+		<h1 class="main__title">elasticSearch</h1>
+	</header><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/posts/kafka-to-elk-message-manipulation/" rel="bookmark">
+			Kafka to Elk Message Manipulation
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2020-05-21T05:58:11">2020-05-21</time>
+</div>
+</div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Introduction We will be creating a message flow starting from Kafka and ending in Kibana. Flow will be like below:
+console app (to send json message) -&gt; kafka -&gt; logstash -&gt; elasticSearch -&gt; kibana
+We will be using ruby filter to manipulate the message as well and docker to setup the environment.
+Setup mkdir kafka-elk cd kafka-elk wget http://apache.mirror.anlx.net/kafka/2.5.0/kafka_2.13-2.5.0.tgz tar xvf kafka_2.13-2.5.0.tgz Note: We need kafka binaries to get the script that can send json message via console to kafka.
+	</div>
+	<div class="list__footer clearfix">
+		<a class="list__footer-readmore btn" href="/posts/kafka-to-elk-message-manipulation/">Read more…</a>
+	</div>
+</article>
+</main>
+
+
+			</div>
+			
+<aside class="sidebar sidebar--left"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH..." value="" name="q" aria-label="SEARCH...">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="/" />
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/posts/kafka-to-elk-message-manipulation/">Kafka to Elk Message Manipulation</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/openstack-instances-using-goose-library/">Remote OpenStack Instances Using Goose library (using Nova networking)</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/openstack-instances-using-gophercloud-nova-networking/">Remote OpenStack instances using Gophercloud Library (using Nova Networking)</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/remote-openstack-instances-gophercloud-neutron/">Remote OpenStack Instances using Gophercloud (using neutron networking)</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/json-full-paths-from-root-node-to-leaf/">Json Full Paths From Root Node to Leaf</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/apache" title="Apache">Apache (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/blog" title="Blog">Blog (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/blog-publishing" title="Blog publishing">Blog publishing (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/blogger" title="Blogger">Blogger (4)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/blogger-api" title="Blogger api">Blogger api (3)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/blogger-html" title="Blogger html">Blogger html (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ca" title="Ca">Ca (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/curl" title="Curl">Curl (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/digital-certificates" title="Digital certificates">Digital certificates (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/docker" title="Docker">Docker (2)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/elasticsearch" title="Elasticsearch">Elasticsearch (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/elk" title="Elk">Elk (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/flask" title="Flask">Flask (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/github-pages-deployment" title="Github pages deployment">Github pages deployment (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/go" title="Go">Go (4)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/golang" title="Golang">Golang (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/google-api" title="Google api">Google api (3)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/goose" title="Goose">Goose (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/gophercloud" title="Gophercloud">Gophercloud (2)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/gunicorn" title="Gunicorn">Gunicorn (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/html" title="Html">Html (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/html-generation" title="Html generation">Html generation (2)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/hugo" title="Hugo">Hugo (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/jinja" title="Jinja">Jinja (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/json" title="Json">Json (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/kafka" title="Kafka">Kafka (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/kibana" title="Kibana">Kibana (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/logging" title="Logging">Logging (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/logstash" title="Logstash">Logstash (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/neutron" title="Neutron">Neutron (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nova" title="Nova">Nova (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/openssl" title="Openssl">Openssl (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/openstack" title="Openstack">Openstack (3)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/pdf-generation" title="Pdf generation">Pdf generation (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/pki" title="Pki">Pki (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/proxy" title="Proxy">Proxy (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python" title="Python">Python (3)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/recursion" title="Recursion">Recursion (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/reverse-proxy" title="Reverse proxy">Reverse proxy (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/rsyslog" title="Rsyslog">Rsyslog (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ruby" title="Ruby">Ruby (2)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/runner" title="Runner">Runner (2)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/salt" title="Salt">Salt (3)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/saltstack" title="Saltstack">Saltstack (3)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ssl" title="Ssl">Ssl (2)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ssl-authentication" title="Ssl authentication">Ssl authentication (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ssl-mutual-authentication" title="Ssl mutual authentication">Ssl mutual authentication (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ssl-reverse-proxy" title="Ssl reverse proxy">Ssl reverse proxy (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/syslog" title="Syslog">Syslog (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/terminal" title="Terminal">Terminal (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tmux" title="Tmux">Tmux (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/vagrant" title="Vagrant">Vagrant (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/vagrantfile" title="Vagrantfile">Vagrantfile (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/vagrantfile-plugin" title="Vagrantfile plugin">Vagrantfile plugin (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/vim" title="Vim">Vim (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/vundle" title="Vundle">Vundle (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/x509" title="X509">X509 (1)</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2020 SpareSlant.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
+</html>

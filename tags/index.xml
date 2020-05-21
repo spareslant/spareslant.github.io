@@ -6,10 +6,73 @@
     <description>Recent content in Tags on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Mon, 16 Mar 2020 23:04:49 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 21 May 2020 05:58:11 +0100</lastBuildDate>
     
 	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>docker</title>
+      <link>/tags/docker/</link>
+      <pubDate>Thu, 21 May 2020 05:58:11 +0100</pubDate>
+      
+      <guid>/tags/docker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>elasticSearch</title>
+      <link>/tags/elasticsearch/</link>
+      <pubDate>Thu, 21 May 2020 05:58:11 +0100</pubDate>
+      
+      <guid>/tags/elasticsearch/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ELK</title>
+      <link>/tags/elk/</link>
+      <pubDate>Thu, 21 May 2020 05:58:11 +0100</pubDate>
+      
+      <guid>/tags/elk/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>kafka</title>
+      <link>/tags/kafka/</link>
+      <pubDate>Thu, 21 May 2020 05:58:11 +0100</pubDate>
+      
+      <guid>/tags/kafka/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>kibana</title>
+      <link>/tags/kibana/</link>
+      <pubDate>Thu, 21 May 2020 05:58:11 +0100</pubDate>
+      
+      <guid>/tags/kibana/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>logstash</title>
+      <link>/tags/logstash/</link>
+      <pubDate>Thu, 21 May 2020 05:58:11 +0100</pubDate>
+      
+      <guid>/tags/logstash/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ruby</title>
+      <link>/tags/ruby/</link>
+      <pubDate>Thu, 21 May 2020 05:58:11 +0100</pubDate>
+      
+      <guid>/tags/ruby/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Go</title>
@@ -39,7 +102,7 @@
     </item>
     
     <item>
-      <title>gopherCloud</title>
+      <title>gophercloud</title>
       <link>/tags/gophercloud/</link>
       <pubDate>Mon, 16 Mar 2020 22:46:24 +0000</pubDate>
       
@@ -147,6 +210,15 @@
     </item>
     
     <item>
+      <title>blog</title>
+      <link>/tags/blog/</link>
+      <pubDate>Sat, 14 Mar 2020 21:16:00 +0000</pubDate>
+      
+      <guid>/tags/blog/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>blogger</title>
       <link>/tags/blogger/</link>
       <pubDate>Sat, 14 Mar 2020 21:16:00 +0000</pubDate>
@@ -179,15 +251,6 @@
       <pubDate>Sat, 14 Mar 2020 21:16:00 +0000</pubDate>
       
       <guid>/tags/google-api/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Ruby</title>
-      <link>/tags/ruby/</link>
-      <pubDate>Tue, 10 Mar 2020 17:50:49 +0000</pubDate>
-      
-      <guid>/tags/ruby/</guid>
       <description></description>
     </item>
     
@@ -336,15 +399,6 @@
     </item>
     
     <item>
-      <title>blog</title>
-      <link>/tags/blog/</link>
-      <pubDate>Sat, 03 Aug 2019 19:01:43 +0100</pubDate>
-      
-      <guid>/tags/blog/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>blog publishing</title>
       <link>/tags/blog-publishing/</link>
       <pubDate>Sat, 03 Aug 2019 19:01:43 +0100</pubDate>
@@ -377,15 +431,6 @@
       <pubDate>Sat, 27 Jul 2019 20:39:13 +0100</pubDate>
       
       <guid>/tags/pdf-generation/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>docker</title>
-      <link>/tags/docker/</link>
-      <pubDate>Sat, 27 Jul 2019 12:15:28 +0100</pubDate>
-      
-      <guid>/tags/docker/</guid>
       <description></description>
     </item>
     

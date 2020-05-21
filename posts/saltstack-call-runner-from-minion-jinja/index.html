@@ -74,23 +74,23 @@ Therefore minion may need to ask salt-master to execute on its behalf. This can 
 </ul>
 <h2 id="preparation">Preparation</h2>
 <p><code>/etc/salt/master</code> file used.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">log_level: debug
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">log_level</span>: debug
 
-peer_run:
-  .<span style="color:#75715e">*:</span>
+<span style="color:#66d9ef">peer_run</span>:
+  <span style="color:#66d9ef">.*</span>:
     - .*
 
-fileserver_backend:
+<span style="color:#66d9ef">fileserver_backend</span>:
   - roots
 
-file_roots:
-  base:
+<span style="color:#66d9ef">file_roots</span>:
+  <span style="color:#66d9ef">base</span>:
     - /srv/salt
 
-runner_dirs:
+<span style="color:#66d9ef">runner_dirs</span>:
   - /srv/salt/_runners
 </code></pre></div><p><code>/etc/salt/minion</code> file used.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">master: salt
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">master</span>: salt
 </code></pre></div><p><strong>Note:</strong> In <code>/etc/salt/master</code> file, <code>log_level</code> is set to <code>debug</code>. Normally this will be <code>info</code>. Also take a note of <code>peer_run</code> config. This is must. At the moment this is very open and you may like to narrow it down.</p>
 <p><code>my_module.py</code> will be our execution module.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir /srv/salt/_modules
@@ -101,14 +101,14 @@ touch /srv/salt/_runners/my_runner.py
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#! /usr/bin/env python</span>
 
 <span style="color:#75715e"># Below virtual name can be any string.</span>
-__virtualname__ <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">my_module</span><span style="color:#e6db74">&#39;</span>
+__virtualname__ <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;my_module&#39;</span>
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__virtual__</span>():
     <span style="color:#66d9ef">return</span> __virtualname__
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">my_module_function</span>(arg1, arg2):
-    modified_arg1 <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">_</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">%</span> (arg1, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">modified</span><span style="color:#e6db74">&#39;</span>)
-    modified_arg2 <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">_</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">%</span> (arg2, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">modified</span><span style="color:#e6db74">&#39;</span>)
+    modified_arg1 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">_</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">%</span> (arg1, <span style="color:#e6db74">&#39;modified&#39;</span>)
+    modified_arg2 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">_</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">%</span> (arg2, <span style="color:#e6db74">&#39;modified&#39;</span>)
     <span style="color:#66d9ef">return</span> True
 </code></pre></div><p>Contents of <code>/srv/salt/_runners/my_runner.py</code> are as follows.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#! /usr/bin/env python</span>
@@ -117,9 +117,9 @@ __virtualname__ <span style="color:#f92672">=</span> <span style="color:#e6db74"
 <span style="color:#f92672">import</span> salt.config
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">my_runner_function</span>(arg1, arg2):
-    __opts__ <span style="color:#f92672">=</span> salt<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>minion_config(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">/etc/salt/master</span><span style="color:#e6db74">&#39;</span>)
+    __opts__ <span style="color:#f92672">=</span> salt<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>minion_config(<span style="color:#e6db74">&#39;/etc/salt/master&#39;</span>)
     mods <span style="color:#f92672">=</span> salt<span style="color:#f92672">.</span>loader<span style="color:#f92672">.</span>minion_mods(__opts__)
-    ret <span style="color:#f92672">=</span> mods[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">my_module.my_module_function</span><span style="color:#e6db74">&#39;</span>](arg1, arg2)
+    ret <span style="color:#f92672">=</span> mods[<span style="color:#e6db74">&#39;my_module.my_module_function&#39;</span>](arg1, arg2)
     <span style="color:#66d9ef">return</span> ret
 </code></pre></div><p>Above runner can be called from command line as follows:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@salt-master# salt-run my_runner.my_runner_function <span style="color:#e6db74">&#39;a_string&#39;</span> <span style="color:#e6db74">&#39;b_string&#39;</span>
@@ -127,7 +127,7 @@ True
 <span style="color:#f92672">[</span>INFO    <span style="color:#f92672">]</span> Runner completed: <span style="color:#ae81ff">20170109200157859211</span>
 </code></pre></div><p>Now we will ask minion to execute runner on master.</p>
 <p>Create a state file <code>/srv/salt/jinja_state_file_calling_runner_on_master.sls</code> as following:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-jinja" data-lang="jinja"><span style="color:#75715e">{%</span> <span style="color:#66d9ef">set</span> some_changes <span style="color:#f92672">=</span> salt<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;publish.runner&#39;</span><span style="color:#f92672">]</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;my_runner.my_runner_function&#39;</span><span style="color:#f92672">,</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#39;argument1&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;argument2&#39;</span><span style="color:#f92672">]</span><span style="color:#f92672">)</span> <span style="color:#75715e">%}</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-jinja" data-lang="jinja"><span style="color:#75715e">{%</span> <span style="color:#66d9ef">set</span> some_changes <span style="color:#f92672">=</span> salt<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;publish.runner&#39;</span><span style="color:#f92672">](</span><span style="color:#e6db74">&#39;my_runner.my_runner_function&#39;</span><span style="color:#f92672">,</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#39;argument1&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;argument2&#39;</span><span style="color:#f92672">])</span> <span style="color:#75715e">%}</span>
 
 <span style="color:#75715e">{%</span> <span style="color:#66d9ef">if</span> some_changes <span style="color:#f92672">==</span> <span style="color:#66d9ef">True</span> <span style="color:#75715e">%}</span>
 install tcpdump:

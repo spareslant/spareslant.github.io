@@ -53,9 +53,9 @@
     <li><a href="#create-all-digital-certificates">Create all digital certificates</a>
       <ul>
         <li><a href="#create-client-side-certificate">Create client-side certificate</a></li>
-        <li><a href="#create-apache-server-side-certificate">Create apache server-side certificate</a></li>
-        <li><a href="#create-apache-client-side-certificate">Create apache client-side certificate</a></li>
-        <li><a href="#create-gunicorn-server-side-certificate">Create gunicorn server-side certificate</a></li>
+        <li><a href="#create-apache-server-side-certificate">Create <code>apache</code> server-side certificate</a></li>
+        <li><a href="#create-apache-client-side-certificate">Create <code>apache</code> client-side certificate</a></li>
+        <li><a href="#create-gunicorn-server-side-certificate">Create <code>gunicorn</code> server-side certificate</a></li>
       </ul>
     </li>
     <li><a href="#apache-preparation">Apache Preparation</a>
@@ -290,9 +290,9 @@ app <span style="color:#f92672">=</span> Flask<span style="color:#f92672">(</spa
 
 api_url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/&#34;</span>
 
-@app.route<span style="color:#f92672">(</span>api_url, methods<span style="color:#f92672">=</span><span style="color:#f92672">[</span><span style="color:#e6db74">&#34;GET&#34;</span><span style="color:#f92672">]</span><span style="color:#f92672">)</span>
-def write_to_file<span style="color:#f92672">(</span><span style="color:#f92672">)</span>:
-    <span style="color:#66d9ef">return</span> jsonify<span style="color:#f92672">(</span><span style="color:#f92672">{</span><span style="color:#e6db74">&#34;success&#34;</span>: <span style="color:#e6db74">&#34;request received successfully&#34;</span><span style="color:#f92672">}</span><span style="color:#f92672">)</span>, <span style="color:#ae81ff">201</span>
+@app.route<span style="color:#f92672">(</span>api_url, methods<span style="color:#f92672">=[</span><span style="color:#e6db74">&#34;GET&#34;</span><span style="color:#f92672">])</span>
+def write_to_file<span style="color:#f92672">()</span>:
+    <span style="color:#66d9ef">return</span> jsonify<span style="color:#f92672">({</span><span style="color:#e6db74">&#34;success&#34;</span>: <span style="color:#e6db74">&#34;request received successfully&#34;</span><span style="color:#f92672">})</span>, <span style="color:#ae81ff">201</span>
 </code></pre></div><p>start serving flask app using following command.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cd flaskApp/
 $ gunicorn --bind 0.0.0.0:6662 myFlaskApp:app <span style="color:#ae81ff">\

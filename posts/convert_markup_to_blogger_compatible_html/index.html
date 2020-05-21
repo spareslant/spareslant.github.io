@@ -50,9 +50,9 @@
 		<nav id="TableOfContents">
   <ul>
     <li><a href="#introduction">Introduction</a></li>
-    <li><a href="#install-pandoc-and-github-html5-template">Install pandoc and GitHUB html5 Template</a>
+    <li><a href="#install-pandoc-and-github-html5-template">Install <code>pandoc</code> and <code>GitHUB html5</code> Template</a>
       <ul>
-        <li><a href="#modify-above-github-html5-template-source-code-for-blogger">Modify above GitHUB html5 template source code for blogger.</a></li>
+        <li><a href="#modify-above-github-html5-template-source-code-for-blogger">Modify above <code>GitHUB html5 template</code> source code for blogger.</a></li>
         <li><a href="#compile-scss-file">Compile scss file.</a></li>
       </ul>
     </li>
@@ -151,17 +151,17 @@ node css-injector.js
 <p>Create a shell script say <code>generate_html_for_blogger.sh</code> with following contents in <code>$HOME/panDocs</code> folder.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#! /bin/bash
 </span><span style="color:#75715e"></span>
-<span style="color:#f92672">[</span><span style="color:#f92672">[</span> $1 <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#f92672">]</span><span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> echo <span style="color:#e6db74">&#34;pass a html filename as first argument&#34;</span> <span style="color:#f92672">&amp;&amp;</span> exit <span style="color:#ae81ff">2</span>
+<span style="color:#f92672">[[</span> $1 <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#f92672">]]</span> <span style="color:#f92672">&amp;&amp;</span> echo <span style="color:#e6db74">&#34;pass a html filename as first argument&#34;</span> <span style="color:#f92672">&amp;&amp;</span> exit <span style="color:#ae81ff">2</span>
 
 <span style="color:#75715e">#output_file=&#34;output.html&#34;</span>
 input_file<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$1<span style="color:#e6db74">&#34;</span>
-output_file<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>basename $input_file .md<span style="color:#66d9ef">)</span><span style="color:#e6db74">.html</span><span style="color:#e6db74">&#34;</span>
-output_file_code_tag_removed<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>basename $input_file .md<span style="color:#66d9ef">)</span><span style="color:#e6db74">.code_tag_removed.html</span><span style="color:#e6db74">&#34;</span>
+output_file<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>basename $input_file .md<span style="color:#66d9ef">)</span><span style="color:#e6db74">.html&#34;</span>
+output_file_code_tag_removed<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>basename $input_file .md<span style="color:#66d9ef">)</span><span style="color:#e6db74">.code_tag_removed.html&#34;</span>
 
 pandoc <span style="color:#e6db74">&#34;</span>$input_file<span style="color:#e6db74">&#34;</span> -f markdown --template pandoc-goodies/templates/html5/github/GitHub.html5 --self-contained --toc --toc-depth<span style="color:#f92672">=</span><span style="color:#ae81ff">6</span> -o $output_file
 
 cat <span style="color:#e6db74">&#34;</span>$output_file<span style="color:#e6db74">&#34;</span> | perl -wpl -e <span style="color:#e6db74">&#39;s!\&lt;code\&gt;(.+?)\&lt;/code\&gt;!\&lt;span class=\&#34;code&#34;\&gt;$1\&lt;/span\&gt;!g&#39;</span> &gt; <span style="color:#e6db74">&#34;</span>$output_file_code_tag_removed<span style="color:#e6db74">&#34;</span>
-echo <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">file geneated: </span>$output_file_code_tag_removed<span style="color:#e6db74">&#34;</span>
+echo <span style="color:#e6db74">&#34;file geneated: </span>$output_file_code_tag_removed<span style="color:#e6db74">&#34;</span>
 </code></pre></div><h3 id="run-the-script">Run the script.</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ./generate_html_for_blogger.sh markupContent.md
 <span style="color:#f92672">[</span>WARNING<span style="color:#f92672">]</span> This document format requires a nonempty &lt;title&gt; element.

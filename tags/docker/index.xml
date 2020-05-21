@@ -6,10 +6,22 @@
     <description>Recent content in docker on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Sat, 27 Jul 2019 12:15:28 +0100</lastBuildDate>
+    <lastBuildDate>Thu, 21 May 2020 05:58:11 +0100</lastBuildDate>
     
 	<atom:link href="/tags/docker/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Kafka to Elk Message Manipulation</title>
+      <link>/posts/kafka-to-elk-message-manipulation/</link>
+      <pubDate>Thu, 21 May 2020 05:58:11 +0100</pubDate>
+      
+      <guid>/posts/kafka-to-elk-message-manipulation/</guid>
+      <description>Introduction We will be creating a message flow starting from Kafka and ending in Kibana. Flow will be like below:
+console app (to send json message) -&amp;gt; kafka -&amp;gt; logstash -&amp;gt; elasticSearch -&amp;gt; kibana
+We will be using ruby filter to manipulate the message as well and docker to setup the environment.
+Setup mkdir kafka-elk cd kafka-elk wget http://apache.mirror.anlx.net/kafka/2.5.0/kafka_2.13-2.5.0.tgz tar xvf kafka_2.13-2.5.0.tgz Note: We need kafka binaries to get the script that can send json message via console to kafka.</description>
+    </item>
     
     <item>
       <title>Docker Logging With Rsyslog</title>

@@ -113,7 +113,7 @@
 <span style="color:#f92672">import</span> pprint
 
 
-json_data <span style="color:#f92672">=</span> open(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">sample_json_file.json</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>read()
+json_data <span style="color:#f92672">=</span> open(<span style="color:#e6db74">&#39;sample_json_file.json&#39;</span>, <span style="color:#e6db74">&#39;r&#39;</span>)<span style="color:#f92672">.</span>read()
 json_dict <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>loads(json_data)
 
 stack <span style="color:#f92672">=</span> []
@@ -126,15 +126,15 @@ final_dict <span style="color:#f92672">=</span> {}
             stack<span style="color:#f92672">.</span>append(key)
             <span style="color:#75715e">#print(&#34;/&#34;.join(stack))</span>
             <span style="color:#66d9ef">if</span> isinstance(value, dict) <span style="color:#f92672">and</span> len(value<span style="color:#f92672">.</span>keys()) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
-                final_dict[<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join(stack)] <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">EMPTY_DICT</span><span style="color:#e6db74">&#34;</span>
+                final_dict[<span style="color:#e6db74">&#34;/&#34;</span><span style="color:#f92672">.</span>join(stack)] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;EMPTY_DICT&#34;</span>
             <span style="color:#66d9ef">if</span> isinstance(value, list) <span style="color:#f92672">and</span> len(value) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
-                final_dict[<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join(stack)] <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">EMPTY_LIST</span><span style="color:#e6db74">&#39;</span>
+                final_dict[<span style="color:#e6db74">&#34;/&#34;</span><span style="color:#f92672">.</span>join(stack)] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;EMPTY_LIST&#39;</span>
             <span style="color:#66d9ef">if</span> isinstance(value, dict):
                 do_walk(value)
             <span style="color:#66d9ef">if</span> isinstance(value, list):
                 do_walk(value)
             <span style="color:#66d9ef">if</span> isinstance(value, unicode):
-                final_dict[<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join(stack)] <span style="color:#f92672">=</span> value
+                final_dict[<span style="color:#e6db74">&#34;/&#34;</span><span style="color:#f92672">.</span>join(stack)] <span style="color:#f92672">=</span> value
             stack<span style="color:#f92672">.</span>pop()
 
     <span style="color:#66d9ef">if</span> isinstance(datadict, list):
@@ -147,7 +147,7 @@ final_dict <span style="color:#f92672">=</span> {}
             <span style="color:#66d9ef">if</span> isinstance(key, list):
                 do_walk(key)
             <span style="color:#66d9ef">if</span> isinstance(key, unicode):
-                final_dict[<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join(stack)] <span style="color:#f92672">=</span> key
+                final_dict[<span style="color:#e6db74">&#34;/&#34;</span><span style="color:#f92672">.</span>join(stack)] <span style="color:#f92672">=</span> key
             stack<span style="color:#f92672">.</span>pop()
 
 

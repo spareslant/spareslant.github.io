@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-gb">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Kafka to Elk Message Manipulation - SpareSlant Technical Blog</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/my.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="SpareSlant Technical Blog" rel="home">
+				<div class="logo__title">SpareSlant Technical Blog</div>
+				<div class="logo__tagline">SpareSlant tech blog</div>
+			</a>
+		</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Kafka to Elk Message Manipulation</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2020-05-21T05:58:11">2020-05-21</time>
+</div>
+</div>
+		</header>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#setup">Setup</a>
+      <ul>
+        <li><a href="#populate-docker-composeyml-file-with-following-contents">Populate <code>docker-compose.yml</code> file with following contents</a></li>
+        <li><a href="#create-logstashconf-file">create <code>logstash.conf</code> file</a></li>
+        <li><a href="#create-logstashyml-with-following-contents">create <code>logstash.yml</code> with following contents</a></li>
+        <li><a href="#create-manipulate_msgrb-with-following-contents">create <code>manipulate_msg.rb</code> with following contents.</a></li>
+        <li><a href="#create-a-samplejson-file-with-following-contents">Create a <code>sample.json</code> file with following contents</a></li>
+        <li><a href="#flatten-the-json-record">flatten the json record.</a></li>
+      </ul>
+    </li>
+    <li><a href="#start-the-whole-setup">Start the whole setup</a></li>
+    <li><a href="#setup-kibana">Setup kibana</a></li>
+    <li><a href="#send-json-data-via-kafka">send json data via kafka</a></li>
+    <li><a href="#send-json-data-via-syslog-port-5000">send json data via syslog port 5000</a></li>
+  </ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<h2 id="introduction">Introduction</h2>
+<p>We will be creating a message flow starting from Kafka and ending in Kibana. Flow will be like below:</p>
+<p><code>console app (to send json message) -&gt; kafka -&gt; logstash -&gt; elasticSearch -&gt; kibana</code></p>
+<p>We will be using ruby filter to manipulate the message as well and docker to setup the environment.</p>
+<h2 id="setup">Setup</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir kafka-elk
+cd kafka-elk
+wget http://apache.mirror.anlx.net/kafka/2.5.0/kafka_2.13-2.5.0.tgz
+tar xvf kafka_2.13-2.5.0.tgz
+</code></pre></div><p>Note: We need kafka binaries to get the script that can send json message via console to kafka.</p>
+<h3 id="populate-docker-composeyml-file-with-following-contents">Populate <code>docker-compose.yml</code> file with following contents</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#66d9ef">version</span>: <span style="color:#e6db74">&#39;2&#39;</span>
+
+<span style="color:#66d9ef">services</span>:
+  <span style="color:#66d9ef">zookeeper</span>:
+    <span style="color:#66d9ef">image</span>: <span style="color:#e6db74">&#39;bitnami/zookeeper:3&#39;</span>
+    <span style="color:#66d9ef">container_name</span>: zookeeper
+    <span style="color:#66d9ef">ports</span>:
+      - <span style="color:#e6db74">&#39;2181:2181&#39;</span>
+    <span style="color:#66d9ef">volumes</span>:
+      - <span style="color:#e6db74">&#39;zookeeper_data:/bitnami&#39;</span>
+    <span style="color:#66d9ef">environment</span>:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+    <span style="color:#66d9ef">networks</span>:
+      - elastic
+
+  <span style="color:#66d9ef">kafka</span>:
+    <span style="color:#66d9ef">image</span>: <span style="color:#e6db74">&#39;bitnami/kafka:2.5.0&#39;</span>
+    <span style="color:#66d9ef">container_name</span>: kafka
+    <span style="color:#66d9ef">ports</span>:
+      - <span style="color:#e6db74">&#39;9092:9092&#39;</span>
+      - <span style="color:#e6db74">&#39;29092:29092&#39;</span>
+    <span style="color:#66d9ef">volumes</span>:
+      - <span style="color:#e6db74">&#39;kafka_data:/bitnami&#39;</span>
+    <span style="color:#66d9ef">environment</span>:
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:<span style="color:#ae81ff">2181</span>
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:<span style="color:#ae81ff">9092</span>,PLAINTEXT_HOST://:<span style="color:#ae81ff">29092</span>
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:<span style="color:#ae81ff">9092</span>,PLAINTEXT_HOST://localhost:<span style="color:#ae81ff">29092</span>
+    <span style="color:#66d9ef">depends_on</span>:
+      - zookeeper
+    <span style="color:#66d9ef">networks</span>:
+      - elastic
+
+  <span style="color:#66d9ef">elasticsearch</span>:
+    <span style="color:#66d9ef">image</span>: docker.elastic.co/elasticsearch/elasticsearch:<span style="color:#ae81ff">7.6.2</span>
+    <span style="color:#66d9ef">container_name</span>: elasticsearch
+    <span style="color:#66d9ef">environment</span>:
+      - node.name=elasticsearch
+      - cluster.name=es-docker-cluster
+      - cluster.initial_master_nodes=elasticsearch
+      - bootstrap.memory_lock=<span style="color:#66d9ef">true</span>
+      - <span style="color:#e6db74">&#34;ES_JAVA_OPTS=-Xms512m -Xmx512m&#34;</span>
+    <span style="color:#66d9ef">ulimits</span>:
+      <span style="color:#66d9ef">memlock</span>:
+        <span style="color:#66d9ef">soft</span>: -<span style="color:#ae81ff">1</span>
+        <span style="color:#66d9ef">hard</span>: -<span style="color:#ae81ff">1</span>
+    <span style="color:#66d9ef">volumes</span>:
+      - elastic_data:/usr/share/elasticsearch/data
+    <span style="color:#66d9ef">ports</span>:
+      - <span style="color:#ae81ff">9200</span>:<span style="color:#ae81ff">9200</span>
+    <span style="color:#66d9ef">networks</span>:
+      - elastic
+
+  <span style="color:#66d9ef">kibana</span>:
+    <span style="color:#66d9ef">image</span>: docker.elastic.co/kibana/kibana:<span style="color:#ae81ff">7.6.2</span>
+    <span style="color:#66d9ef">container_name</span>: kibana
+    <span style="color:#66d9ef">ports</span>:
+      - <span style="color:#ae81ff">5601</span>:<span style="color:#ae81ff">5601</span>
+    <span style="color:#66d9ef">environment</span>:
+      <span style="color:#66d9ef">ELASTICSEARCH_URL</span>: http://elasticsearch:<span style="color:#ae81ff">9200</span>
+      <span style="color:#66d9ef">ELASTICSEARCH_HOSTS</span>: http://elasticsearch:<span style="color:#ae81ff">9200</span>
+    <span style="color:#66d9ef">networks</span>:
+      - elastic
+
+  <span style="color:#66d9ef">logstash</span>:
+    <span style="color:#66d9ef">image</span>: docker.elastic.co/logstash/logstash:<span style="color:#ae81ff">7.7.0</span>
+    <span style="color:#66d9ef">container_name</span>: logstash
+    <span style="color:#66d9ef">ports</span>:
+      - <span style="color:#ae81ff">5000</span>:<span style="color:#ae81ff">5000</span>
+    <span style="color:#66d9ef">volumes</span>:
+    - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+    - ./logstash.yml:/usr/share/logstash/config/logstash.yml
+    - ./manipulate_msg.rb:/etc/logstash/manipulate_msg.rb
+    <span style="color:#66d9ef">networks</span>:
+      - elastic
+
+<span style="color:#66d9ef">networks</span>:
+  <span style="color:#66d9ef">elastic</span>:
+    <span style="color:#66d9ef">driver</span>: bridge
+
+<span style="color:#66d9ef">volumes</span>:
+  <span style="color:#66d9ef">zookeeper_data</span>:
+    <span style="color:#66d9ef">driver</span>: local
+  <span style="color:#66d9ef">kafka_data</span>:
+    <span style="color:#66d9ef">driver</span>: local
+  <span style="color:#66d9ef">elastic_data</span>:
+    <span style="color:#66d9ef">driver</span>: local
+</code></pre></div><h3 id="create-logstashconf-file">create <code>logstash.conf</code> file</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cat <span style="color:#e6db74">&lt;&lt;EOF &gt; logstash.conf
+</span><span style="color:#e6db74">input {
+</span><span style="color:#e6db74">  kafka {
+</span><span style="color:#e6db74">    bootstrap_servers =&gt; &#34;kafka:9092&#34;
+</span><span style="color:#e6db74">    client_id =&gt; &#34;transform-text&#34;
+</span><span style="color:#e6db74">    group_id =&gt; &#34;transform-text&#34;
+</span><span style="color:#e6db74">    consumer_threads =&gt; 3
+</span><span style="color:#e6db74">    topics =&gt; [&#34;transform-text&#34;]
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    # Following multiline json codec may not work on all the
+</span><span style="color:#e6db74">    # possible multiline json records.
+</span><span style="color:#e6db74">    # codec =&gt; multiline {
+</span><span style="color:#e6db74">    #  pattern =&gt; &#34;^\{&#34;
+</span><span style="color:#e6db74">    #  negate =&gt; true
+</span><span style="color:#e6db74">    #  what =&gt; previous
+</span><span style="color:#e6db74">    # }
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    # use json record with no newline in between.
+</span><span style="color:#e6db74">    codec =&gt; json
+</span><span style="color:#e6db74">    tags =&gt; [&#34;transformed-text&#34;, &#34;kafka_source&#34;]
+</span><span style="color:#e6db74">    type =&gt; &#34;kafka-test-messages&#34;
+</span><span style="color:#e6db74">  }
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">  # to test the logstah via telnet
+</span><span style="color:#e6db74">  # e.g. cat some.json | nc localhost 5000
+</span><span style="color:#e6db74">  tcp {
+</span><span style="color:#e6db74">    port =&gt; 5000
+</span><span style="color:#e6db74">    type =&gt; syslog
+</span><span style="color:#e6db74">    codec =&gt; multiline {
+</span><span style="color:#e6db74">      pattern =&gt; &#34;^\{$&#34;
+</span><span style="color:#e6db74">      negate =&gt; true
+</span><span style="color:#e6db74">      what =&gt; previous
+</span><span style="color:#e6db74">    }
+</span><span style="color:#e6db74">  }
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">  # to test the logstah via telnet
+</span><span style="color:#e6db74">  # e.g. cat some.json | nc localhost 5000
+</span><span style="color:#e6db74">  udp {
+</span><span style="color:#e6db74">    port =&gt; 5000
+</span><span style="color:#e6db74">    type =&gt; syslog
+</span><span style="color:#e6db74">    codec =&gt; multiline {
+</span><span style="color:#e6db74">      pattern =&gt; &#34;^\{$&#34;
+</span><span style="color:#e6db74">      negate =&gt; true
+</span><span style="color:#e6db74">      what =&gt; previous
+</span><span style="color:#e6db74">    }
+</span><span style="color:#e6db74">  }
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">}
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">filter {
+</span><span style="color:#e6db74">  ruby {
+</span><span style="color:#e6db74">    path =&gt; &#34;/etc/logstash/manipulate_msg.rb&#34;
+</span><span style="color:#e6db74">  }
+</span><span style="color:#e6db74">}
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">output {
+</span><span style="color:#e6db74">  elasticsearch {
+</span><span style="color:#e6db74">    hosts =&gt; [&#34;elasticsearch:9200&#34;]
+</span><span style="color:#e6db74">    index =&gt; &#34;logstash-%{+YYYY.MM.dd}&#34;
+</span><span style="color:#e6db74">  }
+</span><span style="color:#e6db74">  stdout { codec =&gt; rubydebug }
+</span><span style="color:#e6db74">}
+</span><span style="color:#e6db74">EOF</span>
+</code></pre></div><h3 id="create-logstashyml-with-following-contents">create <code>logstash.yml</code> with following contents</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#66d9ef">http.host</span>: <span style="color:#e6db74">&#34;0.0.0.0&#34;</span>
+<span style="color:#66d9ef">config.support_escapes</span>: <span style="color:#66d9ef">true</span>
+</code></pre></div><h3 id="create-manipulate_msgrb-with-following-contents">create <code>manipulate_msg.rb</code> with following contents.</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">filter</span>(event)
+  <span style="color:#75715e"># get the message line sent by kafka or any other source like syslog</span>
+  message <span style="color:#f92672">=</span> event<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;message&#34;</span>)
+  event<span style="color:#f92672">.</span>set(<span style="color:#e6db74">&#34;newField&#34;</span>, <span style="color:#e6db74">&#34;newValue&#34;</span>)
+  <span style="color:#66d9ef">return</span> <span style="color:#f92672">[</span>event<span style="color:#f92672">]</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p><strong>Note:</strong> We are manipulating the message coming from kafka by adding an extra field/value pair to the message in logstash ruby filter which will be visible in kibana.</p>
+<p><strong>Note</strong> Kafka is not pushing messages to logstash. Its the logstash that pulling messages from kafka (acting as kafka consumer).</p>
+<h3 id="create-a-samplejson-file-with-following-contents">Create a <code>sample.json</code> file with following contents</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#f92672">&#34;menu&#34;</span>: {
+    <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#e6db74">&#34;file with space&#34;</span>,
+    <span style="color:#f92672">&#34;value&#34;</span>: <span style="color:#e6db74">&#34;File&#34;</span>,
+    <span style="color:#f92672">&#34;popup&#34;</span>: {
+      <span style="color:#f92672">&#34;menuitem&#34;</span>: [
+        {<span style="color:#f92672">&#34;value&#34;</span>: <span style="color:#e6db74">&#34;New&#34;</span>, <span style="color:#f92672">&#34;onclick&#34;</span>: <span style="color:#e6db74">&#34;CreateNewDoc()&#34;</span>},
+        {<span style="color:#f92672">&#34;value&#34;</span>: <span style="color:#e6db74">&#34;Open&#34;</span>, <span style="color:#f92672">&#34;onclick&#34;</span>: <span style="color:#e6db74">&#34;OpenDoc()&#34;</span>},
+        {<span style="color:#f92672">&#34;value&#34;</span>: <span style="color:#e6db74">&#34;Close&#34;</span>, <span style="color:#f92672">&#34;onclick&#34;</span>: <span style="color:#e6db74">&#34;CloseDoc()&#34;</span>}
+      ]
+    }
+  }
+}
+</code></pre></div><p><strong>Note:</strong> We need to make above json input to be in one-line, as logstash cannot ingest multiline json record. You can use multiline codec in logstash.conf input plugin (to ingest multiline json) but then kibana will show that record as a single string and json record&rsquo;s field/keys will not be shown as individual fields in kibana.</p>
+<p>Multiline codec will make json record just a series of characters (a long string) and record&rsquo;s keys/fields will not be recoginzed in kibana as separate fields. You might need to make changes to ruby filter so that kibana can show record&rsquo;s key/fields as individual searchable fields.</p>
+<p>To keep things simple, we will be converting our json in a flat structure and use codec json in logstash.conf&rsquo;s kafka input plugin.</p>
+<h3 id="flatten-the-json-record">flatten the json record.</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cat sample.json |  perl -wp -e <span style="color:#e6db74">&#39;s/\n+//g&#39;</span> &gt; flat_sample.json
+</code></pre></div><h2 id="start-the-whole-setup">Start the whole setup</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker-compose up -d
+</code></pre></div><p><strong>Note</strong>: You can bring down whole setup by running this command <code>docker-compose down -v</code></p>
+<h2 id="setup-kibana">Setup kibana</h2>
+<p>Wait for a minute for above setup to come up fully, and open Kibana URL: http://localhost:5601/ . You need to create an index pattern with logstash-* as index patten (inside management). But before you can create index-pattern you need to send some data to elastic search. That can be sent via running below mentioned kafka-console-producer.sh command. Once you have sent the json , you should be able to create index pattern. Now click on &ldquo;discover&rdquo; to view the sent data. Try sending more data.</p>
+<h2 id="send-json-data-via-kafka">send json data via kafka</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kafka_2.13-2.5.0/bin/kafka-console-producer.sh --topic <span style="color:#e6db74">&#34;transform-text&#34;</span> --bootstrap-server localhost:29092 &lt; flat_sample.json
+</code></pre></div><p><strong>Note</strong>: Kafka input plugin is using json codec</p>
+<p><strong>Note:</strong> You should see json data visible in Kibana.
+<strong>Note</strong> You can see data being ingested by logstash by viewing logstash logs <code>docker logs -f logstash</code></p>
+<h2 id="send-json-data-via-syslog-port-5000">send json data via syslog port 5000</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"> cat flat_sample.json | nc localhost <span style="color:#ae81ff">5000</span>
+</code></pre></div><p><strong>Note:</strong> tcp input plugin is using port 5000 which is can be used by syslog as well.
+<strong>Note:</strong> above command is sending data straight to logstash (skipping kafka)
+<strong>Note:</strong> tcp input plugin is using multiline codec.</p>
+<p>Please note the difference in reprsentation of two records sent above in kibana in order to understand the differnce between multiline and json codec.</p>
+
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/docker/" rel="tag">docker</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/kafka/" rel="tag">kafka</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/elasticsearch/" rel="tag">elasticSearch</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/kibana/" rel="tag">kibana</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/logstash/" rel="tag">logstash</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/elk/" rel="tag">ELK</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/ruby/" rel="tag">ruby</a></li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<div class="authorbox__header">
+		<span class="authorbox__name">About SpareSlant</span>
+	</div>
+</div>
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/posts/openstack-instances-using-goose-library/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Remote OpenStack Instances Using Goose library (using Nova networking)</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2020 SpareSlant.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
+</html>

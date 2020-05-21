@@ -55,7 +55,7 @@
       <ul>
         <li><a href="#install-required-libraries">Install required libraries.</a></li>
         <li><a href="#copy-credential-script">Copy credential script.</a></li>
-        <li><a href="#create-ruby-script-bloggerclirb">Create Ruby script bloggerCli.rb</a></li>
+        <li><a href="#create-ruby-script-bloggerclirb">Create Ruby script <code>bloggerCli.rb</code></a></li>
         <li><a href="#create-a-test-file-to-be-uploaded">Create a test file to be uploaded.</a></li>
         <li><a href="#run-the-script">Run the script.</a></li>
         <li><a href="#references-used">References used:</a></li>
@@ -158,7 +158,7 @@ require <span style="color:#e6db74">&#39;launchy&#39;</span>
 require <span style="color:#e6db74">&#39;slop&#39;</span>
 
 opts <span style="color:#f92672">=</span> <span style="color:#66d9ef">Slop</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Options</span><span style="color:#f92672">.</span>new
-opts<span style="color:#f92672">.</span>banner <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">usage: </span><span style="color:#e6db74">#{</span><span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>basename(__FILE__)<span style="color:#e6db74">}</span><span style="color:#e6db74"> -f &lt;html file&gt; -t &lt;post title&gt; -l &lt;label_string1&gt; -l &lt;label_string2&gt; -l .. -l ..</span><span style="color:#e6db74">&#34;</span>
+opts<span style="color:#f92672">.</span>banner <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;usage: </span><span style="color:#e6db74">#{</span><span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>basename(__FILE__)<span style="color:#e6db74">}</span><span style="color:#e6db74"> -f &lt;html file&gt; -t &lt;post title&gt; -l &lt;label_string1&gt; -l &lt;label_string2&gt; -l .. -l ..&#34;</span>
 opts<span style="color:#f92672">.</span>string <span style="color:#e6db74">&#39;-f&#39;</span>, <span style="color:#e6db74">&#39;--uploadfile&#39;</span>, <span style="color:#e6db74">&#39;html file&#39;</span>, <span style="color:#e6db74">required</span>: <span style="color:#66d9ef">true</span>
 opts<span style="color:#f92672">.</span>string <span style="color:#e6db74">&#39;-t&#39;</span>, <span style="color:#e6db74">&#39;--title&#39;</span>, <span style="color:#e6db74">&#39;Post Title&#39;</span>, <span style="color:#e6db74">required</span>: <span style="color:#66d9ef">true</span>
 opts<span style="color:#f92672">.</span>string <span style="color:#e6db74">&#39;-e&#39;</span>, <span style="color:#e6db74">&#39;--email&#39;</span>, <span style="color:#e6db74">&#39;Account email id&#39;</span>, <span style="color:#e6db74">required</span>: <span style="color:#66d9ef">true</span>
@@ -186,7 +186,7 @@ parser <span style="color:#f92672">=</span> <span style="color:#66d9ef">Slop</sp
 
 
 <span style="color:#75715e"># create an API client from service account</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e"></span><span style="color:#f92672"></span><span style="color:#a6e22e">create_client_from_serviceAccount</span>(scope, service_account_cred)
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">create_client_from_serviceAccount</span>(scope, service_account_cred)
     authorizer <span style="color:#f92672">=</span> <span style="color:#66d9ef">Google</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Auth</span><span style="color:#f92672">::</span><span style="color:#66d9ef">ServiceAccountCredentials</span><span style="color:#f92672">.</span>make_creds(
                     <span style="color:#e6db74">json_key_io</span>: <span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>open(service_account_cred), <span style="color:#e6db74">scope</span>: scope)
 
@@ -198,19 +198,19 @@ parser <span style="color:#f92672">=</span> <span style="color:#66d9ef">Slop</sp
 
 <span style="color:#75715e"># create an API client from an AOUTH2.0 account.</span>
 <span style="color:#75715e"># Following function will create a new file called tokens.yaml</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e"></span><span style="color:#f92672"></span><span style="color:#a6e22e">create_client_from_outhAccount</span>(scope, oob_uri, user_id, oauth_cred_file)
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">create_client_from_outhAccount</span>(scope, oob_uri, user_id, oauth_cred_file)
     <span style="color:#75715e">#oob_uri = &#39;urn:ietf:wg:oauth:2.0:oob&#39;</span>
     <span style="color:#75715e">#user_id = &#39;eyemole@gmail.com&#39;</span>
     client_id <span style="color:#f92672">=</span> <span style="color:#66d9ef">Google</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Auth</span><span style="color:#f92672">::</span><span style="color:#66d9ef">ClientId</span><span style="color:#f92672">.</span>from_file(oauth_cred_file)
-    token_store <span style="color:#f92672">=</span> <span style="color:#66d9ef">Google</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Auth</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Stores</span><span style="color:#f92672">::</span><span style="color:#66d9ef">FileTokenStore</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">:file</span> <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> <span style="color:#e6db74">&#39;tokens.yaml&#39;</span>)
+    token_store <span style="color:#f92672">=</span> <span style="color:#66d9ef">Google</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Auth</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Stores</span><span style="color:#f92672">::</span><span style="color:#66d9ef">FileTokenStore</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">:file</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;tokens.yaml&#39;</span>)
     authorizer <span style="color:#f92672">=</span> <span style="color:#66d9ef">Google</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Auth</span><span style="color:#f92672">::</span><span style="color:#66d9ef">UserAuthorizer</span><span style="color:#f92672">.</span>new(client_id, scope, token_store)
     credentials <span style="color:#f92672">=</span> authorizer<span style="color:#f92672">.</span>get_credentials(user_id)
     <span style="color:#66d9ef">if</span> credentials<span style="color:#f92672">.</span>nil?
         url <span style="color:#f92672">=</span> authorizer<span style="color:#f92672">.</span>get_authorization_url(<span style="color:#e6db74">base_url</span>: oob_uri )
         <span style="color:#75715e">#Launchy.open(url)</span>
-        puts <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Open this URL in Browser and enter the code you got from browser below</span><span style="color:#e6db74">&#34;</span>
-        puts <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">URL: </span><span style="color:#e6db74">#{</span>url<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
-        print <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">enter the code you got from browser here and press Enter: </span><span style="color:#e6db74">&#34;</span>
+        puts <span style="color:#e6db74">&#34;Open this URL in Browser and enter the code you got from browser below&#34;</span>
+        puts <span style="color:#e6db74">&#34;URL: </span><span style="color:#e6db74">#{</span>url<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+        print <span style="color:#e6db74">&#34;enter the code you got from browser here and press Enter: &#34;</span>
         <span style="color:#75715e"># code = gets</span>
         code <span style="color:#f92672">=</span> <span style="color:#66d9ef">STDIN</span><span style="color:#f92672">.</span>gets<span style="color:#f92672">.</span>chomp
         credentials <span style="color:#f92672">=</span> authorizer<span style="color:#f92672">.</span>get_and_store_credentials_from_code(<span style="color:#e6db74">user_id</span>: user_id, <span style="color:#e6db74">code</span>: code, <span style="color:#e6db74">base_url</span>: oob_uri)
@@ -229,21 +229,21 @@ blogger <span style="color:#f92672">=</span> create_client_from_outhAccount(<spa
 
 blog <span style="color:#f92672">=</span> blogger<span style="color:#f92672">.</span>get_blog(<span style="color:#66d9ef">BLOG_ID</span>)
 <span style="color:#75715e"># puts &#34;blog URL = #{blog.url}&#34;</span>
-puts <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Total posts in this blog = </span><span style="color:#e6db74">#{</span>blog<span style="color:#f92672">.</span>posts<span style="color:#f92672">.</span>total_items<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+puts <span style="color:#e6db74">&#34;Total posts in this blog = </span><span style="color:#e6db74">#{</span>blog<span style="color:#f92672">.</span>posts<span style="color:#f92672">.</span>total_items<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
 
-puts <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">========== Inserting a new Post ========</span><span style="color:#e6db74">&#34;</span>
+puts <span style="color:#e6db74">&#34;========== Inserting a new Post ========&#34;</span>
 
 contents <span style="color:#f92672">=</span> <span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>read(<span style="color:#66d9ef">FILE_TO_POST</span>)
 
 new_post <span style="color:#f92672">=</span> <span style="color:#66d9ef">Google</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Apis</span><span style="color:#f92672">::</span><span style="color:#66d9ef">BloggerV3</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Post</span><span style="color:#f92672">.</span>new
-new_post<span style="color:#f92672">.</span>kind <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">blogger</span><span style="color:#e6db74">#</span><span style="color:#e6db74">post</span><span style="color:#e6db74">&#34;</span>
+new_post<span style="color:#f92672">.</span>kind <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;blogger#post&#34;</span>
 new_post<span style="color:#f92672">.</span>title <span style="color:#f92672">=</span> <span style="color:#66d9ef">POST_TITLE</span>
 new_post<span style="color:#f92672">.</span>content <span style="color:#f92672">=</span> contents
 new_post<span style="color:#f92672">.</span>labels <span style="color:#f92672">=</span> <span style="color:#66d9ef">LABELS_FOR_POST</span>
 blogger<span style="color:#f92672">.</span>insert_post(<span style="color:#66d9ef">BLOG_ID</span>, new_post)
 
 blog <span style="color:#f92672">=</span> blogger<span style="color:#f92672">.</span>get_blog(<span style="color:#66d9ef">BLOG_ID</span>)
-puts <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Total posts in this blog = </span><span style="color:#e6db74">#{</span>blog<span style="color:#f92672">.</span>posts<span style="color:#f92672">.</span>total_items<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+puts <span style="color:#e6db74">&#34;Total posts in this blog = </span><span style="color:#e6db74">#{</span>blog<span style="color:#f92672">.</span>posts<span style="color:#f92672">.</span>total_items<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
 
 <span style="color:#75715e">#posts.items.each do |post|</span>
 <span style="color:#75715e">#    puts post.to_json</span>
@@ -255,7 +255,7 @@ puts <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Total p
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ruby bloggerCli.rb -f sometext.txt -t <span style="color:#e6db74">&#34;My First Post&#34;</span> -e <span style="color:#e6db74">&#34;&lt;userAccount&gt;@gmail.com&#34;</span> -b <span style="color:#e6db74">&#34;3434533535534&#34;</span> -l label1,label2
 enter the code you got from browser here and press Enter: 6/xQEBsJRhTZfthVP9ZSNsasaa7Y78HSDj2sd7aG
 Total posts in this blog <span style="color:#f92672">=</span> 0
-<span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span> Inserting a new Post <span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span>
+<span style="color:#f92672">==========</span> Inserting a new Post <span style="color:#f92672">========</span>
 Total posts in this blog <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
 </code></pre></div><p><strong>Note-1</strong>: While running above script, this will open a browser and wil ask you to login to your google account.</p>
 <p><strong>Note-2</strong>: Above run will create a <code>tokens.yaml</code> file. On subsequent runs, browser window will not open due to presence of tokens.yaml file. If you remove this file, then you will have to authenticate again in the browser.</p>

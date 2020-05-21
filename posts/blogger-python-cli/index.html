@@ -55,7 +55,7 @@
       <ul>
         <li><a href="#install-required-libraries">Install required libraries.</a></li>
         <li><a href="#copy-credential-script">Copy credential script.</a></li>
-        <li><a href="#create-python-script-bloggerclipy">Create Python script bloggerCli.py</a></li>
+        <li><a href="#create-python-script-bloggerclipy">Create Python script <code>bloggerCli.py</code></a></li>
         <li><a href="#create-a-test-file-to-be-uploaded">Create a test file to be uploaded.</a></li>
         <li><a href="#run-the-script">Run the script.</a></li>
         <li><a href="#references-used">References used:</a></li>
@@ -155,18 +155,18 @@ pip install --upgrade google-auth-oauthlib
 <span style="color:#f92672">import</span> argparse
 
 
-usage <span style="color:#f92672">=</span> f<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{os.path.basename(__file__)} -f &lt;html file&gt; -t &lt;post title&gt; -l &lt;label_string1&gt; -l &lt;label_string2&gt; -l .. -l ..</span><span style="color:#e6db74">&#34;</span>
+usage <span style="color:#f92672">=</span> f<span style="color:#e6db74">&#34;{os.path.basename(__file__)} -f &lt;html file&gt; -t &lt;post title&gt; -l &lt;label_string1&gt; -l &lt;label_string2&gt; -l .. -l ..&#34;</span>
 
-parser <span style="color:#f92672">=</span> argparse<span style="color:#f92672">.</span>ArgumentParser(prog<span style="color:#f92672">=</span>os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>basename(__file__), usage<span style="color:#f92672">=</span>usage, description<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Upload a post to Blogger</span><span style="color:#e6db74">&#39;</span>)
-parser<span style="color:#f92672">.</span>add_argument(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">-f</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">--uploadfile</span><span style="color:#e6db74">&#39;</span>, action<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">store</span><span style="color:#e6db74">&#39;</span>, dest<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">fileToPost</span><span style="color:#e6db74">&#39;</span>, help<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">html file to post</span><span style="color:#e6db74">&#39;</span>, required<span style="color:#f92672">=</span>True)
-parser<span style="color:#f92672">.</span>add_argument(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">-l</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">--labels</span><span style="color:#e6db74">&#39;</span>, action<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">append</span><span style="color:#e6db74">&#39;</span>, dest<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">labels</span><span style="color:#e6db74">&#39;</span>, default<span style="color:#f92672">=</span>[], help<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">-l &lt;label1&gt; -l &lt;label2&gt;</span><span style="color:#e6db74">&#39;</span>)
-parser<span style="color:#f92672">.</span>add_argument(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">-t</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">--title</span><span style="color:#e6db74">&#39;</span>, action<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">store</span><span style="color:#e6db74">&#39;</span>, dest<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">title</span><span style="color:#e6db74">&#39;</span>, help<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">-t &lt;Post Title string&gt;</span><span style="color:#e6db74">&#39;</span>, required<span style="color:#f92672">=</span>True)
-parser<span style="color:#f92672">.</span>add_argument(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">-b</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">--blogid</span><span style="color:#e6db74">&#39;</span>, action<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">store</span><span style="color:#e6db74">&#39;</span>, dest<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">blogid</span><span style="color:#e6db74">&#39;</span>, help<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">-b &lt;blogid string&gt;</span><span style="color:#e6db74">&#39;</span>, required<span style="color:#f92672">=</span>True)
+parser <span style="color:#f92672">=</span> argparse<span style="color:#f92672">.</span>ArgumentParser(prog<span style="color:#f92672">=</span>os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>basename(__file__), usage<span style="color:#f92672">=</span>usage, description<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Upload a post to Blogger&#39;</span>)
+parser<span style="color:#f92672">.</span>add_argument(<span style="color:#e6db74">&#39;-f&#39;</span>, <span style="color:#e6db74">&#39;--uploadfile&#39;</span>, action<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;store&#39;</span>, dest<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;fileToPost&#39;</span>, help<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;html file to post&#39;</span>, required<span style="color:#f92672">=</span>True)
+parser<span style="color:#f92672">.</span>add_argument(<span style="color:#e6db74">&#39;-l&#39;</span>, <span style="color:#e6db74">&#39;--labels&#39;</span>, action<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;append&#39;</span>, dest<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;labels&#39;</span>, default<span style="color:#f92672">=</span>[], help<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;-l &lt;label1&gt; -l &lt;label2&gt;&#39;</span>)
+parser<span style="color:#f92672">.</span>add_argument(<span style="color:#e6db74">&#39;-t&#39;</span>, <span style="color:#e6db74">&#39;--title&#39;</span>, action<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;store&#39;</span>, dest<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;title&#39;</span>, help<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;-t &lt;Post Title string&gt;&#39;</span>, required<span style="color:#f92672">=</span>True)
+parser<span style="color:#f92672">.</span>add_argument(<span style="color:#e6db74">&#39;-b&#39;</span>, <span style="color:#e6db74">&#39;--blogid&#39;</span>, action<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;store&#39;</span>, dest<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;blogid&#39;</span>, help<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;-b &lt;blogid string&gt;&#39;</span>, required<span style="color:#f92672">=</span>True)
 arguments <span style="color:#f92672">=</span> parser<span style="color:#f92672">.</span>parse_args()
 
 <span style="color:#66d9ef">if</span> len(sys<span style="color:#f92672">.</span>argv) <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
     parser<span style="color:#f92672">.</span>print_help()
-    parser<span style="color:#f92672">.</span>error(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">You must specify command line flags as mentioned above.</span><span style="color:#e6db74">&#34;</span>)
+    parser<span style="color:#f92672">.</span>error(<span style="color:#e6db74">&#34;You must specify command line flags as mentioned above.&#34;</span>)
 
 
 FILE_TO_POST <span style="color:#f92672">=</span> arguments<span style="color:#f92672">.</span>fileToPost
@@ -174,12 +174,12 @@ LABELS_FOR_POST <span style="color:#f92672">=</span> arguments<span style="color
 POST_TITLE <span style="color:#f92672">=</span> arguments<span style="color:#f92672">.</span>title
 BLOG_ID <span style="color:#f92672">=</span> arguments<span style="color:#f92672">.</span>blogid
 
-SCOPES <span style="color:#f92672">=</span> [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">https://www.googleapis.com/auth/blogger</span><span style="color:#e6db74">&#39;</span>]
-SERVICE_ACCOUNT_FILE <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">blogger-api-credentials.json</span><span style="color:#e6db74">&#39;</span>
-OAUTH2_ACCOUNT_FILE <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">OAuth2.0_secret.json</span><span style="color:#e6db74">&#39;</span>
+SCOPES <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;https://www.googleapis.com/auth/blogger&#39;</span>]
+SERVICE_ACCOUNT_FILE <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;blogger-api-credentials.json&#39;</span>
+OAUTH2_ACCOUNT_FILE <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;OAuth2.0_secret.json&#39;</span>
 FLOW_SERVER_PORT <span style="color:#f92672">=</span> <span style="color:#ae81ff">9090</span>
-API_SERVICE_NAME <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">blogger</span><span style="color:#e6db74">&#39;</span>
-API_SERVICE_VERSION <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">v3</span><span style="color:#e6db74">&#39;</span>
+API_SERVICE_NAME <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;blogger&#39;</span>
+API_SERVICE_VERSION <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;v3&#39;</span>
 
 <span style="color:#75715e"># create a API client from service account</span>
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">create_client_from_serviceAccount</span>():
@@ -191,16 +191,16 @@ API_SERVICE_VERSION <span style="color:#f92672">=</span> <span style="color:#e6d
 <span style="color:#75715e"># create a client from an AOUTH2.0 account.</span>
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">create_client_from_outhAccount</span>():
     flow <span style="color:#f92672">=</span> InstalledAppFlow<span style="color:#f92672">.</span>from_client_secrets_file(OAUTH2_ACCOUNT_FILE, scopes<span style="color:#f92672">=</span>SCOPES)
-    credentials <span style="color:#f92672">=</span> flow<span style="color:#f92672">.</span>run_local_server(host<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">localhost</span><span style="color:#e6db74">&#39;</span>, port<span style="color:#f92672">=</span>FLOW_SERVER_PORT, authorization_prompt_message<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Please visit this URL: {url}</span><span style="color:#e6db74">&#39;</span>, 
-                        success_message<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">The auth flow is complete; you may close this window.</span><span style="color:#e6db74">&#39;</span>, open_browser<span style="color:#f92672">=</span>True)
+    credentials <span style="color:#f92672">=</span> flow<span style="color:#f92672">.</span>run_local_server(host<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;localhost&#39;</span>, port<span style="color:#f92672">=</span>FLOW_SERVER_PORT, authorization_prompt_message<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Please visit this URL: {url}&#39;</span>, 
+                        success_message<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;The auth flow is complete; you may close this window.&#39;</span>, open_browser<span style="color:#f92672">=</span>True)
     blogger <span style="color:#f92672">=</span> googleapiclient<span style="color:#f92672">.</span>discovery<span style="color:#f92672">.</span>build(API_SERVICE_NAME, API_SERVICE_VERSION, credentials<span style="color:#f92672">=</span>credentials)
     <span style="color:#66d9ef">return</span> blogger
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">print_number_of_posts</span>(postList):
-    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">items</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">in</span> postList:
-        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">No of posts in blog = 0</span><span style="color:#e6db74">&#34;</span>)
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> <span style="color:#e6db74">&#39;items&#39;</span> <span style="color:#f92672">in</span> postList:
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;No of posts in blog = 0&#34;</span>)
     <span style="color:#66d9ef">else</span>:    
-        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">No of posts in blog = {}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(len(postList[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">items</span><span style="color:#e6db74">&#39;</span>])))
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;No of posts in blog = {}&#34;</span><span style="color:#f92672">.</span>format(len(postList[<span style="color:#e6db74">&#39;items&#39;</span>])))
 
 <span style="color:#75715e"># From a service account you cannot create a new post in blogger. It might need some special permissions that I am not aware of.</span>
 <span style="color:#75715e"># However, Service account can read posts and fetch them.</span>
@@ -212,16 +212,16 @@ blogger <span style="color:#f92672">=</span> create_client_from_outhAccount()
 postList <span style="color:#f92672">=</span> blogger<span style="color:#f92672">.</span>posts()<span style="color:#f92672">.</span>list(blogId<span style="color:#f92672">=</span>BLOG_ID)<span style="color:#f92672">.</span>execute()
 print_number_of_posts(postList)
 
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">====== Inserting a new post =======</span><span style="color:#e6db74">&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;====== Inserting a new post =======&#34;</span>)
 
 <span style="color:#66d9ef">with</span> open(FILE_TO_POST) <span style="color:#66d9ef">as</span> f:
     contents <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>read()
 
 blogBody <span style="color:#f92672">=</span> {
-    <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">content</span><span style="color:#e6db74">&#34;</span>: contents,
-    <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">kind</span><span style="color:#e6db74">&#34;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">blogger#post</span><span style="color:#e6db74">&#34;</span>,
-    <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">title</span><span style="color:#e6db74">&#34;</span>: POST_TITLE,
-    <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">labels</span><span style="color:#e6db74">&#34;</span>: LABELS_FOR_POST,
+    <span style="color:#e6db74">&#34;content&#34;</span>: contents,
+    <span style="color:#e6db74">&#34;kind&#34;</span>: <span style="color:#e6db74">&#34;blogger#post&#34;</span>,
+    <span style="color:#e6db74">&#34;title&#34;</span>: POST_TITLE,
+    <span style="color:#e6db74">&#34;labels&#34;</span>: LABELS_FOR_POST,
         }
 
 result <span style="color:#f92672">=</span> blogger<span style="color:#f92672">.</span>posts()<span style="color:#f92672">.</span>insert(blogId<span style="color:#f92672">=</span>BLOG_ID, body<span style="color:#f92672">=</span>blogBody)<span style="color:#f92672">.</span>execute()
@@ -234,7 +234,7 @@ print_number_of_posts(postList)
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ./bloggerCli.py -f sometext.txt -t <span style="color:#e6db74">&#34;My First Post&#34;</span> -b <span style="color:#ae81ff">34456769666334</span> -l label1 -l label2 -l label3
 Please visit this URL: https://accounts.google.com/o/oauth2/auth?response_type<span style="color:#f92672">=</span>code&amp;client_id<span style="color:#f92672">=</span>26652434353-e9u77isb2sdsd4343sdsd343434.apps.googleusercontent.com&amp;redirect_uri<span style="color:#f92672">=</span>http%3A%2F%2Flocalhost%3A9090%2F&amp;scope<span style="color:#f92672">=</span>https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fblogger&amp;state<span style="color:#f92672">=</span>BkaXVyiW15sdsdsdADH7sadsH8hS&amp;access_type<span style="color:#f92672">=</span>offline
 No of posts in blog <span style="color:#f92672">=</span> 0
-<span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span> Inserting a new post <span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span>
+<span style="color:#f92672">======</span> Inserting a new post <span style="color:#f92672">=======</span>
 No of posts in blog <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
 </code></pre></div><p><strong>Note-1</strong>: While running above script, this will open a browser and wil ask you to login to your google account.</p>
 <p><strong>Note-2</strong>: You may need to change the <em>FLOW_SERVER_PORT</em> in above script.</p>

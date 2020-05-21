@@ -814,7 +814,7 @@ More details here: https://curl.haxx.se/docs/sslcerts.html
 curl failed to verify the legitimacy of the server and therefore could not
 establish a secure connection to it. To learn more about this situation and
 how to fix it, please visit the web page mentioned above.
-</code></pre><p><strong>Note:</strong> The error above is due to the mismatch between client calling the server name as <code>localhost</code> and certificate's <code>SAN</code> name as <code>myhost.full.domain.name</code></p>
+</code></pre><p><strong>Note:</strong> The error above is due to the mismatch between client calling the server name as <code>localhost</code> and certificate&rsquo;s <code>SAN</code> name as <code>myhost.full.domain.name</code></p>
 <h4 id="fetch-atesthtml-file-with-correct-server-hostname">Fetch <code>atest.html</code> file with correct server hostname</h4>
 <p>using correct server name</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl https://myhost.full.domain.name:9999/serveContent/atest.html --cacert caCert/myCA.crt
