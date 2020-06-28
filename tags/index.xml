@@ -210,15 +210,6 @@
     </item>
     
     <item>
-      <title>blog</title>
-      <link>/tags/blog/</link>
-      <pubDate>Sat, 14 Mar 2020 21:16:00 +0000</pubDate>
-      
-      <guid>/tags/blog/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>blogger</title>
       <link>/tags/blogger/</link>
       <pubDate>Sat, 14 Mar 2020 21:16:00 +0000</pubDate>
@@ -395,6 +386,15 @@
       <pubDate>Sun, 04 Aug 2019 14:54:01 +0100</pubDate>
       
       <guid>/tags/ssl-reverse-proxy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>blog</title>
+      <link>/tags/blog/</link>
+      <pubDate>Sat, 03 Aug 2019 19:01:43 +0100</pubDate>
+      
+      <guid>/tags/blog/</guid>
       <description></description>
     </item>
     

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en-gb">
 <head>
-	<meta name="generator" content="Hugo 0.68.3" />
+	<meta name="generator" content="Hugo 0.72.0" />
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -72,7 +72,10 @@
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		Minimal working tmux config Populate $HOME/.tmux.conf with following contents
-set -g default-terminal &quot;screen-256color&quot; set -g history-limit 5000 #setw -g status-utf8 on set -g status-bg colour15 setw -g display-time 5000 setw -g window-status-format &quot;&lt;#I.#P #W&gt;&quot; setw -g window-status-current-format &quot;|#I.#P#F #W|&quot; setw -g window-status-last-style fg=red setw -g window-status-current-style fg=brightcyan,bg=black setw -g pane-border-style fg=red,bg=black set -g allow-rename off set -g mode-keys vi Launch tmux tmux -u Note: -u is specified for terminals where locale is not set to UTF-8
+set -g default-terminal &quot;screen-256color&quot; set -g history-limit 99999 # setw -g status-utf8 on # status line background colour will be the colour of terminal in background set -g status-bg default setw -g display-time 5000 #################################################################################################### # settings for TMUX widnows status decorations # #################################################################################################### # status format for both last-active-window and all the windows before last-active # commas are escaped using # char in below statement.
+	</div>
+	<div class="list__footer clearfix">
+		<a class="list__footer-readmore btn" href="/posts/minimal-working-tmux-config/">Read more…</a>
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">

@@ -59,21 +59,59 @@
 			<h2 id="minimal-working-tmux-config">Minimal working tmux config</h2>
 <p>Populate <code>$HOME/.tmux.conf</code> with following contents</p>
 <pre><code>set -g default-terminal &quot;screen-256color&quot;
-set -g history-limit 5000
-#setw -g status-utf8 on
-set -g status-bg colour15
-setw -g display-time 5000
-setw -g window-status-format &quot;&lt;#I.#P #W&gt;&quot;
-setw -g window-status-current-format &quot;|#I.#P#F #W|&quot;
-setw -g window-status-last-style fg=red
-setw -g window-status-current-style fg=brightcyan,bg=black
-setw -g pane-border-style fg=red,bg=black
+set -g history-limit 99999
+# setw -g status-utf8 on
 
+# status line background colour will be the colour of terminal in background
+set -g status-bg default
+setw -g display-time 5000
+
+####################################################################################################
+#      settings for TMUX widnows status decorations                                                #
+####################################################################################################
+# status format for both last-active-window and all the windows before last-active
+# commas are escaped using # char in below statement. i.e #, =&gt; escapes comma. Below 5 lines are actually one line broke up into 5
+setw -g window-status-format &quot;#{\
+?window_last_flag,\
+#[bold #, bg=colour226 #, fg=colour232] #I.#P #W ,\
+#[bold #, bg=colour124 #, fg=colour232] #I.#P #W \
+}&quot;
+
+# status format for current active window
+setw -g window-status-current-format &quot;#[bold #, bg=colour77 #, fg=colour232] #I.#P#F #W &quot;
+setw -g window-status-separator &quot;   &quot;
+
+####################################################################################################
+#      settings for TMUX pane status decorations                                                   #
+####################################################################################################
+setw -g pane-border-status top
+
+# we do not need bg colour here as we want the bg colour to be the colour of the terminal, therefore bg is set to default. We may even omit bg here.
+# set the colouring of border for current active pane
+setw -g pane-active-border-style bg=default,fg=colour81
+
+# we cannot have space after the comma here.
+# set the colouring of border for non-current pane
+setw -g pane-border-style bg=default,fg=colour180
+
+# commas are escaped using # char in below statement. i.e #, =&gt; escapes , . Below 5 lines are actually one line broke up into 5
+# two different colour schemes for current and all non-current panes TEXT
+setw -g pane-border-format &quot;#{\
+?pane_active,\
+#[bold #, bg=colour81 #, fg=colour16]  ~&gt;&gt; #I.#P   #T &lt;&lt;~  ,\
+#[bg=colour180 #, fg=colour16] #I.#P #T \
+}&quot;
+
+####################################################################################################
+#      Other settings                                                                              #
+####################################################################################################
 set -g allow-rename off
 set -g mode-keys vi
+set-option -g mouse on
 </code></pre><h2 id="launch-tmux">Launch tmux</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">tmux -u
-</code></pre></div><p><strong>Note:</strong> <code>-u</code> is specified for terminals where locale is not set to <code>UTF-8</code></p>
+</code></pre></div><p><strong>Note:</strong> <code>-u</code> is specified for terminals where locale is not set to <code>UTF-8</code>
+<strong>Note</strong> To change the title of pane run this command <code>ctrl-b :select-pane -T MyTitle</code></p>
 
 		</div>
 		<footer class="post__footer">

@@ -188,11 +188,6 @@
   </url>
   
   <url>
-    <loc>/tags/blog/</loc>
-    <lastmod>2020-03-14T21:16:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/tags/blogger/</loc>
     <lastmod>2020-03-14T21:16:00+00:00</lastmod>
   </url>
@@ -325,6 +320,11 @@
   <url>
     <loc>/tags/ssl-reverse-proxy/</loc>
     <lastmod>2019-08-04T14:54:01+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/blog/</loc>
+    <lastmod>2019-08-03T19:01:43+01:00</lastmod>
   </url>
   
   <url>
