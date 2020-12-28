@@ -80,94 +80,94 @@ wget http://apache.mirror.anlx.net/kafka/2.5.0/kafka_2.13-2.5.0.tgz
 tar xvf kafka_2.13-2.5.0.tgz
 </code></pre></div><p>Note: We need kafka binaries to get the script that can send json message via console to kafka.</p>
 <h3 id="populate-docker-composeyml-file-with-following-contents">Populate <code>docker-compose.yml</code> file with following contents</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#66d9ef">version</span>: <span style="color:#e6db74">&#39;2&#39;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#f92672">version</span>: <span style="color:#e6db74">&#39;2&#39;</span>
 
-<span style="color:#66d9ef">services</span>:
-  <span style="color:#66d9ef">zookeeper</span>:
-    <span style="color:#66d9ef">image</span>: <span style="color:#e6db74">&#39;bitnami/zookeeper:3&#39;</span>
-    <span style="color:#66d9ef">container_name</span>: zookeeper
-    <span style="color:#66d9ef">ports</span>:
+<span style="color:#f92672">services</span>:
+  <span style="color:#f92672">zookeeper</span>:
+    <span style="color:#f92672">image</span>: <span style="color:#e6db74">&#39;bitnami/zookeeper:3&#39;</span>
+    <span style="color:#f92672">container_name</span>: <span style="color:#ae81ff">zookeeper</span>
+    <span style="color:#f92672">ports</span>:
       - <span style="color:#e6db74">&#39;2181:2181&#39;</span>
-    <span style="color:#66d9ef">volumes</span>:
+    <span style="color:#f92672">volumes</span>:
       - <span style="color:#e6db74">&#39;zookeeper_data:/bitnami&#39;</span>
-    <span style="color:#66d9ef">environment</span>:
-      - ALLOW_ANONYMOUS_LOGIN=yes
-    <span style="color:#66d9ef">networks</span>:
-      - elastic
+    <span style="color:#f92672">environment</span>:
+      - <span style="color:#ae81ff">ALLOW_ANONYMOUS_LOGIN=yes</span>
+    <span style="color:#f92672">networks</span>:
+      - <span style="color:#ae81ff">elastic</span>
 
-  <span style="color:#66d9ef">kafka</span>:
-    <span style="color:#66d9ef">image</span>: <span style="color:#e6db74">&#39;bitnami/kafka:2.5.0&#39;</span>
-    <span style="color:#66d9ef">container_name</span>: kafka
-    <span style="color:#66d9ef">ports</span>:
+  <span style="color:#f92672">kafka</span>:
+    <span style="color:#f92672">image</span>: <span style="color:#e6db74">&#39;bitnami/kafka:2.5.0&#39;</span>
+    <span style="color:#f92672">container_name</span>: <span style="color:#ae81ff">kafka</span>
+    <span style="color:#f92672">ports</span>:
       - <span style="color:#e6db74">&#39;9092:9092&#39;</span>
       - <span style="color:#e6db74">&#39;29092:29092&#39;</span>
-    <span style="color:#66d9ef">volumes</span>:
+    <span style="color:#f92672">volumes</span>:
       - <span style="color:#e6db74">&#39;kafka_data:/bitnami&#39;</span>
-    <span style="color:#66d9ef">environment</span>:
-      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:<span style="color:#ae81ff">2181</span>
-      - ALLOW_PLAINTEXT_LISTENER=yes
-      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      - KAFKA_CFG_LISTENERS=PLAINTEXT://:<span style="color:#ae81ff">9092</span>,PLAINTEXT_HOST://:<span style="color:#ae81ff">29092</span>
-      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:<span style="color:#ae81ff">9092</span>,PLAINTEXT_HOST://localhost:<span style="color:#ae81ff">29092</span>
-    <span style="color:#66d9ef">depends_on</span>:
-      - zookeeper
-    <span style="color:#66d9ef">networks</span>:
-      - elastic
+    <span style="color:#f92672">environment</span>:
+      - <span style="color:#ae81ff">KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181</span>
+      - <span style="color:#ae81ff">ALLOW_PLAINTEXT_LISTENER=yes</span>
+      - <span style="color:#ae81ff">KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT</span>
+      - <span style="color:#ae81ff">KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,PLAINTEXT_HOST://:29092</span>
+      - <span style="color:#ae81ff">KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092</span>
+    <span style="color:#f92672">depends_on</span>:
+      - <span style="color:#ae81ff">zookeeper</span>
+    <span style="color:#f92672">networks</span>:
+      - <span style="color:#ae81ff">elastic</span>
 
-  <span style="color:#66d9ef">elasticsearch</span>:
-    <span style="color:#66d9ef">image</span>: docker.elastic.co/elasticsearch/elasticsearch:<span style="color:#ae81ff">7.6.2</span>
-    <span style="color:#66d9ef">container_name</span>: elasticsearch
-    <span style="color:#66d9ef">environment</span>:
-      - node.name=elasticsearch
-      - cluster.name=es-docker-cluster
-      - cluster.initial_master_nodes=elasticsearch
-      - bootstrap.memory_lock=<span style="color:#66d9ef">true</span>
+  <span style="color:#f92672">elasticsearch</span>:
+    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">docker.elastic.co/elasticsearch/elasticsearch:7.6.2</span>
+    <span style="color:#f92672">container_name</span>: <span style="color:#ae81ff">elasticsearch</span>
+    <span style="color:#f92672">environment</span>:
+      - <span style="color:#ae81ff">node.name=elasticsearch</span>
+      - <span style="color:#ae81ff">cluster.name=es-docker-cluster</span>
+      - <span style="color:#ae81ff">cluster.initial_master_nodes=elasticsearch</span>
+      - <span style="color:#ae81ff">bootstrap.memory_lock=true</span>
       - <span style="color:#e6db74">&#34;ES_JAVA_OPTS=-Xms512m -Xmx512m&#34;</span>
-    <span style="color:#66d9ef">ulimits</span>:
-      <span style="color:#66d9ef">memlock</span>:
-        <span style="color:#66d9ef">soft</span>: -<span style="color:#ae81ff">1</span>
-        <span style="color:#66d9ef">hard</span>: -<span style="color:#ae81ff">1</span>
-    <span style="color:#66d9ef">volumes</span>:
-      - elastic_data:/usr/share/elasticsearch/data
-    <span style="color:#66d9ef">ports</span>:
+    <span style="color:#f92672">ulimits</span>:
+      <span style="color:#f92672">memlock</span>:
+        <span style="color:#f92672">soft</span>: -<span style="color:#ae81ff">1</span>
+        <span style="color:#f92672">hard</span>: -<span style="color:#ae81ff">1</span>
+    <span style="color:#f92672">volumes</span>:
+      - <span style="color:#ae81ff">elastic_data:/usr/share/elasticsearch/data</span>
+    <span style="color:#f92672">ports</span>:
       - <span style="color:#ae81ff">9200</span>:<span style="color:#ae81ff">9200</span>
-    <span style="color:#66d9ef">networks</span>:
-      - elastic
+    <span style="color:#f92672">networks</span>:
+      - <span style="color:#ae81ff">elastic</span>
 
-  <span style="color:#66d9ef">kibana</span>:
-    <span style="color:#66d9ef">image</span>: docker.elastic.co/kibana/kibana:<span style="color:#ae81ff">7.6.2</span>
-    <span style="color:#66d9ef">container_name</span>: kibana
-    <span style="color:#66d9ef">ports</span>:
+  <span style="color:#f92672">kibana</span>:
+    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">docker.elastic.co/kibana/kibana:7.6.2</span>
+    <span style="color:#f92672">container_name</span>: <span style="color:#ae81ff">kibana</span>
+    <span style="color:#f92672">ports</span>:
       - <span style="color:#ae81ff">5601</span>:<span style="color:#ae81ff">5601</span>
-    <span style="color:#66d9ef">environment</span>:
-      <span style="color:#66d9ef">ELASTICSEARCH_URL</span>: http://elasticsearch:<span style="color:#ae81ff">9200</span>
-      <span style="color:#66d9ef">ELASTICSEARCH_HOSTS</span>: http://elasticsearch:<span style="color:#ae81ff">9200</span>
-    <span style="color:#66d9ef">networks</span>:
-      - elastic
+    <span style="color:#f92672">environment</span>:
+      <span style="color:#f92672">ELASTICSEARCH_URL</span>: <span style="color:#ae81ff">http://elasticsearch:9200</span>
+      <span style="color:#f92672">ELASTICSEARCH_HOSTS</span>: <span style="color:#ae81ff">http://elasticsearch:9200</span>
+    <span style="color:#f92672">networks</span>:
+      - <span style="color:#ae81ff">elastic</span>
 
-  <span style="color:#66d9ef">logstash</span>:
-    <span style="color:#66d9ef">image</span>: docker.elastic.co/logstash/logstash:<span style="color:#ae81ff">7.7.0</span>
-    <span style="color:#66d9ef">container_name</span>: logstash
-    <span style="color:#66d9ef">ports</span>:
+  <span style="color:#f92672">logstash</span>:
+    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">docker.elastic.co/logstash/logstash:7.7.0</span>
+    <span style="color:#f92672">container_name</span>: <span style="color:#ae81ff">logstash</span>
+    <span style="color:#f92672">ports</span>:
       - <span style="color:#ae81ff">5000</span>:<span style="color:#ae81ff">5000</span>
-    <span style="color:#66d9ef">volumes</span>:
-    - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
-    - ./logstash.yml:/usr/share/logstash/config/logstash.yml
-    - ./manipulate_msg.rb:/etc/logstash/manipulate_msg.rb
-    <span style="color:#66d9ef">networks</span>:
-      - elastic
+    <span style="color:#f92672">volumes</span>:
+    - <span style="color:#ae81ff">./logstash.conf:/usr/share/logstash/pipeline/logstash.conf</span>
+    - <span style="color:#ae81ff">./logstash.yml:/usr/share/logstash/config/logstash.yml</span>
+    - <span style="color:#ae81ff">./manipulate_msg.rb:/etc/logstash/manipulate_msg.rb</span>
+    <span style="color:#f92672">networks</span>:
+      - <span style="color:#ae81ff">elastic</span>
 
-<span style="color:#66d9ef">networks</span>:
-  <span style="color:#66d9ef">elastic</span>:
-    <span style="color:#66d9ef">driver</span>: bridge
+<span style="color:#f92672">networks</span>:
+  <span style="color:#f92672">elastic</span>:
+    <span style="color:#f92672">driver</span>: <span style="color:#ae81ff">bridge</span>
 
-<span style="color:#66d9ef">volumes</span>:
-  <span style="color:#66d9ef">zookeeper_data</span>:
-    <span style="color:#66d9ef">driver</span>: local
-  <span style="color:#66d9ef">kafka_data</span>:
-    <span style="color:#66d9ef">driver</span>: local
-  <span style="color:#66d9ef">elastic_data</span>:
-    <span style="color:#66d9ef">driver</span>: local
+<span style="color:#f92672">volumes</span>:
+  <span style="color:#f92672">zookeeper_data</span>:
+    <span style="color:#f92672">driver</span>: <span style="color:#ae81ff">local</span>
+  <span style="color:#f92672">kafka_data</span>:
+    <span style="color:#f92672">driver</span>: <span style="color:#ae81ff">local</span>
+  <span style="color:#f92672">elastic_data</span>:
+    <span style="color:#f92672">driver</span>: <span style="color:#ae81ff">local</span>
 </code></pre></div><h3 id="create-logstashconf-file">create <code>logstash.conf</code> file</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cat <span style="color:#e6db74">&lt;&lt;EOF &gt; logstash.conf
 </span><span style="color:#e6db74">input {
@@ -233,8 +233,8 @@ tar xvf kafka_2.13-2.5.0.tgz
 </span><span style="color:#e6db74">}
 </span><span style="color:#e6db74">EOF</span>
 </code></pre></div><h3 id="create-logstashyml-with-following-contents">create <code>logstash.yml</code> with following contents</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#66d9ef">http.host</span>: <span style="color:#e6db74">&#34;0.0.0.0&#34;</span>
-<span style="color:#66d9ef">config.support_escapes</span>: <span style="color:#66d9ef">true</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#f92672">http.host</span>: <span style="color:#e6db74">&#34;0.0.0.0&#34;</span>
+<span style="color:#f92672">config.support_escapes</span>: <span style="color:#66d9ef">true</span>
 </code></pre></div><h3 id="create-manipulate_msgrb-with-following-contents">create <code>manipulate_msg.rb</code> with following contents.</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">filter</span>(event)
   <span style="color:#75715e"># get the message line sent by kafka or any other source like syslog</span>
@@ -301,13 +301,16 @@ tar xvf kafka_2.13-2.5.0.tgz
 
 <div class="authorbox clearfix">
 	<div class="authorbox__header">
-		<span class="authorbox__name">About SpareSlant</span>
+		<span class="authorbox__name"></span>
 	</div>
 </div>
 
 <nav class="post-nav flex">
 	<div class="post-nav__item post-nav__item--prev">
 		<a class="post-nav__link" href="/posts/openstack-instances-using-goose-library/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Remote OpenStack Instances Using Goose library (using Nova networking)</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/posts/terraform-cdk/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">Terraform Cdk</p></a>
 	</div>
 </nav>
 

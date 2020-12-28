@@ -74,23 +74,23 @@ Therefore minion may need to ask salt-master to execute on its behalf. This can 
 </ul>
 <h2 id="preparation">Preparation</h2>
 <p><code>/etc/salt/master</code> file used.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">log_level</span>: debug
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">log_level</span>: <span style="color:#ae81ff">debug</span>
 
-<span style="color:#66d9ef">peer_run</span>:
-  <span style="color:#66d9ef">.*</span>:
-    - .*
+<span style="color:#f92672">peer_run</span>:
+  <span style="color:#f92672">.*</span>:
+    - <span style="color:#ae81ff">.*</span>
 
-<span style="color:#66d9ef">fileserver_backend</span>:
-  - roots
+<span style="color:#f92672">fileserver_backend</span>:
+  - <span style="color:#ae81ff">roots</span>
 
-<span style="color:#66d9ef">file_roots</span>:
-  <span style="color:#66d9ef">base</span>:
-    - /srv/salt
+<span style="color:#f92672">file_roots</span>:
+  <span style="color:#f92672">base</span>:
+    - <span style="color:#ae81ff">/srv/salt</span>
 
-<span style="color:#66d9ef">runner_dirs</span>:
-  - /srv/salt/_runners
+<span style="color:#f92672">runner_dirs</span>:
+  - <span style="color:#ae81ff">/srv/salt/_runners</span>
 </code></pre></div><p><code>/etc/salt/minion</code> file used.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">master</span>: salt
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">master</span>: <span style="color:#ae81ff">salt</span>
 </code></pre></div><p><strong>Note:</strong> In <code>/etc/salt/master</code> file, <code>log_level</code> is set to <code>debug</code>. Normally this will be <code>info</code>. Also take a note of <code>peer_run</code> config. This is must. At the moment this is very open and you may like to narrow it down.</p>
 <p><code>my_module.py</code> will be our execution module.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir /srv/salt/_modules
@@ -213,7 +213,7 @@ Total run time: 420.049 ms
 
 <div class="authorbox clearfix">
 	<div class="authorbox__header">
-		<span class="authorbox__name">About SpareSlant</span>
+		<span class="authorbox__name"></span>
 	</div>
 </div>
 

@@ -6,10 +6,51 @@
     <description>Recent content in Tags on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Thu, 21 May 2020 05:58:11 +0100</lastBuildDate>
+    <lastBuildDate>Mon, 28 Dec 2020 17:54:12 +0000</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>aws</title>
+      <link>/tags/aws/</link>
+      <pubDate>Mon, 28 Dec 2020 17:54:12 +0000</pubDate>
+      
+      <guid>/tags/aws/</guid>
+      <description></description>
+    </item>
     
-	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>cdk</title>
+      <link>/tags/cdk/</link>
+      <pubDate>Mon, 28 Dec 2020 17:54:12 +0000</pubDate>
+      
+      <guid>/tags/cdk/</guid>
+      <description></description>
+    </item>
     
+    <item>
+      <title>node.js</title>
+      <link>/tags/node.js/</link>
+      <pubDate>Mon, 28 Dec 2020 17:54:12 +0000</pubDate>
+      
+      <guid>/tags/node.js/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>terraform</title>
+      <link>/tags/terraform/</link>
+      <pubDate>Mon, 28 Dec 2020 17:54:12 +0000</pubDate>
+      
+      <guid>/tags/terraform/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>typescript</title>
+      <link>/tags/typescript/</link>
+      <pubDate>Mon, 28 Dec 2020 17:54:12 +0000</pubDate>
+      
+      <guid>/tags/typescript/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>docker</title>

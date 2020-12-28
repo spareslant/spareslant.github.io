@@ -99,7 +99,7 @@ template <span style="color:#f92672">(</span>name<span style="color:#f92672">=</
     <span style="color:#75715e"># Local logging</span>
     action<span style="color:#f92672">(</span>name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;localFiles&#34;</span> type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;omfile&#34;</span> DynaFile<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Dockerlogfiles&#34;</span><span style="color:#f92672">)</span>
 
-    <span style="color:#75715e"># Remote logging to remote syslog server.</span> 
+    <span style="color:#75715e"># Remote logging to remote syslog server. </span>
     action<span style="color:#f92672">(</span>name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;forwardToOtherSyslog&#34;</span> type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;omfwd&#34;</span> Target<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;IP ADDRESS of Target Syslog server&#34;</span> Port<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;514&#34;</span> Protocol<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;udp&#34;</span> template<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;LongTagForwardFormat&#34;</span><span style="color:#f92672">)</span>
     &amp;~
 <span style="color:#f92672">}</span>
@@ -204,14 +204,14 @@ template <span style="color:#f92672">(</span>name<span style="color:#f92672">=</
 <span style="color:#75715e">#   property(name=&#34;syslogtag&#34; securepath=&#34;replace&#34; \</span>
 <span style="color:#75715e">#            regex.expression=&#34;docker/\\(.*\\)/\\(.*\\)/\\(.*\\)\\[&#34; regex.submatch=&#34;2&#34;)\</span>
 <span style="color:#75715e">#   constant(value=&#34;/docker.log&#34;)</span>
-#
+<span style="color:#75715e">#</span>
 <span style="color:#75715e">#}</span>
 
 <span style="color:#66d9ef">if</span> $syslogtag startswith <span style="color:#e6db74">&#34;docker&#34;</span> <span style="color:#66d9ef">then</span> <span style="color:#f92672">{</span>
     <span style="color:#75715e"># Local logging</span>
     action<span style="color:#f92672">(</span>name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;localFiles&#34;</span> type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;omfile&#34;</span> DynaFile<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Dockerlogfiles&#34;</span><span style="color:#f92672">)</span>
 
-    <span style="color:#75715e"># Remote logging to remote syslog server.</span> 
+    <span style="color:#75715e"># Remote logging to remote syslog server. </span>
     action<span style="color:#f92672">(</span>name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;forwardToOtherSyslog&#34;</span> type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;omfwd&#34;</span> Target<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;IP ADDRESS of Target Syslog server&#34;</span> Port<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;514&#34;</span> Protocol<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;udp&#34;</span> template<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;LongTagForwardFormat&#34;</span><span style="color:#f92672">)</span>
     &amp;~
 <span style="color:#f92672">}</span>
@@ -234,7 +234,7 @@ template <span style="color:#f92672">(</span>name<span style="color:#f92672">=</
 
 <div class="authorbox clearfix">
 	<div class="authorbox__header">
-		<span class="authorbox__name">About SpareSlant</span>
+		<span class="authorbox__name"></span>
 	</div>
 </div>
 

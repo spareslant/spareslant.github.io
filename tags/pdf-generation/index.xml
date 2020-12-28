@@ -6,11 +6,7 @@
     <description>Recent content in pdf generation on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Sat, 27 Jul 2019 20:39:13 +0100</lastBuildDate>
-    
-	<atom:link href="/tags/pdf-generation/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sat, 27 Jul 2019 20:39:13 +0100</lastBuildDate><atom:link href="/tags/pdf-generation/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Markup to Pdf/HTML</title>
       <link>/posts/markup-to-pdf/</link>

@@ -6,11 +6,7 @@
     <description>Recent content in SaltStack on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Mon, 16 Mar 2020 13:41:26 +0000</lastBuildDate>
-    
-	<atom:link href="/tags/saltstack/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 16 Mar 2020 13:41:26 +0000</lastBuildDate><atom:link href="/tags/saltstack/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Saltstack Custom Execution Module With Arguments</title>
       <link>/posts/saltstack-custom-execution-module-with-arguments/</link>

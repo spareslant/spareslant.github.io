@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>typescript on SpareSlant Technical Blog</title>
+    <link>/tags/typescript/</link>
+    <description>Recent content in typescript on SpareSlant Technical Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <lastBuildDate>Mon, 28 Dec 2020 17:54:12 +0000</lastBuildDate><atom:link href="/tags/typescript/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Terraform Cdk</title>
+      <link>/posts/terraform-cdk/</link>
+      <pubDate>Mon, 28 Dec 2020 17:54:12 +0000</pubDate>
+      
+      <guid>/posts/terraform-cdk/</guid>
+      <description>Introduction We will be exploring the terraform-cdk toolkit in this article. We shall be using an AWS account to spin up a VM. We shall be doing following.
+ Create A brand New VPC (Not touching existing default VPC) Create 3 subnets ( 1 public, 2 private) A security Group to allow incoming SSH traffic and allow all outgoing. A key-pair for ssh An additional internet-gateway in AWS (It is needed to get internet connectity to new VPC.</description>
+    </item>
+    
+  </channel>
+</rss>

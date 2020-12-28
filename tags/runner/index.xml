@@ -6,11 +6,7 @@
     <description>Recent content in runner on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Sun, 15 Mar 2020 21:26:03 +0000</lastBuildDate>
-    
-	<atom:link href="/tags/runner/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sun, 15 Mar 2020 21:26:03 +0000</lastBuildDate><atom:link href="/tags/runner/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Saltstack: Call runner from minion</title>
       <link>/posts/saltstack-call-runner-from-minion/</link>

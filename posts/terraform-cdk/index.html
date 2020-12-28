@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-gb">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Terraform Cdk - SpareSlant Technical Blog</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/my.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="SpareSlant Technical Blog" rel="home">
+				<div class="logo__title">SpareSlant Technical Blog</div>
+				<div class="logo__tagline">SpareSlant tech blog</div>
+			</a>
+		</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Terraform Cdk</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2020-12-28T17:54:12">2020-12-28</time>
+</div>
+</div>
+		</header>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li><a href="#prepare-environment">Prepare environment.</a>
+      <ul>
+        <li><a href="#start-fedora-33-in-interactive-mode">Start fedora-33 in interactive mode.</a></li>
+        <li><a href="#install-nvm-node-version-manager-inside-docker-container">Install NVM (node version manager) inside docker container.</a></li>
+        <li><a href="#enable-nvm-in-current-shell">Enable NVM in current shell.</a></li>
+        <li><a href="#install-latest-stable-node">Install latest stable node.</a></li>
+        <li><a href="#install-vim-unzip-less">Install VIM, unzip, less</a></li>
+        <li><a href="#install-aws-cli">Install aws-cli</a></li>
+        <li><a href="#configure-aws-account">configure AWS account</a></li>
+        <li><a href="#verify-the-connectivity-to-aws-apis">Verify the connectivity to AWS apis</a></li>
+        <li><a href="#install-terraform-binary">Install terraform binary</a></li>
+        <li><a href="#install-terraform-cdk-kit-latest-development-version">Install <code>terraform-cdk</code> kit (latest development version)</a></li>
+      </ul>
+    </li>
+    <li><a href="#start-coding">Start coding.</a>
+      <ul>
+        <li><a href="#create-a-project-with-typescript-tempplate">Create a project with <code>typescript</code> tempplate</a></li>
+        <li><a href="#output-files-in-the-directory">output files in the directory</a></li>
+        <li><a href="#download-relevant-provider">download relevant provider</a></li>
+      </ul>
+    </li>
+    <li><a href="#install-sshpk-module-and-its-typescript-definitions">install sshpk module and its typescript definitions.</a>
+      <ul>
+        <li><a href="#modify-maints-with-following-contents">Modify <code>main.ts</code> with following contents</a></li>
+        <li><a href="#create-a-new-file-generatsshkeysts-with-following-contents">create a new file <code>generatSSHkeys.ts</code> with following contents.</a></li>
+        <li><a href="#with-the-addition-of-new-file-directory-contents-now-look-like-this">with the addition of new file, directory contents now look like this.</a></li>
+        <li><a href="#check-what-is-being-deployed">check what is being deployed</a></li>
+        <li><a href="#deploy-to-aws">deploy to AWS</a></li>
+        <li><a href="#verify-deployment-by-ssh-into-the-vm">Verify deployment by ssh into the vm</a></li>
+        <li><a href="#verify-the-idempotency">Verify the idempotency</a></li>
+        <li><a href="#destroy-the-deployment">Destroy the deployment</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<h1 id="introduction">Introduction</h1>
+<p>We will be exploring the <code>terraform-cdk</code> toolkit in this article. We shall be using an AWS account to spin up a VM. We shall be doing following.</p>
+<ul>
+<li>Create A brand New VPC (Not touching existing default VPC)</li>
+<li>Create 3 subnets ( 1 public, 2 private)</li>
+<li>A security Group to allow incoming SSH traffic and allow all outgoing.</li>
+<li>A key-pair for ssh</li>
+<li>An additional internet-gateway in AWS (It is needed to get internet connectity to new VPC.)</li>
+<li>A new VM created in above mentioned VPC, and public subnet having internet connectivity and allows ssh connection from internet.</li>
+</ul>
+<p><strong>Note1:</strong> We shall be using <code>typescript</code> for terraform-cdk.
+<strong>Note2:</strong> We need to create an additional Internet-Gateway because, existing internet-gateway is attached to default VPC in the account, and an Internet-gateway cannot be attched to more than one VPC.</p>
+<h2 id="prepare-environment">Prepare environment.</h2>
+<p>We shall be doing everything in a docker image. I am using fedora-33.</p>
+<h3 id="start-fedora-33-in-interactive-mode">Start fedora-33 in interactive mode.</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ docker run -it fedora:33 /bin/bash
+
+Unable to find image <span style="color:#e6db74">&#39;fedora:33&#39;</span> locally
+33: Pulling from library/fedora
+ae7b613df528: Pull complete
+Digest: sha256:aa889c59fc048b597dcfab40898ee3fcaad9ed61caf12bcfef44493ee670e9df
+Status: Downloaded newer image <span style="color:#66d9ef">for</span> fedora:33
+<span style="color:#f92672">[</span>root@72b337cb65e6 /<span style="color:#f92672">]</span><span style="color:#75715e">#</span>
+</code></pre></div><h3 id="install-nvm-node-version-manager-inside-docker-container">Install NVM (node version manager) inside docker container.</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@72b337cb65e6 ~<span style="color:#f92672">]</span><span style="color:#75715e"># curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash</span>
+
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+<span style="color:#ae81ff">100</span> <span style="color:#ae81ff">13633</span>  <span style="color:#ae81ff">100</span> <span style="color:#ae81ff">13633</span>    <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>  <span style="color:#ae81ff">34082</span>      <span style="color:#ae81ff">0</span> --:--:-- --:--:-- --:--:-- 34082
+<span style="color:#f92672">=</span>&gt; Downloading nvm as script to <span style="color:#e6db74">&#39;/root/.nvm&#39;</span>
+
+<span style="color:#f92672">=</span>&gt; Appending nvm source string to /root/.bashrc
+<span style="color:#f92672">=</span>&gt; Appending bash_completion source string to /root/.bashrc
+<span style="color:#f92672">=</span>&gt; Close and reopen your terminal to start using nvm or run the following to use it now:
+
+export NVM_DIR<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$HOME<span style="color:#e6db74">/.nvm&#34;</span>
+<span style="color:#f92672">[</span> -s <span style="color:#e6db74">&#34;</span>$NVM_DIR<span style="color:#e6db74">/nvm.sh&#34;</span> <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\.</span> <span style="color:#e6db74">&#34;</span>$NVM_DIR<span style="color:#e6db74">/nvm.sh&#34;</span>  <span style="color:#75715e"># This loads nvm</span>
+<span style="color:#f92672">[</span> -s <span style="color:#e6db74">&#34;</span>$NVM_DIR<span style="color:#e6db74">/bash_completion&#34;</span> <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\.</span> <span style="color:#e6db74">&#34;</span>$NVM_DIR<span style="color:#e6db74">/bash_completion&#34;</span>  <span style="color:#75715e"># This loads nvm bash_completion</span>
+</code></pre></div><h3 id="enable-nvm-in-current-shell">Enable NVM in current shell.</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f /<span style="color:#f92672">]</span><span style="color:#75715e"># source /root/.bashrc</span>
+</code></pre></div><h3 id="install-latest-stable-node">Install latest stable node.</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@72b337cb65e6 ~<span style="color:#f92672">]</span><span style="color:#75715e"># nvm install --lts</span>
+Installing latest LTS version.
+Downloading and installing node v14.15.3...
+Downloading https://nodejs.org/dist/v14.15.3/node-v14.15.3-linux-x64.tar.gz...
+<span style="color:#75715e">##################################################################################################################################################################### 100.0%</span>
+Computing checksum with sha256sum
+Checksums matched!
+Now using node v14.15.3 <span style="color:#f92672">(</span>npm v6.14.9<span style="color:#f92672">)</span>
+Creating default alias: default -&gt; lts/* <span style="color:#f92672">(</span>-&gt; v14.15.3 *<span style="color:#f92672">)</span>
+</code></pre></div><h3 id="install-vim-unzip-less">Install VIM, unzip, less</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f ~<span style="color:#f92672">]</span><span style="color:#75715e"># dnf install vim unzip less openssh-clients -y</span>
+</code></pre></div><h3 id="install-aws-cli">Install aws-cli</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f /<span style="color:#f92672">]</span><span style="color:#75715e"># curl &#34;https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip&#34; -o &#34;awscliv2.zip&#34;</span>
+<span style="color:#f92672">[</span>root@f159c206739f /<span style="color:#f92672">]</span><span style="color:#75715e"># unzip awscliv2.zip</span>
+<span style="color:#f92672">[</span>root@f159c206739f /<span style="color:#f92672">]</span><span style="color:#75715e"># sudo ./aws/install</span>
+</code></pre></div><h3 id="configure-aws-account">configure AWS account</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f /<span style="color:#f92672">]</span><span style="color:#75715e"># aws configure --profile personal</span>
+AWS Access Key ID <span style="color:#f92672">[</span>None<span style="color:#f92672">]</span>: XXXXXXXXXXXXX
+AWS Secret Access Key <span style="color:#f92672">[</span>None<span style="color:#f92672">]</span>: YYYYYYYYYYYYYYYYYYYY
+Default region name <span style="color:#f92672">[</span>None<span style="color:#f92672">]</span>: &lt;Press enter or use your AWS region. <span style="color:#f92672">(</span>We will be defining region in the code also.<span style="color:#f92672">)</span>&gt;
+Default output format <span style="color:#f92672">[</span>None<span style="color:#f92672">]</span>: json
+</code></pre></div><h3 id="verify-the-connectivity-to-aws-apis">Verify the connectivity to AWS apis</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f /<span style="color:#f92672">]</span><span style="color:#75715e"># aws iam list-users --profile personal</span>
+
+<span style="color:#f92672">{</span>
+    <span style="color:#e6db74">&#34;Users&#34;</span>: <span style="color:#f92672">[</span>
+        <span style="color:#f92672">{</span>
+            <span style="color:#e6db74">&#34;Path&#34;</span>: <span style="color:#e6db74">&#34;/&#34;</span>,
+            <span style="color:#e6db74">&#34;UserName&#34;</span>: <span style="color:#e6db74">&#34;&lt;YourAdminUserHere&gt;&#34;</span>,
+            <span style="color:#e6db74">&#34;UserId&#34;</span>: <span style="color:#e6db74">&#34;XXXXXXXXXXXXXXXXX&#34;</span>,
+            <span style="color:#e6db74">&#34;Arn&#34;</span>: <span style="color:#e6db74">&#34;arn:aws:iam::99999999999:user/&lt;YourAdminUserHere&gt;&#34;</span>,
+            <span style="color:#e6db74">&#34;CreateDate&#34;</span>: <span style="color:#e6db74">&#34;Createtion date and time&#34;</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">]</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="install-terraform-binary">Install terraform binary</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f /<span style="color:#f92672">]</span><span style="color:#75715e"># dnf install -y dnf-plugins-core</span>
+<span style="color:#f92672">[</span>root@f159c206739f /<span style="color:#f92672">]</span><span style="color:#75715e"># dnf config-manager --add-repo https://rpm.releases.hashicorp.com/fedora/hashicorp.repo</span>
+<span style="color:#f92672">[</span>root@f159c206739f /<span style="color:#f92672">]</span><span style="color:#75715e"># dnf -y install terraform</span>
+</code></pre></div><h3 id="install-terraform-cdk-kit-latest-development-version">Install <code>terraform-cdk</code> kit (latest development version)</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f /<span style="color:#f92672">]</span><span style="color:#75715e"># mkdir deployInternetFacingVM</span>
+<span style="color:#f92672">[</span>root@f159c206739f /<span style="color:#f92672">]</span><span style="color:#75715e"># cd deployInternetFacingVM</span>
+
+
+<span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e"># npm install --global cdktf-cli@next</span>
+/root/.nvm/versions/node/v14.15.3/bin/cdktf -&gt; /root/.nvm/versions/node/v14.15.3/lib/node_modules/cdktf-cli/bin/cdktf
+npm WARN eslint-plugin-react@7.21.5 requires a peer of eslint@^3 <span style="color:#f92672">||</span> ^4 <span style="color:#f92672">||</span> ^5 <span style="color:#f92672">||</span> ^6 <span style="color:#f92672">||</span> ^7 but none is installed. You must install peer dependencies yourself.
+
++ cdktf-cli@0.0.19-pre.153
+added <span style="color:#ae81ff">228</span> packages from <span style="color:#ae81ff">145</span> contributors in 68.454s
+<span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e">#</span>
+</code></pre></div><h2 id="start-coding">Start coding.</h2>
+<h3 id="create-a-project-with-typescript-tempplate">Create a project with <code>typescript</code> tempplate</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e"># cdktf init --template=&#34;typescript&#34; --local</span>
+
+Newer version of Terraform CDK is available <span style="color:#f92672">[</span>0.0.19<span style="color:#f92672">]</span> - Upgrade recommended
+Note: By supplying <span style="color:#e6db74">&#39;--local&#39;</span> option you have chosen local storage mode <span style="color:#66d9ef">for</span> storing the state of your stack.
+This means that your Terraform state file will be stored locally on disk in a file <span style="color:#e6db74">&#39;terraform.tfstate&#39;</span> in the root of your project.
+
+We will now set up the project. Please enter the details <span style="color:#66d9ef">for</span> your project.
+If you want to exit, press ^C.
+
+Project Name: <span style="color:#f92672">(</span>default: <span style="color:#e6db74">&#39;deployInternetFacingVM&#39;</span><span style="color:#f92672">)</span>
+Project Description: <span style="color:#f92672">(</span>default: <span style="color:#e6db74">&#39;A simple getting started project for cdktf.&#39;</span><span style="color:#f92672">)</span>
+npm notice created a lockfile as package-lock.json. You should commit this file.
++ constructs@3.2.82
++ cdktf@0.0.19-pre.153
+added <span style="color:#ae81ff">4</span> packages from <span style="color:#ae81ff">4</span> contributors and audited <span style="color:#ae81ff">4</span> packages in 2.601s
+found <span style="color:#ae81ff">0</span> vulnerabilities
+
+npm WARN eslint-plugin-react@7.21.5 requires a peer of eslint@^3 <span style="color:#f92672">||</span> ^4 <span style="color:#f92672">||</span> ^5 <span style="color:#f92672">||</span> ^6 <span style="color:#f92672">||</span> ^7 but none is installed. You must install peer dependencies yourself.
+
++ @types/node@14.14.16
++ cdktf-cli@0.0.19-pre.153
++ typescript@4.1.3
+added <span style="color:#ae81ff">226</span> packages from <span style="color:#ae81ff">144</span> contributors and audited <span style="color:#ae81ff">230</span> packages in 25.81s
+
+<span style="color:#ae81ff">57</span> packages are looking <span style="color:#66d9ef">for</span> funding
+  run <span style="color:#e6db74">`</span>npm fund<span style="color:#e6db74">`</span> <span style="color:#66d9ef">for</span> details
+
+found <span style="color:#ae81ff">0</span> vulnerabilities
+
+
+&gt; deployInternetFacingVM@1.0.0 build /deployInternetFacingVM
+&gt; cdktf get <span style="color:#f92672">&amp;&amp;</span> tsc
+
+Generated typescript constructs in the output directory: .gen
+<span style="color:#f92672">========================================================================================================</span>
+
+  Your cdktf typescript project is ready!
+  ......
+  .....
+  ......
+  &lt;output snipped&gt;
+</code></pre></div><h3 id="output-files-in-the-directory">output files in the directory</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e"># ls</span>
+cdktf.json  help  main.d.ts  main.js  main.ts  node_modules  package-lock.json  package.json  tsconfig.json
+</code></pre></div><h3 id="download-relevant-provider">download relevant provider</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e"># cdktf get</span>
+
+Generated typescript constructs in the output directory: .gen
+</code></pre></div><h2 id="install-sshpk-module-and-its-typescript-definitions">install sshpk module and its typescript definitions.</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e"># npm install sshpk @types/sshpk</span>
+
+npm WARN eslint-plugin-react@7.21.5 requires a peer of eslint@^3 <span style="color:#f92672">||</span> ^4 <span style="color:#f92672">||</span> ^5 <span style="color:#f92672">||</span> ^6 <span style="color:#f92672">||</span> ^7 but none is installed. You must install peer dependencies yourself.
+
++ sshpk@1.16.1
+added <span style="color:#ae81ff">10</span> packages from <span style="color:#ae81ff">17</span> contributors and audited <span style="color:#ae81ff">240</span> packages in 5.885s
+
+<span style="color:#ae81ff">57</span> packages are looking <span style="color:#66d9ef">for</span> funding
+  run <span style="color:#e6db74">`</span>npm fund<span style="color:#e6db74">`</span> <span style="color:#66d9ef">for</span> details
+
+found <span style="color:#ae81ff">0</span> vulnerabilities
+</code></pre></div><h3 id="modify-maints-with-following-contents">Modify <code>main.ts</code> with following contents</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Typescript" data-lang="Typescript"><span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">Construct</span> } <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;constructs&#39;</span>;
+<span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">App</span>, <span style="color:#a6e22e">TerraformStack</span>, <span style="color:#a6e22e">TerraformOutput</span> } <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;cdktf&#39;</span>;
+<span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">AwsProvider</span>, <span style="color:#a6e22e">Instance</span>, <span style="color:#a6e22e">Vpc</span>, <span style="color:#a6e22e">KeyPair</span>, <span style="color:#a6e22e">Subnet</span>, <span style="color:#a6e22e">SecurityGroup</span>, <span style="color:#a6e22e">InternetGateway</span>, <span style="color:#a6e22e">DefaultRouteTable</span> } <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;./.gen/providers/aws&#39;</span>
+<span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">sshPrivateKey</span>, <span style="color:#a6e22e">sshPublicKey</span> } <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;./generatSSHkeys&#39;</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyStack</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">TerraformStack</span> {
+  <span style="color:#66d9ef">constructor</span>(<span style="color:#a6e22e">scope</span>: <span style="color:#66d9ef">Construct</span>, <span style="color:#a6e22e">name</span>: <span style="color:#66d9ef">string</span>) {
+    <span style="color:#66d9ef">super</span>(<span style="color:#a6e22e">scope</span>, <span style="color:#a6e22e">name</span>);
+
+    <span style="color:#75715e">// define resources here
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">AwsProvider</span>(<span style="color:#66d9ef">this</span>, <span style="color:#e6db74">&#39;aws&#39;</span>, {
+      <span style="color:#a6e22e">region</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;eu-west-2&#39;</span>,
+      <span style="color:#a6e22e">profile</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;personal&#39;</span>
+    });
+
+    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">myKey</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">KeyPair</span>(<span style="color:#66d9ef">this</span>, <span style="color:#e6db74">&#39;myKeyPair&#39;</span>, {
+      <span style="color:#a6e22e">keyName</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;myKey&#34;</span>,
+      <span style="color:#a6e22e">publicKey</span>: <span style="color:#66d9ef">sshPublicKey</span>
+    });
+
+    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">vpc</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Vpc</span>(<span style="color:#66d9ef">this</span>, <span style="color:#e6db74">&#39;myVpc&#39;</span>, {
+      <span style="color:#a6e22e">cidrBlock</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;10.0.0.0/16&#39;</span>,
+    });
+
+    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">myGateway</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">InternetGateway</span>(<span style="color:#66d9ef">this</span>, <span style="color:#e6db74">&#39;myGateway&#39;</span>, {
+      <span style="color:#a6e22e">vpcId</span>: <span style="color:#66d9ef">vpc.id</span>
+    });
+
+    <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">DefaultRouteTable</span>(<span style="color:#66d9ef">this</span>, <span style="color:#e6db74">&#39;add_default_route&#39;</span>, {
+      <span style="color:#a6e22e">defaultRouteTableId</span>: <span style="color:#66d9ef">vpc.defaultRouteTableId</span>,
+      <span style="color:#a6e22e">route</span><span style="color:#f92672">:</span> [
+        {
+          <span style="color:#a6e22e">cidrBlock</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;0.0.0.0/0&#39;</span>,
+          <span style="color:#a6e22e">gatewayId</span>: <span style="color:#66d9ef">myGateway.id</span>,
+          <span style="color:#a6e22e">egressOnlyGatewayId</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;&#39;</span>,
+          <span style="color:#a6e22e">instanceId</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;&#39;</span>,
+          <span style="color:#a6e22e">ipv6CidrBlock</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;&#39;</span>,
+          <span style="color:#a6e22e">natGatewayId</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;&#39;</span>,
+          <span style="color:#a6e22e">networkInterfaceId</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;&#39;</span>,
+          <span style="color:#a6e22e">transitGatewayId</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;&#39;</span>,
+          <span style="color:#a6e22e">vpcPeeringConnectionId</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;&#39;</span>
+        }
+      ]
+    });
+
+    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">publicSubnet</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Subnet</span>(<span style="color:#66d9ef">this</span>, <span style="color:#e6db74">&#39;publicSubnet&#39;</span>, {
+      <span style="color:#a6e22e">vpcId</span>: <span style="color:#66d9ef">vpc.id</span>,
+      <span style="color:#a6e22e">cidrBlock</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;10.0.1.0/24&#39;</span>,
+      <span style="color:#a6e22e">mapPublicIpOnLaunch</span>: <span style="color:#66d9ef">true</span>
+    });
+    <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Subnet</span>(<span style="color:#66d9ef">this</span>, <span style="color:#e6db74">&#39;privateSubnet1&#39;</span>, {
+      <span style="color:#a6e22e">vpcId</span>: <span style="color:#66d9ef">vpc.id</span>,
+      <span style="color:#a6e22e">cidrBlock</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;10.0.2.0/24&#39;</span>,
+    });
+    <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Subnet</span>(<span style="color:#66d9ef">this</span>, <span style="color:#e6db74">&#39;privateSubnet2&#39;</span>, {
+      <span style="color:#a6e22e">vpcId</span>: <span style="color:#66d9ef">vpc.id</span>,
+      <span style="color:#a6e22e">cidrBlock</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;10.0.3.0/24&#39;</span>,
+    });
+
+    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">allowIncomingSSH</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">SecurityGroup</span>(<span style="color:#66d9ef">this</span>, <span style="color:#e6db74">&#39;allowIncomingSSH&#39;</span>, {
+      <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;allowIncomingSSH&#34;</span>,
+      <span style="color:#a6e22e">vpcId</span>: <span style="color:#66d9ef">vpc.id</span>,
+      <span style="color:#a6e22e">ingress</span><span style="color:#f92672">:</span> [
+        {
+          <span style="color:#a6e22e">toPort</span>: <span style="color:#66d9ef">0</span>,
+          <span style="color:#a6e22e">cidrBlocks</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39;0.0.0.0/0&#39;</span>],
+          <span style="color:#a6e22e">fromPort</span>: <span style="color:#66d9ef">0</span>,
+          <span style="color:#a6e22e">protocol</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;-1&#34;</span>,
+          <span style="color:#a6e22e">securityGroups</span><span style="color:#f92672">:</span> [],
+          <span style="color:#a6e22e">description</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;allow ssh&#34;</span>,
+          <span style="color:#a6e22e">ipv6CidrBlocks</span><span style="color:#f92672">:</span> [],
+          <span style="color:#a6e22e">prefixListIds</span><span style="color:#f92672">:</span> [],
+          <span style="color:#a6e22e">selfAttribute</span>: <span style="color:#66d9ef">false</span>
+        }
+      ],
+      <span style="color:#a6e22e">egress</span><span style="color:#f92672">:</span> [
+        {
+          <span style="color:#a6e22e">fromPort</span>: <span style="color:#66d9ef">0</span>,
+          <span style="color:#a6e22e">toPort</span>: <span style="color:#66d9ef">0</span>,
+          <span style="color:#a6e22e">cidrBlocks</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39;0.0.0.0/0&#39;</span>],
+          <span style="color:#a6e22e">protocol</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;-1&#34;</span>,
+          <span style="color:#a6e22e">securityGroups</span><span style="color:#f92672">:</span> [],
+          <span style="color:#a6e22e">description</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;allow all outgoing&#34;</span>,
+          <span style="color:#a6e22e">ipv6CidrBlocks</span><span style="color:#f92672">:</span> [],
+          <span style="color:#a6e22e">prefixListIds</span><span style="color:#f92672">:</span> [],
+          <span style="color:#a6e22e">selfAttribute</span>: <span style="color:#66d9ef">false</span>
+        }
+      ]
+    });
+
+    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">instance</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Instance</span>(<span style="color:#66d9ef">this</span>, <span style="color:#e6db74">&#39;myVmInstance&#39;</span>, {
+      <span style="color:#a6e22e">instanceType</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;t2.micro&#39;</span>,
+      <span style="color:#a6e22e">ami</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;ami-0e9ae639e4d979a9f&#39;</span>,
+      <span style="color:#a6e22e">keyName</span>: <span style="color:#66d9ef">myKey.keyName</span>,
+      <span style="color:#a6e22e">subnetId</span>: <span style="color:#66d9ef">publicSubnet.id</span>,
+      <span style="color:#a6e22e">vpcSecurityGroupIds</span><span style="color:#f92672">:</span> [
+        <span style="color:#a6e22e">allowIncomingSSH</span>.<span style="color:#a6e22e">id</span>
+      ]
+    });
+
+    <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">TerraformOutput</span>(<span style="color:#66d9ef">this</span>, <span style="color:#e6db74">&#39;public_ip&#39;</span>, {
+      <span style="color:#a6e22e">value</span>: <span style="color:#66d9ef">instance.publicIp</span>
+    })
+    <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">TerraformOutput</span>(<span style="color:#66d9ef">this</span>, <span style="color:#e6db74">&#39;privateKey&#39;</span>, {
+      <span style="color:#a6e22e">value</span>: <span style="color:#66d9ef">sshPrivateKey</span>
+    })
+
+  }
+}
+
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">app</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">App</span>();
+<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">MyStack</span>(<span style="color:#a6e22e">app</span>, <span style="color:#e6db74">&#39;deployInternetFacingVM&#39;</span>);
+<span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">synth</span>();
+</code></pre></div><h3 id="create-a-new-file-generatsshkeysts-with-following-contents">create a new file <code>generatSSHkeys.ts</code> with following contents.</h3>
+<p>This file will create openssh key-pair only once.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Typescript" data-lang="Typescript"><span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">generateKeyPairSync</span> } <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;crypto&#39;</span>;
+<span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">parseKey</span> } <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;sshpk&#39;</span>
+<span style="color:#66d9ef">import</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">as</span> <span style="color:#a6e22e">fs</span> <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;fs&#39;</span>;
+<span style="color:#66d9ef">import</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">as</span> <span style="color:#a6e22e">path</span> <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;path&#39;</span>;
+
+
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">sshKeysDir</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">join</span>(<span style="color:#a6e22e">__dirname</span>, <span style="color:#e6db74">&#39;protected&#39;</span>, <span style="color:#e6db74">&#39;sshKeys&#39;</span>)
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">privateKeyFile</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">join</span>(<span style="color:#a6e22e">sshKeysDir</span>, <span style="color:#e6db74">&#39;privateKey.pem&#39;</span>)
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">publicKeyFile</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">join</span>(<span style="color:#a6e22e">sshKeysDir</span>, <span style="color:#e6db74">&#39;publicKey.pem&#39;</span>)
+<span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">mkdirSync</span>(<span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">join</span>(<span style="color:#a6e22e">__dirname</span>, <span style="color:#e6db74">&#39;protected&#39;</span>, <span style="color:#e6db74">&#39;sshKeys&#39;</span>), { <span style="color:#a6e22e">recursive</span>: <span style="color:#66d9ef">true</span>});
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getKeyPair() {</span>
+  <span style="color:#66d9ef">const</span> { <span style="color:#a6e22e">publicKey</span>, <span style="color:#a6e22e">privateKey</span>} <span style="color:#f92672">=</span> <span style="color:#a6e22e">generateKeyPairSync</span>(<span style="color:#e6db74">&#39;rsa&#39;</span>, {
+    <span style="color:#a6e22e">modulusLength</span>: <span style="color:#66d9ef">2048</span>,
+    <span style="color:#a6e22e">publicKeyEncoding</span><span style="color:#f92672">:</span> {
+      <span style="color:#a6e22e">format</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;pem&#39;</span>,
+      <span style="color:#66d9ef">type</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;pkcs1&#39;</span>
+    },
+    <span style="color:#a6e22e">privateKeyEncoding</span><span style="color:#f92672">:</span> {
+      <span style="color:#a6e22e">format</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;pem&#39;</span>,
+      <span style="color:#66d9ef">type</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;pkcs1&#39;</span>
+    }
+  });
+  <span style="color:#66d9ef">return</span> {<span style="color:#a6e22e">publicKey</span>, <span style="color:#a6e22e">privateKey</span>}
+};
+
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">sshPrivateKey</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>;
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">sshPublicKey</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>;
+<span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">existsSync</span>(<span style="color:#a6e22e">privateKeyFile</span>) <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">existsSync</span>(<span style="color:#a6e22e">publicKeyFile</span>)) {
+  <span style="color:#a6e22e">sshPrivateKey</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">readFileSync</span>(<span style="color:#a6e22e">privateKeyFile</span>).<span style="color:#a6e22e">toString</span>()
+  <span style="color:#a6e22e">sshPublicKey</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">readFileSync</span>(<span style="color:#a6e22e">publicKeyFile</span>).<span style="color:#a6e22e">toString</span>()
+} <span style="color:#66d9ef">else</span> {
+  <span style="color:#66d9ef">let</span> {<span style="color:#a6e22e">publicKey</span>, <span style="color:#a6e22e">privateKey</span>} <span style="color:#f92672">=</span> <span style="color:#a6e22e">getKeyPair</span>();
+  <span style="color:#a6e22e">sshPublicKey</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">parseKey</span>(<span style="color:#a6e22e">publicKey</span>, <span style="color:#e6db74">&#39;pem&#39;</span>).<span style="color:#a6e22e">toString</span>(<span style="color:#e6db74">&#39;ssh&#39;</span>);
+  <span style="color:#a6e22e">sshPrivateKey</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">privateKey</span>;
+  <span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">writeFileSync</span>(<span style="color:#a6e22e">privateKeyFile</span>, <span style="color:#a6e22e">sshPrivateKey</span>);
+  <span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">writeFileSync</span>(<span style="color:#a6e22e">publicKeyFile</span>, <span style="color:#a6e22e">sshPublicKey</span>)
+}
+
+<span style="color:#66d9ef">export</span> {<span style="color:#a6e22e">sshPublicKey</span>, <span style="color:#a6e22e">sshPrivateKey</span>};
+</code></pre></div><h3 id="with-the-addition-of-new-file-directory-contents-now-look-like-this">with the addition of new file, directory contents now look like this.</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e"># ls</span>
+cdktf.json  generatSSHkeys.ts  help  main.d.ts  main.js  main.ts  node_modules  package-lock.json  package.json  tsconfig.json
+</code></pre></div><h3 id="check-what-is-being-deployed">check what is being deployed</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e"># cdktf diff</span>
+Stack: deployInternetFacingVM
+Resources
+ + AWS_DEFAULT_ROUTE_TA add_default_route   aws_default_route_table.add_default_route
+ + AWS_INSTANCE         myVmInstance        aws_instance.myVmInstance
+ + AWS_INTERNET_GATEWAY myGateway           aws_internet_gateway.myGateway
+ + AWS_KEY_PAIR         myKeyPair           aws_key_pair.myKeyPair
+ + AWS_SECURITY_GROUP   allowIncomingSSH    aws_security_group.allowIncomingSSH
+ + AWS_SUBNET           privateSubnet1      aws_subnet.privateSubnet1
+ + AWS_SUBNET           privateSubnet2      aws_subnet.privateSubnet2
+ + AWS_SUBNET           publicSubnet        aws_subnet.publicSubnet
+ + AWS_VPC              myVpc               aws_vpc.myVpc
+
+Diff: <span style="color:#ae81ff">9</span> to create, <span style="color:#ae81ff">0</span> to update, <span style="color:#ae81ff">0</span> to delete.
+</code></pre></div><h3 id="deploy-to-aws">deploy to AWS</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e"># cdktf deploy</span>
+
+Deploying Stack: deployInternetFacingVM
+Resources
+ ✔ AWS_DEFAULT_ROUTE_TA add_default_route   aws_default_route_table.add_default_route
+ ✔ AWS_INSTANCE         myVmInstance        aws_instance.myVmInstance
+ ✔ AWS_INTERNET_GATEWAY myGateway           aws_internet_gateway.myGateway
+ ✔ AWS_KEY_PAIR         myKeyPair           aws_key_pair.myKeyPair
+ ✔ AWS_SECURITY_GROUP   allowIncomingSSH    aws_security_group.allowIncomingSSH
+ ✔ AWS_SUBNET           privateSubnet1      aws_subnet.privateSubnet1
+ ✔ AWS_SUBNET           privateSubnet2      aws_subnet.privateSubnet2
+ ✔ AWS_SUBNET           publicSubnet        aws_subnet.publicSubnet
+ ✔ AWS_VPC              myVpc               aws_vpc.myVpc
+
+Summary: <span style="color:#ae81ff">9</span> created, <span style="color:#ae81ff">0</span> updated, <span style="color:#ae81ff">0</span> destroyed.
+
+Output: privateKey <span style="color:#f92672">=</span> -----BEGIN RSA PRIVATE KEY-----
+        &lt;Private key contents&gt;
+        -----END RSA PRIVATE KEY-----
+
+        public_ip <span style="color:#f92672">=</span> &lt;public ip&gt;
+<span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e">#</span>
+</code></pre></div><h3 id="verify-deployment-by-ssh-into-the-vm">Verify deployment by ssh into the vm</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e"># chmod 400 protected/sshKeys/privateKey.pem</span>
+<span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e"># ssh -i protected/sshKeys/privateKey.pem ubuntu@&lt;public_ip_displayed_above&gt;</span>
+</code></pre></div><p><strong>Note:</strong> Contents of <code>protected/sshKeys/privateKey.pem</code> is displayed above in <code>cdktf deploy</code> output as well.</p>
+<h3 id="verify-the-idempotency">Verify the idempotency</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e"># cdktf deploy</span>
+No changes <span style="color:#66d9ef">for</span> Stack: deployInternetFacingVM
+</code></pre></div><h3 id="destroy-the-deployment">Destroy the deployment</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e"># cdktf destroy</span>
+Destroying Stack: deployInternetFacingVM
+Resources
+ ✔ AWS_DEFAULT_ROUTE_TA add_default_route   aws_default_route_table.add_default_route
+ ✔ AWS_INSTANCE         myVmInstance        aws_instance.myVmInstance
+ ✔ AWS_INTERNET_GATEWAY myGateway           aws_internet_gateway.myGateway
+ ✔ AWS_KEY_PAIR         myKeyPair           aws_key_pair.myKeyPair
+ ✔ AWS_SECURITY_GROUP   allowIncomingSSH    aws_security_group.allowIncomingSSH
+ ✔ AWS_SUBNET           privateSubnet1      aws_subnet.privateSubnet1
+ ✔ AWS_SUBNET           privateSubnet2      aws_subnet.privateSubnet2
+ ✔ AWS_SUBNET           publicSubnet        aws_subnet.publicSubnet
+ ✔ AWS_VPC              myVpc               aws_vpc.myVpc
+
+Summary: <span style="color:#ae81ff">9</span> destroyed.
+</code></pre></div><h4 id="github-repo-link">GitHub Repo Link:</h4>
+<p><a href="https://github.com/spareslant/terraform_cdk_deployInternetFacingVM">https://github.com/spareslant/terraform_cdk_deployInternetFacingVM</a></p>
+
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/terraform/" rel="tag">terraform</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/aws/" rel="tag">aws</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/cdk/" rel="tag">cdk</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/typescript/" rel="tag">typescript</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/node.js/" rel="tag">node.js</a></li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<div class="authorbox__header">
+		<span class="authorbox__name"></span>
+	</div>
+</div>
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/posts/kafka-to-elk-message-manipulation/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Kafka to Elk Message Manipulation</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2020 SpareSlant.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
+</html>

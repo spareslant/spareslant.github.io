@@ -6,11 +6,7 @@
     <description>Recent content in Vagrantfile on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Tue, 10 Mar 2020 17:50:49 +0000</lastBuildDate>
-    
-	<atom:link href="/tags/vagrantfile/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Tue, 10 Mar 2020 17:50:49 +0000</lastBuildDate><atom:link href="/tags/vagrantfile/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Multiple Vms Vagrantfile</title>
       <link>/posts/multiple-vms-vagrantfile/</link>

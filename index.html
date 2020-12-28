@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en-gb">
 <head>
-	<meta name="generator" content="Hugo 0.72.0" />
+	<meta name="generator" content="Hugo 0.79.1" />
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -37,6 +37,27 @@
 			
 <main class="main list" role="main">
 	<article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/posts/terraform-cdk/" rel="bookmark">
+			Terraform Cdk
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2020-12-28T17:54:12">2020-12-28</time>
+</div>
+</div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Introduction We will be exploring the terraform-cdk toolkit in this article. We shall be using an AWS account to spin up a VM. We shall be doing following.
+ Create A brand New VPC (Not touching existing default VPC) Create 3 subnets ( 1 public, 2 private) A security Group to allow incoming SSH traffic and allow all outgoing. A key-pair for ssh An additional internet-gateway in AWS (It is needed to get internet connectity to new VPC.
+	</div>
+	<div class="list__footer clearfix">
+		<a class="list__footer-readmore btn" href="/posts/terraform-cdk/">Read more…</a>
+	</div>
+</article><article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
 			<a href="/posts/kafka-to-elk-message-manipulation/" rel="bookmark">
@@ -233,27 +254,6 @@ log_level: debug fileserver_backend: - roots file_roots: base: - /srv/salt runne
 	<div class="list__footer clearfix">
 		<a class="list__footer-readmore btn" href="/posts/saltstack-call-runner-from-minion/">Read more…</a>
 	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/posts/saltstack-call-runner-from-minion-jinja/" rel="bookmark">
-			Saltstack: Call runner from minion (jinja conditionals)
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
-	<time class="meta__text" datetime="2020-03-15T21:05:23">2020-03-15</time>
-</div>
-</div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		Introduction Sometimes a minion may need to execute something which is central to whole system but based on some condition. e.g. Minion may need to update an external common Database whose write access is given only to master. Therefore minion may need to ask salt-master to execute on its behalf. This can be done by
- Minion calling runner on salt-master runner executing a custom execution module that provides access to DB  As a custom execution module needs to be executed on salt-master, therefore salt-minion also needs to be installed on salt-master.
-	</div>
-	<div class="list__footer clearfix">
-		<a class="list__footer-readmore btn" href="/posts/saltstack-call-runner-from-minion-jinja/">Read more…</a>
-	</div>
 </article>
 </main>
 
@@ -277,11 +277,11 @@ log_level: debug fileserver_backend: - roots file_roots: base: - /srv/salt runne
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/posts/terraform-cdk/">Terraform Cdk</a></li>
 			<li class="widget__item"><a class="widget__link" href="/posts/kafka-to-elk-message-manipulation/">Kafka to Elk Message Manipulation</a></li>
 			<li class="widget__item"><a class="widget__link" href="/posts/openstack-instances-using-goose-library/">Remote OpenStack Instances Using Goose library (using Nova networking)</a></li>
 			<li class="widget__item"><a class="widget__link" href="/posts/openstack-instances-using-gophercloud-nova-networking/">Remote OpenStack instances using Gophercloud Library (using Nova Networking)</a></li>
 			<li class="widget__item"><a class="widget__link" href="/posts/remote-openstack-instances-gophercloud-neutron/">Remote OpenStack Instances using Gophercloud (using neutron networking)</a></li>
-			<li class="widget__item"><a class="widget__link" href="/posts/json-full-paths-from-root-node-to-leaf/">Json Full Paths From Root Node to Leaf</a></li>
 		</ul>
 	</div>
 </div>
@@ -289,12 +289,14 @@ log_level: debug fileserver_backend: - roots file_roots: base: - /srv/salt runne
 	<h4 class="widget__title">Tags</h4>
 	<div class="widget__content">
 		<a class="widget-taglist__link widget__link btn" href="/tags/apache" title="Apache">Apache (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/aws" title="Aws">Aws (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/blog" title="Blog">Blog (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/blog-publishing" title="Blog publishing">Blog publishing (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/blogger" title="Blogger">Blogger (4)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/blogger-api" title="Blogger api">Blogger api (3)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/blogger-html" title="Blogger html">Blogger html (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/ca" title="Ca">Ca (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cdk" title="Cdk">Cdk (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/curl" title="Curl">Curl (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/digital-certificates" title="Digital certificates">Digital certificates (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/docker" title="Docker">Docker (2)</a>
@@ -318,6 +320,7 @@ log_level: debug fileserver_backend: - roots file_roots: base: - /srv/salt runne
 		<a class="widget-taglist__link widget__link btn" href="/tags/logging" title="Logging">Logging (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/logstash" title="Logstash">Logstash (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/neutron" title="Neutron">Neutron (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/node.js" title="Node.js">Node.js (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/nova" title="Nova">Nova (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/openssl" title="Openssl">Openssl (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/openstack" title="Openstack">Openstack (3)</a>
@@ -338,7 +341,9 @@ log_level: debug fileserver_backend: - roots file_roots: base: - /srv/salt runne
 		<a class="widget-taglist__link widget__link btn" href="/tags/ssl-reverse-proxy" title="Ssl reverse proxy">Ssl reverse proxy (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/syslog" title="Syslog">Syslog (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/terminal" title="Terminal">Terminal (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/terraform" title="Terraform">Terraform (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/tmux" title="Tmux">Tmux (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/typescript" title="Typescript">Typescript (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/vagrant" title="Vagrant">Vagrant (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/vagrantfile" title="Vagrantfile">Vagrantfile (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/vagrantfile-plugin" title="Vagrantfile plugin">Vagrantfile plugin (1)</a>

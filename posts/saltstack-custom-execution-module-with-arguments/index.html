@@ -68,16 +68,16 @@
 <li>salt-minion installed and configured to accept command from salt-master.</li>
 </ul>
 <p><code>/etc/salt/master</code> file used:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">log_level</span>: debug
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">log_level</span>: <span style="color:#ae81ff">debug</span>
 
-<span style="color:#66d9ef">fileserver_backend</span>:
-  - roots
+<span style="color:#f92672">fileserver_backend</span>:
+  - <span style="color:#ae81ff">roots</span>
 
-<span style="color:#66d9ef">file_roots</span>:
-  <span style="color:#66d9ef">base</span>:
-    - /srv/salt
+<span style="color:#f92672">file_roots</span>:
+  <span style="color:#f92672">base</span>:
+    - <span style="color:#ae81ff">/srv/salt</span>
 </code></pre></div><p><code>/etc/salt/minion</code> file used:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">master</span>: salt
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">master</span>: <span style="color:#ae81ff">salt</span>
 </code></pre></div><p><strong>Note:</strong> In <code>/etc/salt/master</code> file, <code>log_level</code> is set to <code>debug</code>. Normally this will be <code>info</code>.</p>
 <p><code>my_module.py</code> will be our execution module</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir /srv/salt/_modules
@@ -120,11 +120,11 @@ fedora2.vagrant.box:
 </code></pre></div><p>Now run above execution module using a state file.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@salt-master# touch /srv/salt/state_file_call_custom_exec_module.sls
 </code></pre></div><p>Contents of <code>/srv/salt/state_file_call_custom_exec_module.sls</code> are as follows:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">run_custom_module</span>:
-  <span style="color:#66d9ef">module.run</span>:
-    - <span style="color:#66d9ef">name</span>: my_module.my_module_function
-    - <span style="color:#66d9ef">arg1</span>: a_string
-    - <span style="color:#66d9ef">arg2</span>: b_string
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">run_custom_module</span>:
+  <span style="color:#f92672">module.run</span>:
+    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">my_module.my_module_function</span>
+    - <span style="color:#f92672">arg1</span>: <span style="color:#ae81ff">a_string</span>
+    - <span style="color:#f92672">arg2</span>: <span style="color:#ae81ff">b_string</span>
 </code></pre></div><p>Run the following command to execute above state file on client machine:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@salt-master# salt <span style="color:#e6db74">&#39;fedora2.vagrant.box&#39;</span> state.sls state_file_call_custom_exec_module
 fedora2.vagrant.box:
@@ -166,7 +166,7 @@ Total run time:   1.085 ms
 
 <div class="authorbox clearfix">
 	<div class="authorbox__header">
-		<span class="authorbox__name">About SpareSlant</span>
+		<span class="authorbox__name"></span>
 	</div>
 </div>
 
