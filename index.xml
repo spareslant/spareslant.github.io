@@ -6,7 +6,16 @@
     <description>Recent content on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Mon, 28 Dec 2020 17:54:12 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 05 Jan 2021 21:09:04 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Multihop SSH Tunnel to access Vagrant VM Service</title>
+      <link>/posts/multihop-ssh/</link>
+      <pubDate>Tue, 05 Jan 2021 21:09:04 +0000</pubDate>
+      
+      <guid>/posts/multihop-ssh/</guid>
+      <description>Multihop SSH tunnel to access Vagrant VM Service Following is the scenario:  A localmachine (192.168.0.17) A remote machine (192.168.0.19) Another vagrant machine (call it master) running inside above remote machine. This Vagrant VM has private IP 10.0.0.10. A web-service is listening on 10.0.0.10:31421 port inside Vagrant VM. We want this web-service to be accessible in the browser running in localmachine (i.e 192.168.0.17)  Get ssh port of Vagrant VM vagrant port master In my case it was 2200.</description>
+    </item>
+    
     <item>
       <title>Terraform Cdk</title>
       <link>/posts/terraform-cdk/</link>

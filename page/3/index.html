@@ -39,6 +39,27 @@
 	<article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
+			<a href="/posts/apache-reverseproxyssl-sslclientauth/" rel="bookmark">
+			Apache ReverseProxySSL SSLClientAuth
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2019-08-04T14:54:01">2019-08-04</time>
+</div>
+</div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Introduction We will be configuring Apache in reverse proxy mode. Apache will be accepting connections on secure port with SSL client authentication and forward that request to a backend application server Gunicorn. Communication between apache and gunicorn will also be on secure port and SSL authenticated. Gunicorn will run a simple flask app that will be writing some text to file.
+Purpose of this excersize is to introduce end to end secure communication from client to apache to app server with SSL client authentication at every stage.
+	</div>
+	<div class="list__footer clearfix">
+		<a class="list__footer-readmore btn" href="/posts/apache-reverseproxyssl-sslclientauth/">Read more…</a>
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
 			<a href="/posts/deploy-hugosite-to-github/" rel="bookmark">
 			Deploy HugoSite to Github
 			</a>
@@ -144,11 +165,11 @@ Prepare environment os used $ cat /etc/fedora-release Fedora release 30 (Thirty)
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/posts/multihop-ssh/">Multihop SSH Tunnel to access Vagrant VM Service</a></li>
 			<li class="widget__item"><a class="widget__link" href="/posts/terraform-cdk/">Terraform Cdk</a></li>
 			<li class="widget__item"><a class="widget__link" href="/posts/kafka-to-elk-message-manipulation/">Kafka to Elk Message Manipulation</a></li>
 			<li class="widget__item"><a class="widget__link" href="/posts/openstack-instances-using-goose-library/">Remote OpenStack Instances Using Goose library (using Nova networking)</a></li>
 			<li class="widget__item"><a class="widget__link" href="/posts/openstack-instances-using-gophercloud-nova-networking/">Remote OpenStack instances using Gophercloud Library (using Nova Networking)</a></li>
-			<li class="widget__item"><a class="widget__link" href="/posts/remote-openstack-instances-gophercloud-neutron/">Remote OpenStack Instances using Gophercloud (using neutron networking)</a></li>
 		</ul>
 	</div>
 </div>
@@ -186,6 +207,7 @@ Prepare environment os used $ cat /etc/fedora-release Fedora release 30 (Thirty)
 		<a class="widget-taglist__link widget__link btn" href="/tags/kibana" title="Kibana">Kibana (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/logging" title="Logging">Logging (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/logstash" title="Logstash">Logstash (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/multi-hop-tunnel" title="Multi hop tunnel">Multi hop tunnel (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/neutron" title="Neutron">Neutron (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/node.js" title="Node.js">Node.js (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/nova" title="Nova">Nova (1)</a>
@@ -202,6 +224,8 @@ Prepare environment os used $ cat /etc/fedora-release Fedora release 30 (Thirty)
 		<a class="widget-taglist__link widget__link btn" href="/tags/runner" title="Runner">Runner (2)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/salt" title="Salt">Salt (3)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/saltstack" title="Saltstack">Saltstack (3)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ssh" title="Ssh">Ssh (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ssh-tunnel" title="Ssh tunnel">Ssh tunnel (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/ssl" title="Ssl">Ssl (2)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/ssl-authentication" title="Ssl authentication">Ssl authentication (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/ssl-mutual-authentication" title="Ssl mutual authentication">Ssl mutual authentication (1)</a>
@@ -211,8 +235,8 @@ Prepare environment os used $ cat /etc/fedora-release Fedora release 30 (Thirty)
 		<a class="widget-taglist__link widget__link btn" href="/tags/terraform" title="Terraform">Terraform (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/tmux" title="Tmux">Tmux (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/typescript" title="Typescript">Typescript (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/vagrant" title="Vagrant">Vagrant (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/vagrantfile" title="Vagrantfile">Vagrantfile (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/vagrant" title="Vagrant">Vagrant (2)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/vagrantfile" title="Vagrantfile">Vagrantfile (2)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/vagrantfile-plugin" title="Vagrantfile plugin">Vagrantfile plugin (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/vim" title="Vim">Vim (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/vundle" title="Vundle">Vundle (1)</a>
@@ -225,7 +249,7 @@ Prepare environment os used $ cat /etc/fedora-release Fedora release 30 (Thirty)
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2020 SpareSlant.
+			&copy; 2021 SpareSlant.
 			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
 		</div>
 	</div>
