@@ -4,14 +4,14 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>reverse proxy - SpareSlant Technical Blog</title>
+	<title>cri-o - SpareSlant Technical Blog</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
 	
 	
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
-	<link rel="alternate" type="application/rss+xml" href="/tags/reverse-proxy/index.xml" title="SpareSlant Technical Blog">
+	<link rel="alternate" type="application/rss+xml" href="/tags/cri-o/index.xml" title="SpareSlant Technical Blog">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
 	<link rel="stylesheet" href="/css/style.css">
 	<link rel="stylesheet" href="/css/my.css">
@@ -36,27 +36,26 @@
 			
 <main class="main list" role="main">
 	<header class="main__header">
-		<h1 class="main__title">reverse proxy</h1>
+		<h1 class="main__title">cri-o</h1>
 	</header><article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
-			<a href="/posts/apache-reverseproxyssl-sslclientauth/" rel="bookmark">
-			Apache ReverseProxySSL SSLClientAuth
+			<a href="/posts/kubernetes-cluster-cri-o/" rel="bookmark">
+			Kubernetes Cluster Using CRI-O
 			</a>
 		</h3>
 		<div class="list__meta meta">
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
-	<time class="meta__text" datetime="2019-08-04T14:54:01">2019-08-04</time>
+	<time class="meta__text" datetime="2021-02-07T22:18:02">2021-02-07</time>
 </div>
 </div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		Introduction We will be configuring Apache in reverse proxy mode. Apache will be accepting connections on secure port with SSL client authentication and forward that request to a backend application server Gunicorn. Communication between apache and gunicorn will also be on secure port and SSL authenticated. Gunicorn will run a simple flask app that will be writing some text to file.
-Purpose of this excersize is to introduce end to end secure communication from client to apache to app server with SSL client authentication at every stage.
+		Introduction  We will be creating a 2 node kubernetes cluster using vagrant and virtualbox. We will be using cri-o rather than Docker to configure the cluster. CRI-O uses the systemd cgroup driver per default. We will be creating config files init-defaults.yml and join-defaults.yml to be used by kubeadm to configure control plane and worker rather than using long command line options. In the config files, we shall specify the cgroup driver for kubelet.
 	</div>
 	<div class="list__footer clearfix">
-		<a class="list__footer-readmore btn" href="/posts/apache-reverseproxyssl-sslclientauth/">Read more…</a>
+		<a class="list__footer-readmore btn" href="/posts/kubernetes-cluster-cri-o/">Read more…</a>
 	</div>
 </article>
 </main>

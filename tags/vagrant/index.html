@@ -40,6 +40,26 @@
 	</header><article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
+			<a href="/posts/kubernetes-cluster-cri-o/" rel="bookmark">
+			Kubernetes Cluster Using CRI-O
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2021-02-07T22:18:02">2021-02-07</time>
+</div>
+</div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Introduction  We will be creating a 2 node kubernetes cluster using vagrant and virtualbox. We will be using cri-o rather than Docker to configure the cluster. CRI-O uses the systemd cgroup driver per default. We will be creating config files init-defaults.yml and join-defaults.yml to be used by kubeadm to configure control plane and worker rather than using long command line options. In the config files, we shall specify the cgroup driver for kubelet.
+	</div>
+	<div class="list__footer clearfix">
+		<a class="list__footer-readmore btn" href="/posts/kubernetes-cluster-cri-o/">Read more…</a>
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
 			<a href="/posts/kubernetes-cluster-containerd/" rel="bookmark">
 			Kubernetes Cluster Using Containerd
 			</a>
@@ -117,11 +137,11 @@ Prepare Environment mkdir Vagrant_VMS cd Vagrant_VMS vagrant init Populate Vagra
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/posts/kubernetes-cluster-cri-o/">Kubernetes Cluster Using CRI-O</a></li>
 			<li class="widget__item"><a class="widget__link" href="/posts/kubernetes-cluster-containerd/">Kubernetes Cluster Using Containerd</a></li>
 			<li class="widget__item"><a class="widget__link" href="/posts/multihop-ssh/">Multihop SSH Tunnel to access Vagrant VM Service</a></li>
 			<li class="widget__item"><a class="widget__link" href="/posts/terraform-cdk/">Terraform Cdk</a></li>
 			<li class="widget__item"><a class="widget__link" href="/posts/kafka-to-elk-message-manipulation/">Kafka to Elk Message Manipulation</a></li>
-			<li class="widget__item"><a class="widget__link" href="/posts/openstack-instances-using-goose-library/">Remote OpenStack Instances Using Goose library (using Nova networking)</a></li>
 		</ul>
 	</div>
 </div>
@@ -137,8 +157,9 @@ Prepare Environment mkdir Vagrant_VMS cd Vagrant_VMS vagrant init Populate Vagra
 		<a class="widget-taglist__link widget__link btn" href="/tags/blogger-html" title="Blogger html">Blogger html (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/ca" title="Ca">Ca (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/cdk" title="Cdk">Cdk (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/cgroups" title="Cgroups">Cgroups (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cgroups" title="Cgroups">Cgroups (2)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/containerd" title="Containerd">Containerd (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cri-o" title="Cri o">Cri o (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/curl" title="Curl">Curl (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/digital-certificates" title="Digital certificates">Digital certificates (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/docker" title="Docker">Docker (2)</a>
@@ -157,10 +178,10 @@ Prepare Environment mkdir Vagrant_VMS cd Vagrant_VMS vagrant init Populate Vagra
 		<a class="widget-taglist__link widget__link btn" href="/tags/hugo" title="Hugo">Hugo (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/jinja" title="Jinja">Jinja (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/json" title="Json">Json (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/k8s" title="K8s">K8s (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/k8s" title="K8s">K8s (2)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/kafka" title="Kafka">Kafka (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/kibana" title="Kibana">Kibana (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/kubernetes" title="Kubernetes">Kubernetes (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/kubernetes" title="Kubernetes">Kubernetes (2)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/logging" title="Logging">Logging (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/logstash" title="Logstash">Logstash (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/multi-hop-tunnel" title="Multi hop tunnel">Multi hop tunnel (1)</a>
@@ -191,11 +212,11 @@ Prepare Environment mkdir Vagrant_VMS cd Vagrant_VMS vagrant init Populate Vagra
 		<a class="widget-taglist__link widget__link btn" href="/tags/terraform" title="Terraform">Terraform (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/tmux" title="Tmux">Tmux (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/typescript" title="Typescript">Typescript (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/vagrant" title="Vagrant">Vagrant (3)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/vagrantfile" title="Vagrantfile">Vagrantfile (3)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/vagrant" title="Vagrant">Vagrant (4)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/vagrantfile" title="Vagrantfile">Vagrantfile (4)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/vagrantfile-plugin" title="Vagrantfile plugin">Vagrantfile plugin (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/vim" title="Vim">Vim (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/virtualbox" title="Virtualbox">Virtualbox (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/virtualbox" title="Virtualbox">Virtualbox (2)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/vundle" title="Vundle">Vundle (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/x509" title="X509">X509 (1)</a>
 	</div>

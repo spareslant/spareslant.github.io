@@ -6,7 +6,16 @@
     <description>Recent content in Posts on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Sun, 07 Feb 2021 15:48:01 +0000</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 07 Feb 2021 22:18:02 +0000</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kubernetes Cluster Using CRI-O</title>
+      <link>/posts/kubernetes-cluster-cri-o/</link>
+      <pubDate>Sun, 07 Feb 2021 22:18:02 +0000</pubDate>
+      
+      <guid>/posts/kubernetes-cluster-cri-o/</guid>
+      <description>Introduction  We will be creating a 2 node kubernetes cluster using vagrant and virtualbox. We will be using cri-o rather than Docker to configure the cluster. CRI-O uses the systemd cgroup driver per default. We will be creating config files init-defaults.yml and join-defaults.yml to be used by kubeadm to configure control plane and worker rather than using long command line options. In the config files, we shall specify the cgroup driver for kubelet.</description>
+    </item>
+    
     <item>
       <title>Kubernetes Cluster Using Containerd</title>
       <link>/posts/kubernetes-cluster-containerd/</link>
