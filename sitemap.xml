@@ -3,6 +3,61 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/tags/cgroups/</loc>
+    <lastmod>2021-02-07T15:48:01+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/containerd/</loc>
+    <lastmod>2021-02-07T15:48:01+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/k8s/</loc>
+    <lastmod>2021-02-07T15:48:01+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/kubernetes/</loc>
+    <lastmod>2021-02-07T15:48:01+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/kubernetes-cluster-containerd/</loc>
+    <lastmod>2021-02-07T15:48:01+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/</loc>
+    <lastmod>2021-02-07T15:48:01+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/</loc>
+    <lastmod>2021-02-07T15:48:01+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2021-02-07T15:48:01+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/vagrant/</loc>
+    <lastmod>2021-02-07T15:48:01+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/vagrantfile/</loc>
+    <lastmod>2021-02-07T15:48:01+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/virtualbox/</loc>
+    <lastmod>2021-02-07T15:48:01+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/tags/multi-hop-tunnel/</loc>
     <lastmod>2021-01-05T21:09:04+00:00</lastmod>
   </url>
@@ -13,37 +68,12 @@
   </url>
   
   <url>
-    <loc>/posts/</loc>
-    <lastmod>2021-01-05T21:09:04+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/</loc>
-    <lastmod>2021-01-05T21:09:04+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/tags/ssh/</loc>
     <lastmod>2021-01-05T21:09:04+00:00</lastmod>
   </url>
   
   <url>
     <loc>/tags/ssh-tunnel/</loc>
-    <lastmod>2021-01-05T21:09:04+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
-    <lastmod>2021-01-05T21:09:04+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/vagrant/</loc>
-    <lastmod>2021-01-05T21:09:04+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/vagrantfile/</loc>
     <lastmod>2021-01-05T21:09:04+00:00</lastmod>
   </url>
   

@@ -97,8 +97,8 @@
 <li>An additional internet-gateway in AWS (It is needed to get internet connectity to new VPC.)</li>
 <li>A new VM created in above mentioned VPC, and public subnet having internet connectivity and allows ssh connection from internet.</li>
 </ul>
-<p><strong>Note1:</strong> We shall be using <code>typescript</code> for terraform-cdk.
-<strong>Note2:</strong> We need to create an additional Internet-Gateway because, existing internet-gateway is attached to default VPC in the account, and an Internet-gateway cannot be attched to more than one VPC.</p>
+<p><strong>Note1:</strong> We shall be using <code>typescript</code> for terraform-cdk.</p>
+<p><strong>Note2:</strong> We need to create an additional Internet-Gateway because, existing internet-gateway is attached to default VPC in the account, and an Internet-gateway cannot be attched to more than one VPC.</p>
 <h2 id="prepare-environment">Prepare environment.</h2>
 <p>We shall be doing everything in a docker image. I am using fedora-33.</p>
 <h3 id="start-fedora-33-in-interactive-mode">Start fedora-33 in interactive mode.</h3>

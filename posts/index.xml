@@ -6,7 +6,16 @@
     <description>Recent content in Posts on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Tue, 05 Jan 2021 21:09:04 +0000</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 07 Feb 2021 15:48:01 +0000</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kubernetes Cluster Using Containerd</title>
+      <link>/posts/kubernetes-cluster-containerd/</link>
+      <pubDate>Sun, 07 Feb 2021 15:48:01 +0000</pubDate>
+      
+      <guid>/posts/kubernetes-cluster-containerd/</guid>
+      <description>Introduction  We will be creating a 2 node kubernetes cluster using vagrant and virtualbox. We will be using containerd rather than Docker to configure the cluster. We will make sure containerduses systemd as its cgroup driver. We will be creating config files init-defaults.yml and join-defaults.yml to be used by kubeadm to configure control plane and worker rather than using long command line options. In the config files, we shall specify the cgroup driver.</description>
+    </item>
+    
     <item>
       <title>Multihop SSH Tunnel to access Vagrant VM Service</title>
       <link>/posts/multihop-ssh/</link>

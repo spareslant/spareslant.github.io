@@ -50,7 +50,11 @@
 		<nav id="TableOfContents">
   <ul>
     <li><a href="#minimal-working-tmux-config">Minimal working tmux config</a></li>
-    <li><a href="#launch-tmux">Launch tmux</a></li>
+    <li><a href="#launch-tmux">Launch tmux</a>
+      <ul>
+        <li><a href="#another-minimal-config">Another minimal config</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
 	</div>
@@ -112,7 +116,11 @@ set-option -g mouse on
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">tmux -u
 </code></pre></div><p><strong>Note:</strong> <code>-u</code> is specified for terminals where locale is not set to <code>UTF-8</code>
 <strong>Note</strong> To change the title of pane run this command <code>ctrl-b :select-pane -T MyTitle</code></p>
-
+<h3 id="another-minimal-config">Another minimal config</h3>
+<pre><code>set-option -g mouse on
+set-option -g mode-keys vi
+set-option -g status-style bg=default
+</code></pre>
 		</div>
 		<footer class="post__footer">
 			
