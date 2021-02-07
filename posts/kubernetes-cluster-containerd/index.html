@@ -72,7 +72,8 @@
         <li><a href="#prepare-config-file-worker-nodes">Prepare config file worker nodes</a></li>
       </ul>
     </li>
-    <li><a href="#setup-worker-node">Setup worker node</a>
+    <li><a href="#setup-worker-node">Setup worker node</a></li>
+    <li><a href="#fix-the-etchosts-file-1">Fix the <code>/etc/hosts</code> file</a>
       <ul>
         <li><a href="#install-containerd-container-runtime-1">Install <code>containerd</code> container runtime</a></li>
         <li><a href="#make-systemd-cgroup-drive-for-containerd-1">Make systemd cgroup drive for containerd</a></li>
@@ -82,7 +83,7 @@
     </li>
     <li><a href="#verify-cluster-installation">Verify cluster installation</a>
       <ul>
-        <li><a href="#check-nodes-status">Check nodes status</a></li>
+        <li><a href="#check-nodes-status-on-master-control-plane-node">Check nodes status on <code>master</code> (control plane) node</a></li>
         <li><a href="#create-an-nginx-deployment">Create an <code>nginx</code> deployment</a></li>
         <li><a href="#create-a-service">Create a service</a></li>
       </ul>
@@ -580,7 +581,11 @@ We are using <code>token</code> and <code>caCertHashes</code> from above <code>k
 <h2 id="setup-worker-node">Setup worker node</h2>
 <p>Login to the <code>worker1</code> node</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant ssh worker1
-</code></pre></div><h3 id="install-containerd-container-runtime-1">Install <code>containerd</code> container runtime</h3>
+</code></pre></div><h2 id="fix-the-etchosts-file-1">Fix the <code>/etc/hosts</code> file</h2>
+<p>In <code>/etc/hosts</code> file, make sure <code>worker1.virtual.machine</code> and <code>worker1</code> are pointing to <code>10.0.0.12</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">10.0.0.12 master.virtual.machine master
+</code></pre></div><p>Note: <code>10.0.0.12</code> is defined in <code>vagrantfile</code>.</p>
+<h3 id="install-containerd-container-runtime-1">Install <code>containerd</code> container runtime</h3>
 <p>Instructions for this page <a href="https://kubernetes.io/docs/setup/production-environment/container-runtimes/#containerd">https://kubernetes.io/docs/setup/production-environment/container-runtimes/#containerd</a> were followed to install the container runtime</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cat <span style="color:#e6db74">&lt;&lt;EOF | sudo tee /etc/modules-load.d/containerd.conf
 </span><span style="color:#e6db74">overlay
@@ -659,11 +664,11 @@ This node has joined the cluster:
 Run 'kubectl get nodes' on the control-plane to see this node join the cluster.
 </code></pre><p>As above output says, <code>worker1</code> has joined the cluster successfully.</p>
 <h2 id="verify-cluster-installation">Verify cluster installation</h2>
-<h3 id="check-nodes-status">Check nodes status</h3>
+<h3 id="check-nodes-status-on-master-control-plane-node">Check nodes status on <code>master</code> (control plane) node</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant@master:~$ kubectl get nodes -o wide
-NAME      STATUS   ROLES                  AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION       CONTAINER-RUNTIME
-master    Ready    control-plane,master   75m   v1.20.2   10.0.0.10     &lt;none&gt;        Ubuntu 18.04.5 LTS   4.15.0-130-generic   containerd://1.3.3
-worker1   Ready    &lt;none&gt;                 14m   v1.20.2   10.0.2.15     &lt;none&gt;        Ubuntu 18.04.5 LTS   4.15.0-130-generic   containerd://1.3.3
+NAME      STATUS   ROLES                  AGE    VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION       CONTAINER-RUNTIME
+master    Ready    control-plane,master   123m   v1.20.2   10.0.0.10     &lt;none&gt;        Ubuntu 18.04.5 LTS   4.15.0-130-generic   containerd://1.3.3
+worker1   Ready    &lt;none&gt;                 18s    v1.20.2   10.0.0.12     &lt;none&gt;        Ubuntu 18.04.5 LTS   4.15.0-130-generic   containerd://1.3.3
 </code></pre></div><h3 id="create-an-nginx-deployment">Create an <code>nginx</code> deployment</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant@master:~$ kubectl create deployment --image<span style="color:#f92672">=</span>nginx nginx --port<span style="color:#f92672">=</span><span style="color:#ae81ff">80</span>
 deployment.apps/nginx created
