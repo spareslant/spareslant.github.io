@@ -583,7 +583,7 @@ We are using <code>token</code> and <code>caCertHashes</code> from above <code>k
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant ssh worker1
 </code></pre></div><h2 id="fix-the-etchosts-file-1">Fix the <code>/etc/hosts</code> file</h2>
 <p>In <code>/etc/hosts</code> file, make sure <code>worker1.virtual.machine</code> and <code>worker1</code> are pointing to <code>10.0.0.12</code>.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">10.0.0.12 master.virtual.machine master
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">10.0.0.12 worker1.virtual.machine worker1
 </code></pre></div><p>Note: <code>10.0.0.12</code> is defined in <code>vagrantfile</code>.</p>
 <h3 id="install-containerd-container-runtime-1">Install <code>containerd</code> container runtime</h3>
 <p>Instructions for this page <a href="https://kubernetes.io/docs/setup/production-environment/container-runtimes/#containerd">https://kubernetes.io/docs/setup/production-environment/container-runtimes/#containerd</a> were followed to install the container runtime</p>
