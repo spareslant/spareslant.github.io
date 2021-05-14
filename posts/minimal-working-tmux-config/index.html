@@ -115,7 +115,9 @@ set-option -g mouse on
 </code></pre><h2 id="launch-tmux">Launch tmux</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">tmux -u
 </code></pre></div><p><strong>Note:</strong> <code>-u</code> is specified for terminals where locale is not set to <code>UTF-8</code>
-<strong>Note</strong> To change the title of pane run this command <code>ctrl-b :select-pane -T MyTitle</code></p>
+<strong>Note</strong> To change the title of pane run this command <code>ctrl-b :select-pane -T MyTitle</code>
+<strong>Note</strong> To change the title of window run this command <code>ctrl-b :rename-window MyTitle2</code> or <code>ctrl-b ,</code> and then type MyTitle2.
+<strong>Note</strong> If pane title changes after pressing enter or after doing ssh, that means shell prompt is sending escape sequence to set the terminal title. In order to disable this behaviour, set the simple terminal promt. e.g. <code>PS1=&quot;\u@\h:\w\n$ &quot;</code> and then set pane title. Window title once set do not change.</p>
 <h3 id="another-minimal-config">Another minimal config</h3>
 <pre><code>set-option -g mouse on
 set-option -g mode-keys vi

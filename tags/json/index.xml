@@ -6,7 +6,17 @@
     <description>Recent content in json on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Mon, 16 Mar 2020 22:09:29 +0000</lastBuildDate><atom:link href="/tags/json/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 14 May 2021 06:58:28 +0100</lastBuildDate><atom:link href="/tags/json/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Edit Json Easily Programatically</title>
+      <link>/posts/edit-json-easily-programatically/</link>
+      <pubDate>Fri, 14 May 2021 06:58:28 +0100</pubDate>
+      
+      <guid>/posts/edit-json-easily-programatically/</guid>
+      <description>Introduction Often I had to manipulate the JSON/YAML files. I created a utility that can help make changes in JSON/YAML easily.
+Get the code. git clone https://github.com/spareslant/json_manipulation.git cd json_manipulation Python version used $ python --version Python 3.9.0 How to Run: input_data_1.json contents { &amp;#34;data&amp;#34;: [ { &amp;#34;actions&amp;#34;: [ { &amp;#34;link&amp;#34;: &amp;#34;http://www.facebook.com/X999/posts/Y999&amp;#34;, &amp;#34;name&amp;#34;: &amp;#34;Comment&amp;#34; }, { &amp;#34;link&amp;#34;: &amp;#34;http://www.facebook.com/X999/posts/Y999&amp;#34;, &amp;#34;name&amp;#34;: &amp;#34;Like&amp;#34; } ], &amp;#34;created_time&amp;#34;: &amp;#34;2010-08-02T21:27:44+0000&amp;#34;, &amp;#34;from&amp;#34;: { &amp;#34;id&amp;#34;: &amp;#34;X12&amp;#34;, &amp;#34;name&amp;#34;: &amp;#34;Tom Brady&amp;#34; }, &amp;#34;id&amp;#34;: &amp;#34;X999_Y999&amp;#34;, &amp;#34;message&amp;#34;: &amp;#34;Looking forward to 2010!</description>
+    </item>
+    
     <item>
       <title>Json Full Paths From Root Node to Leaf</title>
       <link>/posts/json-full-paths-from-root-node-to-leaf/</link>

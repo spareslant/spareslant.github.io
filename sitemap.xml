@@ -3,6 +3,41 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/posts/edit-json-easily-programatically/</loc>
+    <lastmod>2021-05-14T06:58:28+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/json/</loc>
+    <lastmod>2021-05-14T06:58:28+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/</loc>
+    <lastmod>2021-05-14T06:58:28+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/python/</loc>
+    <lastmod>2021-05-14T06:58:28+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/</loc>
+    <lastmod>2021-05-14T06:58:28+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2021-05-14T06:58:28+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/yaml/</loc>
+    <lastmod>2021-05-14T06:58:28+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/tags/cgroups/</loc>
     <lastmod>2021-02-07T22:18:02+00:00</lastmod>
   </url>
@@ -24,21 +59,6 @@
   
   <url>
     <loc>/posts/kubernetes-cluster-cri-o/</loc>
-    <lastmod>2021-02-07T22:18:02+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/posts/</loc>
-    <lastmod>2021-02-07T22:18:02+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/</loc>
-    <lastmod>2021-02-07T22:18:02+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
     <lastmod>2021-02-07T22:18:02+00:00</lastmod>
   </url>
   
@@ -203,17 +223,7 @@
   </url>
   
   <url>
-    <loc>/tags/json/</loc>
-    <lastmod>2020-03-16T22:09:29+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/posts/json-full-paths-from-root-node-to-leaf/</loc>
-    <lastmod>2020-03-16T22:09:29+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/python/</loc>
     <lastmod>2020-03-16T22:09:29+00:00</lastmod>
   </url>
   
