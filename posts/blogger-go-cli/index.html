@@ -123,13 +123,13 @@
 </ul>
 <h2 id="go-development-environment-creation">Go development environment creation</h2>
 <p>I am using following <code>Go</code> version.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ go version
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ go version
 go version go1.13.8 darwin/amd64
 </code></pre></div><h3 id="setup-following-go-development-directory-structure">Setup following <code>Go</code> development directory structure.</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir -p BloggerCli/go-cli
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir -p BloggerCli/go-cli
 touch BloggerCli/go-cli/createAndActivateGoWorkSpace.sh
 </code></pre></div><p>Populate <code>BloggerCli/go-cli/createAndActivateGoWorkSpace.sh</code> with following contents</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#! /bin/bash
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#! /bin/bash
 </span><span style="color:#75715e"></span><span style="color:#75715e"># current directory is workspace</span>
 WORKSPACE<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>pwd<span style="color:#66d9ef">)</span>
 cd <span style="color:#e6db74">&#34;</span>$WORKSPACE<span style="color:#e6db74">&#34;</span>
@@ -137,17 +137,17 @@ mkdir -p src bin pkg
 export GOPATH<span style="color:#f92672">=</span>$WORKSPACE
 export GOBIN<span style="color:#f92672">=</span>$WORKSPACE/bin
 </code></pre></div><p>Create directory structure</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd BloggerCli/go-cli
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd BloggerCli/go-cli
 source ./createAndActivateGoWorkSpace.sh
 mkdir src/blogger
 </code></pre></div><h3 id="install-required-libraries">Install required libraries.</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">go get -v google.golang.org/api/blogger/v3
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">go get -v google.golang.org/api/blogger/v3
 go get -v golang.org/x/oauth2/google
 </code></pre></div><h3 id="copy-credential-file">Copy credential file.</h3>
 <p>Copy above downloaded credential json file in <code>BloggerCli/go-cli/src/blogger</code> folder and rename it to <code>OAuth2.0_secret.json</code>.</p>
 <p><strong>Note:</strong> You can rename it any name</p>
 <h3 id="create-go-file-bloggercligo-clisrcbloggerbloggercligo-file-with-following-contents">Create <code>Go</code> file <code>BloggerCli/go-cli/src/blogger/bloggerCli.go</code> file with following contents.</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
 
 <span style="color:#75715e">/*
 </span><span style="color:#75715e">https://pkg.go.dev/google.golang.org/api/blogger/v3?tab=doc
@@ -327,11 +327,11 @@ go get -v golang.org/x/oauth2/google
 	}
 }
 </code></pre></div><h3 id="create-a-test-file-to-be-uploaded">Create a test file to be uploaded.</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">echo <span style="color:#e6db74">&#39;This is a first post&#39;</span> &gt; sometext.txt
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">echo <span style="color:#e6db74">&#39;This is a first post&#39;</span> &gt; sometext.txt
 </code></pre></div><p><strong>Note</strong>: You can create an HTML file as well.</p>
 <h2 id="run-the-script">Run the script</h2>
 <h3 id="create-a-new-post">Create a New Post</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cd BloggerCli/go-cli/src/blogger
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cd BloggerCli/go-cli/src/blogger
 
 $ go run bloggerCli.go -b <span style="color:#ae81ff">232343232322</span> -f sometext.txt -t <span style="color:#e6db74">&#34;A new Post&#34;</span> -l <span style="color:#e6db74">&#34;label1,label2&#34;</span>
 Visit the URL <span style="color:#66d9ef">for</span> the auth dialog: https://accounts.google.com/o/oauth2/auth?client_id<span style="color:#f92672">=</span>99999999-ccc55566666iiioo999ddd.apps.googleusercontent.com&amp;redirect_uri<span style="color:#f92672">=</span>urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&amp;response_type<span style="color:#f92672">=</span>code&amp;scope<span style="color:#f92672">=</span>https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fblogger&amp;state<span style="color:#f92672">=</span>state
@@ -344,7 +344,7 @@ PostID: 2344555555555999
 <span style="color:#f92672">=================================================</span>
 Total posts in this blog: <span style="color:#ae81ff">52</span>
 </code></pre></div><h3 id="update-a-post">Update a Post</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cd BloggerCli/go-cli/src/blogger
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cd BloggerCli/go-cli/src/blogger
 
 $ go run bloggerCli.go -b <span style="color:#ae81ff">232343232322</span> -f sometext.txt -t <span style="color:#e6db74">&#34;Multiple Vms Vagrantfile&#34;</span> -m
 Visit the URL <span style="color:#66d9ef">for</span> the auth dialog: https://accounts.google.com/o/oauth2/auth?client_id<span style="color:#f92672">=</span>99999999-ccc55566666iiioo999ddd.apps.googleusercontent.com&amp;redirect_uri<span style="color:#f92672">=</span>urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&amp;response_type<span style="color:#f92672">=</span>code&amp;scope<span style="color:#f92672">=</span>https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fblogger&amp;state<span style="color:#f92672">=</span>state

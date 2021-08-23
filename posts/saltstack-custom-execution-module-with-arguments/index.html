@@ -68,7 +68,7 @@
 <li>salt-minion installed and configured to accept command from salt-master.</li>
 </ul>
 <p><code>/etc/salt/master</code> file used:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">log_level</span>: <span style="color:#ae81ff">debug</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">log_level</span>: <span style="color:#ae81ff">debug</span>
 
 <span style="color:#f92672">fileserver_backend</span>:
   - <span style="color:#ae81ff">roots</span>
@@ -77,13 +77,13 @@
   <span style="color:#f92672">base</span>:
     - <span style="color:#ae81ff">/srv/salt</span>
 </code></pre></div><p><code>/etc/salt/minion</code> file used:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">master</span>: <span style="color:#ae81ff">salt</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">master</span>: <span style="color:#ae81ff">salt</span>
 </code></pre></div><p><strong>Note:</strong> In <code>/etc/salt/master</code> file, <code>log_level</code> is set to <code>debug</code>. Normally this will be <code>info</code>.</p>
 <p><code>my_module.py</code> will be our execution module</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir /srv/salt/_modules
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir /srv/salt/_modules
 touch /srv/salt/_modules/my_module.py
 </code></pre></div><p>Contents of <code>/srv/salt/_modules/my_module.py</code> are as follows:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#! /usr/bin/env python</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#! /usr/bin/env python</span>
 
 <span style="color:#75715e"># Below virtual name can be any string.</span>
 __virtualname__ <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;my_module&#39;</span>
@@ -96,7 +96,7 @@ __virtualname__ <span style="color:#f92672">=</span> <span style="color:#e6db74"
     modified_arg2 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">_</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">%</span> (arg2, <span style="color:#e6db74">&#39;modified&#39;</span>)
     <span style="color:#66d9ef">return</span> modified_arg1, modified_arg2
 </code></pre></div><p>Now we are ready to execute this module to our minion (client machine). Run following command to sync modules first to all minions.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@salt-master# salt <span style="color:#e6db74">&#39;*&#39;</span> saltutil.sync_all
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@salt-master# salt <span style="color:#e6db74">&#39;*&#39;</span> saltutil.sync_all
 fedora2.vagrant.box:
     ----------
     beacons:
@@ -113,20 +113,20 @@ fedora2.vagrant.box:
     states:
     utils:
 </code></pre></div><p>Now we are ready to execute this module to our minion (client machine). Run following command to sync modules first to all minions.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@salt-master# salt <span style="color:#e6db74">&#39;fedora2.vagrant.box&#39;</span> my_module.my_module_function <span style="color:#e6db74">&#39;a_string&#39;</span> <span style="color:#e6db74">&#39;b_string2&#39;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@salt-master# salt <span style="color:#e6db74">&#39;fedora2.vagrant.box&#39;</span> my_module.my_module_function <span style="color:#e6db74">&#39;a_string&#39;</span> <span style="color:#e6db74">&#39;b_string2&#39;</span>
 fedora2.vagrant.box:
     - a_string_modified
     - b_string2_modified
 </code></pre></div><p>Now run above execution module using a state file.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@salt-master# touch /srv/salt/state_file_call_custom_exec_module.sls
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@salt-master# touch /srv/salt/state_file_call_custom_exec_module.sls
 </code></pre></div><p>Contents of <code>/srv/salt/state_file_call_custom_exec_module.sls</code> are as follows:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">run_custom_module</span>:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">run_custom_module</span>:
   <span style="color:#f92672">module.run</span>:
     - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">my_module.my_module_function</span>
     - <span style="color:#f92672">arg1</span>: <span style="color:#ae81ff">a_string</span>
     - <span style="color:#f92672">arg2</span>: <span style="color:#ae81ff">b_string</span>
 </code></pre></div><p>Run the following command to execute above state file on client machine:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@salt-master# salt <span style="color:#e6db74">&#39;fedora2.vagrant.box&#39;</span> state.sls state_file_call_custom_exec_module
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@salt-master# salt <span style="color:#e6db74">&#39;fedora2.vagrant.box&#39;</span> state.sls state_file_call_custom_exec_module
 fedora2.vagrant.box:
 ----------
           ID: run_custom_module

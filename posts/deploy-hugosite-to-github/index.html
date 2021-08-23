@@ -69,17 +69,17 @@
 </div>
 <div class="content post__content clearfix">
 			<h3 id="run-http-server-to-serve-file-locally-to-check-the-contents">Run HTTP server to serve file locally to check the contents</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ hugo server -D
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ hugo server -D
 </code></pre></div><h3 id="do-following-change-in-md-files-that-need-to-be-published">Do following change in md files that need to be published.</h3>
 <pre><code>change draft: true to draft: false
 </code></pre><h3 id="run-http-server-in-prod-mode-and-make-sure-all-required-files-are-being-served">Run HTTP server in prod mode and make sure all required files are being served.</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ hugo server
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ hugo server
 </code></pre></div><h3 id="git-commit-the-changes"><code>Git</code> commit the changes</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ git add &lt;files&gt;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ git add &lt;files&gt;
 $ git commit
 $ git push origin master
 </code></pre></div><h3 id="prepare-contents-to-be-deployed-to-github">Prepare contents to be deployed to <code>GITHUB</code></h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cd MyTechnialBlog/
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cd MyTechnialBlog/
 
 $ ls -og
 total <span style="color:#ae81ff">8</span>
@@ -93,17 +93,17 @@ drwxr-xr-x  <span style="color:#ae81ff">2</span>     <span style="color:#ae81ff"
 drwxr-xr-x  <span style="color:#ae81ff">3</span>     <span style="color:#ae81ff">96</span> <span style="color:#ae81ff">17</span> Jul 21:27 themes
 
 </code></pre></div><h3 id="clone-remote-spareslantgithubio-repo">clone remote <code>spareslant.github.io</code> repo.</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd ../spareslant.github.io
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd ../spareslant.github.io
 git clone https://github.com/spareslant/spareslant.github.io.git
 </code></pre></div><h3 id="build-site-to-be-deployed">Build site to be deployed.</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cd MyTechnialBlog/
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cd MyTechnialBlog/
 $ hugo -d ../spareslant.github.io/
 </code></pre></div><h3 id="commit-new-changes-in-spareslantgithubio">commit new changes in <code>../spareslant.github.io</code>.</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cd ../spareslant.github.io/
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cd ../spareslant.github.io/
 $ git add .
 $ git commit
 </code></pre></div><h3 id="publish-site-by-pushing-the-contents-to-repo">Publish site by pushing the contents to repo.</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ git push origin master
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ git push origin master
 </code></pre></div><h3 id="check-published-changes-at-following-link">check published changes at following link</h3>
 <p><a href="https://spareslant.github.io/">https://spareslant.github.io/</a></p>
 

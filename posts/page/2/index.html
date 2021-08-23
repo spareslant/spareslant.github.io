@@ -40,6 +40,28 @@
 	</header><article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
+			<a href="/posts/json-full-paths-from-root-node-to-leaf/" rel="bookmark">
+			Json Full Paths From Root Node to Leaf
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2020-03-16T22:09:29">2020-03-16</time>
+</div>
+</div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Introduction: Often there is a requirement to create full paths from root node to leaf node in JSON file. Following python program will generate these paths.
+Sample JSON file sample_json_file.json is below:
+{ &#34;data&#34;: [ { &#34;id&#34;: &#34;X999_Y999&#34;, &#34;from&#34;: { &#34;name&#34;: &#34;Tom Brady&#34;, &#34;id&#34;: &#34;X12&#34; }, &#34;message&#34;: &#34;Looking forward to 2010!&#34;, &#34;actions&#34;: [ { &#34;name&#34;: &#34;Comment&#34;, &#34;link&#34;: &#34;http://www.facebook.com/X999/posts/Y999&#34; }, { &#34;name&#34;: &#34;Like&#34;, &#34;link&#34;: &#34;http://www.facebook.com/X999/posts/Y999&#34; } ], &#34;type&#34;: &#34;status&#34;, &#34;created_time&#34;: &#34;2010-08-02T21:27:44+0000&#34;, &#34;updated_time&#34;: &#34;2010-08-02T21:27:44+0000&#34; }, { &#34;id&#34;: &#34;X998_Y998&#34;, &#34;from&#34;: { &#34;name&#34;: &#34;Peyton Manning&#34;, &#34;id&#34;: &#34;X18&#34; }, &#34;message&#34;: &#34;Where&#39;s my contract?
+	</div>
+	<div class="list__footer clearfix">
+		<a class="list__footer-readmore btn" href="/posts/json-full-paths-from-root-node-to-leaf/">Read more…</a>
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
 			<a href="/posts/saltstack-custom-execution-module-with-arguments/" rel="bookmark">
 			Saltstack Custom Execution Module With Arguments
 			</a>
@@ -230,29 +252,6 @@ Prepare Environment mkdir Vagrant_VMS cd Vagrant_VMS vagrant init Populate Vagra
 	<div class="list__footer clearfix">
 		<a class="list__footer-readmore btn" href="/posts/multiple-vms-vagrantfile/">Read more…</a>
 	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/posts/convert_markup_to_blogger_compatible_html/" rel="bookmark">
-			Convert markup to blogger compatible html
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
-	<time class="meta__text" datetime="2020-03-10T11:12:00">2020-03-10</time>
-</div>
-</div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		Introduction We will be converting a markup file to a blogger compatible html.
-Install pandoc and GitHUB html5 Template Install pandoc using URL https://pandoc.org/installing.html . Create a workspace and clone following git repos in that workspace area.
-mkdir $HOME/panDocs cd $HOME/panDocs git clone https://github.com/tajmone/pandoc-goodies.git cd pandoc-goodies/templates/html5/github/src Modify above GitHUB html5 template source code for blogger. Make the padding and max-width changes in _github-markdown.scss file as follows:
-$ git diff templates/html5/github/src/_github-markdown.scss diff --git a/templates/html5/github/src/_github-markdown.
-	</div>
-	<div class="list__footer clearfix">
-		<a class="list__footer-readmore btn" href="/posts/convert_markup_to_blogger_compatible_html/">Read more…</a>
-	</div>
 </article>
 </main>
 
@@ -278,11 +277,11 @@ $ git diff templates/html5/github/src/_github-markdown.scss diff --git a/templat
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/posts/k8s-vagrant-centos-stream-crio-automated-deployment/">K8s Vagrant Centos Stream Crio Automated Deployment</a></li>
 			<li class="widget__item"><a class="widget__link" href="/posts/edit-json-easily-programatically/">Edit Json Easily Programatically</a></li>
 			<li class="widget__item"><a class="widget__link" href="/posts/kubernetes-cluster-cri-o/">Kubernetes Cluster Using CRI-O</a></li>
 			<li class="widget__item"><a class="widget__link" href="/posts/kubernetes-cluster-containerd/">Kubernetes Cluster Using Containerd</a></li>
 			<li class="widget__item"><a class="widget__link" href="/posts/multihop-ssh/">Multihop SSH Tunnel to access Vagrant VM Service</a></li>
-			<li class="widget__item"><a class="widget__link" href="/posts/terraform-cdk/">Terraform Cdk</a></li>
 		</ul>
 	</div>
 </div>
@@ -294,13 +293,13 @@ $ git diff templates/html5/github/src/_github-markdown.scss diff --git a/templat
 		<a class="widget-taglist__link widget__link btn" href="/tags/blog" title="Blog">Blog (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/blog-publishing" title="Blog publishing">Blog publishing (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/blogger" title="Blogger">Blogger (4)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/blogger-api" title="Blogger api">Blogger api (3)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/blogger-html" title="Blogger html">Blogger html (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/blogger-api" title="Blogger API">Blogger API (3)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/blogger-html" title="Blogger HTML">Blogger HTML (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/ca" title="Ca">Ca (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/cdk" title="Cdk">Cdk (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/cgroups" title="Cgroups">Cgroups (2)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/containerd" title="Containerd">Containerd (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/cri-o" title="Cri o">Cri o (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cri-o" title="Cri o">Cri o (2)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/curl" title="Curl">Curl (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/digital-certificates" title="Digital certificates">Digital certificates (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/docker" title="Docker">Docker (2)</a>
@@ -310,24 +309,24 @@ $ git diff templates/html5/github/src/_github-markdown.scss diff --git a/templat
 		<a class="widget-taglist__link widget__link btn" href="/tags/github-pages-deployment" title="Github pages deployment">Github pages deployment (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/go" title="Go">Go (4)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/golang" title="Golang">Golang (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/google-api" title="Google api">Google api (3)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/google-api" title="Google API">Google API (3)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/goose" title="Goose">Goose (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/gophercloud" title="Gophercloud">Gophercloud (2)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/gunicorn" title="Gunicorn">Gunicorn (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/html" title="Html">Html (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/html-generation" title="Html generation">Html generation (2)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/html" title="HTML">HTML (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/html-generation" title="HTML generation">HTML generation (2)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/hugo" title="Hugo">Hugo (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/jinja" title="Jinja">Jinja (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/json" title="Json">Json (2)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/k8s" title="K8s">K8s (2)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/json" title="JSON">JSON (2)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/k8s" title="K8s">K8s (3)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/kafka" title="Kafka">Kafka (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/kibana" title="Kibana">Kibana (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/kubernetes" title="Kubernetes">Kubernetes (2)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/kubernetes" title="Kubernetes">Kubernetes (3)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/logging" title="Logging">Logging (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/logstash" title="Logstash">Logstash (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/multi-hop-tunnel" title="Multi hop tunnel">Multi hop tunnel (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/neutron" title="Neutron">Neutron (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/node.js" title="Node.js">Node.js (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/node.js" title="Node.Js">Node.Js (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/nova" title="Nova">Nova (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/openssl" title="Openssl">Openssl (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/openstack" title="Openstack">Openstack (3)</a>
@@ -342,8 +341,8 @@ $ git diff templates/html5/github/src/_github-markdown.scss diff --git a/templat
 		<a class="widget-taglist__link widget__link btn" href="/tags/runner" title="Runner">Runner (2)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/salt" title="Salt">Salt (3)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/saltstack" title="Saltstack">Saltstack (3)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/ssh" title="Ssh">Ssh (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/ssh-tunnel" title="Ssh tunnel">Ssh tunnel (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ssh" title="SSH">SSH (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ssh-tunnel" title="SSH tunnel">SSH tunnel (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/ssl" title="Ssl">Ssl (2)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/ssl-authentication" title="Ssl authentication">Ssl authentication (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/ssl-mutual-authentication" title="Ssl mutual authentication">Ssl mutual authentication (1)</a>
@@ -353,11 +352,11 @@ $ git diff templates/html5/github/src/_github-markdown.scss diff --git a/templat
 		<a class="widget-taglist__link widget__link btn" href="/tags/terraform" title="Terraform">Terraform (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/tmux" title="Tmux">Tmux (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/typescript" title="Typescript">Typescript (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/vagrant" title="Vagrant">Vagrant (4)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/vagrantfile" title="Vagrantfile">Vagrantfile (4)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/vagrant" title="Vagrant">Vagrant (5)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/vagrantfile" title="Vagrantfile">Vagrantfile (5)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/vagrantfile-plugin" title="Vagrantfile plugin">Vagrantfile plugin (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/vim" title="Vim">Vim (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/virtualbox" title="Virtualbox">Virtualbox (2)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/virtualbox" title="Virtualbox">Virtualbox (3)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/vundle" title="Vundle">Vundle (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/x509" title="X509">X509 (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/yaml" title="Yaml">Yaml (1)</a>

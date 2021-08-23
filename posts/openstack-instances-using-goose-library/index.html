@@ -67,7 +67,7 @@ Tenant   : This is more like a project/Account or Organization. A tenant can hav
 Region   : Default region is set to RegionOne.
 </code></pre><p>In <code>trystack.org</code> this information can be found at <code>https://x86.trystack.org/dashboard/project/access_and_security/</code> and click on Download OpenStack RC file. Contents of RC file will have all the required information.</p>
 <p>Following is the source code.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
 
 <span style="color:#f92672">import</span> (
  <span style="color:#e6db74">&#34;crypto/rand&#34;</span>
@@ -283,7 +283,7 @@ Region   : Default region is set to RegionOne.
 <li>Make sure GO Lang compiler is installed.</li>
 <li>Place go source code in a directory. (most likely home directory)</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir MYGO
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir MYGO
 export GOPATH<span style="color:#f92672">=</span>$HOME/MYGO
 go get github.com/rackspace/gophercloud
 go build launchOpenStackInstances.go
@@ -291,7 +291,7 @@ go build launchOpenStackInstances.go
 <li>An executable with name <code>launchOpenStackInstances</code> will be there.</li>
 </ul>
 <p>Below are the sample runs:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># ./launchOpenStackInstances</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># ./launchOpenStackInstances</span>
   -authurl string
         AUTH URL <span style="color:#f92672">(</span>default <span style="color:#e6db74">&#34;http://10.0.2.15:5000/v2.0&#34;</span><span style="color:#f92672">)</span>
   -flavor string
@@ -316,7 +316,7 @@ go build launchOpenStackInstances.go
         Total number of instances <span style="color:#f92672">(</span>default <span style="color:#e6db74">&#34;5&#34;</span><span style="color:#f92672">)</span>
   -user string
         OS Username <span style="color:#f92672">(</span>default <span style="color:#e6db74">&#34;admin&#34;</span><span style="color:#f92672">)</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># ./launchOpenStackInstances -authurl=http://10.0.2.15:5000/v2.0 -image=cirros -user=admin -password=xxxxx -tenant=admin -flavor=m1.tiny -region=RegionOne -total=3</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># ./launchOpenStackInstances -authurl=http://10.0.2.15:5000/v2.0 -image=cirros -user=admin -password=xxxxx -tenant=admin -flavor=m1.tiny -region=RegionOne -total=3</span>
 Creating VMs:
 B081CB981 VM creation request sent successfully.
  Details: <span style="color:#f92672">{</span> flavor<span style="color:#f92672">=</span>m1.tiny, image<span style="color:#f92672">=</span>cirros, network<span style="color:#f92672">=</span>private, sec_group<span style="color:#f92672">=</span>default <span style="color:#f92672">}</span>
@@ -330,7 +330,7 @@ B081CB983 VM creation request sent successfully.
 Assigning Floating IP to first instance. Can take a few seconds.
 <span style="color:#66d9ef">done</span>.
 </code></pre></div><p><strong>Note:</strong> B081CB981, B081CB982 and B081CB983 are VM names, that are generated dynamically. Program also tries to assign a <code>floatingIP</code> if available to the first VM in above list.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># ./launchOpenStackInstances -authurl=http://10.0.2.15:5000/v2.0 -image=cirros -user=admin -password=xxxxx -tenant=admin -flavor=m1.tiny -region=RegionOne -total=3 -hostnameprefix=mymachines</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># ./launchOpenStackInstances -authurl=http://10.0.2.15:5000/v2.0 -image=cirros -user=admin -password=xxxxx -tenant=admin -flavor=m1.tiny -region=RegionOne -total=3 -hostnameprefix=mymachines</span>
 Creating VMs:
 mymachines1 VM creation request sent successfully.
  Details: <span style="color:#f92672">{</span> flavor<span style="color:#f92672">=</span>m1.tiny, image<span style="color:#f92672">=</span>cirros, network<span style="color:#f92672">=</span>private, sec_group<span style="color:#f92672">=</span>default <span style="color:#f92672">}</span>

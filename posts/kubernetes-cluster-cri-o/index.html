@@ -103,7 +103,7 @@
 <p>It is assumed that you already have <code>VirtualBox</code> and <code>Vagrant</code> installed in your machine.</p>
 <h3 id="vagrantfile">Vagrantfile</h3>
 <p>Run following commands to create Vagrantfile.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir VAGRANT
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir VAGRANT
 cd VAGRANT
 cat <span style="color:#e6db74">&lt;&lt; EOF &gt;&gt; Vagrantfile
 </span><span style="color:#e6db74">all_hosts = [
@@ -148,12 +148,12 @@ cat <span style="color:#e6db74">&lt;&lt; EOF &gt;&gt; Vagrantfile
 </span><span style="color:#e6db74">end
 </span><span style="color:#e6db74">EOF</span>
 </code></pre></div><h3 id="bring-up-the-vms">Bring up the VMs</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant up master worker1
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant up master worker1
 </code></pre></div><h2 id="setup-master-node-as-kubernetes-control-plane">Setup Master node as Kubernetes control plane</h2>
 <p>Login to master node.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant ssh master
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant ssh master
 </code></pre></div><p>Optionally set <code>.vimrc</code> file with following content in <code>master</code> node.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ~/.vimrc
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ~/.vimrc
 </span><span style="color:#e6db74">set nocompatible
 </span><span style="color:#e6db74">set sw=2
 </span><span style="color:#e6db74">set ts=2
@@ -171,12 +171,12 @@ cat <span style="color:#e6db74">&lt;&lt; EOF &gt;&gt; Vagrantfile
 </span><span style="color:#e6db74">EOF</span>
 </code></pre></div><h3 id="fix-the-etchosts-file">Fix the <code>/etc/hosts</code> file</h3>
 <p>In <code>/etc/hosts</code> file, make sure <code>master.virtual.machine</code> and <code>master</code> are pointing to <code>10.0.0.10</code>.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">10.0.0.10 master.virtual.machine master
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">10.0.0.10 master.virtual.machine master
 </code></pre></div><p>Note: <code>10.0.0.10</code> is defined in <code>vagrantfile</code>.</p>
 <p><code>Vagrantfile</code> create two network interfaces for the virtual machines and hence two networks are available (Private and NAT). One network interface which is <code>private</code> will have the IP <code>10.0.0.10</code>. The other network interface will be for NAT to have internet connectivity. IP to this network interface is assigned by virtualbox dynamically.</p>
 <p>The two VMs (<code>master</code> and <code>worker</code>) can communicate with each other on their private IPs only. Their NAT IPs will not be able ping each other. Therefore while configuring kubernetes control plane, we will have to explicity mention the private IP of the master in options.</p>
 <p><code>master</code> node network interfaces:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu <span style="color:#ae81ff">65536</span> qdisc noqueue state UNKNOWN group default qlen <span style="color:#ae81ff">1000</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu <span style="color:#ae81ff">65536</span> qdisc noqueue state UNKNOWN group default qlen <span style="color:#ae81ff">1000</span>
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
     inet 127.0.0.1/8 scope host lo
        valid_lft forever preferred_lft forever
@@ -195,7 +195,7 @@ cat <span style="color:#e6db74">&lt;&lt; EOF &gt;&gt; Vagrantfile
     inet6 fe80::a00:27ff:fe1b:d0a5/64 scope link
        valid_lft forever preferred_lft forever
 </code></pre></div><p><code>worker</code> network interfaces:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu <span style="color:#ae81ff">65536</span> qdisc noqueue state UNKNOWN group default qlen <span style="color:#ae81ff">1000</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu <span style="color:#ae81ff">65536</span> qdisc noqueue state UNKNOWN group default qlen <span style="color:#ae81ff">1000</span>
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
     inet 127.0.0.1/8 scope host lo
        valid_lft forever preferred_lft forever
@@ -216,7 +216,7 @@ cat <span style="color:#e6db74">&lt;&lt; EOF &gt;&gt; Vagrantfile
 </code></pre></div><p><strong>Note</strong>: NAT interfaces (<code>enp0s3</code>) in both <code>master</code> and <code>worker1</code> nodes have same IP (10.0.2.15), but private inetrfaces (<code>enp0s8</code>) IPs are being assigned using the config defined in <code>Vagrantfile</code>.</p>
 <h3 id="install-cri-o-container-runtime">Install <code>cri-o</code> container runtime</h3>
 <p>Instructions for this page <a href="https://kubernetes.io/docs/setup/production-environment/container-runtimes/#cri-o">https://kubernetes.io/docs/setup/production-environment/container-runtimes/#cri-o</a> were followed to install the container runtime</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># Create the .conf file to load the modules at bootup</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># Create the .conf file to load the modules at bootup</span>
 cat <span style="color:#e6db74">&lt;&lt;EOF | sudo tee /etc/modules-load.d/crio.conf
 </span><span style="color:#e6db74">overlay
 </span><span style="color:#e6db74">br_netfilter
@@ -234,9 +234,9 @@ cat <span style="color:#e6db74">&lt;&lt;EOF | sudo tee /etc/sysctl.d/99-kubernet
 
 sudo sysctl --system
 </code></pre></div><p>Set variables according to the OS distribution</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">export OS<span style="color:#f92672">=</span>xUbuntu_18.04
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">export OS<span style="color:#f92672">=</span>xUbuntu_18.04
 export VERSION<span style="color:#f92672">=</span>1.20
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cat <span style="color:#e6db74">&lt;&lt;EOF | sudo tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cat <span style="color:#e6db74">&lt;&lt;EOF | sudo tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
 </span><span style="color:#e6db74">deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/$OS/ /
 </span><span style="color:#e6db74">EOF</span>
 cat <span style="color:#e6db74">&lt;&lt;EOF | sudo tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable:cri-o:$VERSION.list
@@ -248,8 +248,8 @@ curl -L https://download.opensuse.org/repositories/devel:kubic:libcontainers:sta
 
 sudo apt-get update
 sudo apt-get install cri-o cri-o-runc
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo systemctl status crio
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo crio-status info
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo systemctl status crio
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo crio-status info
 cgroup driver: systemd
 storage driver: overlay
 storage root: /var/lib/containers/storage
@@ -259,7 +259,7 @@ default UID mappings <span style="color:#f92672">(</span>format &lt;container&gt
   0:0:4294967295
 </code></pre></div><h3 id="install-kube-binaries">Install Kube binaries.</h3>
 <p>Steps were followed from this link <a href="https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/">https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/</a></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get update <span style="color:#f92672">&amp;&amp;</span> sudo apt-get install -y apt-transport-https curl
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get update <span style="color:#f92672">&amp;&amp;</span> sudo apt-get install -y apt-transport-https curl
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 cat <span style="color:#e6db74">&lt;&lt;EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
 </span><span style="color:#e6db74">deb https://apt.kubernetes.io/ kubernetes-xenial main
@@ -267,14 +267,14 @@ cat <span style="color:#e6db74">&lt;&lt;EOF | sudo tee /etc/apt/sources.list.d/k
 sudo apt-get update
 sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo systemctl daemon-reload
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo systemctl daemon-reload
 sudo systemctl start crio
 </code></pre></div><h3 id="generate-config-file-for-control-plane-configuration-using-kubeadm">Generate config file for control plane configuration using kubeadm</h3>
 <p>A helpful link: <a href="https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/">https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/</a></p>
 <p>generate initial dummy configuration file.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo kubeadm config print init-defaults &gt; init-defaults.yml
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo kubeadm config print init-defaults &gt; init-defaults.yml
 </code></pre></div><p>Make following modifications and some additions to the <code>init-defaults.yml</code> file</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff">apiVersion: kubeadm.k8s.io/v1beta2
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff">apiVersion: kubeadm.k8s.io/v1beta2
  bootstrapTokens:
  - groups:
 <span style="color:#f92672">-  - system:bootstrappers:kubeadm:default-node-token
@@ -310,7 +310,7 @@ sudo systemctl start crio
 <li>leading <code>-</code> =&gt; lines removed</li>
 </ul>
 <p>final <code>init-defaults.yml</code> will look below:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">kubeadm.k8s.io/v1beta2</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">kubeadm.k8s.io/v1beta2</span>
 <span style="color:#f92672">bootstrapTokens</span>:
 - <span style="color:#f92672">groups</span>:
   <span style="color:#f92672">usages</span>:
@@ -364,9 +364,9 @@ sudo systemctl start crio
 </ul>
 <h3 id="configure-control-plane-using-init-defaultsyml">Configure control plane using <code>init-defaults.yml</code></h3>
 <p>Run following command</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo kubeadm init --config<span style="color:#f92672">=</span>init-defaults.yml --node-name<span style="color:#f92672">=</span>master
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo kubeadm init --config<span style="color:#f92672">=</span>init-defaults.yml --node-name<span style="color:#f92672">=</span>master
 </code></pre></div><p>following was the output</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>init<span style="color:#f92672">]</span> Using Kubernetes version: v1.20.0
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>init<span style="color:#f92672">]</span> Using Kubernetes version: v1.20.0
 <span style="color:#f92672">[</span>preflight<span style="color:#f92672">]</span> Running pre-flight checks
 <span style="color:#f92672">[</span>preflight<span style="color:#f92672">]</span> Pulling images required <span style="color:#66d9ef">for</span> setting up a Kubernetes cluster
 <span style="color:#f92672">[</span>preflight<span style="color:#f92672">]</span> This might take a minute or two, depending on the speed of your internet connection
@@ -439,17 +439,17 @@ kubeadm join 10.0.0.10:6443 --token iqcz6s.23d1vgw7vdm3k4cv <span style="color:#
 </span><span style="color:#ae81ff"></span>    --discovery-token-ca-cert-hash sha256:bc1e33333b01e57b1f927fc5913668577cde464e08f833afe99218b6a43da306
 </code></pre></div><h3 id="configure-local-unix-user-to-run-kubectl-commands">Configure local unix user to run kubectl commands</h3>
 <p>Run the following commands as mentioned in above output.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir -p $HOME/.kube
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown <span style="color:#66d9ef">$(</span>id -u<span style="color:#66d9ef">)</span>:<span style="color:#66d9ef">$(</span>id -g<span style="color:#66d9ef">)</span> $HOME/.kube/config
 </code></pre></div><h3 id="enable-kubectl-auto-complete-optional">Enable kubectl auto-complete (Optional)</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">source &lt;<span style="color:#f92672">(</span>kubectl completion bash<span style="color:#f92672">)</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">source &lt;<span style="color:#f92672">(</span>kubectl completion bash<span style="color:#f92672">)</span>
 </code></pre></div><h3 id="check-various-components-in-control-plane">Check various components in control plane</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant@master:~$ kubectl get nodes -o wide
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant@master:~$ kubectl get nodes -o wide
 NAME     STATUS     ROLES                  AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION       CONTAINER-RUNTIME
 master   NotReady   control-plane,master   90s   v1.20.2   10.0.0.10     &lt;none&gt;        Ubuntu 18.04.5 LTS   4.15.0-130-generic   cri-o://1.20.0
 </code></pre></div><p><strong>Note:</strong> <code>master</code> node status in above output is <code>NotReady</code></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant@master:~$ kubectl get pods -o wide --all-namespaces
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant@master:~$ kubectl get pods -o wide --all-namespaces
 NAMESPACE     NAME                             READY   STATUS    RESTARTS   AGE    IP          NODE     NOMINATED NODE   READINESS GATES
 kube-system   coredns-74ff55c5b-4gntg          0/1     Pending   <span style="color:#ae81ff">0</span>          111s   &lt;none&gt;      &lt;none&gt;   &lt;none&gt;           &lt;none&gt;
 kube-system   coredns-74ff55c5b-xhrrl          0/1     Pending   <span style="color:#ae81ff">0</span>          111s   &lt;none&gt;      &lt;none&gt;   &lt;none&gt;           &lt;none&gt;
@@ -460,7 +460,7 @@ kube-system   kube-proxy-cp58h                 1/1     Running   <span style="co
 kube-system   kube-scheduler-master            1/1     Running   <span style="color:#ae81ff">0</span>          2m     10.0.0.10   master   &lt;none&gt;           &lt;none&gt;
 </code></pre></div><p><strong>Note:</strong> <code>coredns</code> pods in above output is <code>pending</code></p>
 <h3 id="apply-calico-networking">Apply <code>calico</code> networking</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
 </code></pre></div><p>Following was the output</p>
 <pre><code>configmap/calico-config created
 customresourcedefinition.apiextensions.k8s.io/bgpconfigurations.crd.projectcalico.org created
@@ -488,11 +488,11 @@ deployment.apps/calico-kube-controllers created
 serviceaccount/calico-kube-controllers created
 poddisruptionbudget.policy/calico-kube-controllers created
 </code></pre><h3 id="re-check-node-and-pod-status-now">Re-check node and pod status now</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant@master:~$ kubectl get nodes -o wide
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant@master:~$ kubectl get nodes -o wide
 NAME     STATUS   ROLES                  AGE     VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION       CONTAINER-RUNTIME
 master   Ready    control-plane,master   3m55s   v1.20.2   10.0.0.10     &lt;none&gt;        Ubuntu 18.04.5 LTS   4.15.0-130-generic   cri-o://1.20.0
 </code></pre></div><p><strong>Note:</strong> <code>master</code> node status is <code>Ready</code> now</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant@master:~$ kubectl get pods -o wide --all-namespaces
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant@master:~$ kubectl get pods -o wide --all-namespaces
 NAMESPACE     NAME                                      READY   STATUS    RESTARTS   AGE     IP               NODE     NOMINATED NODE   READINESS GATES
 kube-system   calico-kube-controllers-86bddfcff-tt7gq   1/1     Running   <span style="color:#ae81ff">0</span>          99s     172.168.219.67   master   &lt;none&gt;           &lt;none&gt;
 kube-system   calico-node-72zf5                         1/1     Running   <span style="color:#ae81ff">0</span>          99s     10.0.0.10        master   &lt;none&gt;           &lt;none&gt;
@@ -506,14 +506,14 @@ kube-system   kube-scheduler-master                     1/1     Running   <span 
 </code></pre></div><p><strong>Note:</strong> <code>coredns</code> pods status is <code>Running</code> now.</p>
 <h3 id="prepare-config-file-worker-nodes">Prepare config file worker nodes</h3>
 <p>We can use the token generated by <code>kubeadm init</code> command above. However we shall create a new one.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant@master:~$ sudo kubeadm token create --print-join-command
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant@master:~$ sudo kubeadm token create --print-join-command
 kubeadm join 10.0.0.10:6443 --token wk27p3.dwyr6hbg17pcncso     --discovery-token-ca-cert-hash sha256:bc1e33333b01e57b1f927fc5913668577cde464e08f833afe99218b6a43da306
 </code></pre></div><p>Take a note of <code>token</code> and <code>discovery-token-ca-cert-hash</code> in abobe output. We shall use that shortly in creating <code>join-defaults.yml</code> file.</p>
 <p>Run the following command to generate the <code>join-default</code> configuration for workers.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo kubeadm config print join-defaults &gt; join-defaults.yml
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo kubeadm config print join-defaults &gt; join-defaults.yml
 </code></pre></div><p>Make following modifications and additions to the <code>join-defaults.yml</code> file.
 We are using <code>token</code> and <code>caCertHashes</code> from above <code>kubeadm token create</code> command output.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff"> apiVersion: kubeadm.k8s.io/v1beta2
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff"> apiVersion: kubeadm.k8s.io/v1beta2
  caCertPath: /etc/kubernetes/pki/ca.crt
  discovery:
    bootstrapToken:
@@ -543,7 +543,7 @@ We are using <code>token</code> and <code>caCertHashes</code> from above <code>k
 <li>leading <code>-</code> =&gt; lines removed</li>
 </ul>
 <p>final <code>join-defaults.yml</code> will look like below:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">kubeadm.k8s.io/v1beta2</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">kubeadm.k8s.io/v1beta2</span>
 <span style="color:#f92672">caCertPath</span>: <span style="color:#ae81ff">/etc/kubernetes/pki/ca.crt</span>
 <span style="color:#f92672">discovery</span>:
   <span style="color:#f92672">bootstrapToken</span>:
@@ -571,14 +571,14 @@ We are using <code>token</code> and <code>caCertHashes</code> from above <code>k
 </ul>
 <h2 id="setup-worker-node">Setup worker node</h2>
 <p>Login to the <code>worker1</code> node</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant ssh worker1
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant ssh worker1
 </code></pre></div><h2 id="fix-the-etchosts-file-1">Fix the <code>/etc/hosts</code> file</h2>
 <p>In <code>/etc/hosts</code> file, make sure <code>worker1.virtual.machine</code> and <code>worker1</code> are pointing to <code>10.0.0.12</code>.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">10.0.0.12 worker1.virtual.machine worker1
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">10.0.0.12 worker1.virtual.machine worker1
 </code></pre></div><p>Note: <code>10.0.0.12</code> is defined in <code>vagrantfile</code>.</p>
 <h3 id="install-cri-o-container-runtime-1">Install <code>cri-o</code> container runtime</h3>
 <p>Instructions for this page <a href="https://kubernetes.io/docs/setup/production-environment/container-runtimes/#cri-o">https://kubernetes.io/docs/setup/production-environment/container-runtimes/#cri-o</a> were followed to install the container runtim</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># Create the .conf file to load the modules at bootup</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># Create the .conf file to load the modules at bootup</span>
 cat <span style="color:#e6db74">&lt;&lt;EOF | sudo tee /etc/modules-load.d/crio.conf
 </span><span style="color:#e6db74">overlay
 </span><span style="color:#e6db74">br_netfilter
@@ -596,9 +596,9 @@ cat <span style="color:#e6db74">&lt;&lt;EOF | sudo tee /etc/sysctl.d/99-kubernet
 
 sudo sysctl --system
 </code></pre></div><p>Set variables according to the OS distribution</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">export OS<span style="color:#f92672">=</span>xUbuntu_18.04
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">export OS<span style="color:#f92672">=</span>xUbuntu_18.04
 export VERSION<span style="color:#f92672">=</span>1.20
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cat <span style="color:#e6db74">&lt;&lt;EOF | sudo tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cat <span style="color:#e6db74">&lt;&lt;EOF | sudo tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
 </span><span style="color:#e6db74">deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/$OS/ /
 </span><span style="color:#e6db74">EOF</span>
 cat <span style="color:#e6db74">&lt;&lt;EOF | sudo tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable:cri-o:$VERSION.list
@@ -610,13 +610,13 @@ curl -L https://download.opensuse.org/repositories/devel:kubic:libcontainers:sta
 
 sudo apt-get update
 sudo apt-get install cri-o cri-o-runc
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo systemctl daemon-reload
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo systemctl daemon-reload
 sudo systemctl start crio
 <span style="color:#e6db74">``</span>
 
 <span style="color:#e6db74">```</span>bash
 sudo systemctl status crio
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo crio-status info
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo crio-status info
 cgroup driver: systemd
 storage driver: overlay
 storage root: /var/lib/containers/storage
@@ -626,7 +626,7 @@ default UID mappings <span style="color:#f92672">(</span>format &lt;container&gt
   0:0:4294967295
 </code></pre></div><h3 id="install-kube-binaries-1">Install Kube binaries.</h3>
 <p>Steps were followed from this link <a href="https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/">https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/</a></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get update <span style="color:#f92672">&amp;&amp;</span> sudo apt-get install -y apt-transport-https curl
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get update <span style="color:#f92672">&amp;&amp;</span> sudo apt-get install -y apt-transport-https curl
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 cat <span style="color:#e6db74">&lt;&lt;EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
 </span><span style="color:#e6db74">deb https://apt.kubernetes.io/ kubernetes-xenial main
@@ -637,9 +637,9 @@ sudo apt-mark hold kubelet kubeadm kubectl
 </code></pre></div><h3 id="joining-the-worker1-node">Joining the <code>worker1</code> node</h3>
 <p>Copy the <code>join-defaults.yml</code> file created in <code>master</code> node to <code>worker1</code> node.</p>
 <p>Run the following command in <code>worker1</code> node.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo kubeadm join --config<span style="color:#f92672">=</span>join-defaults.yml --node-name<span style="color:#f92672">=</span>worker1
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo kubeadm join --config<span style="color:#f92672">=</span>join-defaults.yml --node-name<span style="color:#f92672">=</span>worker1
 </code></pre></div><p>Following output was produced</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>preflight<span style="color:#f92672">]</span> Running pre-flight checks
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>preflight<span style="color:#f92672">]</span> Running pre-flight checks
 <span style="color:#f92672">[</span>preflight<span style="color:#f92672">]</span> Reading configuration from the cluster...
 <span style="color:#f92672">[</span>preflight<span style="color:#f92672">]</span> FYI: You can look at this config file with <span style="color:#e6db74">&#39;kubectl -n kube-system get cm kubeadm-config -o yaml&#39;</span>
 <span style="color:#f92672">[</span>kubelet-start<span style="color:#f92672">]</span> Writing kubelet configuration to file <span style="color:#e6db74">&#34;/var/lib/kubelet/config.yaml&#34;</span>
@@ -654,12 +654,12 @@ This node has joined the cluster:
 Run <span style="color:#e6db74">&#39;kubectl get nodes&#39;</span> on the control-plane to see this node join the cluster.
 </code></pre></div><h2 id="verify-cluster-installation">Verify cluster installation</h2>
 <h3 id="check-nodes-status-on-master-control-plane-node">Check nodes status on <code>master</code> (control plane) node</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant@master:~$ kubectl get nodes -o wide
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant@master:~$ kubectl get nodes -o wide
 NAME      STATUS   ROLES                  AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION       CONTAINER-RUNTIME
 master    Ready    control-plane,master   27m   v1.20.2   10.0.0.10     &lt;none&gt;        Ubuntu 18.04.5 LTS   4.15.0-130-generic   cri-o://1.20.0
 worker1   Ready    &lt;none&gt;                 78s   v1.20.2   10.0.0.12     &lt;none&gt;        Ubuntu 18.04.5 LTS   4.15.0-130-generic   cri-o://1.20.0
 </code></pre></div><h3 id="create-an-nginx-deployment">Create an <code>nginx</code> deployment</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant@master:~$ kubectl create deployment --image<span style="color:#f92672">=</span>nginx nginx --port<span style="color:#f92672">=</span><span style="color:#ae81ff">80</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant@master:~$ kubectl create deployment --image<span style="color:#f92672">=</span>nginx nginx --port<span style="color:#f92672">=</span><span style="color:#ae81ff">80</span>
 deployment.apps/nginx created
 
 vagrant@master:~$ kubectl get deployments.apps
@@ -670,19 +670,19 @@ vagrant@master:~$ kubectl get pods -o wide
 NAME                     READY   STATUS    RESTARTS   AGE   IP                NODE      NOMINATED NODE   READINESS GATES
 nginx-7848d4b86f-mfvt5   1/1     Running   <span style="color:#ae81ff">0</span>          56s   172.168.235.129   worker1   &lt;none&gt;           &lt;none&gt;
 </code></pre></div><h3 id="create-a-service">Create a service</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant@master:~$ kubectl expose deployment nginx --port<span style="color:#f92672">=</span><span style="color:#ae81ff">8080</span> --target-port<span style="color:#f92672">=</span><span style="color:#ae81ff">80</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant@master:~$ kubectl expose deployment nginx --port<span style="color:#f92672">=</span><span style="color:#ae81ff">8080</span> --target-port<span style="color:#f92672">=</span><span style="color:#ae81ff">80</span>
 service/nginx exposed
 
 vagrant@master:~$ kubectl get service -o wide
 NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT<span style="color:#f92672">(</span>S<span style="color:#f92672">)</span>    AGE   SELECTOR
 kubernetes   ClusterIP   10.96.0.1       &lt;none&gt;        443/TCP    30m   &lt;none&gt;
 nginx        ClusterIP   10.103.27.202   &lt;none&gt;        8080/TCP   31s   app<span style="color:#f92672">=</span>nginx
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant@master:~$ kubectl get ep -o wide
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant@master:~$ kubectl get ep -o wide
 NAME         ENDPOINTS            AGE
 kubernetes   10.0.0.10:6443       30m
 nginx        172.168.235.129:80   61s
 </code></pre></div><h4 id="check-nginx-service-created-above">Check nginx service created above.</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant@master:~$ curl http://10.103.27.202:8080
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant@master:~$ curl http://10.103.27.202:8080
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;

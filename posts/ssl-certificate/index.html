@@ -96,7 +96,7 @@
 <p>We will be creating our own CA (Certificate Authority), CSR (Certificate Signing Request), signed certificate. We will be creating server side and client side certificate and will verify them using <code>openssl</code> and <code>curl</code>.</p>
 <h1 id="prepare-environment">Prepare environment</h1>
 <h2 id="os-used">os used</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cat /etc/fedora-release
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cat /etc/fedora-release
 Fedora release <span style="color:#ae81ff">30</span> <span style="color:#f92672">(</span>Thirty<span style="color:#f92672">)</span>
 
 $ uname -a
@@ -104,7 +104,7 @@ Linux localhost.localdomain 5.0.9-301.fc30.x86_64 <span style="color:#75715e">#1
 </code></pre></div><h2 id="prepare-openssl-conf-files">Prepare openssl conf files</h2>
 <p>A reference conf file can be found in <code>/etc/pki/tls/openssl.cnf</code> location and by default openssl uses this file. We will be creating our own conf files. One for CA and other one to generate CSRs.</p>
 <p><strong>Note:</strong> You do not need to be <code>root</code> to run following commands.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ mkdir -p myPKI
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ mkdir -p myPKI
 $ cd mkPKI
 $ mkdir -p caCert  caDatabase  CSRs  newCreatedCerts  opensslConf  privateKeys
 $ touch caDatabase/index.txt
@@ -268,7 +268,7 @@ DNS.1 = myhost.full.domain.name
 [ san_names ]
 DNS.1 = client.full.domain.name
 </code></pre><h2 id="create-self-signed-ca-certificate">Create self signed CA certificate.</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cd myPKI
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cd myPKI
 $ openssl req -config opensslConf/CA_openssl.cnf <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>-new -x509 <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>-out caCert/myCA.crt <span style="color:#ae81ff">\
@@ -284,7 +284,7 @@ writing new private key to <span style="color:#e6db74">&#39;caCert/myCAkey.pem&#
 Enter PEM pass phrase:
 Verifying - Enter PEM pass phrase:
 -----
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ls -1 caCert/
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ls -1 caCert/
 myCA.crt
 myCAkey.pem
 </code></pre></div><h2 id="check-ca-certificate">Check CA certificate</h2>
@@ -358,7 +358,7 @@ error 18 at 0 depth lookup: self signed certificate
 error caCert/myCA.crt: verification failed
 </code></pre><p><strong>Note:</strong> Above verification failed because this CA cert is self signed and is NOT issued by certified authority.</p>
 <p>Run following command to tell <code>openssl</code> to use our signed CA cert.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ openssl verify -CAfile caCert/myCA.crt -verbose  caCert/myCA.crt
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ openssl verify -CAfile caCert/myCA.crt -verbose  caCert/myCA.crt
 
 caCert/myCA.crt: OK
 </code></pre></div><h2 id="create-a-csr-request-for-server">Create a CSR request for server.</h2>
@@ -379,7 +379,7 @@ Generating a RSA private key
 ........+++++
 writing new private key to 'privateKeys/serverKey.pem'
 -----
-</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ls -1 CSRs/
+</code></pre><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ls -1 CSRs/
 server.csr
 </code></pre></div><h2 id="create-a-csr-request-for-client">Create a CSR request for client.</h2>
 <pre><code>$ openssl req \
@@ -399,7 +399,7 @@ Generating a RSA private key
 .............+++++
 writing new private key to 'privateKeys/myClientKey.pem'
 -----
-</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ls -og privateKeys/
+</code></pre><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ls -og privateKeys/
 total <span style="color:#ae81ff">8</span>
 -rw-------. <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1704</span> Aug  <span style="color:#ae81ff">3</span> 13:03 myClientKey.pem
 -rw-------. <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1704</span> Aug  <span style="color:#ae81ff">3</span> 12:17 serverKey.pem
@@ -580,7 +580,7 @@ Sign the certificate? [y/n]:y
 1 out of 1 certificate requests certified, commit? [y/n]y
 Write out database with 1 new entries
 Data Base Updated
-</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ls -og  newCreatedCerts/
+</code></pre><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ls -og  newCreatedCerts/
 total <span style="color:#ae81ff">16</span>
 -rw-rw-r--. <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">5035</span> Aug  <span style="color:#ae81ff">3</span> 12:40 10.pem
 -rw-rw-r--. <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">5035</span> Aug  <span style="color:#ae81ff">3</span> 12:40 serverCert.pem
@@ -652,7 +652,7 @@ Certificate:
          72:1f:c9:dc:e4:69:da:1e:31:30:63:d0:2c:cd:a1:e8:f0:ce:
          e3:9d:36:a8
 </code></pre><h3 id="verify-server-certificate">Verify server certificate</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ openssl verify  -CAfile caCert/myCA.crt newCreatedCerts/serverCert.pem
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ openssl verify  -CAfile caCert/myCA.crt newCreatedCerts/serverCert.pem
 
 newCreatedCerts/serverCert.pem: OK
 </code></pre></div><h2 id="sign-client-csr-and-generate-client-certificate">Sign client CSR and generate client certificate</h2>
@@ -703,7 +703,7 @@ Sign the certificate? [y/n]:y
 1 out of 1 certificate requests certified, commit? [y/n]y
 Write out database with 1 new entries
 Data Base Updated
-</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ls -og newCreatedCerts/
+</code></pre><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ls -og newCreatedCerts/
 total <span style="color:#ae81ff">32</span>
 -rw-rw-r--. <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">5035</span> Aug  <span style="color:#ae81ff">3</span> 12:40 10.pem
 -rw-rw-r--. <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">5034</span> Aug  <span style="color:#ae81ff">3</span> 13:18 11.pem
@@ -779,7 +779,7 @@ Certificate:
 </code></pre><h2 id="verify-clientserver-connectivity-using-certs">Verify Client/Server connectivity using certs.</h2>
 <p>Please note that our server certificate was created using <code>CN=myhost.full.domain.name</code>. This is imaginary hostname but client must use <code>myhost.full.domain.name</code> to connect to server.</p>
 <p>Create a test html file <code>atest.html</code> that will be served by openssl server.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cd myPKI
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cd myPKI
 $ mkdir -p serveContent
 $ touch serveContent/atest.html
 $ <span style="color:#f92672">(</span> cat <span style="color:#e6db74">&lt;&lt;EOF
@@ -788,9 +788,9 @@ $ <span style="color:#f92672">(</span> cat <span style="color:#e6db74">&lt;&lt;E
 <span style="color:#f92672">)</span> &gt; serveContent/atest.html
 </code></pre></div><h2 id="attemps-to-connect-and-fetch-a-page-from-server-no-mutual-auth">Attemps to connect and fetch a page from server (NO mutual auth)</h2>
 <p>Start a SSL server.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ host myhost.full.domain.name
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ host myhost.full.domain.name
 Host myhost.full.domain.name not found: 3<span style="color:#f92672">(</span>NXDOMAIN<span style="color:#f92672">)</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ openssl s_server <span style="color:#ae81ff">\
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ openssl s_server <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>-accept <span style="color:#ae81ff">9999</span> <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>-CAfile caCert/myCA.crt <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>-cert newCreatedCerts/serverCert.pem <span style="color:#ae81ff">\
@@ -817,7 +817,7 @@ how to fix it, please visit the web page mentioned above.
 </code></pre><p><strong>Note:</strong> The error above is due to the mismatch between client calling the server name as <code>localhost</code> and certificate&rsquo;s <code>SAN</code> name as <code>myhost.full.domain.name</code></p>
 <h4 id="fetch-atesthtml-file-with-correct-server-hostname">Fetch <code>atest.html</code> file with correct server hostname</h4>
 <p>using correct server name</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl https://myhost.full.domain.name:9999/serveContent/atest.html --cacert caCert/myCA.crt
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl https://myhost.full.domain.name:9999/serveContent/atest.html --cacert caCert/myCA.crt
 
 curl: <span style="color:#f92672">(</span>6<span style="color:#f92672">)</span> Could not resolve host: myhost.full.domain.name
 </code></pre></div><h4 id="fixing-dns-resolution-for-myhostfulldomainname">Fixing DNS resolution for <code>myhost.full.domain.name</code></h4>
@@ -834,7 +834,7 @@ dnsmasq: reading /etc/resolv.conf
 dnsmasq: ignoring nameserver 127.0.0.1 - local interface
 dnsmasq: using nameserver 192.168.97.2#53
 dnsmasq: read /etc/hosts - 2 addresses
-</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ host myhost.full.domain.name
+</code></pre><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ host myhost.full.domain.name
 myhost.full.domain.name has address 127.0.0.1
 </code></pre></div><h4 id="fetch-atesthtml-file-securely-after-dns-resolution-fix">Fetch <code>atest.html</code> file securely after DNS resolution fix.</h4>
 <p>secure fetch.</p>
@@ -856,18 +856,18 @@ Using default temp DH parameters
 ACCEPT
 </code></pre><h4 id="fetch-atesthtml-in-insecure-way">Fetch <code>atest.html</code> in <code>insecure</code> way</h4>
 <p>insecure fetch</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl https://myhost.full.domain.name:9999/serveContent/atest.html <span style="color:#ae81ff">\
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl https://myhost.full.domain.name:9999/serveContent/atest.html <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>--insecure
 
 curl: <span style="color:#f92672">(</span>56<span style="color:#f92672">)</span> OpenSSL SSL_read: error:1409445C:SSL routines:ssl3_read_bytes:tlsv13 alert certificate required, errno <span style="color:#ae81ff">0</span>
 </code></pre></div><h4 id="fetch-atesthtml-secure-way">Fetch <code>atest.html</code> secure way</h4>
 <p>secure fetch</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl https://myhost.full.domain.name:9999/serveContent/atest.html <span style="color:#ae81ff">\
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl https://myhost.full.domain.name:9999/serveContent/atest.html <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>--cacert caCert/myCA.crt
 
 curl: <span style="color:#f92672">(</span>56<span style="color:#f92672">)</span> OpenSSL SSL_read: error:1409445C:SSL routines:ssl3_read_bytes:tlsv13 alert certificate required, errno <span style="color:#ae81ff">0</span>
 </code></pre></div><h4 id="fetch-atesthtml-secure-way-using-client-certs-mutual-auth">Fetch <code>atest.html</code> secure way using client certs (mutual auth)</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl https://myhost.full.domain.name:9999/serveContent/atest.html <span style="color:#ae81ff">\
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl https://myhost.full.domain.name:9999/serveContent/atest.html <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>--cacert caCert/myCA.crt <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>--cert newCreatedCerts/myClientCert.pem <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>--key privateKeys/myClientKey.pem

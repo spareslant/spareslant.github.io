@@ -72,20 +72,20 @@
 <li>We want this web-service to be accessible in the browser running in localmachine (i.e <code>192.168.0.17</code>)</li>
 </ul>
 <h3 id="get-ssh-port-of-vagrant-vm">Get ssh port of Vagrant VM</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant port master
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant port master
 </code></pre></div><p>In my case it was 2200.</p>
 <h3 id="what-does-vagrant-ssh-port-means">what does vagrant ssh port means?</h3>
 <p>Normally ssh into Vagrant VM is done by running following command.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant ssh master
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant ssh master
 </code></pre></div><p>But you can also login to <code>master</code> using following command.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh -p <span style="color:#ae81ff">2200</span> vagrant@127.0.0.1 -i ~/VAGRANT/.vagrant/machines/master/virtualbox/private_key
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh -p <span style="color:#ae81ff">2200</span> vagrant@127.0.0.1 -i ~/VAGRANT/.vagrant/machines/master/virtualbox/private_key
 </code></pre></div><h3 id="create-tunnel">Create Tunnel</h3>
 <p>Run the following command from host having <code>192.168.0.17</code> IP.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh  -L <span style="color:#e6db74">&#34;*&#34;</span>:9090:localhost:8080 user1@192.168.0.19 <span style="color:#e6db74">&#34;ssh -L 8080:10.0.0.10:31421 vagrant@127.0.0.1 -p 2200 -i ~/VAGRANT/.vagrant/machines/master/virtualbox/private_key&#34;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh  -L <span style="color:#e6db74">&#34;*&#34;</span>:9090:localhost:8080 user1@192.168.0.19 <span style="color:#e6db74">&#34;ssh -L 8080:10.0.0.10:31421 vagrant@127.0.0.1 -p 2200 -i ~/VAGRANT/.vagrant/machines/master/virtualbox/private_key&#34;</span>
 </code></pre></div><p>Above command will create an ssh tunnel that will forawrd the port of the service listening on <code>10.0.0.10:31421</code> to <code>192.168.0.17</code>. You can then access this service on <code>https://192.168.0.17:9090</code> and <code>https://localhost:9090/</code></p>
 <h4 id="vagrantfile-used-to-create-vm">VagrantFile used to create VM.</h4>
 <p>Following Vagrantfile was used to create VM inside remote-machine (192.168.0.19)</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">all_hosts <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">all_hosts <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>
     {
         <span style="color:#e6db74">vagrant_hostname</span>: <span style="color:#e6db74">&#34;master&#34;</span>,
         <span style="color:#e6db74">full_hostname</span>: <span style="color:#e6db74">&#34;master.virtual.machine&#34;</span>,

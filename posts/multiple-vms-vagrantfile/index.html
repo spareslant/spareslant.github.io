@@ -61,11 +61,11 @@
 			<h2 id="introduction">Introduction</h2>
 <p>A <code>Vagrantfile</code> for multiple VMS.</p>
 <h2 id="prepare-environment">Prepare Environment</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir Vagrant_VMS
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir Vagrant_VMS
 cd Vagrant_VMS
 vagrant init
 </code></pre></div><h2 id="populate-vagrantfile-with-following-contents">Populate <code>Vagrantfile</code> with following contents.</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Ruby" data-lang="Ruby">all_hosts <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Ruby" data-lang="Ruby">all_hosts <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>
     {
         <span style="color:#e6db74">vagrant_hostname</span>: <span style="color:#e6db74">&#34;amachine&#34;</span>,
         <span style="color:#e6db74">full_hostname</span>: <span style="color:#e6db74">&#34;amachine.virtual.machine&#34;</span>,
@@ -109,7 +109,7 @@ vagrant init
     config<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>synced_folder <span style="color:#e6db74">&#34;.&#34;</span>, <span style="color:#e6db74">&#34;/vagrant&#34;</span>, <span style="color:#e6db74">type</span>: <span style="color:#e6db74">&#34;nfs&#34;</span>
 <span style="color:#66d9ef">end</span>
 </code></pre></div><h2 id="start-vms">Start VMs</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant up amachine
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant up amachine
 </code></pre></div><p><strong>Note:</strong> You need to mention vm name in <code>vagrant up</code> command due to presense of <code>autostart: false</code> in above Vagrantfile.</p>
 
 		</div>

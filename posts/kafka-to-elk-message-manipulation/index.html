@@ -74,13 +74,13 @@
 <p><code>console app (to send json message) -&gt; kafka -&gt; logstash -&gt; elasticSearch -&gt; kibana</code></p>
 <p>We will be using ruby filter to manipulate the message as well and docker to setup the environment.</p>
 <h2 id="setup">Setup</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir kafka-elk
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir kafka-elk
 cd kafka-elk
 wget http://apache.mirror.anlx.net/kafka/2.5.0/kafka_2.13-2.5.0.tgz
 tar xvf kafka_2.13-2.5.0.tgz
 </code></pre></div><p>Note: We need kafka binaries to get the script that can send json message via console to kafka.</p>
 <h3 id="populate-docker-composeyml-file-with-following-contents">Populate <code>docker-compose.yml</code> file with following contents</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#f92672">version</span>: <span style="color:#e6db74">&#39;2&#39;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#f92672">version</span>: <span style="color:#e6db74">&#39;2&#39;</span>
 
 <span style="color:#f92672">services</span>:
   <span style="color:#f92672">zookeeper</span>:
@@ -169,7 +169,7 @@ tar xvf kafka_2.13-2.5.0.tgz
   <span style="color:#f92672">elastic_data</span>:
     <span style="color:#f92672">driver</span>: <span style="color:#ae81ff">local</span>
 </code></pre></div><h3 id="create-logstashconf-file">create <code>logstash.conf</code> file</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cat <span style="color:#e6db74">&lt;&lt;EOF &gt; logstash.conf
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cat <span style="color:#e6db74">&lt;&lt;EOF &gt; logstash.conf
 </span><span style="color:#e6db74">input {
 </span><span style="color:#e6db74">  kafka {
 </span><span style="color:#e6db74">    bootstrap_servers =&gt; &#34;kafka:9092&#34;
@@ -233,10 +233,10 @@ tar xvf kafka_2.13-2.5.0.tgz
 </span><span style="color:#e6db74">}
 </span><span style="color:#e6db74">EOF</span>
 </code></pre></div><h3 id="create-logstashyml-with-following-contents">create <code>logstash.yml</code> with following contents</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#f92672">http.host</span>: <span style="color:#e6db74">&#34;0.0.0.0&#34;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#f92672">http.host</span>: <span style="color:#e6db74">&#34;0.0.0.0&#34;</span>
 <span style="color:#f92672">config.support_escapes</span>: <span style="color:#66d9ef">true</span>
 </code></pre></div><h3 id="create-manipulate_msgrb-with-following-contents">create <code>manipulate_msg.rb</code> with following contents.</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">filter</span>(event)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">filter</span>(event)
   <span style="color:#75715e"># get the message line sent by kafka or any other source like syslog</span>
   message <span style="color:#f92672">=</span> event<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;message&#34;</span>)
   event<span style="color:#f92672">.</span>set(<span style="color:#e6db74">&#34;newField&#34;</span>, <span style="color:#e6db74">&#34;newValue&#34;</span>)
@@ -245,7 +245,7 @@ tar xvf kafka_2.13-2.5.0.tgz
 </code></pre></div><p><strong>Note:</strong> We are manipulating the message coming from kafka by adding an extra field/value pair to the message in logstash ruby filter which will be visible in kibana.</p>
 <p><strong>Note</strong> Kafka is not pushing messages to logstash. Its the logstash that pulling messages from kafka (acting as kafka consumer).</p>
 <h3 id="create-a-samplejson-file-with-following-contents">Create a <code>sample.json</code> file with following contents</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
   <span style="color:#f92672">&#34;menu&#34;</span>: {
     <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#e6db74">&#34;file with space&#34;</span>,
     <span style="color:#f92672">&#34;value&#34;</span>: <span style="color:#e6db74">&#34;File&#34;</span>,
@@ -262,19 +262,19 @@ tar xvf kafka_2.13-2.5.0.tgz
 <p>Multiline codec will make json record just a series of characters (a long string) and record&rsquo;s keys/fields will not be recoginzed in kibana as separate fields. You might need to make changes to ruby filter so that kibana can show record&rsquo;s key/fields as individual searchable fields.</p>
 <p>To keep things simple, we will be converting our json in a flat structure and use codec json in logstash.conf&rsquo;s kafka input plugin.</p>
 <h3 id="flatten-the-json-record">flatten the json record.</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cat sample.json |  perl -wp -e <span style="color:#e6db74">&#39;s/\n+//g&#39;</span> &gt; flat_sample.json
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cat sample.json |  perl -wp -e <span style="color:#e6db74">&#39;s/\n+//g&#39;</span> &gt; flat_sample.json
 </code></pre></div><h2 id="start-the-whole-setup">Start the whole setup</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker-compose up -d
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker-compose up -d
 </code></pre></div><p><strong>Note</strong>: You can bring down whole setup by running this command <code>docker-compose down -v</code></p>
 <h2 id="setup-kibana">Setup kibana</h2>
 <p>Wait for a minute for above setup to come up fully, and open Kibana URL: http://localhost:5601/ . You need to create an index pattern with logstash-* as index patten (inside management). But before you can create index-pattern you need to send some data to elastic search. That can be sent via running below mentioned kafka-console-producer.sh command. Once you have sent the json , you should be able to create index pattern. Now click on &ldquo;discover&rdquo; to view the sent data. Try sending more data.</p>
 <h2 id="send-json-data-via-kafka">send json data via kafka</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kafka_2.13-2.5.0/bin/kafka-console-producer.sh --topic <span style="color:#e6db74">&#34;transform-text&#34;</span> --bootstrap-server localhost:29092 &lt; flat_sample.json
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kafka_2.13-2.5.0/bin/kafka-console-producer.sh --topic <span style="color:#e6db74">&#34;transform-text&#34;</span> --bootstrap-server localhost:29092 &lt; flat_sample.json
 </code></pre></div><p><strong>Note</strong>: Kafka input plugin is using json codec</p>
 <p><strong>Note:</strong> You should see json data visible in Kibana.
 <strong>Note</strong> You can see data being ingested by logstash by viewing logstash logs <code>docker logs -f logstash</code></p>
 <h2 id="send-json-data-via-syslog-port-5000">send json data via syslog port 5000</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"> cat flat_sample.json | nc localhost <span style="color:#ae81ff">5000</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"> cat flat_sample.json | nc localhost <span style="color:#ae81ff">5000</span>
 </code></pre></div><p><strong>Note:</strong> tcp input plugin is using port 5000 which is can be used by syslog as well.
 <strong>Note:</strong> above command is sending data straight to logstash (skipping kafka)
 <strong>Note:</strong> tcp input plugin is using multiline codec.</p>

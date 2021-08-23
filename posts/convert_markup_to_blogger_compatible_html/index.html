@@ -76,13 +76,13 @@
 <p>We will be converting a <code>markup</code> file to a <code>blogger</code> compatible <code>html</code>.</p>
 <h2 id="install-pandoc-and-github-html5-template">Install <code>pandoc</code> and <code>GitHUB html5</code> Template</h2>
 <p>Install <code>pandoc</code> using URL <em><a href="https://pandoc.org/installing.html">https://pandoc.org/installing.html</a></em> . Create a workspace and clone following git repos in that workspace area.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir $HOME/panDocs
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir $HOME/panDocs
 cd $HOME/panDocs
 git clone https://github.com/tajmone/pandoc-goodies.git
 cd pandoc-goodies/templates/html5/github/src
 </code></pre></div><h3 id="modify-above-github-html5-template-source-code-for-blogger">Modify above <code>GitHUB html5 template</code> source code for blogger.</h3>
 <p>Make the <code>padding</code> and <code>max-width</code> changes in <code>_github-markdown.scss</code> file as follows:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff">$ git diff templates/html5/github/src/_github-markdown.scss
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff">$ git diff templates/html5/github/src/_github-markdown.scss
 diff --git a/templates/html5/github/src/_github-markdown.scss b/templates/html5/github/src/_github-markdown.scss
 index 479b5fc..54c9abb 100644
 <span style="color:#f92672">--- a/templates/html5/github/src/_github-markdown.scss
@@ -100,7 +100,7 @@ index 479b5fc..54c9abb 100644
    a {
      color: #0366d6;
 </code></pre></div><p>Change the css source file name in <code>src/css-injector.js</code> as follows:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff">$ git diff css-injector.js
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff">$ git diff css-injector.js
 diff --git a/templates/html5/github/src/css-injector.js b/templates/html5/github/src/css-injector.js
 index 861494d..14b5597 100644
 <span style="color:#f92672">--- a/templates/html5/github/src/css-injector.js
@@ -115,7 +115,7 @@ index 861494d..14b5597 100644
  placeHolder   = &#34;{{CSS-INJECT}}&#34;      // Placeholder string for CSS-injection
 </code></pre></div><h3 id="compile-scss-file">Compile scss file.</h3>
 <p>Note: You need to install <code>node</code> on your system in order to compile.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd pandoc-goodies/templates/html5/github/src
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd pandoc-goodies/templates/html5/github/src
 npm init -y
 npm install node-sass
 ./node_modules/node-sass/bin/node-sass --source-map true --output-style<span style="color:#f92672">=</span>expanded --indent-type space GitHub.scss &gt; GitHub.css
@@ -149,7 +149,7 @@ node css-injector.js
     ```
 </code></pre><h2 id="create-a-conversion-script">Create a conversion script.</h2>
 <p>Create a shell script say <code>generate_html_for_blogger.sh</code> with following contents in <code>$HOME/panDocs</code> folder.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#! /bin/bash
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#! /bin/bash
 </span><span style="color:#75715e"></span>
 <span style="color:#f92672">[[</span> $1 <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#f92672">]]</span> <span style="color:#f92672">&amp;&amp;</span> echo <span style="color:#e6db74">&#34;pass a html filename as first argument&#34;</span> <span style="color:#f92672">&amp;&amp;</span> exit <span style="color:#ae81ff">2</span>
 
@@ -163,7 +163,7 @@ pandoc <span style="color:#e6db74">&#34;</span>$input_file<span style="color:#e6
 cat <span style="color:#e6db74">&#34;</span>$output_file<span style="color:#e6db74">&#34;</span> | perl -wpl -e <span style="color:#e6db74">&#39;s!\&lt;code\&gt;(.+?)\&lt;/code\&gt;!\&lt;span class=\&#34;code&#34;\&gt;$1\&lt;/span\&gt;!g&#39;</span> &gt; <span style="color:#e6db74">&#34;</span>$output_file_code_tag_removed<span style="color:#e6db74">&#34;</span>
 echo <span style="color:#e6db74">&#34;file geneated: </span>$output_file_code_tag_removed<span style="color:#e6db74">&#34;</span>
 </code></pre></div><h3 id="run-the-script">Run the script.</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ./generate_html_for_blogger.sh markupContent.md
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ./generate_html_for_blogger.sh markupContent.md
 <span style="color:#f92672">[</span>WARNING<span style="color:#f92672">]</span> This document format requires a nonempty &lt;title&gt; element.
   Defaulting to <span style="color:#e6db74">&#39;markupContent&#39;</span> as the title.
   To specify a title, use <span style="color:#e6db74">&#39;title&#39;</span> in metadata or --metadata title<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;...&#34;</span>.
@@ -209,7 +209,7 @@ file geneated: markupContent.code_tag_removed.html
     &lt;span class=&quot;hlb&quot;&gt;This Text is colorized.&lt;/span&gt;
     &lt;/pre&gt;
 </code></pre><h3 id="run-the-script-1">Run the script.</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ./generate_html_for_blogger.sh markupContent.md
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ./generate_html_for_blogger.sh markupContent.md
 <span style="color:#f92672">[</span>WARNING<span style="color:#f92672">]</span> This document format requires a nonempty &lt;title&gt; element.
   Defaulting to <span style="color:#e6db74">&#39;markupContent&#39;</span> as the title.
   To specify a title, use <span style="color:#e6db74">&#39;title&#39;</span> in metadata or --metadata title<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;...&#34;</span>.

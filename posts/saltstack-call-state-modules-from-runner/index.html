@@ -68,7 +68,7 @@
 <li>salt-minion installed and configured to accept command from salt-master.</li>
 </ul>
 <p><code>/etc/salt/master</code> file used:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">log_level</span>: <span style="color:#ae81ff">debug</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">log_level</span>: <span style="color:#ae81ff">debug</span>
 
 <span style="color:#f92672">fileserver_backend</span>:
   - <span style="color:#ae81ff">roots</span>
@@ -80,13 +80,13 @@
 <span style="color:#f92672">runner_dirs</span>:
   - <span style="color:#ae81ff">/srv/salt/_runners</span>
 </code></pre></div><p><code>/etc/salt/minion</code> file used:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">master</span>: <span style="color:#ae81ff">salt</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">master</span>: <span style="color:#ae81ff">salt</span>
 </code></pre></div><p><strong>Note1:</strong> In <code>/etc/salt/master</code> file, <code>log_level</code> is set to <code>debug</code>. Normally this will be <code>info</code>.</p>
 <p><strong>Note2:</strong> we have to explicitly specify runners directory. In case of executions modules and state modules this is not required. we also need to restart salt-master if any entry is added to <code>/etc/salt/master</code> file.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir /srv/salt/_runners
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir /srv/salt/_runners
 touch /srv/salt/_runners/custom_runner.py
 </code></pre></div><p>Contents of <code>/srv/salt/_runners/custom_runner.py</code> are as follows:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> salt.client
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> salt.client
 <span style="color:#f92672">import</span> salt.loader
 <span style="color:#f92672">import</span> salt.config
 <span style="color:#f92672">import</span> pprint
@@ -101,7 +101,7 @@ client <span style="color:#f92672">=</span> salt<span style="color:#f92672">.</s
     __salt__ <span style="color:#f92672">=</span> salt<span style="color:#f92672">.</span>loader<span style="color:#f92672">.</span>minion_mods(__opts__, utils<span style="color:#f92672">=</span>__utils__)
 
     <span style="color:#75715e"># state_mods is not being populated with all the state modules. Perhaps arguments need to be set.</span>
-    state_mods <span style="color:#f92672">=</span> salt<span style="color:#f92672">.</span>loader<span style="color:#f92672">.</span>states(__opts__, None, None, None)
+    state_mods <span style="color:#f92672">=</span> salt<span style="color:#f92672">.</span>loader<span style="color:#f92672">.</span>states(__opts__, <span style="color:#66d9ef">None</span>, <span style="color:#66d9ef">None</span>, <span style="color:#66d9ef">None</span>)
     execution_mods <span style="color:#f92672">=</span> salt<span style="color:#f92672">.</span>loader<span style="color:#f92672">.</span>minion_mods(__opts__)
 
     <span style="color:#75715e"># print all state modules available in this runner</span>
@@ -131,7 +131,7 @@ client <span style="color:#f92672">=</span> salt<span style="color:#f92672">.</s
     execute_state_mod_on_minion_from_runner()
 </code></pre></div><p>Now we are ready to execute this runner.</p>
 <p>Call a state module on salt-master itself via runner.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@salt-master# salt-run custom_runner.call_state_mod_on_saltmaster_from_runner
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@salt-master# salt-run custom_runner.call_state_mod_on_saltmaster_from_runner
 changes:
     ----------
 comment:
@@ -143,7 +143,7 @@ result:
 <span style="color:#f92672">[</span>INFO    <span style="color:#f92672">]</span> Runner completed: <span style="color:#ae81ff">20170109175501129807</span>
 </code></pre></div><p><strong>Note:</strong> Please note that <code>wait_for_event</code> is a state module available to salt-Master. There are only a handful of state modules available to salt-master. Most of the state modules are for clients. Read comments in <code>custom_runner.py</code> file for more information.</p>
 <p>Execute a state file from runner onto minion (client):</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@salt-master# salt-run custom_runner.execute_state_file_on_minion_from_runner
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@salt-master# salt-run custom_runner.execute_state_file_on_minion_from_runner
 fedora2.vagrant.box:
     ----------
     pkg_|-install tcpdump_|-tcpdump_|-installed:

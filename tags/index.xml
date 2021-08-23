@@ -6,7 +6,61 @@
     <description>Recent content in Tags on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Fri, 14 May 2021 06:58:28 +0100</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 23 Aug 2021 22:29:22 +0100</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>cri-o</title>
+      <link>/tags/cri-o/</link>
+      <pubDate>Mon, 23 Aug 2021 22:29:22 +0100</pubDate>
+      
+      <guid>/tags/cri-o/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>k8s</title>
+      <link>/tags/k8s/</link>
+      <pubDate>Mon, 23 Aug 2021 22:29:22 +0100</pubDate>
+      
+      <guid>/tags/k8s/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>kubernetes</title>
+      <link>/tags/kubernetes/</link>
+      <pubDate>Mon, 23 Aug 2021 22:29:22 +0100</pubDate>
+      
+      <guid>/tags/kubernetes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vagrant</title>
+      <link>/tags/vagrant/</link>
+      <pubDate>Mon, 23 Aug 2021 22:29:22 +0100</pubDate>
+      
+      <guid>/tags/vagrant/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vagrantfile</title>
+      <link>/tags/vagrantfile/</link>
+      <pubDate>Mon, 23 Aug 2021 22:29:22 +0100</pubDate>
+      
+      <guid>/tags/vagrantfile/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>virtualbox</title>
+      <link>/tags/virtualbox/</link>
+      <pubDate>Mon, 23 Aug 2021 22:29:22 +0100</pubDate>
+      
+      <guid>/tags/virtualbox/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>json</title>
       <link>/tags/json/</link>
@@ -40,60 +94,6 @@
       <pubDate>Sun, 07 Feb 2021 22:18:02 +0000</pubDate>
       
       <guid>/tags/cgroups/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>cri-o</title>
-      <link>/tags/cri-o/</link>
-      <pubDate>Sun, 07 Feb 2021 22:18:02 +0000</pubDate>
-      
-      <guid>/tags/cri-o/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>k8s</title>
-      <link>/tags/k8s/</link>
-      <pubDate>Sun, 07 Feb 2021 22:18:02 +0000</pubDate>
-      
-      <guid>/tags/k8s/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>kubernetes</title>
-      <link>/tags/kubernetes/</link>
-      <pubDate>Sun, 07 Feb 2021 22:18:02 +0000</pubDate>
-      
-      <guid>/tags/kubernetes/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>vagrant</title>
-      <link>/tags/vagrant/</link>
-      <pubDate>Sun, 07 Feb 2021 22:18:02 +0000</pubDate>
-      
-      <guid>/tags/vagrant/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>vagrantfile</title>
-      <link>/tags/vagrantfile/</link>
-      <pubDate>Sun, 07 Feb 2021 22:18:02 +0000</pubDate>
-      
-      <guid>/tags/vagrantfile/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>virtualbox</title>
-      <link>/tags/virtualbox/</link>
-      <pubDate>Sun, 07 Feb 2021 22:18:02 +0000</pubDate>
-      
-      <guid>/tags/virtualbox/</guid>
       <description></description>
     </item>
     

@@ -84,7 +84,7 @@ syntax on
 &quot; color lettuce
 </code></pre><h2 id="preparation-of-vagrantfile-plugin-for-vundle">Preparation of <code>Vagrantfile</code> plugin for <code>Vundle</code></h2>
 <p>Create following structure of directories and files.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir -p $HOME/.vim/vagrantfile/plugin
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir -p $HOME/.vim/vagrantfile/plugin
 touch $HOME/.vim/vagrantfile/plugin/vagrantfile.vim
 curl https://raw.githubusercontent.com/hashicorp/vagrant/master/contrib/vim/vagrantfile.vim -o $HOME/.vim/vagrantfile/plugin/vagrantfile.vim
 cd $HOME/.vim/vagrantfile 
@@ -92,7 +92,7 @@ git init .
 </code></pre></div><p>Note: It is important to have above structure and initialized it as a git repo.</p>
 <h2 id="make-changes-to-homevimrc-file">Make changes to <code>$HOME/.vimrc</code> file</h2>
 <p>Add following line to <code>$HOME/.vimrc</code> file.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">Plugin <span style="color:#e6db74">&#39;file:///&lt;/full/path/to/home/dir&gt;/.vim/vagrantfile&#39;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">Plugin <span style="color:#e6db74">&#39;file:///&lt;/full/path/to/home/dir&gt;/.vim/vagrantfile&#39;</span>
 </code></pre></div><p><code>.vimrc</code> file will look like below:</p>
 <pre><code>set nocompatible              &quot; be iMproved, required
 filetype off                  &quot; required
@@ -116,7 +116,7 @@ syntax on
 &quot; color lettuce
 </code></pre><h2 id="activate-vagrantfile-plugin">Activate <code>vagrantfile</code> plugin</h2>
 <p>Run following command to install the plugin and activate it.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vim +PluginInstall +qall
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vim +PluginInstall +qall
 </code></pre></div>
 		</div>
 		<footer class="post__footer">

@@ -117,28 +117,28 @@
 </ul>
 <h2 id="ruby-environment-creation">Ruby environment creation</h2>
 <p>I am using following ruby version.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ruby --version
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ruby --version
 ruby 2.7.0p0 <span style="color:#f92672">(</span>2019-12-25 revision 647ee6f091<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>x86_64-darwin19<span style="color:#f92672">]</span>
 </code></pre></div><p>We will be creating a python virtual environment.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir BloggerCli
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir BloggerCli
 cd BloggerCli
 mkdir ruby-cli
 </code></pre></div><h3 id="install-required-libraries">Install required libraries.</h3>
 <p>Create a file <code>ruby-cli/Gemfile</code> with following contents.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">source <span style="color:#e6db74">&#39;https://rubygems.org&#39;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">source <span style="color:#e6db74">&#39;https://rubygems.org&#39;</span>
 gem <span style="color:#e6db74">&#39;google-api-client&#39;</span>
 gem <span style="color:#e6db74">&#39;googleauth&#39;</span>
 gem <span style="color:#e6db74">&#39;launchy&#39;</span>
 gem <span style="color:#e6db74">&#39;slop&#39;</span>
 </code></pre></div><p>Run following commands to install above gems.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd ruby-cli
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd ruby-cli
 bundler
 </code></pre></div><h3 id="copy-credential-script">Copy credential script.</h3>
 <p>Copy above downloaded credential json file in <code>ruby-cli</code> folder and rename it to <code>OAuth2.0_secret.json</code>.</p>
 <p><strong>Note:</strong> You can rename it any name.</p>
 <h3 id="create-ruby-script-bloggerclirb">Create Ruby script <code>bloggerCli.rb</code></h3>
 <p>Create following ruby script in <code>ruby-cli</code> folder.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e">#! /usr/bin/ruby</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e">#! /usr/bin/ruby</span>
 
 <span style="color:#75715e"># https://github.com/googleapis/google-api-ruby-client</span>
 <span style="color:#75715e"># https://github.com/googleapis/google-api-ruby-client/blob/master/docs/oauth-server.md</span>
@@ -249,10 +249,10 @@ puts <span style="color:#e6db74">&#34;Total posts in this blog = </span><span st
 <span style="color:#75715e">#    puts post.to_json</span>
 <span style="color:#75715e">#end</span>
 </code></pre></div><h3 id="create-a-test-file-to-be-uploaded">Create a test file to be uploaded.</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">echo <span style="color:#e6db74">&#39;This is a first post&#39;</span> &gt; sometext.txt
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">echo <span style="color:#e6db74">&#39;This is a first post&#39;</span> &gt; sometext.txt
 </code></pre></div><p><strong>Note</strong>: You can create an HTML file as well.</p>
 <h3 id="run-the-script">Run the script.</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ruby bloggerCli.rb -f sometext.txt -t <span style="color:#e6db74">&#34;My First Post&#34;</span> -e <span style="color:#e6db74">&#34;&lt;userAccount&gt;@gmail.com&#34;</span> -b <span style="color:#e6db74">&#34;3434533535534&#34;</span> -l label1,label2
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ruby bloggerCli.rb -f sometext.txt -t <span style="color:#e6db74">&#34;My First Post&#34;</span> -e <span style="color:#e6db74">&#34;&lt;userAccount&gt;@gmail.com&#34;</span> -b <span style="color:#e6db74">&#34;3434533535534&#34;</span> -l label1,label2
 enter the code you got from browser here and press Enter: 6/xQEBsJRhTZfthVP9ZSNsasaa7Y78HSDj2sd7aG
 Total posts in this blog <span style="color:#f92672">=</span> 0
 <span style="color:#f92672">==========</span> Inserting a new Post <span style="color:#f92672">========</span>

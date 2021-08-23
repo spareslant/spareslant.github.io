@@ -67,7 +67,7 @@ Tenant   : This is more like a project/Account or Organization. A tenant can hav
 Region   : Default region is set to RegionOne.
 </code></pre><p>In <code>trystack.org</code> this information can be found at <strong><a href="https://x86.trystack.org/dashboard/project/access_and_security/">https://x86.trystack.org/dashboard/project/access_and_security/</a></strong> and click on Download OpenStack RC file. Contents of RC file will have all the required information.</p>
 <p>Following is the source code.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
 
 <span style="color:#f92672">import</span> (
         <span style="color:#e6db74">&#34;crypto/rand&#34;</span>
@@ -217,7 +217,7 @@ Region   : Default region is set to RegionOne.
 <li>Make sure GO Lang compiler is installed.</li>
 <li>Place go source code in a directory. (most likely home directory)</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir MYGO
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir MYGO
 export GOPATH<span style="color:#f92672">=</span>$HOME/MYGO
 go get github.com/rackspace/gophercloud
 go build launchOpenStackInstances.go
@@ -225,7 +225,7 @@ go build launchOpenStackInstances.go
 <li>An executable with name <code>launchOpenStackInstances</code> will be there .</li>
 </ul>
 <p>Below is the sample run:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># ./launchOpenStackInstances.go -authurl=http://10.1.0.10:5000/v2.0 -flavor=m1.tiny -image=cirros -private_network=private_network -public_network=public_network -user=admin -password=106d84bf40fb4413 -total=2</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># ./launchOpenStackInstances.go -authurl=http://10.1.0.10:5000/v2.0 -flavor=m1.tiny -image=cirros -private_network=private_network -public_network=public_network -user=admin -password=106d84bf40fb4413 -total=2</span>
 Creating VMs:
 Obtaining free floating IP: 10.1.0.159 found.
 5F52A0801 VM creation request sent successfully.

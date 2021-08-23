@@ -6,7 +6,16 @@
     <description>Recent content in k8s on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Sun, 07 Feb 2021 22:18:02 +0000</lastBuildDate><atom:link href="/tags/k8s/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 23 Aug 2021 22:29:22 +0100</lastBuildDate><atom:link href="/tags/k8s/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>K8s Vagrant Centos Stream Crio Automated Deployment</title>
+      <link>/posts/k8s-vagrant-centos-stream-crio-automated-deployment/</link>
+      <pubDate>Mon, 23 Aug 2021 22:29:22 +0100</pubDate>
+      
+      <guid>/posts/k8s-vagrant-centos-stream-crio-automated-deployment/</guid>
+      <description>Introduction  We will be creating a fully automated Vagrant based Kubernetes cluster deployment. Following are the software versions used:  Hardware: MacBook Pro HostOS: MacOS Big Sur 11.5.2 Kube Version: 1.21.4 CRIO: 1.21 Cluster OS: Centos8 Stream   It is assumed that VirtualBox and Vagrant is already installed on your hostOS.  Vagrantfile  Create a directory and create a file named Vagrantfile with following contents in that directory.</description>
+    </item>
+    
     <item>
       <title>Kubernetes Cluster Using CRI-O</title>
       <link>/posts/kubernetes-cluster-cri-o/</link>

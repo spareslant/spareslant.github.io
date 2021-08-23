@@ -80,14 +80,14 @@
 <p>Purpose of this excersize is to introduce end to end secure communication from client to apache to app server with SSL client authentication at every stage. Please note that this exercise represents just the minimal configuration to work and no other authentication mechanism will be mentioned.</p>
 <p><strong>Note:</strong> we will be using self-signed CA authority and all certificates will be signed by this authority.</p>
 <h1 id="environment-used">Environment Used</h1>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cat /etc/fedora-release
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cat /etc/fedora-release
 Fedora release <span style="color:#ae81ff">30</span> <span style="color:#f92672">(</span>Thirty<span style="color:#f92672">)</span>
 
 $ uname -a
 Linux localhost.localdomain 5.0.9-301.fc30.x86_64 <span style="color:#75715e">#1 SMP Tue Apr 23 23:57:35 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux</span>
 </code></pre></div><h1 id="prepare-environment">Prepare Environment</h1>
 <h2 id="create-python-virtual-environment">Create python virtual environment</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ python3 -m  venv apacheSLL
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ python3 -m  venv apacheSLL
 $ source apacheSLL/bin/activate
 $ pip install flask
 $ pip install gunicorn
@@ -102,7 +102,7 @@ We will be creating following certificates.</p>
 </ul>
 <h3 id="create-client-side-certificate">Create client-side certificate</h3>
 <p>create CSR</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">openssl req <span style="color:#ae81ff">\
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">openssl req <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>-config &lt;<span style="color:#f92672">(</span>cat opensslConf/csr_openssl.cnf opensslConf/client_san_names.cnf<span style="color:#f92672">)</span> <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>-new <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>-newkey rsa:2048 <span style="color:#ae81ff">\
@@ -113,7 +113,7 @@ We will be creating following certificates.</p>
 </span><span style="color:#ae81ff"></span>-reqexts client <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>-subj <span style="color:#e6db74">&#34;/emailAddress=client@somecompany.com/C=GB/ST=London/L=City of London/O=client Organization/OU=Engg/CN=client.full.domain.name&#34;</span>
 </code></pre></div><p>Sign CSR with CA</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">openssl ca <span style="color:#ae81ff">\
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">openssl ca <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>-config opensslConf/CA_openssl.cnf <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>-policy policy_anything <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>-cert caCert/myCA.crt <span style="color:#ae81ff">\
@@ -122,11 +122,11 @@ We will be creating following certificates.</p>
 </span><span style="color:#ae81ff"></span>-out newCreatedCerts/aClientCert.pem
 </code></pre></div><h3 id="create-apache-server-side-certificate">Create <code>apache</code> server-side certificate</h3>
 <p>If you have followed the structure of PKI mentioned in <a href="/posts/ssl-certificate/"><strong>this link</strong></a>, then create a san file for apache like following.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cat opensslConf/apache_san_names.cnf
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cat opensslConf/apache_san_names.cnf
 <span style="color:#f92672">[</span> san_names <span style="color:#f92672">]</span>
 DNS.1 <span style="color:#f92672">=</span> apache.server.name
 </code></pre></div><p>create CSR</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">openssl req <span style="color:#ae81ff">\
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">openssl req <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>-config &lt;<span style="color:#f92672">(</span>cat opensslConf/csr_openssl.cnf opensslConf/apache_san_names.cnf<span style="color:#f92672">)</span> <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>-new <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>-newkey rsa:2048 <span style="color:#ae81ff">\
@@ -137,7 +137,7 @@ DNS.1 <span style="color:#f92672">=</span> apache.server.name
 </span><span style="color:#ae81ff"></span>-reqexts server <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>-subj <span style="color:#e6db74">&#34;/emailAddress=apacheAdmin@admin.com/C=GB/ST=London/L=City of London/O=My Organization/OU=Engg/CN=apache.server.name&#34;</span>
 </code></pre></div><p>Sign CSR with CA</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">openssl ca <span style="color:#ae81ff">\
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">openssl ca <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>-config opensslConf/CA_openssl.cnf <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>-policy policy_anything <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>-cert caCert/myCA.crt <span style="color:#ae81ff">\
@@ -146,7 +146,7 @@ DNS.1 <span style="color:#f92672">=</span> apache.server.name
 </span><span style="color:#ae81ff"></span>-out newCreatedCerts/apacheServerCert.pem
 </code></pre></div><h3 id="create-apache-client-side-certificate">Create <code>apache</code> client-side certificate</h3>
 <p>create CSR</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">openssl req <span style="color:#ae81ff">\
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">openssl req <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>-config &lt;<span style="color:#f92672">(</span>cat opensslConf/csr_openssl.cnf opensslConf/apache_san_names.cnf<span style="color:#f92672">)</span> <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>-new <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>-newkey rsa:2048 <span style="color:#ae81ff">\
@@ -157,7 +157,7 @@ DNS.1 <span style="color:#f92672">=</span> apache.server.name
 </span><span style="color:#ae81ff"></span>-reqexts client <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>-subj <span style="color:#e6db74">&#34;/emailAddress=apacheAdmin@admin.com/C=GB/ST=London/L=City of London/O=My Organization/OU=Engg/CN=apache.server.name&#34;</span>
 </code></pre></div><p>Sign CSR with CA</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">openssl ca <span style="color:#ae81ff">\
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">openssl ca <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>-config opensslConf/CA_openssl.cnf <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>-policy policy_anything <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>-cert caCert/myCA.crt <span style="color:#ae81ff">\
@@ -166,11 +166,11 @@ DNS.1 <span style="color:#f92672">=</span> apache.server.name
 </span><span style="color:#ae81ff"></span>-out newCreatedCerts/apacheAsClientCert.pem
 </code></pre></div><h3 id="create-gunicorn-server-side-certificate">Create <code>gunicorn</code> server-side certificate</h3>
 <p>If you have followed the structure of PKI mentioned in <a href="/posts/ssl-certificate/"><strong>this link</strong></a>, then create a san file for gunicorn like following.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cat opensslConf/gunicorn_san_names.cnf
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cat opensslConf/gunicorn_san_names.cnf
 
 <span style="color:#f92672">[</span> san_names <span style="color:#f92672">]</span>
 DNS.1 <span style="color:#f92672">=</span> gunicorn.app.server
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ openssl req <span style="color:#ae81ff">\
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ openssl req <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>-config &lt;<span style="color:#f92672">(</span>cat opensslConf/csr_openssl.cnf opensslConf/gunicorn_san_names.cnf<span style="color:#f92672">)</span> <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>-new <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>-newkey rsa:2048 <span style="color:#ae81ff">\
@@ -181,7 +181,7 @@ DNS.1 <span style="color:#f92672">=</span> gunicorn.app.server
 </span><span style="color:#ae81ff"></span>-reqexts server <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>-subj <span style="color:#e6db74">&#34;/emailAddress=apacheAdmin@admin.com/C=GB/ST=London/L=City of London/O=My Organization/OU=Engg/CN=gunicorn.app.server&#34;</span>
 </code></pre></div><p>Sign CSR</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ openssl ca <span style="color:#ae81ff">\
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ openssl ca <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>-config opensslConf/CA_openssl.cnf <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>-policy policy_anything <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>-cert caCert/myCA.crt <span style="color:#ae81ff">\
@@ -189,7 +189,7 @@ DNS.1 <span style="color:#f92672">=</span> gunicorn.app.server
 </span><span style="color:#ae81ff"></span>-in CSRs/gunicornServer.csr <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>-out newCreatedCerts/gunicornCert.pem
 </code></pre></div><p>In whole, following files will should be created.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ls -1 caCert newCreatedCerts privateKeys/
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ls -1 caCert newCreatedCerts privateKeys/
 caCert:
 myCA.crt
 myCAkey.pem
@@ -213,22 +213,22 @@ gunicornServerKey.pem
 <h2 id="apache-preparation">Apache Preparation</h2>
 <p>Make sure <code>apache</code> is installed. In case of fedora apache is recognized as <code>httpd</code> rpm package.</p>
 <p>Install apache <code>ssl</code> module.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo dnf -y install mod_ssl
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo dnf -y install mod_ssl
 </code></pre></div><h3 id="create-certificate-directory">Create Certificate Directory</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo mkdir /etc/httpd/sslCerts
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo mkdir /etc/httpd/sslCerts
 $ sudo cp newCreatedCerts/apacheServerCert.pem newCreatedCerts/apacheAsClientCert.pem <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>privateKeys/apacheServerKey.pem privateKeys/apacheAsClientKey.pem <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>caCert/myCA.crt <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>/etc/httpd/sslCerts/
 </code></pre></div><h3 id="prepare-certificate-to-be-used-by-apache-reverse-proxy-ssl-engine">prepare certificate to be used by apache reverse proxy SSL engine.</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ openssl rsa -in apacheAsClientKey.pem &gt; apacheAsClientKeyWithRSAHeader.pem
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ openssl rsa -in apacheAsClientKey.pem &gt; apacheAsClientKeyWithRSAHeader.pem
 $ openssl x509 -in apacheAsClientCert.pem &gt; apacheAsClientCertPEMformat.pem
 $ cat apacheAsClientCertPEMformat.pem apacheAsClientKeyWithRSAHeader.pem &gt; apacheAsClientCertAndKeyCombined.pem
 $ chmod <span style="color:#ae81ff">400</span> apacheServerKey.pem apacheAsClientCertAndKeyCombined.pem
 </code></pre></div><p><strong>Note:</strong> We do NOT need <code>apacheAsClientKey.pem</code>, <code>apacheAsClientCert.pem</code>, <code>apacheAsClientKeyWithRSAHeader.pem</code> and <code>apacheAsClientCertPEMformat.pem</code> files and they can be deleted.</p>
 <h3 id="prepeare-apache-config-file">Prepeare apache config file</h3>
 <p>Create a file <code>/etc/httpd/conf.d/reverseProxy.conf</code> with following contents.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cat /etc/httpd/conf.d/reverseProxy.conf
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cat /etc/httpd/conf.d/reverseProxy.conf
 
 Listen <span style="color:#ae81ff">7771</span>
 &lt;VirtualHost *:7771&gt;
@@ -262,29 +262,29 @@ Listen <span style="color:#ae81ff">7771</span>
 &lt;/VirtualHost&gt;
 </code></pre></div><p><strong>Note</strong>: You may need to inrease <code>SSLVerifyDepth</code> and <code>SSLProxyVerifyDepth</code> to higher number. This represents the depth of you certificate chain (Root and intermediary certs). Number need to be exact. It can be higher but no lower. Lower number will result in error.</p>
 <h3 id="start-apache">Start Apache</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo systemctl restart  httpd
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo systemctl restart  httpd
 </code></pre></div><p><strong>Note:</strong> You may need to tweak selinux policy for apache to run at 7771 port. I had disabled selinux for this excersize.</p>
 <h3 id="make-client-apache-and-gunicorn-addresses-resolvable">Make client, apache and gunicorn addresses resolvable</h3>
 <p>As <code>root</code> user enter the following line in <code>/etc/resolv.conf</code> file above all <code>nameserver</code> lines.</p>
 <pre><code>nameserver 127.0.0.1
 </code></pre><p>Run a temp DNS server in foreground.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo dnsmasq --no-daemon <span style="color:#ae81ff">\
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo dnsmasq --no-daemon <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>--listen-address<span style="color:#f92672">=</span>127.0.0.1 <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>--address<span style="color:#f92672">=</span>/client.full.domain.name/127.0.0.1 <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>--address<span style="color:#f92672">=</span>/apache.server.name/127.0.0.1 --address<span style="color:#f92672">=</span>/gunicorn.app.server/127.0.0.1  <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>--log-queries
 </code></pre></div><h3 id="create-a-simple-flask-app">Create a Simple flask app</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir flaskApp
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir flaskApp
 mkdir flaskApp/certs
 touch flaskApp/myFlaskApp.py
 </code></pre></div><p>Contents of <code>flaskApp/certs</code> should be following</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ls -og flaskApp/certs
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ls -og flaskApp/certs
 total <span style="color:#ae81ff">16</span>
 -rw-rw-r--. <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">5021</span> Aug  <span style="color:#ae81ff">4</span> 17:37 gunicornCert.pem
 -rw-------. <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1704</span> Aug  <span style="color:#ae81ff">4</span> 17:37 gunicornServerKey.pem
 -rw-rw-r--. <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1493</span> Aug  <span style="color:#ae81ff">4</span> 17:37 myCA.crt
 </code></pre></div><p>Contents of <code>myFlaskApp.py</code> are below.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cat myFlaskApp.py
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cat myFlaskApp.py
 from flask import Flask, jsonify
 app <span style="color:#f92672">=</span> Flask<span style="color:#f92672">(</span>__name__<span style="color:#f92672">)</span>
 
@@ -294,7 +294,7 @@ api_url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/&
 def write_to_file<span style="color:#f92672">()</span>:
     <span style="color:#66d9ef">return</span> jsonify<span style="color:#f92672">({</span><span style="color:#e6db74">&#34;success&#34;</span>: <span style="color:#e6db74">&#34;request received successfully&#34;</span><span style="color:#f92672">})</span>, <span style="color:#ae81ff">201</span>
 </code></pre></div><p>start serving flask app using following command.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cd flaskApp/
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cd flaskApp/
 $ gunicorn --bind 0.0.0.0:6662 myFlaskApp:app <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>--ca-certs certs/myCA.crt <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>--certfile certs/gunicornCert.pem <span style="color:#ae81ff">\
@@ -307,10 +307,10 @@ $ gunicorn --bind 0.0.0.0:6662 myFlaskApp:app <span style="color:#ae81ff">\
 <span style="color:#f92672">[</span>2019-08-04 18:20:48 +0100<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>37407<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span> Booting worker with pid: <span style="color:#ae81ff">37407</span>
 </code></pre></div><p><strong>Note:</strong> argument 2 for <code>--cert-reqs</code> corresponds to <code>ssl.CERT_REQUIRED</code></p>
 <h3 id="create-client-environment">Create client environment</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ mkdir client
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ mkdir client
 $ mkdir client/certs
 </code></pre></div><p>contents of <code>client/certs</code> are below</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ls -og client/certs/
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ls -og client/certs/
 total <span style="color:#ae81ff">16</span>
 -rw-rw-r--. <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">5062</span> Aug  <span style="color:#ae81ff">4</span> 17:40 aClientCert.pem
 -rw-------. <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1704</span> Aug  <span style="color:#ae81ff">4</span> 17:41 aClientKey.pem
@@ -318,27 +318,27 @@ total <span style="color:#ae81ff">16</span>
 </code></pre></div><h3 id="test-the-whole-setup">Test the whole setup</h3>
 <h4 id="test-gunicorn-server-connectivity-directly">Test <code>gunicorn</code> server connectivity directly</h4>
 <p>Gunicorn server connectivity.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl https://gunicorn.app.server:6662 <span style="color:#ae81ff">\
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl https://gunicorn.app.server:6662 <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>--cacert certs/myCA.crt <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>--cert certs/aClientCert.pem <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>--key certs/aClientKey.pem 
 
 <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;success&#34;</span>:<span style="color:#e6db74">&#34;request received successfully&#34;</span><span style="color:#f92672">}</span>
 </code></pre></div><h4 id="test-gunicorn-server-connectivity-directly-no-certs-insecure">Test <code>gunicorn</code> server connectivity directly (no certs, insecure)</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl https://gunicorn.app.server:6662 <span style="color:#ae81ff">\
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl https://gunicorn.app.server:6662 <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>--cacert certs/myCA.crt <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>--insecure
 
 curl: <span style="color:#f92672">(</span>56<span style="color:#f92672">)</span> OpenSSL SSL_read: error:1409445C:SSL routines:ssl3_read_bytes:tlsv13 alert certificate required, errno <span style="color:#ae81ff">0</span>
 </code></pre></div><h4 id="insecure-connection-attempt"><code>insecure</code> connection attempt</h4>
 <p>insecure connection</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cd client/
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cd client/
 $ curl https://apache.server.name:7771/ --insecure
 
 curl: <span style="color:#f92672">(</span>56<span style="color:#f92672">)</span> OpenSSL SSL_read: error:1409445C:SSL routines:ssl3_read_bytes:tlsv13 alert certificate required, errno <span style="color:#ae81ff">0</span>
 </code></pre></div><p>Above connection failed because server requires authentication. Client also need to provide its certificate.</p>
 <h4 id="authenticated-connection-attempt">Authenticated connection attempt.</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl https://apache.server.name:7771/ <span style="color:#ae81ff">\
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl https://apache.server.name:7771/ <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>--cacert certs/myCA.crt <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>--cert certs/aClientCert.pem <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>--key certs/aClientKey.pem 

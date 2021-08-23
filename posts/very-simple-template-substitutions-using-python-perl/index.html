@@ -64,10 +64,10 @@
 <pre><code>This is a %TEST1% . Another %TEST1%  %TEST1%
 Now this is a %TEST2%.
 </code></pre><p>Following is the file <code>var.py</code> containing values of above place holder.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#a6e22e">TEST1</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;test_string1&#34;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#a6e22e">TEST1</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;test_string1&#34;</span>
 <span style="color:#a6e22e">TEST2</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;test_string2&#34;</span>
 </code></pre></div><p>Following is the python program that will replace above values in <code>test_file.txt</code> from <code>var.py</code> file.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#! /usr/bin/env python</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#! /usr/bin/env python</span>
 
 <span style="color:#f92672">import</span> re
 <span style="color:#f92672">import</span> fileinput
@@ -77,13 +77,13 @@ Now this is a %TEST2%.
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">print_data_vars</span>(matchObj):
     <span style="color:#66d9ef">return</span> globals()[matchObj<span style="color:#f92672">.</span>group(<span style="color:#ae81ff">1</span>)]
 
-<span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> fileinput<span style="color:#f92672">.</span>input(<span style="color:#e6db74">&#39;test_file&#39;</span>, inplace<span style="color:#f92672">=</span>True):
+<span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> fileinput<span style="color:#f92672">.</span>input(<span style="color:#e6db74">&#39;test_file&#39;</span>, inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>):
     line <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>sub(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;%(.+?)%&#39;</span>, print_data_vars, line)
     sys<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>write(line)
 </code></pre></div><p>when above program is run , it will replace placeholders with values in existing <code>test_file.txt</code> file.</p>
 <h2 id="using-shell-and-perl">Using Shell and Perl</h2>
 <p>Assuming <code>var.py</code> and <code>test_file.txt</code> contents are same as above, same effect can also be achieved using <code>shell</code> and <code>perl</code> combination as follows.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#! /usr/bin/env bash
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#! /usr/bin/env bash
 </span><span style="color:#75715e"></span>set -a
 source ./var.py
 set +a

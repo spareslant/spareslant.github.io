@@ -1,524 +1,319 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
-  <url>
-    <loc>/posts/edit-json-easily-programatically/</loc>
-    <lastmod>2021-05-14T06:58:28+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/json/</loc>
-    <lastmod>2021-05-14T06:58:28+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/posts/</loc>
-    <lastmod>2021-05-14T06:58:28+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/python/</loc>
-    <lastmod>2021-05-14T06:58:28+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/</loc>
-    <lastmod>2021-05-14T06:58:28+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
-    <lastmod>2021-05-14T06:58:28+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/yaml/</loc>
-    <lastmod>2021-05-14T06:58:28+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/cgroups/</loc>
-    <lastmod>2021-02-07T22:18:02+00:00</lastmod>
-  </url>
-  
   <url>
     <loc>/tags/cri-o/</loc>
-    <lastmod>2021-02-07T22:18:02+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2021-08-23T22:29:22+01:00</lastmod>
+  </url><url>
     <loc>/tags/k8s/</loc>
-    <lastmod>2021-02-07T22:18:02+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2021-08-23T22:29:22+01:00</lastmod>
+  </url><url>
+    <loc>/posts/k8s-vagrant-centos-stream-crio-automated-deployment/</loc>
+    <lastmod>2021-08-23T22:29:22+01:00</lastmod>
+  </url><url>
     <loc>/tags/kubernetes/</loc>
+    <lastmod>2021-08-23T22:29:22+01:00</lastmod>
+  </url><url>
+    <loc>/posts/</loc>
+    <lastmod>2021-08-23T22:29:22+01:00</lastmod>
+  </url><url>
+    <loc>/</loc>
+    <lastmod>2021-08-23T22:29:22+01:00</lastmod>
+  </url><url>
+    <loc>/tags/</loc>
+    <lastmod>2021-08-23T22:29:22+01:00</lastmod>
+  </url><url>
+    <loc>/tags/vagrant/</loc>
+    <lastmod>2021-08-23T22:29:22+01:00</lastmod>
+  </url><url>
+    <loc>/tags/vagrantfile/</loc>
+    <lastmod>2021-08-23T22:29:22+01:00</lastmod>
+  </url><url>
+    <loc>/tags/virtualbox/</loc>
+    <lastmod>2021-08-23T22:29:22+01:00</lastmod>
+  </url><url>
+    <loc>/posts/edit-json-easily-programatically/</loc>
+    <lastmod>2021-05-14T06:58:28+01:00</lastmod>
+  </url><url>
+    <loc>/tags/json/</loc>
+    <lastmod>2021-05-14T06:58:28+01:00</lastmod>
+  </url><url>
+    <loc>/tags/python/</loc>
+    <lastmod>2021-05-14T06:58:28+01:00</lastmod>
+  </url><url>
+    <loc>/tags/yaml/</loc>
+    <lastmod>2021-05-14T06:58:28+01:00</lastmod>
+  </url><url>
+    <loc>/tags/cgroups/</loc>
     <lastmod>2021-02-07T22:18:02+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/posts/kubernetes-cluster-cri-o/</loc>
     <lastmod>2021-02-07T22:18:02+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/vagrant/</loc>
-    <lastmod>2021-02-07T22:18:02+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/vagrantfile/</loc>
-    <lastmod>2021-02-07T22:18:02+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/virtualbox/</loc>
-    <lastmod>2021-02-07T22:18:02+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/containerd/</loc>
     <lastmod>2021-02-07T15:48:01+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/posts/kubernetes-cluster-containerd/</loc>
     <lastmod>2021-02-07T15:48:01+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/multi-hop-tunnel/</loc>
     <lastmod>2021-01-05T21:09:04+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/posts/multihop-ssh/</loc>
     <lastmod>2021-01-05T21:09:04+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/ssh/</loc>
     <lastmod>2021-01-05T21:09:04+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/ssh-tunnel/</loc>
     <lastmod>2021-01-05T21:09:04+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/aws/</loc>
     <lastmod>2020-12-28T17:54:12+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/cdk/</loc>
     <lastmod>2020-12-28T17:54:12+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/node.js/</loc>
     <lastmod>2020-12-28T17:54:12+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/terraform/</loc>
     <lastmod>2020-12-28T17:54:12+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/posts/terraform-cdk/</loc>
     <lastmod>2020-12-28T17:54:12+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/typescript/</loc>
     <lastmod>2020-12-28T17:54:12+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/docker/</loc>
     <lastmod>2020-05-21T05:58:11+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/elasticsearch/</loc>
     <lastmod>2020-05-21T05:58:11+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/elk/</loc>
     <lastmod>2020-05-21T05:58:11+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/kafka/</loc>
     <lastmod>2020-05-21T05:58:11+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/posts/kafka-to-elk-message-manipulation/</loc>
     <lastmod>2020-05-21T05:58:11+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/kibana/</loc>
     <lastmod>2020-05-21T05:58:11+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/logstash/</loc>
     <lastmod>2020-05-21T05:58:11+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/ruby/</loc>
     <lastmod>2020-05-21T05:58:11+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/go/</loc>
     <lastmod>2020-03-16T23:04:49+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/goose/</loc>
     <lastmod>2020-03-16T23:04:49+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/openstack/</loc>
     <lastmod>2020-03-16T23:04:49+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/posts/openstack-instances-using-goose-library/</loc>
     <lastmod>2020-03-16T23:04:49+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/gophercloud/</loc>
     <lastmod>2020-03-16T22:46:24+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/nova/</loc>
     <lastmod>2020-03-16T22:46:24+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/posts/openstack-instances-using-gophercloud-nova-networking/</loc>
     <lastmod>2020-03-16T22:46:24+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/neutron/</loc>
     <lastmod>2020-03-16T22:24:21+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/posts/remote-openstack-instances-gophercloud-neutron/</loc>
     <lastmod>2020-03-16T22:24:21+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/posts/json-full-paths-from-root-node-to-leaf/</loc>
     <lastmod>2020-03-16T22:09:29+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/recursion/</loc>
     <lastmod>2020-03-16T22:09:29+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/salt/</loc>
     <lastmod>2020-03-16T13:41:26+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/saltstack/</loc>
     <lastmod>2020-03-16T13:41:26+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/posts/saltstack-custom-execution-module-with-arguments/</loc>
     <lastmod>2020-03-16T13:41:26+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/posts/saltstack-call-state-modules-from-runner/</loc>
     <lastmod>2020-03-16T13:21:12+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/posts/saltstack-execute-custom-execution/</loc>
     <lastmod>2020-03-16T08:37:22+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/runner/</loc>
     <lastmod>2020-03-15T21:26:03+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/posts/saltstack-call-runner-from-minion/</loc>
     <lastmod>2020-03-15T21:26:03+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/jinja/</loc>
     <lastmod>2020-03-15T21:05:23+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/posts/saltstack-call-runner-from-minion-jinja/</loc>
     <lastmod>2020-03-15T21:05:23+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/posts/very-simple-template-substitutions-using-python-perl/</loc>
     <lastmod>2020-03-15T20:50:05+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/posts/minimal-working-tmux-config/</loc>
     <lastmod>2020-03-15T20:33:04+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/terminal/</loc>
     <lastmod>2020-03-15T20:33:04+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/tmux/</loc>
     <lastmod>2020-03-15T20:33:04+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/blogger/</loc>
     <lastmod>2020-03-14T21:16:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/blogger-api/</loc>
     <lastmod>2020-03-14T21:16:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/posts/blogger-go-cli/</loc>
     <lastmod>2020-03-14T21:16:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/golang/</loc>
     <lastmod>2020-03-14T21:16:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/google-api/</loc>
     <lastmod>2020-03-14T21:16:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/posts/multiple-vms-vagrantfile/</loc>
     <lastmod>2020-03-10T17:50:49+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/blogger-html/</loc>
     <lastmod>2020-03-10T11:12:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/posts/convert_markup_to_blogger_compatible_html/</loc>
     <lastmod>2020-03-10T11:12:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/html/</loc>
     <lastmod>2020-03-10T11:12:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/html-generation/</loc>
     <lastmod>2020-03-10T11:12:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/posts/blogger-ruby-cli/</loc>
     <lastmod>2020-03-10T00:34:42+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/posts/blogger-python-cli/</loc>
     <lastmod>2020-03-09T18:46:41+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/vagrantfile-plugin/</loc>
     <lastmod>2020-02-25T17:13:09+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/vim/</loc>
     <lastmod>2020-02-25T17:13:09+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/posts/vim-vagrant-plugin/</loc>
     <lastmod>2020-02-25T17:13:09+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/vundle/</loc>
     <lastmod>2020-02-25T17:13:09+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/apache/</loc>
     <lastmod>2019-08-04T14:54:01+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/posts/apache-reverseproxyssl-sslclientauth/</loc>
     <lastmod>2019-08-04T14:54:01+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/flask/</loc>
     <lastmod>2019-08-04T14:54:01+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/gunicorn/</loc>
     <lastmod>2019-08-04T14:54:01+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/proxy/</loc>
     <lastmod>2019-08-04T14:54:01+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/reverse-proxy/</loc>
     <lastmod>2019-08-04T14:54:01+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/ssl/</loc>
     <lastmod>2019-08-04T14:54:01+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/ssl-authentication/</loc>
     <lastmod>2019-08-04T14:54:01+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/ssl-reverse-proxy/</loc>
     <lastmod>2019-08-04T14:54:01+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/blog/</loc>
     <lastmod>2019-08-03T19:01:43+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/blog-publishing/</loc>
     <lastmod>2019-08-03T19:01:43+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/posts/deploy-hugosite-to-github/</loc>
     <lastmod>2019-08-03T19:01:43+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/github-pages-deployment/</loc>
     <lastmod>2019-08-03T19:01:43+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/hugo/</loc>
     <lastmod>2019-08-03T19:01:43+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/posts/markup-to-pdf/</loc>
     <lastmod>2019-07-27T20:39:13+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/pdf-generation/</loc>
     <lastmod>2019-07-27T20:39:13+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/posts/docker-logging-with-rsyslog/</loc>
     <lastmod>2019-07-27T12:15:28+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/logging/</loc>
     <lastmod>2019-07-27T12:15:28+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/rsyslog/</loc>
     <lastmod>2019-07-27T12:15:28+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/syslog/</loc>
     <lastmod>2019-07-27T12:15:28+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/ca/</loc>
     <lastmod>2019-07-17T21:35:50+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/curl/</loc>
     <lastmod>2019-07-17T21:35:50+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/digital-certificates/</loc>
     <lastmod>2019-07-17T21:35:50+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/openssl/</loc>
     <lastmod>2019-07-17T21:35:50+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/pki/</loc>
     <lastmod>2019-07-17T21:35:50+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/posts/ssl-certificate/</loc>
     <lastmod>2019-07-17T21:35:50+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/ssl-mutual-authentication/</loc>
     <lastmod>2019-07-17T21:35:50+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/x509/</loc>
     <lastmod>2019-07-17T21:35:50+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/categories/</loc>
   </url>
-  
 </urlset>

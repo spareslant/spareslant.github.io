@@ -102,7 +102,7 @@
 <h2 id="prepare-environment">Prepare environment.</h2>
 <p>We shall be doing everything in a docker image. I am using fedora-33.</p>
 <h3 id="start-fedora-33-in-interactive-mode">Start fedora-33 in interactive mode.</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ docker run -it fedora:33 /bin/bash
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ docker run -it fedora:33 /bin/bash
 
 Unable to find image <span style="color:#e6db74">&#39;fedora:33&#39;</span> locally
 33: Pulling from library/fedora
@@ -111,7 +111,7 @@ Digest: sha256:aa889c59fc048b597dcfab40898ee3fcaad9ed61caf12bcfef44493ee670e9df
 Status: Downloaded newer image <span style="color:#66d9ef">for</span> fedora:33
 <span style="color:#f92672">[</span>root@72b337cb65e6 /<span style="color:#f92672">]</span><span style="color:#75715e">#</span>
 </code></pre></div><h3 id="install-nvm-node-version-manager-inside-docker-container">Install NVM (node version manager) inside docker container.</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@72b337cb65e6 ~<span style="color:#f92672">]</span><span style="color:#75715e"># curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@72b337cb65e6 ~<span style="color:#f92672">]</span><span style="color:#75715e"># curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash</span>
 
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
@@ -126,9 +126,9 @@ export NVM_DIR<span style="color:#f92672">=</span><span style="color:#e6db74">&#
 <span style="color:#f92672">[</span> -s <span style="color:#e6db74">&#34;</span>$NVM_DIR<span style="color:#e6db74">/nvm.sh&#34;</span> <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\.</span> <span style="color:#e6db74">&#34;</span>$NVM_DIR<span style="color:#e6db74">/nvm.sh&#34;</span>  <span style="color:#75715e"># This loads nvm</span>
 <span style="color:#f92672">[</span> -s <span style="color:#e6db74">&#34;</span>$NVM_DIR<span style="color:#e6db74">/bash_completion&#34;</span> <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\.</span> <span style="color:#e6db74">&#34;</span>$NVM_DIR<span style="color:#e6db74">/bash_completion&#34;</span>  <span style="color:#75715e"># This loads nvm bash_completion</span>
 </code></pre></div><h3 id="enable-nvm-in-current-shell">Enable NVM in current shell.</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f /<span style="color:#f92672">]</span><span style="color:#75715e"># source /root/.bashrc</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f /<span style="color:#f92672">]</span><span style="color:#75715e"># source /root/.bashrc</span>
 </code></pre></div><h3 id="install-latest-stable-node">Install latest stable node.</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@72b337cb65e6 ~<span style="color:#f92672">]</span><span style="color:#75715e"># nvm install --lts</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@72b337cb65e6 ~<span style="color:#f92672">]</span><span style="color:#75715e"># nvm install --lts</span>
 Installing latest LTS version.
 Downloading and installing node v14.15.3...
 Downloading https://nodejs.org/dist/v14.15.3/node-v14.15.3-linux-x64.tar.gz...
@@ -138,19 +138,19 @@ Checksums matched!
 Now using node v14.15.3 <span style="color:#f92672">(</span>npm v6.14.9<span style="color:#f92672">)</span>
 Creating default alias: default -&gt; lts/* <span style="color:#f92672">(</span>-&gt; v14.15.3 *<span style="color:#f92672">)</span>
 </code></pre></div><h3 id="install-vim-unzip-less">Install VIM, unzip, less</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f ~<span style="color:#f92672">]</span><span style="color:#75715e"># dnf install vim unzip less openssh-clients -y</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f ~<span style="color:#f92672">]</span><span style="color:#75715e"># dnf install vim unzip less openssh-clients -y</span>
 </code></pre></div><h3 id="install-aws-cli">Install aws-cli</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f /<span style="color:#f92672">]</span><span style="color:#75715e"># curl &#34;https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip&#34; -o &#34;awscliv2.zip&#34;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f /<span style="color:#f92672">]</span><span style="color:#75715e"># curl &#34;https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip&#34; -o &#34;awscliv2.zip&#34;</span>
 <span style="color:#f92672">[</span>root@f159c206739f /<span style="color:#f92672">]</span><span style="color:#75715e"># unzip awscliv2.zip</span>
 <span style="color:#f92672">[</span>root@f159c206739f /<span style="color:#f92672">]</span><span style="color:#75715e"># sudo ./aws/install</span>
 </code></pre></div><h3 id="configure-aws-account">configure AWS account</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f /<span style="color:#f92672">]</span><span style="color:#75715e"># aws configure --profile personal</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f /<span style="color:#f92672">]</span><span style="color:#75715e"># aws configure --profile personal</span>
 AWS Access Key ID <span style="color:#f92672">[</span>None<span style="color:#f92672">]</span>: XXXXXXXXXXXXX
 AWS Secret Access Key <span style="color:#f92672">[</span>None<span style="color:#f92672">]</span>: YYYYYYYYYYYYYYYYYYYY
 Default region name <span style="color:#f92672">[</span>None<span style="color:#f92672">]</span>: &lt;Press enter or use your AWS region. <span style="color:#f92672">(</span>We will be defining region in the code also.<span style="color:#f92672">)</span>&gt;
 Default output format <span style="color:#f92672">[</span>None<span style="color:#f92672">]</span>: json
 </code></pre></div><h3 id="verify-the-connectivity-to-aws-apis">Verify the connectivity to AWS apis</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f /<span style="color:#f92672">]</span><span style="color:#75715e"># aws iam list-users --profile personal</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f /<span style="color:#f92672">]</span><span style="color:#75715e"># aws iam list-users --profile personal</span>
 
 <span style="color:#f92672">{</span>
     <span style="color:#e6db74">&#34;Users&#34;</span>: <span style="color:#f92672">[</span>
@@ -164,11 +164,11 @@ Default output format <span style="color:#f92672">[</span>None<span style="color
     <span style="color:#f92672">]</span>
 <span style="color:#f92672">}</span>
 </code></pre></div><h3 id="install-terraform-binary">Install terraform binary</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f /<span style="color:#f92672">]</span><span style="color:#75715e"># dnf install -y dnf-plugins-core</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f /<span style="color:#f92672">]</span><span style="color:#75715e"># dnf install -y dnf-plugins-core</span>
 <span style="color:#f92672">[</span>root@f159c206739f /<span style="color:#f92672">]</span><span style="color:#75715e"># dnf config-manager --add-repo https://rpm.releases.hashicorp.com/fedora/hashicorp.repo</span>
 <span style="color:#f92672">[</span>root@f159c206739f /<span style="color:#f92672">]</span><span style="color:#75715e"># dnf -y install terraform</span>
 </code></pre></div><h3 id="install-terraform-cdk-kit-latest-development-version">Install <code>terraform-cdk</code> kit (latest development version)</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f /<span style="color:#f92672">]</span><span style="color:#75715e"># mkdir deployInternetFacingVM</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f /<span style="color:#f92672">]</span><span style="color:#75715e"># mkdir deployInternetFacingVM</span>
 <span style="color:#f92672">[</span>root@f159c206739f /<span style="color:#f92672">]</span><span style="color:#75715e"># cd deployInternetFacingVM</span>
 
 
@@ -181,7 +181,7 @@ added <span style="color:#ae81ff">228</span> packages from <span style="color:#a
 <span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e">#</span>
 </code></pre></div><h2 id="start-coding">Start coding.</h2>
 <h3 id="create-a-project-with-typescript-tempplate">Create a project with <code>typescript</code> tempplate</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e"># cdktf init --template=&#34;typescript&#34; --local</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e"># cdktf init --template=&#34;typescript&#34; --local</span>
 
 Newer version of Terraform CDK is available <span style="color:#f92672">[</span>0.0.19<span style="color:#f92672">]</span> - Upgrade recommended
 Note: By supplying <span style="color:#e6db74">&#39;--local&#39;</span> option you have chosen local storage mode <span style="color:#66d9ef">for</span> storing the state of your stack.
@@ -223,14 +223,14 @@ Generated typescript constructs in the output directory: .gen
   ......
   &lt;output snipped&gt;
 </code></pre></div><h3 id="output-files-in-the-directory">output files in the directory</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e"># ls</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e"># ls</span>
 cdktf.json  help  main.d.ts  main.js  main.ts  node_modules  package-lock.json  package.json  tsconfig.json
 </code></pre></div><h3 id="download-relevant-provider">download relevant provider</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e"># cdktf get</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e"># cdktf get</span>
 
 Generated typescript constructs in the output directory: .gen
 </code></pre></div><h2 id="install-sshpk-module-and-its-typescript-definitions">install sshpk module and its typescript definitions.</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e"># npm install sshpk @types/sshpk</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e"># npm install sshpk @types/sshpk</span>
 
 npm WARN eslint-plugin-react@7.21.5 requires a peer of eslint@^3 <span style="color:#f92672">||</span> ^4 <span style="color:#f92672">||</span> ^5 <span style="color:#f92672">||</span> ^6 <span style="color:#f92672">||</span> ^7 but none is installed. You must install peer dependencies yourself.
 
@@ -242,7 +242,7 @@ added <span style="color:#ae81ff">10</span> packages from <span style="color:#ae
 
 found <span style="color:#ae81ff">0</span> vulnerabilities
 </code></pre></div><h3 id="modify-maints-with-following-contents">Modify <code>main.ts</code> with following contents</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Typescript" data-lang="Typescript"><span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">Construct</span> } <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;constructs&#39;</span>;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Typescript" data-lang="Typescript"><span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">Construct</span> } <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;constructs&#39;</span>;
 <span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">App</span>, <span style="color:#a6e22e">TerraformStack</span>, <span style="color:#a6e22e">TerraformOutput</span> } <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;cdktf&#39;</span>;
 <span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">AwsProvider</span>, <span style="color:#a6e22e">Instance</span>, <span style="color:#a6e22e">Vpc</span>, <span style="color:#a6e22e">KeyPair</span>, <span style="color:#a6e22e">Subnet</span>, <span style="color:#a6e22e">SecurityGroup</span>, <span style="color:#a6e22e">InternetGateway</span>, <span style="color:#a6e22e">DefaultRouteTable</span> } <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;./.gen/providers/aws&#39;</span>
 <span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">sshPrivateKey</span>, <span style="color:#a6e22e">sshPublicKey</span> } <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;./generatSSHkeys&#39;</span>
@@ -357,7 +357,7 @@ found <span style="color:#ae81ff">0</span> vulnerabilities
 <span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">synth</span>();
 </code></pre></div><h3 id="create-a-new-file-generatsshkeysts-with-following-contents">create a new file <code>generatSSHkeys.ts</code> with following contents.</h3>
 <p>This file will create openssh key-pair only once.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Typescript" data-lang="Typescript"><span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">generateKeyPairSync</span> } <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;crypto&#39;</span>;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Typescript" data-lang="Typescript"><span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">generateKeyPairSync</span> } <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;crypto&#39;</span>;
 <span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">parseKey</span> } <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;sshpk&#39;</span>
 <span style="color:#66d9ef">import</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">as</span> <span style="color:#a6e22e">fs</span> <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;fs&#39;</span>;
 <span style="color:#66d9ef">import</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">as</span> <span style="color:#a6e22e">path</span> <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;path&#39;</span>;
@@ -398,10 +398,10 @@ found <span style="color:#ae81ff">0</span> vulnerabilities
 
 <span style="color:#66d9ef">export</span> {<span style="color:#a6e22e">sshPublicKey</span>, <span style="color:#a6e22e">sshPrivateKey</span>};
 </code></pre></div><h3 id="with-the-addition-of-new-file-directory-contents-now-look-like-this">with the addition of new file, directory contents now look like this.</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e"># ls</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e"># ls</span>
 cdktf.json  generatSSHkeys.ts  help  main.d.ts  main.js  main.ts  node_modules  package-lock.json  package.json  tsconfig.json
 </code></pre></div><h3 id="check-what-is-being-deployed">check what is being deployed</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e"># cdktf diff</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e"># cdktf diff</span>
 Stack: deployInternetFacingVM
 Resources
  + AWS_DEFAULT_ROUTE_TA add_default_route   aws_default_route_table.add_default_route
@@ -416,7 +416,7 @@ Resources
 
 Diff: <span style="color:#ae81ff">9</span> to create, <span style="color:#ae81ff">0</span> to update, <span style="color:#ae81ff">0</span> to delete.
 </code></pre></div><h3 id="deploy-to-aws">deploy to AWS</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e"># cdktf deploy</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e"># cdktf deploy</span>
 
 Deploying Stack: deployInternetFacingVM
 Resources
@@ -439,14 +439,14 @@ Output: privateKey <span style="color:#f92672">=</span> -----BEGIN RSA PRIVATE K
         public_ip <span style="color:#f92672">=</span> &lt;public ip&gt;
 <span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e">#</span>
 </code></pre></div><h3 id="verify-deployment-by-ssh-into-the-vm">Verify deployment by ssh into the vm</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e"># chmod 400 protected/sshKeys/privateKey.pem</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e"># chmod 400 protected/sshKeys/privateKey.pem</span>
 <span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e"># ssh -i protected/sshKeys/privateKey.pem ubuntu@&lt;public_ip_displayed_above&gt;</span>
 </code></pre></div><p><strong>Note:</strong> Contents of <code>protected/sshKeys/privateKey.pem</code> is displayed above in <code>cdktf deploy</code> output as well.</p>
 <h3 id="verify-the-idempotency">Verify the idempotency</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e"># cdktf deploy</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e"># cdktf deploy</span>
 No changes <span style="color:#66d9ef">for</span> Stack: deployInternetFacingVM
 </code></pre></div><h3 id="destroy-the-deployment">Destroy the deployment</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e"># cdktf destroy</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@f159c206739f deployInternetFacingVM<span style="color:#f92672">]</span><span style="color:#75715e"># cdktf destroy</span>
 Destroying Stack: deployInternetFacingVM
 Resources
  ✔ AWS_DEFAULT_ROUTE_TA add_default_route   aws_default_route_table.add_default_route

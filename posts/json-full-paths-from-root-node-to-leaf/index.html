@@ -58,7 +58,7 @@
 			<h2 id="introduction">Introduction:</h2>
 <p>Often there is a requirement to create full paths from root node to leaf node in JSON file. Following python program will generate these paths.</p>
 <p>Sample JSON file <code>sample_json_file.json</code> is below:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
    <span style="color:#f92672">&#34;data&#34;</span>: [
       {
          <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#e6db74">&#34;X999_Y999&#34;</span>,
@@ -105,7 +105,7 @@
   <span style="color:#f92672">&#34;job&#34;</span>: { <span style="color:#f92672">&#34;hobbyjob&#34;</span>: [ <span style="color:#e6db74">&#34;Gardening&#34;</span>, <span style="color:#e6db74">&#34;InteriorDesign&#34;</span>], <span style="color:#f92672">&#34;Fulltimejob&#34;</span>: <span style="color:#e6db74">&#34;Lawyer&#34;</span> }
 }
 </code></pre></div><p>Python program to create full paths from above JSON file</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#! /usr/bin/env python</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#! /usr/bin/env python</span>
 
 <span style="color:#75715e"># This programm will create paths from root nodes to leafnodes along with values from any json file or structure.</span>
 
@@ -154,7 +154,7 @@ final_dict <span style="color:#f92672">=</span> {}
 do_walk(json_dict)
 pprint<span style="color:#f92672">.</span>pprint(final_dict)
 </code></pre></div><p>Below is the result:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># python create_json_paths.py</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># python create_json_paths.py</span>
 <span style="color:#f92672">{</span>u<span style="color:#e6db74">&#39;data/0/actions/0/link&#39;</span>: u<span style="color:#e6db74">&#39;http://www.facebook.com/X999/posts/Y999&#39;</span>,
  u<span style="color:#e6db74">&#39;data/0/actions/0/name&#39;</span>: u<span style="color:#e6db74">&#39;Comment&#39;</span>,
  u<span style="color:#e6db74">&#39;data/0/actions/1/link&#39;</span>: u<span style="color:#e6db74">&#39;http://www.facebook.com/X999/posts/Y999&#39;</span>,

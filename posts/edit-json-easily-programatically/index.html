@@ -67,14 +67,14 @@
 			<h2 id="introduction">Introduction</h2>
 <p>Often I had to manipulate the JSON/YAML files. I created a utility that can help make changes in JSON/YAML easily.</p>
 <h3 id="get-the-code">Get the code.</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git clone https://github.com/spareslant/json_manipulation.git
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git clone https://github.com/spareslant/json_manipulation.git
 cd json_manipulation
 </code></pre></div><h3 id="python-version-used">Python version used</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ python --version
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ python --version
 Python 3.9.0
 </code></pre></div><h3 id="how-to-run">How to Run:</h3>
 <h4 id="input_data_1json-contents"><code>input_data_1.json</code> contents</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
     <span style="color:#f92672">&#34;data&#34;</span>: [
         {
             <span style="color:#f92672">&#34;actions&#34;</span>: [
@@ -129,9 +129,9 @@ Python 3.9.0
     <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Anonymous&#34;</span>
 }
 </code></pre></div><h3 id="generate-flat-json-structure">Generate Flat JSON structure</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">./generate_flat_json.py input_data_1.json &gt; input_data_1_flat.json
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">./generate_flat_json.py input_data_1.json &gt; input_data_1_flat.json
 </code></pre></div><h5 id="input_data_1_flatjson-file-contents"><code>input_data_1_flat.json</code> file contents</h5>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
   <span style="color:#f92672">&#34;data/0/actions/0/link&#34;</span>: <span style="color:#e6db74">&#34;http://www.facebook.com/X999/posts/Y999&#34;</span>,
   <span style="color:#f92672">&#34;data/0/actions/0/name&#34;</span>: <span style="color:#e6db74">&#34;Comment&#34;</span>,
   <span style="color:#f92672">&#34;data/0/actions/1/link&#34;</span>: <span style="color:#e6db74">&#34;http://www.facebook.com/X999/posts/Y999&#34;</span>,
@@ -160,7 +160,7 @@ Python 3.9.0
   <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Anonymous&#34;</span>
 }
 </code></pre></div><h3 id="make-changes-to-above-fileconents-like-delete-unwanted-lines-or-change-or-add-new-ones-following-is-the-diff">Make changes to above file/conents. like delete unwanted lines or change or add new ones. Following is the diff</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff">diff -b -u flat_input_data_1.json flat_input_data_1.json.new                                                                                     1 ↵
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff">diff -b -u flat_input_data_1.json flat_input_data_1.json.new                                                                                     1 ↵
 <span style="color:#f92672">--- flat_input_data_1.json      2021-05-14 06:33:56.000000000 +0100
 </span><span style="color:#f92672"></span><span style="color:#a6e22e">+++ flat_input_data_1.json.new  2021-05-14 06:32:50.000000000 +0100
 </span><span style="color:#a6e22e"></span><span style="color:#75715e">@@ -4,16 +4,18 @@
@@ -194,10 +194,10 @@ Python 3.9.0
 </span><span style="color:#f92672"></span><span style="color:#a6e22e">+  &#34;name&#34;: &#34;Anonymous&#34;,
 </span><span style="color:#a6e22e">+  &#34;function&#34;: &#34;Programming&#34;
 </span></code></pre></div><h3 id="re-generate-json-from-flat-json">Re-generate JSON from flat JSON</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">./recreate_json_from_flat.py flat_input_data_1.json.new | python -m json.tool --sort-keys &gt; recreated_data_1.json
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">./recreate_json_from_flat.py flat_input_data_1.json.new | python -m json.tool --sort-keys &gt; recreated_data_1.json
 </code></pre></div><p><strong>Note</strong>: Input file was also sorted with above <code>-m json.tool</code>. Sorting is not required at all. We are sorting above json so that diff can be viewed comfortably.</p>
 <h4 id="recreated_data_1json-file-contents"><code>recreated_data_1.json</code> file contents</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
     <span style="color:#f92672">&#34;data&#34;</span>: [
         {
             <span style="color:#f92672">&#34;actions&#34;</span>: [
@@ -258,7 +258,7 @@ Python 3.9.0
     <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Anonymous&#34;</span>
 }
 </code></pre></div><h4 id="following-is-the-diff-between-original-input-json-file-and-newly-created-file">Following is the diff between original input json file and newly created file</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff">diff -b -u input_data_1.json recreated_data_1.json
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff">diff -b -u input_data_1.json recreated_data_1.json
 <span style="color:#f92672">--- input_data_1.json   2021-05-14 06:26:45.000000000 +0100
 </span><span style="color:#f92672"></span><span style="color:#a6e22e">+++ recreated_data_1.json       2021-05-14 06:36:45.000000000 +0100
 </span><span style="color:#a6e22e"></span><span style="color:#75715e">@@ -13,13 +13,14 @@
@@ -325,6 +325,9 @@ Python 3.9.0
 <nav class="post-nav flex">
 	<div class="post-nav__item post-nav__item--prev">
 		<a class="post-nav__link" href="/posts/kubernetes-cluster-cri-o/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Kubernetes Cluster Using CRI-O</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/posts/k8s-vagrant-centos-stream-crio-automated-deployment/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">K8s Vagrant Centos Stream Crio Automated Deployment</p></a>
 	</div>
 </nav>
 
