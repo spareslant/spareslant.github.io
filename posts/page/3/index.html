@@ -40,6 +40,27 @@
 	</header><article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
+			<a href="/posts/multiple-vms-vagrantfile/" rel="bookmark">
+			Multiple Vms Vagrantfile
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2020-03-10T17:50:49">2020-03-10</time>
+</div>
+</div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Introduction A Vagrantfile for multiple VMS.
+Prepare Environment mkdir Vagrant_VMS cd Vagrant_VMS vagrant init Populate Vagrantfile with following contents. all_hosts = [ { vagrant_hostname: &#34;amachine&#34;, full_hostname: &#34;amachine.virtual.machine&#34;, vmbox: &#34;fedora/31-cloud-base&#34;, vmbox_version: &#34;31.20191023.0&#34;, ip: &#34;10.0.0.10&#34;, memory: 2048, cpus: 1 }, # { # vagrant_hostname: &#34;anotherMachine&#34;, # full_hostname: &#34;another.virtual.machine&#34;, # vmbox: &#34;fedora/31-cloud-base&#34;, # vmbox_version: &#34;31.20191023.0&#34;, # ip: &#34;10.0.0.12&#34;, # memory: 2048, # cpus: 1 # }, ] # individual machine names must be mentioned is below command line in # order to bring machines.
+	</div>
+	<div class="list__footer clearfix">
+		<a class="list__footer-readmore btn" href="/posts/multiple-vms-vagrantfile/">Read more…</a>
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
 			<a href="/posts/convert_markup_to_blogger_compatible_html/" rel="bookmark">
 			Convert markup to blogger compatible html
 			</a>
@@ -260,11 +281,11 @@ Prepare environment os used $ cat /etc/fedora-release Fedora release 30 (Thirty)
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/posts/k8s-vagrant-private-registry-centos8-crio-automated-deployment/">K8s Vagrant Private Registry Centos8 Crio Automated Deployment</a></li>
 			<li class="widget__item"><a class="widget__link" href="/posts/k8s-vagrant-centos-stream-crio-automated-deployment/">K8s Vagrant Centos Stream Crio Automated Deployment</a></li>
 			<li class="widget__item"><a class="widget__link" href="/posts/edit-json-easily-programatically/">Edit Json Easily Programatically</a></li>
 			<li class="widget__item"><a class="widget__link" href="/posts/kubernetes-cluster-cri-o/">Kubernetes Cluster Using CRI-O</a></li>
 			<li class="widget__item"><a class="widget__link" href="/posts/kubernetes-cluster-containerd/">Kubernetes Cluster Using Containerd</a></li>
-			<li class="widget__item"><a class="widget__link" href="/posts/multihop-ssh/">Multihop SSH Tunnel to access Vagrant VM Service</a></li>
 		</ul>
 	</div>
 </div>
@@ -280,12 +301,14 @@ Prepare environment os used $ cat /etc/fedora-release Fedora release 30 (Thirty)
 		<a class="widget-taglist__link widget__link btn" href="/tags/blogger-html" title="Blogger HTML">Blogger HTML (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/ca" title="Ca">Ca (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/cdk" title="Cdk">Cdk (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/centos8-stream" title="Centos8 stream">Centos8 stream (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/cgroups" title="Cgroups">Cgroups (2)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/containerd" title="Containerd">Containerd (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/cri-o" title="Cri o">Cri o (2)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cri-o" title="Cri o">Cri o (3)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/curl" title="Curl">Curl (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/digital-certificates" title="Digital certificates">Digital certificates (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/docker" title="Docker">Docker (2)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/docker" title="Docker">Docker (3)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/docker-registry" title="Docker registry">Docker registry (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/elasticsearch" title="Elasticsearch">Elasticsearch (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/elk" title="Elk">Elk (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/flask" title="Flask">Flask (1)</a>
@@ -301,10 +324,10 @@ Prepare environment os used $ cat /etc/fedora-release Fedora release 30 (Thirty)
 		<a class="widget-taglist__link widget__link btn" href="/tags/hugo" title="Hugo">Hugo (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/jinja" title="Jinja">Jinja (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/json" title="JSON">JSON (2)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/k8s" title="K8s">K8s (3)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/k8s" title="K8s">K8s (4)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/kafka" title="Kafka">Kafka (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/kibana" title="Kibana">Kibana (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/kubernetes" title="Kubernetes">Kubernetes (3)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/kubernetes" title="Kubernetes">Kubernetes (4)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/logging" title="Logging">Logging (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/logstash" title="Logstash">Logstash (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/multi-hop-tunnel" title="Multi hop tunnel">Multi hop tunnel (1)</a>
@@ -335,11 +358,11 @@ Prepare environment os used $ cat /etc/fedora-release Fedora release 30 (Thirty)
 		<a class="widget-taglist__link widget__link btn" href="/tags/terraform" title="Terraform">Terraform (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/tmux" title="Tmux">Tmux (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/typescript" title="Typescript">Typescript (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/vagrant" title="Vagrant">Vagrant (5)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/vagrantfile" title="Vagrantfile">Vagrantfile (5)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/vagrant" title="Vagrant">Vagrant (6)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/vagrantfile" title="Vagrantfile">Vagrantfile (6)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/vagrantfile-plugin" title="Vagrantfile plugin">Vagrantfile plugin (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/vim" title="Vim">Vim (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/virtualbox" title="Virtualbox">Virtualbox (3)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/virtualbox" title="Virtualbox">Virtualbox (4)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/vundle" title="Vundle">Vundle (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/x509" title="X509">X509 (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/yaml" title="Yaml">Yaml (1)</a>

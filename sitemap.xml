@@ -2,34 +2,46 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>/tags/centos8-stream/</loc>
+    <lastmod>2021-08-25T12:24:16+01:00</lastmod>
+  </url><url>
     <loc>/tags/cri-o/</loc>
-    <lastmod>2021-08-23T22:29:22+01:00</lastmod>
+    <lastmod>2021-08-25T12:24:16+01:00</lastmod>
+  </url><url>
+    <loc>/tags/docker/</loc>
+    <lastmod>2021-08-25T12:24:16+01:00</lastmod>
+  </url><url>
+    <loc>/tags/docker-registry/</loc>
+    <lastmod>2021-08-25T12:24:16+01:00</lastmod>
   </url><url>
     <loc>/tags/k8s/</loc>
-    <lastmod>2021-08-23T22:29:22+01:00</lastmod>
+    <lastmod>2021-08-25T12:24:16+01:00</lastmod>
   </url><url>
-    <loc>/posts/k8s-vagrant-centos-stream-crio-automated-deployment/</loc>
-    <lastmod>2021-08-23T22:29:22+01:00</lastmod>
+    <loc>/posts/k8s-vagrant-private-registry-centos8-crio-automated-deployment/</loc>
+    <lastmod>2021-08-25T12:24:16+01:00</lastmod>
   </url><url>
     <loc>/tags/kubernetes/</loc>
-    <lastmod>2021-08-23T22:29:22+01:00</lastmod>
+    <lastmod>2021-08-25T12:24:16+01:00</lastmod>
   </url><url>
     <loc>/posts/</loc>
-    <lastmod>2021-08-23T22:29:22+01:00</lastmod>
+    <lastmod>2021-08-25T12:24:16+01:00</lastmod>
   </url><url>
     <loc>/</loc>
-    <lastmod>2021-08-23T22:29:22+01:00</lastmod>
+    <lastmod>2021-08-25T12:24:16+01:00</lastmod>
   </url><url>
     <loc>/tags/</loc>
-    <lastmod>2021-08-23T22:29:22+01:00</lastmod>
+    <lastmod>2021-08-25T12:24:16+01:00</lastmod>
   </url><url>
     <loc>/tags/vagrant/</loc>
-    <lastmod>2021-08-23T22:29:22+01:00</lastmod>
+    <lastmod>2021-08-25T12:24:16+01:00</lastmod>
   </url><url>
     <loc>/tags/vagrantfile/</loc>
-    <lastmod>2021-08-23T22:29:22+01:00</lastmod>
+    <lastmod>2021-08-25T12:24:16+01:00</lastmod>
   </url><url>
     <loc>/tags/virtualbox/</loc>
+    <lastmod>2021-08-25T12:24:16+01:00</lastmod>
+  </url><url>
+    <loc>/posts/k8s-vagrant-centos-stream-crio-automated-deployment/</loc>
     <lastmod>2021-08-23T22:29:22+01:00</lastmod>
   </url><url>
     <loc>/posts/edit-json-easily-programatically/</loc>
@@ -85,9 +97,6 @@
   </url><url>
     <loc>/tags/typescript/</loc>
     <lastmod>2020-12-28T17:54:12+00:00</lastmod>
-  </url><url>
-    <loc>/tags/docker/</loc>
-    <lastmod>2020-05-21T05:58:11+01:00</lastmod>
   </url><url>
     <loc>/tags/elasticsearch/</loc>
     <lastmod>2020-05-21T05:58:11+01:00</lastmod>

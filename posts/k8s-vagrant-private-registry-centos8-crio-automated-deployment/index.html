@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-gb">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>K8s Vagrant Private Registry Centos8 Crio Automated Deployment - SpareSlant Technical Blog</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/my.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="SpareSlant Technical Blog" rel="home">
+				<div class="logo__title">SpareSlant Technical Blog</div>
+				<div class="logo__tagline">SpareSlant tech blog</div>
+			</a>
+		</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">K8s Vagrant Private Registry Centos8 Crio Automated Deployment</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2021-08-25T12:24:16">2021-08-25</time>
+</div>
+</div>
+		</header>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#vagrantfile">Vagrantfile</a></li>
+    <li><a href="#deployment">Deployment</a></li>
+    <li><a href="#adding-more-nodes">Adding more nodes</a></li>
+    <li><a href="#verify-private-docker-registry">Verify private docker registry</a></li>
+    <li><a href="#notes">Notes</a></li>
+  </ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<h2 id="introduction">Introduction</h2>
+<ul>
+<li>We will be creating a fully automated <code>Vagrant</code> based <code>Kubernetes</code> cluster deployment with private docker registry in separate VM.</li>
+<li>Following are the software versions used:
+<ul>
+<li>Hardware: MacBook Pro</li>
+<li>HostOS: MacOS Big Sur 11.5.2</li>
+<li>Kube Version: 1.21.4</li>
+<li>CRIO: 1.21</li>
+<li>Cluster OS: Centos8 Stream</li>
+</ul>
+</li>
+<li>It is assumed that VirtualBox and Vagrant is already installed on your hostOS.</li>
+</ul>
+<h2 id="vagrantfile">Vagrantfile</h2>
+<ul>
+<li>Create a directory and create a file named <code>Vagrantfile</code> with following contents in that directory.</li>
+<li>cd to this directory</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">require <span style="color:#e6db74">&#39;json&#39;</span>
+
+all_hosts <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>
+    {
+        <span style="color:#e6db74">vagrant_hostname</span>: <span style="color:#e6db74">&#34;master&#34;</span>,
+        <span style="color:#e6db74">full_hostname</span>: <span style="color:#e6db74">&#34;master.virtual.machine&#34;</span>,
+        <span style="color:#e6db74">vmbox</span>: <span style="color:#e6db74">&#34;centos/stream8&#34;</span>,
+        <span style="color:#e6db74">vmbox_version</span>: <span style="color:#e6db74">&#34;20210210.0&#34;</span>,
+        <span style="color:#e6db74">ip</span>: <span style="color:#e6db74">&#34;10.0.0.10&#34;</span>,
+        <span style="color:#e6db74">memory</span>: <span style="color:#ae81ff">2048</span>,
+        <span style="color:#e6db74">cpus</span>: <span style="color:#ae81ff">3</span>
+    },
+    {
+        <span style="color:#e6db74">vagrant_hostname</span>: <span style="color:#e6db74">&#34;worker1&#34;</span>,
+        <span style="color:#e6db74">full_hostname</span>: <span style="color:#e6db74">&#34;worker1.virtual.machine&#34;</span>,
+        <span style="color:#e6db74">vmbox</span>: <span style="color:#e6db74">&#34;centos/stream8&#34;</span>,
+        <span style="color:#e6db74">vmbox_version</span>: <span style="color:#e6db74">&#34;20210210.0&#34;</span>,
+        <span style="color:#e6db74">ip</span>: <span style="color:#e6db74">&#34;10.0.0.12&#34;</span>,
+        <span style="color:#e6db74">memory</span>: <span style="color:#ae81ff">2048</span>,
+        <span style="color:#e6db74">cpus</span>: <span style="color:#ae81ff">1</span>
+    },
+    <span style="color:#75715e"># {</span>
+    <span style="color:#75715e">#     vagrant_hostname: &#34;worker2&#34;,</span>
+    <span style="color:#75715e">#     full_hostname: &#34;worker2.virtual.machine&#34;,</span>
+    <span style="color:#75715e">#     vmbox: &#34;centos/stream8&#34;,</span>
+    <span style="color:#75715e">#     vmbox_version: &#34;20210210.0&#34;,</span>
+    <span style="color:#75715e">#     ip: &#34;10.0.0.14&#34;,</span>
+    <span style="color:#75715e">#     memory: 2048,</span>
+    <span style="color:#75715e">#     cpus: 1</span>
+    <span style="color:#75715e"># },</span>
+    {
+        <span style="color:#e6db74">vagrant_hostname</span>: <span style="color:#e6db74">&#34;registry&#34;</span>,
+        <span style="color:#e6db74">full_hostname</span>: <span style="color:#e6db74">&#34;registry.virtual.machine&#34;</span>,
+        <span style="color:#e6db74">vmbox</span>: <span style="color:#e6db74">&#34;centos/stream8&#34;</span>,
+        <span style="color:#e6db74">vmbox_version</span>: <span style="color:#e6db74">&#34;20210210.0&#34;</span>,
+        <span style="color:#e6db74">ip</span>: <span style="color:#e6db74">&#34;10.0.0.16&#34;</span>,
+        <span style="color:#e6db74">memory</span>: <span style="color:#ae81ff">2048</span>,
+        <span style="color:#e6db74">cpus</span>: <span style="color:#ae81ff">1</span>
+    },
+<span style="color:#f92672">]</span>
+
+<span style="color:#66d9ef">CRIO_VERSION</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;1.21&#34;</span>
+<span style="color:#66d9ef">OS</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;CentOS_8_Stream&#34;</span>
+<span style="color:#66d9ef">K8S_VERSION</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;1.21.4&#34;</span>
+
+<span style="color:#75715e"># we need to generate quoted string here</span>
+<span style="color:#66d9ef">JSON_ALL_HOSTS</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#39;&#34;</span> <span style="color:#f92672">+</span> <span style="color:#66d9ef">JSON</span><span style="color:#f92672">.</span>generate(all_hosts) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;&#39;&#34;</span>
+
+
+
+<span style="color:#75715e"># individual machine names must be mentioned in below command line in</span>
+<span style="color:#75715e"># order to bring up machines. (due to autostart: false)</span>
+<span style="color:#75715e"># vagrant up master worker1</span>
+<span style="color:#66d9ef">Vagrant</span><span style="color:#f92672">.</span>configure(<span style="color:#e6db74">&#34;2&#34;</span>) <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>config<span style="color:#f92672">|</span>
+
+    all_hosts<span style="color:#f92672">.</span>each <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>host<span style="color:#f92672">|</span>
+        config<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>define host<span style="color:#f92672">[</span><span style="color:#e6db74">:vagrant_hostname</span><span style="color:#f92672">]</span>, <span style="color:#e6db74">autostart</span>: <span style="color:#66d9ef">false</span> <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>this_host<span style="color:#f92672">|</span>
+            this_host<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>network <span style="color:#e6db74">:private_network</span>, <span style="color:#e6db74">ip</span>: host<span style="color:#f92672">[</span><span style="color:#e6db74">:ip</span><span style="color:#f92672">]</span>
+            this_host<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>hostname <span style="color:#f92672">=</span> host<span style="color:#f92672">[</span><span style="color:#e6db74">:full_hostname</span><span style="color:#f92672">]</span>
+            this_host<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>box <span style="color:#f92672">=</span> host<span style="color:#f92672">[</span><span style="color:#e6db74">:vmbox</span><span style="color:#f92672">]</span>
+            this_host<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>box_version <span style="color:#f92672">=</span> host<span style="color:#f92672">[</span><span style="color:#e6db74">:vmbox_version</span><span style="color:#f92672">]</span>
+
+            this_host<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>provider <span style="color:#e6db74">&#34;virtualbox&#34;</span> <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>m<span style="color:#f92672">|</span>
+                m<span style="color:#f92672">.</span>memory <span style="color:#f92672">=</span> host<span style="color:#f92672">[</span><span style="color:#e6db74">:memory</span><span style="color:#f92672">]</span>
+                m<span style="color:#f92672">.</span>cpus <span style="color:#f92672">=</span> host<span style="color:#f92672">[</span><span style="color:#e6db74">:cpus</span><span style="color:#f92672">]</span>
+            <span style="color:#66d9ef">end</span>
+
+            this_host<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>provision <span style="color:#e6db74">:shell</span>, <span style="color:#e6db74">privileged</span>: <span style="color:#66d9ef">true</span>, name: <span style="color:#e6db74">&#34;fix_ip_address&#34;</span>, <span style="color:#e6db74">inline</span>: $fix_ip_address, <span style="color:#e6db74">args</span>: <span style="color:#66d9ef">JSON_ALL_HOSTS</span>
+
+            <span style="color:#66d9ef">if</span> host<span style="color:#f92672">[</span><span style="color:#e6db74">:full_hostname</span><span style="color:#f92672">].</span>match(<span style="color:#e6db74">/^master/</span>) 
+                this_host<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>provision <span style="color:#e6db74">:shell</span>, <span style="color:#e6db74">privileged</span>: <span style="color:#66d9ef">true</span>, name: <span style="color:#e6db74">&#34;gen_registry_certs&#34;</span>, <span style="color:#e6db74">inline</span>: $gen_registry_certs
+                this_host<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>provision <span style="color:#e6db74">:shell</span>, <span style="color:#e6db74">privileged</span>: <span style="color:#66d9ef">true</span>, name: <span style="color:#e6db74">&#34;import_registry_certs&#34;</span>, <span style="color:#e6db74">inline</span>: $import_registry_certs
+                this_host<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>provision <span style="color:#e6db74">:shell</span>, <span style="color:#e6db74">privileged</span>: <span style="color:#66d9ef">true</span>, name: <span style="color:#e6db74">&#34;allow_bridged_traffic&#34;</span>, <span style="color:#e6db74">inline</span>: $allow_bridged_traffic
+                this_host<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>provision <span style="color:#e6db74">:shell</span>, <span style="color:#e6db74">privileged</span>: <span style="color:#66d9ef">true</span>, name: <span style="color:#e6db74">&#34;install_crio&#34;</span>, <span style="color:#e6db74">inline</span>: $install_crio, <span style="color:#e6db74">args</span>: <span style="color:#f92672">[</span><span style="color:#66d9ef">CRIO_VERSION</span>, <span style="color:#66d9ef">OS</span><span style="color:#f92672">]</span>
+                this_host<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>provision <span style="color:#e6db74">:shell</span>, <span style="color:#e6db74">privileged</span>: <span style="color:#66d9ef">true</span>, name: <span style="color:#e6db74">&#34;install_k8s&#34;</span>, <span style="color:#e6db74">inline</span>: $install_k8s, <span style="color:#e6db74">args</span>: <span style="color:#66d9ef">K8S_VERSION</span>
+                this_host<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>provision <span style="color:#e6db74">:shell</span>, <span style="color:#e6db74">privileged</span>: <span style="color:#66d9ef">true</span>, name: <span style="color:#e6db74">&#34;setup_k8s_master&#34;</span>, <span style="color:#e6db74">inline</span>: $setup_k8s_master
+                this_host<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>provision <span style="color:#e6db74">:shell</span>, <span style="color:#e6db74">privileged</span>: <span style="color:#66d9ef">true</span>, name: <span style="color:#e6db74">&#34;generate_join_cmd&#34;</span>, <span style="color:#e6db74">inline</span>: $generate_join_cmd
+                this_host<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>provision <span style="color:#e6db74">:shell</span>, <span style="color:#e6db74">privileged</span>: <span style="color:#66d9ef">true</span>, name: <span style="color:#e6db74">&#34;export_nfs&#34;</span>, <span style="color:#e6db74">inline</span>: $export_nfs
+            <span style="color:#66d9ef">end</span>
+
+            <span style="color:#66d9ef">if</span> host<span style="color:#f92672">[</span><span style="color:#e6db74">:full_hostname</span><span style="color:#f92672">].</span>match(<span style="color:#e6db74">/^worker/</span>) 
+                this_host<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>provision <span style="color:#e6db74">:shell</span>, <span style="color:#e6db74">privileged</span>: <span style="color:#66d9ef">true</span>, name: <span style="color:#e6db74">&#34;mount_nfs_share&#34;</span>, <span style="color:#e6db74">inline</span>: $mount_nfs_share
+                this_host<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>provision <span style="color:#e6db74">:shell</span>, <span style="color:#e6db74">privileged</span>: <span style="color:#66d9ef">true</span>, name: <span style="color:#e6db74">&#34;import_registry_certs&#34;</span>, <span style="color:#e6db74">inline</span>: $import_registry_certs
+                this_host<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>provision <span style="color:#e6db74">:shell</span>, <span style="color:#e6db74">privileged</span>: <span style="color:#66d9ef">true</span>, name: <span style="color:#e6db74">&#34;allow_bridged_traffic&#34;</span>, <span style="color:#e6db74">inline</span>: $allow_bridged_traffic
+                this_host<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>provision <span style="color:#e6db74">:shell</span>, <span style="color:#e6db74">privileged</span>: <span style="color:#66d9ef">true</span>, name: <span style="color:#e6db74">&#34;install_crio&#34;</span>, <span style="color:#e6db74">inline</span>: $install_crio, <span style="color:#e6db74">args</span>: <span style="color:#f92672">[</span><span style="color:#66d9ef">CRIO_VERSION</span>, <span style="color:#66d9ef">OS</span><span style="color:#f92672">]</span>
+                this_host<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>provision <span style="color:#e6db74">:shell</span>, <span style="color:#e6db74">privileged</span>: <span style="color:#66d9ef">true</span>, name: <span style="color:#e6db74">&#34;install_k8s&#34;</span>, <span style="color:#e6db74">inline</span>: $install_k8s, <span style="color:#e6db74">args</span>: <span style="color:#66d9ef">K8S_VERSION</span>
+                this_host<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>provision <span style="color:#e6db74">:shell</span>, <span style="color:#e6db74">privileged</span>: <span style="color:#66d9ef">true</span>, name: <span style="color:#e6db74">&#34;setup_k8s_node&#34;</span>, <span style="color:#e6db74">inline</span>: $setup_k8s_node
+            <span style="color:#66d9ef">end</span>
+
+            <span style="color:#66d9ef">if</span> host<span style="color:#f92672">[</span><span style="color:#e6db74">:full_hostname</span><span style="color:#f92672">]</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;registry.virtual.machine&#34;</span>  
+                this_host<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>provision <span style="color:#e6db74">:shell</span>, <span style="color:#e6db74">privileged</span>: <span style="color:#66d9ef">true</span>, name: <span style="color:#e6db74">&#34;mount_nfs_share&#34;</span>, <span style="color:#e6db74">inline</span>: $mount_nfs_share
+                this_host<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>provision <span style="color:#e6db74">:shell</span>, <span style="color:#e6db74">privileged</span>: <span style="color:#66d9ef">true</span>, name: <span style="color:#e6db74">&#34;import_registry_certs&#34;</span>, <span style="color:#e6db74">inline</span>: $import_registry_certs
+                this_host<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>provision <span style="color:#e6db74">:shell</span>, <span style="color:#e6db74">privileged</span>: <span style="color:#66d9ef">true</span>, name: <span style="color:#e6db74">&#34;setup_docker_registry&#34;</span>, <span style="color:#e6db74">inline</span>: $setup_docker_registry
+            <span style="color:#66d9ef">end</span>
+        <span style="color:#66d9ef">end</span>
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#75715e">########################################</span>
+<span style="color:#75715e">#     Fix /etc/hosts file              #</span>
+<span style="color:#75715e">########################################</span>
+$fix_ip_address <span style="color:#f92672">=</span> <span style="color:#e6db74">&lt;&lt;-FIXIP
+</span><span style="color:#e6db74"></span><span style="color:#75715e"># This script is idempotent</span>
+set <span style="color:#f92672">-</span>euo pipefail
+echo <span style="color:#e6db74">&#34;===================== Fixing /etc/hosts file =========================&#34;</span>
+yum install <span style="color:#f92672">-</span>y perl jq
+
+<span style="color:#75715e"># remove `127.0.0.1 &lt;full_hostname&gt;` entry from /etc/hosts file</span>
+perl <span style="color:#f92672">-</span>wnl <span style="color:#f92672">-</span>i <span style="color:#f92672">-</span>s <span style="color:#f92672">-</span>e <span style="color:#e6db74">&#39;m!127.+\s+$hostname! or print&#39;</span> <span style="color:#f92672">--</span> <span style="color:#f92672">-</span>hostname<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;$HOSTNAME&#34;</span> <span style="color:#e6db74">/etc/</span>hosts
+
+echo <span style="color:#e6db74">&#34;$1&#34;</span> <span style="color:#f92672">&gt;</span> all_hosts<span style="color:#f92672">.</span>json
+
+cat all_hosts<span style="color:#f92672">.</span>json <span style="color:#f92672">|</span> jq <span style="color:#f92672">-</span>r <span style="color:#e6db74">&#39;.[] | [.ip , .full_hostname] | @tsv&#39;</span> <span style="color:#f92672">|</span> tr <span style="color:#e6db74">&#39;\t&#39;</span> <span style="color:#e6db74">&#39; &#39;</span> <span style="color:#f92672">&gt;</span> ip_host_format<span style="color:#f92672">.</span>txt
+
+set <span style="color:#f92672">+</span>e
+non_existence_entries<span style="color:#f92672">=</span><span style="color:#960050;background-color:#1e0010">$</span>(egrep <span style="color:#f92672">-</span>v <span style="color:#f92672">-</span>x <span style="color:#f92672">-</span>f <span style="color:#e6db74">/etc/</span>hosts ip_host_format<span style="color:#f92672">.</span>txt)
+
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">[[</span> <span style="color:#f92672">!</span> <span style="color:#f92672">-</span>z <span style="color:#e6db74">&#34;${non_existence_entries}&#34;</span> <span style="color:#f92672">]]</span>
+<span style="color:#66d9ef">then</span>
+    echo <span style="color:#e6db74">&#34;${non_existence_entries}&#34;</span> <span style="color:#f92672">&gt;&gt;</span> <span style="color:#e6db74">/etc/</span>hosts
+fi
+
+cat <span style="color:#e6db74">/etc/</span>hosts
+
+<span style="color:#66d9ef">FIXIP</span>
+
+
+<span style="color:#75715e">########################################</span>
+<span style="color:#75715e">#  IPtables must see Bridged traffic   #</span>
+<span style="color:#75715e">########################################</span>
+$allow_bridged_traffic <span style="color:#f92672">=</span> <span style="color:#e6db74">&lt;&lt;-BRIDGED
+</span><span style="color:#e6db74"></span>set <span style="color:#f92672">-</span>euo pipefail
+<span style="color:#75715e"># This script is idempotent</span>
+swapoff <span style="color:#f92672">-</span>a
+yum install <span style="color:#f92672">-</span>y  iproute<span style="color:#f92672">-</span>tc
+cat <span style="color:#e6db74">&lt;&lt;EOF &gt; /etc/modules-load.d/k8s.conf
+</span><span style="color:#e6db74"></span>br_netfilter
+<span style="color:#66d9ef">EOF</span>
+
+cat <span style="color:#e6db74">&lt;&lt;EOF &gt; /etc/sysctl.d/k8s.conf
+</span><span style="color:#e6db74"></span>net<span style="color:#f92672">.</span>bridge<span style="color:#f92672">.</span>bridge<span style="color:#f92672">-</span>nf<span style="color:#f92672">-</span>call<span style="color:#f92672">-</span>ip6tables <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+net<span style="color:#f92672">.</span>bridge<span style="color:#f92672">.</span>bridge<span style="color:#f92672">-</span>nf<span style="color:#f92672">-</span>call<span style="color:#f92672">-</span>iptables <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+<span style="color:#66d9ef">EOF</span>
+sysctl <span style="color:#f92672">--</span>system
+<span style="color:#66d9ef">BRIDGED</span>
+
+
+<span style="color:#75715e">########################################</span>
+<span style="color:#75715e">#         Install CRIO                 #</span>
+<span style="color:#75715e">########################################</span>
+$install_crio <span style="color:#f92672">=</span> <span style="color:#e6db74">&lt;&lt;-CRIO
+</span><span style="color:#e6db74"></span>set <span style="color:#f92672">-</span>euo pipefail
+<span style="color:#75715e"># This script is idempotent</span>
+echo <span style="color:#e6db74">&#34;=====================Installing CRIO =========================&#34;</span>
+yum <span style="color:#f92672">-</span>y install grubby
+grubby <span style="color:#f92672">--</span>update<span style="color:#f92672">-</span>kernel<span style="color:#f92672">=</span><span style="color:#66d9ef">ALL</span> <span style="color:#f92672">--</span>args<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;systemd.unified_cgroup_hierarchy=1&#34;</span>
+
+cat <span style="color:#e6db74">&lt;&lt;EOF &gt; /etc/modules-load.d/crio.conf
+</span><span style="color:#e6db74"></span>overlay
+br_netfilter
+<span style="color:#66d9ef">EOF</span>
+
+modprobe overlay
+modprobe br_netfilter
+
+cat <span style="color:#e6db74">&lt;&lt;EOF &gt; /etc/sysctl.d/99-kubernetes-cri.conf
+</span><span style="color:#e6db74"></span>net<span style="color:#f92672">.</span>bridge<span style="color:#f92672">.</span>bridge<span style="color:#f92672">-</span>nf<span style="color:#f92672">-</span>call<span style="color:#f92672">-</span>iptables  <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+net<span style="color:#f92672">.</span>ipv4<span style="color:#f92672">.</span>ip_forward                 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+net<span style="color:#f92672">.</span>bridge<span style="color:#f92672">.</span>bridge<span style="color:#f92672">-</span>nf<span style="color:#f92672">-</span>call<span style="color:#f92672">-</span>ip6tables <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+<span style="color:#66d9ef">EOF</span>
+sysctl <span style="color:#f92672">--</span>system
+
+<span style="color:#66d9ef">VERSION</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;$1&#34;</span>
+<span style="color:#66d9ef">OS</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;$2&#34;</span>
+
+curl <span style="color:#f92672">-</span>L <span style="color:#f92672">-</span>o <span style="color:#e6db74">/etc/</span>yum<span style="color:#f92672">.</span>repos<span style="color:#f92672">.</span>d<span style="color:#f92672">/</span><span style="color:#e6db74">devel</span>:<span style="color:#e6db74">kubic</span>:<span style="color:#e6db74">libcontainers</span>:stable<span style="color:#f92672">.</span>repo <span style="color:#e6db74">https</span>:<span style="color:#e6db74">//</span>download<span style="color:#f92672">.</span>opensuse<span style="color:#f92672">.</span>org<span style="color:#f92672">/</span>repositories<span style="color:#f92672">/</span><span style="color:#e6db74">devel</span>:<span style="color:#e6db74">/kubic:/</span><span style="color:#e6db74">libcontainers</span>:<span style="color:#e6db74">/stable/</span>$OS<span style="color:#f92672">/</span><span style="color:#e6db74">devel</span>:<span style="color:#e6db74">kubic</span>:<span style="color:#e6db74">libcontainers</span>:stable<span style="color:#f92672">.</span>repo
+curl <span style="color:#f92672">-</span>L <span style="color:#f92672">-</span>o <span style="color:#e6db74">/etc/</span>yum<span style="color:#f92672">.</span>repos<span style="color:#f92672">.</span>d<span style="color:#f92672">/</span><span style="color:#e6db74">devel</span>:<span style="color:#e6db74">kubic</span>:<span style="color:#e6db74">libcontainers</span>:<span style="color:#e6db74">stable</span>:cri<span style="color:#f92672">-</span><span style="color:#e6db74">o</span>:$VERSION<span style="color:#f92672">.</span>repo <span style="color:#e6db74">https</span>:<span style="color:#e6db74">//</span>download<span style="color:#f92672">.</span>opensuse<span style="color:#f92672">.</span>org<span style="color:#f92672">/</span>repositories<span style="color:#f92672">/</span><span style="color:#e6db74">devel</span>:<span style="color:#e6db74">kubic</span>:<span style="color:#e6db74">libcontainers</span>:<span style="color:#e6db74">stable</span>:cri<span style="color:#f92672">-</span><span style="color:#e6db74">o</span>:$VERSION<span style="color:#f92672">/</span>$OS<span style="color:#f92672">/</span><span style="color:#e6db74">devel</span>:<span style="color:#e6db74">kubic</span>:<span style="color:#e6db74">libcontainers</span>:<span style="color:#e6db74">stable</span>:cri<span style="color:#f92672">-</span><span style="color:#e6db74">o</span>:$VERSION<span style="color:#f92672">.</span>repo
+yum <span style="color:#f92672">-</span>y install cri<span style="color:#f92672">-</span>o
+systemctl daemon<span style="color:#f92672">-</span>reload
+systemctl enable crio <span style="color:#f92672">--</span>now
+
+<span style="color:#66d9ef">CRIO</span>
+
+
+
+<span style="color:#75715e">########################################</span>
+<span style="color:#75715e">#         Install K8S                  #</span>
+<span style="color:#75715e">########################################</span>
+$install_k8s <span style="color:#f92672">=</span> <span style="color:#e6db74">&lt;&lt;-K8S
+</span><span style="color:#e6db74"></span>set <span style="color:#f92672">-</span>euo pipefail
+
+k8s_version<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;$1&#34;</span>
+
+<span style="color:#75715e"># This script is idempotent</span>
+echo <span style="color:#e6db74">&#34;=====================Installing K8S =========================&#34;</span>
+cat <span style="color:#e6db74">&lt;&lt;-&#39;EOF&#39; &gt; /etc/yum.repos.d/kubernetes.repo
+</span><span style="color:#e6db74"></span><span style="color:#f92672">[</span>kubernetes<span style="color:#f92672">]</span>
+name<span style="color:#f92672">=</span><span style="color:#66d9ef">Kubernetes</span>
+baseurl<span style="color:#f92672">=</span><span style="color:#e6db74">https</span>:<span style="color:#e6db74">//</span>packages<span style="color:#f92672">.</span>cloud<span style="color:#f92672">.</span>google<span style="color:#f92672">.</span>com<span style="color:#f92672">/</span>yum<span style="color:#f92672">/</span>repos<span style="color:#f92672">/</span>kubernetes<span style="color:#f92672">-</span>el7<span style="color:#f92672">-</span>\$basearch
+enabled<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+gpgcheck<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+repo_gpgcheck<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+gpgkey<span style="color:#f92672">=</span><span style="color:#e6db74">https</span>:<span style="color:#e6db74">//</span>packages<span style="color:#f92672">.</span>cloud<span style="color:#f92672">.</span>google<span style="color:#f92672">.</span>com<span style="color:#f92672">/</span>yum<span style="color:#f92672">/</span>doc<span style="color:#f92672">/</span>yum<span style="color:#f92672">-</span>key<span style="color:#f92672">.</span>gpg <span style="color:#e6db74">https</span>:<span style="color:#e6db74">//</span>packages<span style="color:#f92672">.</span>cloud<span style="color:#f92672">.</span>google<span style="color:#f92672">.</span>com<span style="color:#f92672">/</span>yum<span style="color:#f92672">/</span>doc<span style="color:#f92672">/</span>rpm<span style="color:#f92672">-</span>package<span style="color:#f92672">-</span>key<span style="color:#f92672">.</span>gpg
+exclude<span style="color:#f92672">=</span>kubelet kubeadm kubectl
+<span style="color:#66d9ef">EOF</span>
+
+<span style="color:#75715e"># Set SELinux in permissive mode (effectively disabling it)</span>
+setenforce <span style="color:#ae81ff">0</span>
+sed <span style="color:#f92672">-</span>i <span style="color:#e6db74">&#39;s/^SELINUX=enforcing$/SELINUX=permissive/&#39;</span> <span style="color:#e6db74">/etc/se</span>linux<span style="color:#f92672">/</span>config
+
+yum install <span style="color:#f92672">-</span>y kubelet<span style="color:#f92672">-</span><span style="color:#960050;background-color:#1e0010">$</span>{k8s_version} kubeadm<span style="color:#f92672">-</span><span style="color:#960050;background-color:#1e0010">$</span>{k8s_version} kubectl<span style="color:#f92672">-</span><span style="color:#960050;background-color:#1e0010">$</span>{k8s_version} <span style="color:#f92672">--</span>disableexcludes<span style="color:#f92672">=</span>kubernetes
+
+systemctl enable <span style="color:#f92672">--</span>now kubelet
+<span style="color:#66d9ef">K8S</span>
+
+
+
+<span style="color:#75715e">########################################</span>
+<span style="color:#75715e">#         Setup K8S Master             #</span>
+<span style="color:#75715e">########################################</span>
+$setup_k8s_master <span style="color:#f92672">=</span> <span style="color:#e6db74">&lt;&lt;-SETUPMASTER
+</span><span style="color:#e6db74"></span>set <span style="color:#f92672">-</span>euo pipefail
+
+echo <span style="color:#e6db74">&#34;===================== Setup K8S Master =========================&#34;</span>
+kubeadm init <span style="color:#f92672">--</span>apiserver<span style="color:#f92672">-</span>advertise<span style="color:#f92672">-</span>address<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span><span style="color:#f92672">.</span><span style="color:#ae81ff">0</span><span style="color:#f92672">.</span><span style="color:#ae81ff">0</span><span style="color:#f92672">.</span><span style="color:#ae81ff">10</span> <span style="color:#f92672">--</span>control<span style="color:#f92672">-</span>plane<span style="color:#f92672">-</span>endpoint<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span><span style="color:#f92672">.</span><span style="color:#ae81ff">0</span><span style="color:#f92672">.</span><span style="color:#ae81ff">0</span><span style="color:#f92672">.</span><span style="color:#ae81ff">10</span> <span style="color:#f92672">--</span>node<span style="color:#f92672">-</span>name $HOSTNAME <span style="color:#f92672">--</span>pod<span style="color:#f92672">-</span>network<span style="color:#f92672">-</span>cidr<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;172.20.0.0/16&#34;</span> <span style="color:#f92672">--</span>upload<span style="color:#f92672">-</span>certs  <span style="color:#ae81ff">2</span><span style="color:#f92672">&gt;&amp;</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">|</span> tee kubeadm<span style="color:#f92672">-</span>init<span style="color:#f92672">.</span>out <span style="color:#f92672">||</span> :
+messages<span style="color:#f92672">=</span><span style="color:#960050;background-color:#1e0010">$</span>(cat kubeadm<span style="color:#f92672">-</span>init<span style="color:#f92672">.</span>out <span style="color:#f92672">|</span> egrep <span style="color:#e6db74">&#39;File.+exists|Port.+use&#39;</span> <span style="color:#f92672">|</span> wc <span style="color:#f92672">-</span>l <span style="color:#f92672">||</span> :)
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">[[</span> <span style="color:#e6db74">&#34;$messages&#34;</span> <span style="color:#f92672">-</span>eq <span style="color:#ae81ff">10</span> <span style="color:#f92672">]]</span>
+<span style="color:#66d9ef">then</span>
+    echo <span style="color:#e6db74">&#34;$HOSTNAME already configured as K8S control plane..&#34;</span>
+<span style="color:#66d9ef">else</span>
+    mkdir <span style="color:#f92672">-</span>p <span style="color:#f92672">~</span>vagrant<span style="color:#f92672">/.</span>kube
+    cp <span style="color:#f92672">-</span>v <span style="color:#f92672">-</span>f <span style="color:#e6db74">/etc/</span>kubernetes<span style="color:#f92672">/</span>admin<span style="color:#f92672">.</span>conf <span style="color:#f92672">~</span>vagrant<span style="color:#f92672">/.</span>kube<span style="color:#f92672">/</span>config
+    chown <span style="color:#f92672">-</span>R <span style="color:#e6db74">vagrant</span>:vagrant <span style="color:#f92672">~</span>vagrant<span style="color:#f92672">/.</span>kube
+    echo <span style="color:#e6db74">&#34;source &lt;(kubectl completion bash)&#34;</span> <span style="color:#f92672">&gt;&gt;</span> <span style="color:#f92672">~</span>vagrant<span style="color:#f92672">/.</span>bashrc
+
+    <span style="color:#75715e"># k8s control may not be ready by this time. So keep on trying for 2 mins</span>
+    time_now<span style="color:#f92672">=</span><span style="color:#960050;background-color:#1e0010">$</span>(date <span style="color:#f92672">+</span><span style="color:#e6db74">%s)
+</span><span style="color:#e6db74">    # try for 2 mins, 120 seconds
+</span><span style="color:#e6db74">    time_expire=$((time_now + 120)</span>)
+    calico_networking<span style="color:#f92672">=</span><span style="color:#66d9ef">false</span>
+    <span style="color:#66d9ef">while</span> <span style="color:#f92672">[[</span> $time_now <span style="color:#f92672">-</span>lt $time_expire <span style="color:#f92672">]]</span>
+    <span style="color:#66d9ef">do</span>
+        echo <span style="color:#e6db74">&#34;=============== Applying Calico Networking ==============&#34;</span>
+        kubectl <span style="color:#f92672">--</span>kubeconfig<span style="color:#f92672">=</span><span style="color:#e6db74">/etc/</span>kubernetes<span style="color:#f92672">/</span>admin<span style="color:#f92672">.</span>conf apply <span style="color:#f92672">-</span>f <span style="color:#e6db74">https</span>:<span style="color:#e6db74">//</span>docs<span style="color:#f92672">.</span>projectcalico<span style="color:#f92672">.</span>org<span style="color:#f92672">/</span>manifests<span style="color:#f92672">/</span>calico<span style="color:#f92672">.</span>yaml \
+            <span style="color:#f92672">&amp;&amp;</span> calico_networking<span style="color:#f92672">=</span><span style="color:#66d9ef">true</span> \
+            <span style="color:#f92672">&amp;&amp;</span> <span style="color:#66d9ef">break</span> \
+            <span style="color:#f92672">||</span> echo <span style="color:#e6db74">&#34;FAILED..will keep on trying for 2 mins..&#34;</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">&gt;&amp;</span><span style="color:#ae81ff">2</span>
+          sleep <span style="color:#ae81ff">2</span>
+        time_now<span style="color:#f92672">=</span><span style="color:#960050;background-color:#1e0010">$</span>(date <span style="color:#f92672">+</span><span style="color:#e6db74">%s)
+</span><span style="color:#e6db74">    done
+</span><span style="color:#e6db74">    if [[ $calico_networking == false ]]
+</span><span style="color:#e6db74">    then
+</span><span style="color:#e6db74">        echo &#34;ERROR: Failed to apply calico networking&#34; 1&gt;&amp;2
+</span><span style="color:#e6db74">        exit 1
+</span><span style="color:#e6db74">    fi
+</span><span style="color:#e6db74">fi
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">SETUPMASTER
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">########################################
+</span><span style="color:#e6db74"># generate new join cmd on master      #
+</span><span style="color:#e6db74">########################################
+</span><span style="color:#e6db74">$generate_join_cmd = &lt;&lt;-JOINCMD
+</span><span style="color:#e6db74">set -euo pipefail
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">mkdir -p /k8s_shared
+</span><span style="color:#e6db74">kubeadm token create --print-join-command &gt; /k8s_shared/kube_join_command.sh
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">JOINCMD
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">########################################
+</span><span style="color:#e6db74"># Export NFS share                     #
+</span><span style="color:#e6db74">########################################
+</span><span style="color:#e6db74">$export_nfs = &lt;&lt;-EXPORTNFS
+</span><span style="color:#e6db74">set -euo pipefail
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">mkdir -p /k8s_shared
+</span><span style="color:#e6db74">yum install -y nfs-utils
+</span><span style="color:#e6db74">echo &#34;====================== Exporting NFS Share: /k8s_shared =====================&#34;
+</span><span style="color:#e6db74">systemctl start nfs-server
+</span><span style="color:#e6db74">echo &#34;/k8s_shared *(ro,sync)</span><span style="color:#e6db74">&#34; &gt; /etc/exports
+</span><span style="color:#e6db74">exportfs -av
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">EXPORTNFS
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">########################################
+</span><span style="color:#e6db74"># Generate certs for Docker registry   #
+</span><span style="color:#e6db74">########################################
+</span><span style="color:#e6db74">$gen_registry_certs = &lt;&lt;-GEN_CERTS
+</span><span style="color:#e6db74">set -euo pipefail
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">mkdir -p /k8s_shared/registry_certs
+</span><span style="color:#e6db74">openssl req \
+</span><span style="color:#e6db74">    -newkey rsa:4096 -nodes -sha256 -keyout /k8s_shared/registry_certs/registryKey.pem \
+</span><span style="color:#e6db74">    -addext &#34;</span>subjectAltName <span style="color:#f92672">=</span> <span style="color:#e6db74">DNS</span>:registry<span style="color:#f92672">.</span>virtual<span style="color:#f92672">.</span>machine<span style="color:#e6db74">&#34; \
+</span><span style="color:#e6db74">    -subj &#34;</span><span style="color:#f92672">/</span>C<span style="color:#f92672">=</span><span style="color:#66d9ef">GB</span><span style="color:#f92672">/</span><span style="color:#66d9ef">ST</span><span style="color:#f92672">=</span><span style="color:#66d9ef">London</span><span style="color:#f92672">/</span>L<span style="color:#f92672">=</span><span style="color:#66d9ef">London</span><span style="color:#f92672">/</span>O<span style="color:#f92672">=</span><span style="color:#66d9ef">MyCompany</span><span style="color:#f92672">/</span><span style="color:#66d9ef">OU</span><span style="color:#f92672">=</span><span style="color:#66d9ef">IT</span><span style="color:#f92672">/</span><span style="color:#66d9ef">CN</span><span style="color:#f92672">=</span>registry<span style="color:#f92672">.</span>virtual<span style="color:#f92672">.</span>machine<span style="color:#f92672">/</span>emailAddress<span style="color:#f92672">=</span>root@example<span style="color:#f92672">.</span>com<span style="color:#e6db74">&#34; \
+</span><span style="color:#e6db74">    -x509 -days 365 -out /k8s_shared/registry_certs/registryCert.pem
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">chmod 644 /k8s_shared/registry_certs/registryKey.pem
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">GEN_CERTS
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">########################################
+</span><span style="color:#e6db74"># Trust and Import registry certs in OS#
+</span><span style="color:#e6db74">########################################
+</span><span style="color:#e6db74">$import_registry_certs = &lt;&lt;-IMPORT_CERTS
+</span><span style="color:#e6db74">set -euo pipefail
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">cp -v -f /k8s_shared/registry_certs/registryCert.pem /etc/pki/ca-trust/source/anchors/registry.virtual.machine.crt
+</span><span style="color:#e6db74">update-ca-trust
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">IMPORT_CERTS
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">########################################
+</span><span style="color:#e6db74">#         Setup K8S Node               #
+</span><span style="color:#e6db74">########################################
+</span><span style="color:#e6db74">$setup_k8s_node = &lt;&lt;-SETUPNODE
+</span><span style="color:#e6db74">set -euo pipefail
+</span><span style="color:#e6db74">    
+</span><span style="color:#e6db74">echo &#34;</span><span style="color:#f92672">=====================</span> <span style="color:#66d9ef">Setup</span> <span style="color:#66d9ef">K8S</span> <span style="color:#66d9ef">Node</span> <span style="color:#f92672">=========================</span><span style="color:#e6db74">&#34;
+</span><span style="color:#e6db74"># k8s control may not be ready by this time. So keep on trying for 2 mins
+</span><span style="color:#e6db74">mkdir -p /k8s_shared
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">time_now=$(date +%s)
+</span><span style="color:#e6db74"># try for 2 mins, 60 seconds
+</span><span style="color:#e6db74">time_expire=$((time_now + 60))
+</span><span style="color:#e6db74">node_joined=false
+</span><span style="color:#e6db74">while [[ $time_now -lt $time_expire ]]
+</span><span style="color:#e6db74">do
+</span><span style="color:#e6db74">    echo &#34;</span><span style="color:#f92672">===============</span> $HOSTNAME is trying to join cluster <span style="color:#f92672">...</span> <span style="color:#f92672">==============</span><span style="color:#e6db74">&#34;
+</span><span style="color:#e6db74">    messages=$(bash /k8s_shared/kube_join_command.sh 2&gt;&amp;1 | egrep &#39;File.+exists|Port.+use&#39; | wc -l || :)
+</span><span style="color:#e6db74">    if [[ &#34;</span>$messages<span style="color:#e6db74">&#34; -eq 3 ]]
+</span><span style="color:#e6db74">    then
+</span><span style="color:#e6db74">        echo &#34;</span>$HOSTNAME already configured <span style="color:#f92672">and</span> joined to cluster<span style="color:#e6db74">&#34;
+</span><span style="color:#e6db74">        node_joined=true
+</span><span style="color:#e6db74">        break
+</span><span style="color:#e6db74">    fi
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    bash /k8s_shared/kube_join_command.sh \
+</span><span style="color:#e6db74">        &amp;&amp; node_joined=true \
+</span><span style="color:#e6db74">        &amp;&amp; break \
+</span><span style="color:#e6db74">        || echo &#34;</span><span style="color:#66d9ef">FAILED</span><span style="color:#f92672">..</span>will keep on trying <span style="color:#66d9ef">for</span> <span style="color:#ae81ff">1</span> mins<span style="color:#f92672">..</span><span style="color:#e6db74">&#34; 1&gt;&amp;2
+</span><span style="color:#e6db74">        sleep 2
+</span><span style="color:#e6db74">        time_now=$(date +%s)
+</span><span style="color:#e6db74">done
+</span><span style="color:#e6db74">if [[ $node_joined == false ]]
+</span><span style="color:#e6db74">then
+</span><span style="color:#e6db74">    echo &#34;</span><span style="color:#e6db74">ERROR</span>: $HOSTNAME failed to join<span style="color:#f92672">..</span><span style="color:#e6db74">&#34; 1&gt;&amp;2
+</span><span style="color:#e6db74">    exit 1
+</span><span style="color:#e6db74">fi
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">SETUPNODE
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">########################################
+</span><span style="color:#e6db74"># mount NFS share                      #
+</span><span style="color:#e6db74">########################################
+</span><span style="color:#e6db74">$mount_nfs_share = &lt;&lt;-MOUNT_NFS
+</span><span style="color:#e6db74">set -euo pipefail
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">mkdir -p /k8s_shared
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">time_now=$(date +%s)
+</span><span style="color:#e6db74"># try for 2 mins, 60 seconds
+</span><span style="color:#e6db74">time_expire=$((time_now + 60))
+</span><span style="color:#e6db74">share_mounted=false
+</span><span style="color:#e6db74">while [[ $time_now -lt $time_expire ]]
+</span><span style="color:#e6db74">do
+</span><span style="color:#e6db74">    echo &#34;</span><span style="color:#f92672">===============</span> mounting master<span style="color:#f92672">.</span>virtual<span style="color:#f92672">.</span>machine<span style="color:#e6db74">:/</span>k8s_shared on $HOSTNAME<span style="color:#e6db74">:/</span>k8s_shared <span style="color:#f92672">...</span> <span style="color:#f92672">==============</span><span style="color:#e6db74">&#34;
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    { mount -t nfs -o soft,timeo=10,retrans=1,retry=1,fg master.virtual.machine:/k8s_shared /k8s_shared \
+</span><span style="color:#e6db74">        &amp;&amp; share_mounted=true \
+</span><span style="color:#e6db74">        &amp;&amp; break
+</span><span style="color:#e6db74">    } || { echo &#34;</span>mounting failed<span style="color:#f92672">..</span>will <span style="color:#66d9ef">retry</span><span style="color:#f92672">...</span><span style="color:#e6db74">&#34; 1&gt;&amp;2;
+</span><span style="color:#e6db74">        time_now=$(date +%s);
+</span><span style="color:#e6db74">        continue;
+</span><span style="color:#e6db74">    }
+</span><span style="color:#e6db74">done
+</span><span style="color:#e6db74">if [[ $share_mounted == false ]]
+</span><span style="color:#e6db74">then
+</span><span style="color:#e6db74">    echo &#34;</span><span style="color:#e6db74">ERROR</span>: $HOSTNAME failed to mount<span style="color:#f92672">.</span> <span style="color:#66d9ef">Is</span> master up <span style="color:#f92672">and</span> running? <span style="color:#e6db74">&#34; 1&gt;&amp;2
+</span><span style="color:#e6db74">    exit 1
+</span><span style="color:#e6db74">fi
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">MOUNT_NFS
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">########################################
+</span><span style="color:#e6db74"># setup docker registry                #
+</span><span style="color:#e6db74">########################################
+</span><span style="color:#e6db74">$setup_docker_registry = &lt;&lt;-DOCKER_REGISTRY
+</span><span style="color:#e6db74">set -euo pipefail
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">echo &#34;</span><span style="color:#f92672">======================</span> <span style="color:#66d9ef">Setup</span> docker registry <span style="color:#f92672">=====================</span><span style="color:#e6db74">&#34;
+</span><span style="color:#e6db74">yum install -y yum-utils
+</span><span style="color:#e6db74">yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+</span><span style="color:#e6db74">yum install -y docker-ce docker-ce-cli containerd.io
+</span><span style="color:#e6db74">systemctl start docker
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">mkdir -p /private_docker_registry/registry_data
+</span><span style="color:#e6db74">cp -r -v -f /k8s_shared/registry_certs /private_docker_registry
+</span><span style="color:#e6db74">chmod 400 /private_docker_registry/registry_certs/registryKey.pem
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">if docker inspect docker-registry &gt; /dev/null 2&gt;&amp;1 
+</span><span style="color:#e6db74">then
+</span><span style="color:#e6db74">    echo &#34;</span><span style="color:#66d9ef">Docker</span> <span style="color:#66d9ef">Registry</span> is already running<span style="color:#f92672">...</span><span style="color:#e6db74">&#34;
+</span><span style="color:#e6db74">else
+</span><span style="color:#e6db74">    docker run -d --name docker-registry --restart=always \
+</span><span style="color:#e6db74">    -p 5000:5000 \
+</span><span style="color:#e6db74">    -e REGISTRY_HTTP_ADDR=0.0.0.0:5000 \
+</span><span style="color:#e6db74">    -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/registryCert.pem \
+</span><span style="color:#e6db74">    -e REGISTRY_HTTP_TLS_KEY=/certs/registryKey.pem \
+</span><span style="color:#e6db74">    -v /private_docker_registry/registry_certs:/certs \
+</span><span style="color:#e6db74">    -v /private_docker_registry/registry_data:/var/lib/registry \
+</span><span style="color:#e6db74">    registry:2
+</span><span style="color:#e6db74">fi
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">DOCKER_REGISTRY
+</span></code></pre></div><h2 id="deployment">Deployment</h2>
+<p>Run the following command to deploy 1 master, 1 node kubernetes cluster along with private docker registry in separate VM. If you want more workers, then change the <code>vagrantfile</code> accordingly.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant up master1 worker1 registry
+</code></pre></div><p>Above command will setup the whole cluster. When above command is finished, run the following command to verify the cluster state.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant ssh master
+kubectl get nodes -o wide
+</code></pre></div><p>you shall see following output:</p>
+<pre><code>NAME                      STATUS   ROLES                  AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE          KERNEL-VERSION          CONTAINER-RUNTIME
+master.virtual.machine    Ready    control-plane,master   43m   v1.21.4   10.0.0.10     &lt;none&gt;        CentOS Stream 8   4.18.0-277.el8.x86_64   cri-o://1.21.2
+worker1.virtual.machine   Ready    &lt;none&gt;                 40m   v1.21.4   10.0.0.12     &lt;none&gt;        CentOS Stream 8   4.18.0-277.el8.x86_64   cri-o://1.21.2
+</code></pre><h2 id="adding-more-nodes">Adding more nodes</h2>
+<ul>
+<li>If you want to add more nodes later on, you just need to add the host information in the top of <code>Vagrantfile</code> in <code>all_hosts</code> array.</li>
+<li>You need to generate the fresh token for new node to join the cluster, as the previous one might have been expired.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant provision master --provision-with<span style="color:#f92672">=</span>generate_join_cmd
+</code></pre></div><p>Above command will generate a new join command in a file in master node. Master node exports this file as NFS share which new node mounts it.</p>
+<ul>
+<li>Start the new node</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant up worker3
+</code></pre></div><p>If you had started the new node prior to generating the join command, then new node may not join the cluster. In this case then generate the token on <code>master</code> node by running <code>vagrant provision master --provision-with=generate_join_cmd</code> command. and then run <code>vagrant up worker --provision</code></p>
+<h2 id="verify-private-docker-registry">Verify private docker registry</h2>
+<ul>
+<li>Pull an image (nginx) from internet (docker HUB)</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant ssh registry
+sudo su -
+docker pull nginx
+</code></pre></div><ul>
+<li>Push this image to the private registry</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker tag nginx registry.virtual.machine:5000/mynginx
+docker push registry.virtual.machine:5000/mynginx
+</code></pre></div><ul>
+<li>Deploy this image in K8S cluster now</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant ssh master
+kubectl run myngnix --image<span style="color:#f92672">=</span>registry.virtual.machine:5000/mynginx
+</code></pre></div><ul>
+<li>Verify deployed pod</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl get pods
+NAME      READY   STATUS    RESTARTS   AGE
+myngnix   1/1     Running   <span style="color:#ae81ff">0</span>          9s
+</code></pre></div><h2 id="notes">Notes</h2>
+<ul>
+<li><code>master</code> node exposes a NFS share, so it should be brought up first. <code>vagrant master worker1 registry</code> will automatically bring up VMs in specified order (left to right)</li>
+<li>you can run <code>vagrant up master --provision</code> or <code>vagrant up worker1 --provision</code> as many times as you like without any harm and in any order.</li>
+<li>You can create worker node without the existence of master node (<code>vagrant up worker2</code>) even, ofcourse it will not join the cluster then. You can create <code>master</code> node afterwards and then run command <code>vagrant up worker2 --provision</code> to join the cluster.</li>
+<li>GitHUB repo: <a href="https://github.com/spareslant/VagrantFiles.git">https://github.com/spareslant/VagrantFiles.git</a> (Checkout Tag: k8s_cluster_private_registry)</li>
+</ul>
+
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/k8s/" rel="tag">k8s</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/kubernetes/" rel="tag">kubernetes</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/vagrant/" rel="tag">vagrant</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/vagrantfile/" rel="tag">vagrantfile</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/cri-o/" rel="tag">cri-o</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/virtualbox/" rel="tag">virtualbox</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/centos8-stream/" rel="tag">centos8 stream</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/docker-registry/" rel="tag">docker registry</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/docker/" rel="tag">docker</a></li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<div class="authorbox__header">
+		<span class="authorbox__name"></span>
+	</div>
+</div>
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/posts/k8s-vagrant-centos-stream-crio-automated-deployment/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">K8s Vagrant Centos Stream Crio Automated Deployment</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 SpareSlant.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
+</html>

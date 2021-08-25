@@ -6,20 +6,47 @@
     <description>Recent content in Tags on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Mon, 23 Aug 2021 22:29:22 +0100</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 25 Aug 2021 12:24:16 +0100</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>centos8 stream</title>
+      <link>/tags/centos8-stream/</link>
+      <pubDate>Wed, 25 Aug 2021 12:24:16 +0100</pubDate>
+      
+      <guid>/tags/centos8-stream/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>cri-o</title>
       <link>/tags/cri-o/</link>
-      <pubDate>Mon, 23 Aug 2021 22:29:22 +0100</pubDate>
+      <pubDate>Wed, 25 Aug 2021 12:24:16 +0100</pubDate>
       
       <guid>/tags/cri-o/</guid>
       <description></description>
     </item>
     
     <item>
+      <title>docker</title>
+      <link>/tags/docker/</link>
+      <pubDate>Wed, 25 Aug 2021 12:24:16 +0100</pubDate>
+      
+      <guid>/tags/docker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>docker registry</title>
+      <link>/tags/docker-registry/</link>
+      <pubDate>Wed, 25 Aug 2021 12:24:16 +0100</pubDate>
+      
+      <guid>/tags/docker-registry/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>k8s</title>
       <link>/tags/k8s/</link>
-      <pubDate>Mon, 23 Aug 2021 22:29:22 +0100</pubDate>
+      <pubDate>Wed, 25 Aug 2021 12:24:16 +0100</pubDate>
       
       <guid>/tags/k8s/</guid>
       <description></description>
@@ -28,7 +55,7 @@
     <item>
       <title>kubernetes</title>
       <link>/tags/kubernetes/</link>
-      <pubDate>Mon, 23 Aug 2021 22:29:22 +0100</pubDate>
+      <pubDate>Wed, 25 Aug 2021 12:24:16 +0100</pubDate>
       
       <guid>/tags/kubernetes/</guid>
       <description></description>
@@ -37,7 +64,7 @@
     <item>
       <title>vagrant</title>
       <link>/tags/vagrant/</link>
-      <pubDate>Mon, 23 Aug 2021 22:29:22 +0100</pubDate>
+      <pubDate>Wed, 25 Aug 2021 12:24:16 +0100</pubDate>
       
       <guid>/tags/vagrant/</guid>
       <description></description>
@@ -46,7 +73,7 @@
     <item>
       <title>vagrantfile</title>
       <link>/tags/vagrantfile/</link>
-      <pubDate>Mon, 23 Aug 2021 22:29:22 +0100</pubDate>
+      <pubDate>Wed, 25 Aug 2021 12:24:16 +0100</pubDate>
       
       <guid>/tags/vagrantfile/</guid>
       <description></description>
@@ -55,7 +82,7 @@
     <item>
       <title>virtualbox</title>
       <link>/tags/virtualbox/</link>
-      <pubDate>Mon, 23 Aug 2021 22:29:22 +0100</pubDate>
+      <pubDate>Wed, 25 Aug 2021 12:24:16 +0100</pubDate>
       
       <guid>/tags/virtualbox/</guid>
       <description></description>
@@ -175,15 +202,6 @@
       <pubDate>Mon, 28 Dec 2020 17:54:12 +0000</pubDate>
       
       <guid>/tags/typescript/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>docker</title>
-      <link>/tags/docker/</link>
-      <pubDate>Thu, 21 May 2020 05:58:11 +0100</pubDate>
-      
-      <guid>/tags/docker/</guid>
       <description></description>
     </item>
     

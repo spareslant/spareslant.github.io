@@ -6,7 +6,16 @@
     <description>Recent content on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Mon, 23 Aug 2021 22:29:22 +0100</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 25 Aug 2021 12:24:16 +0100</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>K8s Vagrant Private Registry Centos8 Crio Automated Deployment</title>
+      <link>/posts/k8s-vagrant-private-registry-centos8-crio-automated-deployment/</link>
+      <pubDate>Wed, 25 Aug 2021 12:24:16 +0100</pubDate>
+      
+      <guid>/posts/k8s-vagrant-private-registry-centos8-crio-automated-deployment/</guid>
+      <description>Introduction  We will be creating a fully automated Vagrant based Kubernetes cluster deployment with private docker registry in separate VM. Following are the software versions used:  Hardware: MacBook Pro HostOS: MacOS Big Sur 11.5.2 Kube Version: 1.21.4 CRIO: 1.21 Cluster OS: Centos8 Stream   It is assumed that VirtualBox and Vagrant is already installed on your hostOS.  Vagrantfile  Create a directory and create a file named Vagrantfile with following contents in that directory.</description>
+    </item>
+    
     <item>
       <title>K8s Vagrant Centos Stream Crio Automated Deployment</title>
       <link>/posts/k8s-vagrant-centos-stream-crio-automated-deployment/</link>
