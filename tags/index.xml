@@ -6,7 +6,79 @@
     <description>Recent content in Tags on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Wed, 25 Aug 2021 12:24:16 +0100</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 20 Sep 2021 23:40:41 +0100</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>cdk</title>
+      <link>/tags/cdk/</link>
+      <pubDate>Mon, 20 Sep 2021 23:40:41 +0100</pubDate>
+      
+      <guid>/tags/cdk/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cdktf</title>
+      <link>/tags/cdktf/</link>
+      <pubDate>Mon, 20 Sep 2021 23:40:41 +0100</pubDate>
+      
+      <guid>/tags/cdktf/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>OCI</title>
+      <link>/tags/oci/</link>
+      <pubDate>Mon, 20 Sep 2021 23:40:41 +0100</pubDate>
+      
+      <guid>/tags/oci/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>oci-cli</title>
+      <link>/tags/oci-cli/</link>
+      <pubDate>Mon, 20 Sep 2021 23:40:41 +0100</pubDate>
+      
+      <guid>/tags/oci-cli/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Oracle Cloud Infrastructure</title>
+      <link>/tags/oracle-cloud-infrastructure/</link>
+      <pubDate>Mon, 20 Sep 2021 23:40:41 +0100</pubDate>
+      
+      <guid>/tags/oracle-cloud-infrastructure/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python</title>
+      <link>/tags/python/</link>
+      <pubDate>Mon, 20 Sep 2021 23:40:41 +0100</pubDate>
+      
+      <guid>/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>terraform</title>
+      <link>/tags/terraform/</link>
+      <pubDate>Mon, 20 Sep 2021 23:40:41 +0100</pubDate>
+      
+      <guid>/tags/terraform/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Terraform CDK</title>
+      <link>/tags/terraform-cdk/</link>
+      <pubDate>Mon, 20 Sep 2021 23:40:41 +0100</pubDate>
+      
+      <guid>/tags/terraform-cdk/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>centos8 stream</title>
       <link>/tags/centos8-stream/</link>
@@ -98,15 +170,6 @@
     </item>
     
     <item>
-      <title>python</title>
-      <link>/tags/python/</link>
-      <pubDate>Fri, 14 May 2021 06:58:28 +0100</pubDate>
-      
-      <guid>/tags/python/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>yaml</title>
       <link>/tags/yaml/</link>
       <pubDate>Fri, 14 May 2021 06:58:28 +0100</pubDate>
@@ -170,29 +233,11 @@
     </item>
     
     <item>
-      <title>cdk</title>
-      <link>/tags/cdk/</link>
-      <pubDate>Mon, 28 Dec 2020 17:54:12 +0000</pubDate>
-      
-      <guid>/tags/cdk/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>node.js</title>
       <link>/tags/node.js/</link>
       <pubDate>Mon, 28 Dec 2020 17:54:12 +0000</pubDate>
       
       <guid>/tags/node.js/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>terraform</title>
-      <link>/tags/terraform/</link>
-      <pubDate>Mon, 28 Dec 2020 17:54:12 +0000</pubDate>
-      
-      <guid>/tags/terraform/</guid>
       <description></description>
     </item>
     

@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-gb">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Terraform CDK Create OCI OracleCloudInfraStructure VM - SpareSlant Technical Blog</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/my.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="SpareSlant Technical Blog" rel="home">
+				<div class="logo__title">SpareSlant Technical Blog</div>
+				<div class="logo__tagline">SpareSlant tech blog</div>
+			</a>
+		</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Terraform CDK Create OCI OracleCloudInfraStructure VM</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2021-09-20T23:40:41">2021-09-20</time>
+</div>
+</div>
+		</header>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#prepare-oci-environment">Prepare OCI environment</a></li>
+    <li><a href="#prepare-local-development-environment">Prepare local development environment</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#configure-tenancy-admin-account-to-access-oci-via-apis">Configure Tenancy Admin account to access OCI via APIs</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#create-and-setup-cdk-user">Create and setup <code>cdk-user</code></a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#install-tools-required-for-development">Install tools required for development</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#start-coding">Start coding.</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<h1 id="introduction">Introduction</h1>
+<p>We will be using <code>terraform-cdk</code> toolkit in this article. We shall be using an <code>OCI (Oracle Cloud Infrastructure)</code> account to spin up a VM.</p>
+<p>We shall be doing following.</p>
+<h5 id="manual-steps-to-prepare-cloud-environment-first-using-oci-cli">Manual steps to prepare cloud environment first (using <code>oci-cli</code>)</h5>
+<ul>
+<li>Create a new user account <code>cdk-user</code> (apart from the tenancy admin) and new <code>compartment</code> called as <code>CDK</code> for this user.</li>
+<li><code>cdk-user</code> will have full privleges to <code>CDK</code> compartment.</li>
+<li>This is done as per Oracle recommended practices for <code>OCI</code>.</li>
+</ul>
+<h5 id="steps-performed-by-terraform-cdk">Steps performed by terraform CDK.</h5>
+<ul>
+<li>Create a brand new <code>VCN</code> in <code>CDK</code> compartment.</li>
+<li>Create 1 public subnet.</li>
+<li>A key-pair for ssh</li>
+<li>An internet-gateway in this VCN (It is needed to get bi-directional internet connectity to new VCN.)</li>
+<li>A new VM created in above mentioned VCN, and public subnet having internet connectivity and allows ssh connection from internet.</li>
+</ul>
+<p><strong>Note1:</strong> We shall be using <code>python</code> for terraform-cdk.</p>
+<h2 id="prepare-oci-environment">Prepare OCI environment</h2>
+<ul>
+<li>You need an <code>OCI</code> account. Its free. SignUp at <a href="https://cloud.oracle.com">https://cloud.oracle.com</a>. This sign-up account is called <code>Tenancy Admin</code> account.</li>
+<li>Login to this <code>Tenancy Admin</code> account. Make sure you have selected <code>Oracle Cloud Infrastructure Direct Sign-In</code> option on the login page.</li>
+<li>click hamburger icon on the top-left corner
+<ul>
+<li>click <code>Identity &amp; Security</code></li>
+<li>click <code>users</code></li>
+<li>click your email ID here (the one you used for sign-up)</li>
+<li>click <code>API Keys</code></li>
+<li>click <code>Add API Key</code></li>
+<li>select <code>Generate API Key Pair</code></li>
+<li>click <code>Download private key</code></li>
+<li>click <code>Add</code> button</li>
+<li>Copy the content in <code>Configuration File Preview</code> and save it. We need it later on.</li>
+<li>click <code>close</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="prepare-local-development-environment">Prepare local development environment</h2>
+<p>We shall be doing everything in a docker image. I am using fedora-34.</p>
+<h4 id="start-fedora-34-in-interactive-mode">Start fedora-34 in interactive mode.</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ docker run -it fedora:34 /bin/bash
+
+Unable to find image <span style="color:#e6db74">&#39;fedora:34&#39;</span> locally
+34: Pulling from library/fedora
+b9705287bb9f: Pull complete
+Digest: sha256:d18bc88f640bc3e88bbfacaff698c3e1e83cae649019657a3880881f2549a1d0
+Status: Downloaded newer image <span style="color:#66d9ef">for</span> fedora:34
+<span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e">#</span>
+</code></pre></div><h4 id="install-nvm-node-version-manager-inside-docker-container">Install NVM (node version manager) inside docker container.</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e"># curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash</span>
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+<span style="color:#ae81ff">100</span> <span style="color:#ae81ff">14984</span>  <span style="color:#ae81ff">100</span> <span style="color:#ae81ff">14984</span>    <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>  <span style="color:#ae81ff">43057</span>      <span style="color:#ae81ff">0</span> --:--:-- --:--:-- --:--:-- 43057
+<span style="color:#f92672">=</span>&gt; Downloading nvm as script to <span style="color:#e6db74">&#39;/root/.nvm&#39;</span>
+
+<span style="color:#f92672">=</span>&gt; Appending nvm source string to /root/.bashrc
+<span style="color:#f92672">=</span>&gt; Appending bash_completion source string to /root/.bashrc
+<span style="color:#f92672">=</span>&gt; Close and reopen your terminal to start using nvm or run the following to use it now:
+
+export NVM_DIR<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$HOME<span style="color:#e6db74">/.nvm&#34;</span>
+<span style="color:#f92672">[</span> -s <span style="color:#e6db74">&#34;</span>$NVM_DIR<span style="color:#e6db74">/nvm.sh&#34;</span> <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\.</span> <span style="color:#e6db74">&#34;</span>$NVM_DIR<span style="color:#e6db74">/nvm.sh&#34;</span>  <span style="color:#75715e"># This loads nvm</span>
+<span style="color:#f92672">[</span> -s <span style="color:#e6db74">&#34;</span>$NVM_DIR<span style="color:#e6db74">/bash_completion&#34;</span> <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\.</span> <span style="color:#e6db74">&#34;</span>$NVM_DIR<span style="color:#e6db74">/bash_completion&#34;</span>  <span style="color:#75715e"># This loads nvm bash_completion</span>
+<span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e">#</span>
+</code></pre></div><h4 id="enable-nvm-in-current-shell">Enable NVM in current shell</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e"># source /root/.bashrc</span>
+</code></pre></div><h4 id="install-latest-stable-node">Install latest stable node.</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e"># nvm install --lts</span>
+Installing latest LTS version.
+Downloading and installing node v14.17.6...
+Downloading https://nodejs.org/dist/v14.17.6/node-v14.17.6-linux-x64.tar.gz...
+<span style="color:#75715e">################################################################################################################################################################################################## 100.0%</span>
+Computing checksum with sha256sum
+Checksums matched!
+Now using node v14.17.6 <span style="color:#f92672">(</span>npm v6.14.15<span style="color:#f92672">)</span>
+Creating default alias: default -&gt; lts/* <span style="color:#f92672">(</span>-&gt; v14.17.6 *<span style="color:#f92672">)</span>
+<span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e">#</span>
+</code></pre></div><h4 id="install-vim-unzip-less">Install VIM, unzip, less</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e"># dnf install vim unzip less openssh-clients jq openssl -y</span>
+</code></pre></div><h4 id="install-oci-cli">Install oci-cli</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e"># dnf install python -y</span>
+<span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e"># pip install oci-cli</span>
+</code></pre></div><h2 id="configure-tenancy-admin-account-to-access-oci-via-apis">Configure Tenancy Admin account to access OCI via APIs</h2>
+<p>You can run <code>oci setup config</code> command to setup the oci config. But we will be following direct manual method as we already have config saved in previous step when we prepared the oci envrionment.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e"># mkdir ~/.oci</span>
+<span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e"># chmod g-rwx,o-rwx /root/.oci</span>
+<span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e"># ls -ld /root/.oci/</span>
+drwx------ <span style="color:#ae81ff">2</span> root root <span style="color:#ae81ff">4096</span> Sep <span style="color:#ae81ff">20</span> 23:36 /root/.oci/
+<span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e"># touch ~/.oci/tenancyAdmin_private_api_key.pem</span>
+<span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e"># vim ~/.oci/tenancyAdmin_private_api_key.pem</span>
+</code></pre></div><p>Paste the contents from file that you downloaded during the step <code>download private key</code> above in file <code>~/.oci/tenancyAdmin_private_api_key.pem</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e"># chmod 600 ~/.oci/tenancyAdmin_private_api_key.pem</span>
+<span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e"># touch ~/.oci/config</span>
+<span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e"># chmod 600 ~/.oci/config</span>
+<span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e"># vim  ~/.oci/config</span>
+</code></pre></div><p>Paste the contents from file that you saved during the step <code>Configuration file preview</code> above in file <code>~/.oci/config</code></p>
+<p>Contents of <code>~/.oci/config</code> will be similar to the following.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#66d9ef">[DEFAULT]</span>
+<span style="color:#a6e22e">user</span><span style="color:#f92672">=</span><span style="color:#e6db74">ocid1.user.oc1..&lt;a very long string&gt;</span>
+<span style="color:#a6e22e">fingerprint</span><span style="color:#f92672">=</span><span style="color:#e6db74">xx:yy:11:22:33:44:d4:56:b6:67:89:b7:b1:7f:4f:7a</span>
+<span style="color:#a6e22e">tenancy</span><span style="color:#f92672">=</span><span style="color:#e6db74">ocid1.tenancy.oc1..&lt;a very long string&gt;</span>
+<span style="color:#a6e22e">region</span><span style="color:#f92672">=</span><span style="color:#e6db74">uk-london-1</span>
+<span style="color:#a6e22e">key_file</span><span style="color:#f92672">=</span><span style="color:#e6db74">~/.oci/tenancyAdmin_private_api_key.pem</span>
+</code></pre></div><p>Please note <code>key_file=</code> above. You need to have exactly the same entry as above.</p>
+<h4 id="verify-connectivity-to-oci">Verify connectivity to OCI</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e"># oci iam user list</span>
+</code></pre></div><p>Above command must run successfully.</p>
+<h2 id="create-and-setup-cdk-user">Create and setup <code>cdk-user</code></h2>
+<p>We will be creating a new user <code>cdk-user</code> and new compartment <code>CDK</code>, where this user can manage anything.
+Following are the manual steps. But there is a script <code>setup_oci_user_account.sh</code> as well in git repo that can also do the same.
+Link to the git repo is mentioned at the bottom of this article.</p>
+<h4 id="get-reuired-info-in-variables">Get reuired info in variables.</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e"># export tenancyID=$(cat ~/.oci/config | egrep &#39;^tenancy&#39; | awk -F&#34;=&#34; &#39;{print $2}&#39;)</span>
+<span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e"># export rootCompartmentID=$tenancyID</span>
+<span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e"># export tenancyRegion=$(cat ~/.oci/config | egrep region |  awk -F&#34;=&#34; &#39;{print $2}&#39;)</span>
+</code></pre></div><p>Note: <code>Root compartmentID</code> is same as <code>TenancyID</code></p>
+<h4 id="create-cdk-compartment">Create <code>CDK</code> compartment</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e"># oci iam compartment create --name CDK --compartment-id $rootCompartmentID --description &#34;CDK Compartment&#34;</span>
+</code></pre></div><p>Take a note of <code>CDK</code> compartment id from above output.</p>
+<h4 id="create-cdk-user">Create <code>cdk-user</code></h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e"># oci iam user create --name cdk-user --compartment-id $rootCompartmentID --description &#34;cdk user&#34;</span>
+</code></pre></div><h4 id="create-cdk-group">Create <code>cdk-group</code></h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e"># oci iam group create --name cdk-group --compartment-id $rootCompartmentID --description &#34;cdk group&#34;</span>
+</code></pre></div><h4 id="add-cdk-user-to-cdk-group">Add <code>cdk-user</code> to <code>cdk-group</code></h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e"># export cdk_user_ocid=$(oci iam user list --name cdk-user | jq -r &#39;.data[0].id&#39;)</span>
+<span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e"># export cdk_group_ocid=$(oci iam group list --name cdk-group | jq -r &#39;.data[0].id&#39;)</span>
+<span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e"># oci iam group add-user --user-id $cdk_user_ocid --group-id $cdk_group_ocid</span>
+</code></pre></div><h4 id="allow-cdk-group-to-do-anything-in-compartment-cdk">Allow <code>cdk-group</code> to do anything in compartment <code>CDK</code></h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e"># export CDKcompartmentID=$(oci iam compartment list  --compartment-id $rootCompartmentID --lifecycle-state ACTIVE | jq -r &#39;.data[] | select(.name == &#34;CDK&#34;) | .id&#39;)</span>
+
+<span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e"># oci iam policy create --name &#34;CDK_Policies&#34; --compartment-id $CDKcompartmentID --description &#34;Policies for CDK&#34; --statements &#39;[&#34;Allow group cdk-group to manage all-resources in compartment CDK&#34;]&#39;</span>
+</code></pre></div><h4 id="generate-api-keys-for-cdk-user">Generate API keys for <code>cdk-user</code></h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e"># cd ~/.oci/</span>
+<span style="color:#f92672">[</span>root@248b335b1e23 .oci<span style="color:#f92672">]</span><span style="color:#75715e"># openssl genrsa -out cdk-user_private_api_key.pem 2048</span>
+<span style="color:#f92672">[</span>root@248b335b1e23 .oci<span style="color:#f92672">]</span><span style="color:#75715e"># openssl rsa -pubout -in cdk-user_private_api_key.pem -out cdk-user_public_api_key.pem</span>
+<span style="color:#f92672">[</span>root@248b335b1e23 .oci<span style="color:#f92672">]</span><span style="color:#75715e"># chmod go-rwx cdk-user_private_api_key.pem</span>
+</code></pre></div><h4 id="upload-public-key-for-cdk-user">Upload public key for <code>cdk-user</code></h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@248b335b1e23 .oci<span style="color:#f92672">]</span><span style="color:#75715e"># oci iam user api-key upload --user-id $cdk_user_ocid --key-file ~/.oci/cdk-user_public_api_key.pem</span>
+</code></pre></div><h4 id="preapre-cdk-user-profile-in-ociconfig-file">preapre <code>cdk-user</code> profile in <code>~/.oci/config</code> file</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@248b335b1e23 .oci<span style="color:#f92672">]</span><span style="color:#75715e"># export cdk_user_fingerprint=$(openssl rsa -pubout -outform DER -in ~/.oci/cdk-user_private_api_key.pem 2&gt; /dev/null | openssl md5 -c | awk &#39;{print $2}&#39;)</span>
+<span style="color:#f92672">[</span>root@248b335b1e23 .oci<span style="color:#f92672">]</span><span style="color:#75715e"># cat &lt;&lt;HELLO &gt;&gt; ~/.oci/config</span>
+<span style="color:#f92672">[</span>cdk-user<span style="color:#f92672">]</span>
+user<span style="color:#f92672">=</span>$cdk_user_ocid
+fingerprint<span style="color:#f92672">=</span>$cdk_user_fingerprint
+tenancy<span style="color:#f92672">=</span>$tenancyID
+region<span style="color:#f92672">=</span>$tenancyRegion
+key_file<span style="color:#f92672">=</span>~/.oci/cdk-user_private_api_key.pem
+HELLO
+</code></pre></div><p>A new section has been appened to <code>~/.oci/config file</code></p>
+<h4 id="verify-cdk-user-access">verify <code>cdk-user</code> access</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@248b335b1e23 .oci<span style="color:#f92672">]</span><span style="color:#75715e"># oci iam user get --user-id=$cdk_user_ocid --profile cdk-user</span>
+</code></pre></div><p>Note: <code>--profile cdk-user</code> in above command</p>
+<h2 id="install-tools-required-for-development">Install tools required for development</h2>
+<h4 id="install-terraform-binary">Install terraform binary</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e"># dnf install -y dnf-plugins-core</span>
+<span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e"># dnf config-manager --add-repo https://rpm.releases.hashicorp.com/fedora/hashicorp.repo</span>
+<span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e"># dnf -y install terraform</span>
+</code></pre></div><h4 id="install-terraform-cdk-kit">Install <code>terraform-cdk</code> kit</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e"># npm install --global cdktf-cli</span>
+<span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e"># cdktf --version</span>
+0.6.2
+</code></pre></div><h4 id="install-pipenv">Install <code>pipenv</code></h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@248b335b1e23 /<span style="color:#f92672">]</span><span style="color:#75715e"># pip install pipenv</span>
+</code></pre></div><p><code>pipenv</code> is better than <code>pip</code>. It is similar to nodejs <code>npm</code> i.e keeps a lockfile as well as packages file in working directory. <code>cdktf-cli</code> can use both <code>pip</code> and <code>pipenv</code>, but we will be using <code>pipenv</code> mode.</p>
+<h2 id="start-coding">Start coding.</h2>
+<h4 id="create-a-project-with-python-template">Create a project with <code>python</code> template</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@248b335b1e23 ~<span style="color:#f92672">]</span><span style="color:#75715e"># mkdir ~/oci_terraform_cdk_python</span>
+<span style="color:#f92672">[</span>root@248b335b1e23 ~<span style="color:#f92672">]</span><span style="color:#75715e"># cd ~/oci_terraform_cdk_python/</span>
+
+<span style="color:#f92672">[</span>root@248b335b1e23 oci_terraform_cdk_python<span style="color:#f92672">]</span><span style="color:#75715e"># cdktf init --template=&#34;python&#34; --local</span>
+
+Note: By supplying <span style="color:#e6db74">&#39;--local&#39;</span> option you have chosen local storage mode <span style="color:#66d9ef">for</span> storing the state of your stack.
+This means that your Terraform state file will be stored locally on disk in a file <span style="color:#e6db74">&#39;terraform.&lt;STACK NAME&gt;.tfstate&#39;</span> in the root of your project.
+? projectName: oci_terraform_cdk_python
+? projectDescription: A public VM in OCI
+</code></pre></div><h4 id="install-oci-sdk-and-other-required-libraries">Install OCI sdk and other required libraries</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@248b335b1e23 oci_terraform_cdk_python<span style="color:#f92672">]</span><span style="color:#75715e"># pipenv install pycryptodome oci</span>
+</code></pre></div><h4 id="files-in-current-direcotry">Files in current direcotry</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@248b335b1e23 oci_terraform_cdk_python<span style="color:#f92672">]</span><span style="color:#75715e"># ls -a</span>
+.  ..  .gitignore  Pipfile  Pipfile.lock  cdktf.json  help  main.py
+</code></pre></div><h4 id="download-oci-terraform-modules-libraries">Download OCI terraform modules libraries</h4>
+<h5 id="add-terraform-provider-information-in-cdktfjson-file">Add terraform provider information in <code>cdktf.json</code> file</h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">{
+  <span style="color:#e6db74">&#34;language&#34;</span>: <span style="color:#e6db74">&#34;python&#34;</span>,
+  <span style="color:#e6db74">&#34;app&#34;</span>: <span style="color:#e6db74">&#34;pipenv run python main.py&#34;</span>,
+  <span style="color:#e6db74">&#34;projectId&#34;</span>: <span style="color:#e6db74">&#34;ae857ab0-8c78-424b-97cf-aeb5f3b56d63&#34;</span>,
+  <span style="color:#e6db74">&#34;terraformProviders&#34;</span>: [
+    <span style="color:#e6db74">&#34;oci@~&gt; 4.44.0&#34;</span>
+  ],
+  <span style="color:#e6db74">&#34;terraformModules&#34;</span>: [],
+  <span style="color:#e6db74">&#34;codeMakerOutput&#34;</span>: <span style="color:#e6db74">&#34;imports&#34;</span>,
+  <span style="color:#e6db74">&#34;context&#34;</span>: {
+    <span style="color:#e6db74">&#34;excludeStackIdFromLogicalIds&#34;</span>: <span style="color:#e6db74">&#34;true&#34;</span>,
+<span style="color:#e6db74">&#34;allowSepCharsInLogicalIds&#34;</span>: <span style="color:#e6db74">&#34;true&#34;</span>
+  }
+}
+</code></pre></div><h5 id="get-the-oci-terraform-libraries">Get the OCI terraform libraries</h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@248b335b1e23 oci_terraform_cdk_python<span style="color:#f92672">]</span><span style="color:#75715e"># cdktf get</span>
+
+<span style="color:#f92672">[</span>root@248b335b1e23 oci_terraform_cdk_python<span style="color:#f92672">]</span><span style="color:#75715e"># ls</span>
+Pipfile  Pipfile.lock  account.py  cdktf.json  help  imports  main.py
+</code></pre></div><h4 id="create-a-helper-library-accountpy-with-following-contents">Create a helper library <code>account.py</code> with following contents</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@248b335b1e23 oci_terraform_cdk_python<span style="color:#f92672">]</span><span style="color:#75715e"># touch account.py</span>
+</code></pre></div><h5 id="accountpy-contents"><code>account.py</code> contents</h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#! /usr/bin/env python</span>
+
+<span style="color:#f92672">import</span> oci
+<span style="color:#f92672">from</span> Crypto.PublicKey <span style="color:#f92672">import</span> RSA
+<span style="color:#f92672">import</span> os
+
+keys_dir <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;keys&#34;</span>
+profile_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;cdk-user&#34;</span>
+compartment_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;CDK&#34;</span>
+
+config <span style="color:#f92672">=</span> oci<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>from_file(<span style="color:#e6db74">&#34;~/.oci/config&#34;</span>, profile_name)
+identity <span style="color:#f92672">=</span> oci<span style="color:#f92672">.</span>identity<span style="color:#f92672">.</span>IdentityClient(config)
+user <span style="color:#f92672">=</span> identity<span style="color:#f92672">.</span>get_user(config[<span style="color:#e6db74">&#34;user&#34;</span>])<span style="color:#f92672">.</span>data
+compartment_id <span style="color:#f92672">=</span> user<span style="color:#f92672">.</span>compartment_id
+
+<span style="color:#75715e"># compartments = identity.list_compartments(compartment_id, compartment_id_in_subtree=True, lifecycle_state=&#34;ACTIVE&#34;, access_level=&#34;ACCESSIBLE&#34;)</span>
+
+<span style="color:#75715e"># print(compartments.data)</span>
+<span style="color:#75715e"># print(compartments.data[0])</span>
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_availability_domain</span>():
+    list_availability_domains_response <span style="color:#f92672">=</span> oci<span style="color:#f92672">.</span>pagination<span style="color:#f92672">.</span>list_call_get_all_results(
+        identity<span style="color:#f92672">.</span>list_availability_domains,
+        compartment_id
+    )
+    availability_domain <span style="color:#f92672">=</span> list_availability_domains_response<span style="color:#f92672">.</span>data[<span style="color:#ae81ff">0</span>]
+
+    <span style="color:#66d9ef">return</span> availability_domain<span style="color:#f92672">.</span>name
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_compartment_id</span>(comp_name<span style="color:#f92672">=</span>compartment_name) <span style="color:#f92672">-&gt;</span> str:
+
+    desired_compartment_id: str <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+
+    <span style="color:#66d9ef">for</span> comp <span style="color:#f92672">in</span> oci<span style="color:#f92672">.</span>pagination<span style="color:#f92672">.</span>list_call_get_all_results_generator(
+            identity<span style="color:#f92672">.</span>list_compartments,
+            <span style="color:#e6db74">&#39;record&#39;</span>,
+            compartment_id,
+            compartment_id_in_subtree<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,
+            lifecycle_state<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ACTIVE&#34;</span>):
+        <span style="color:#66d9ef">if</span> comp<span style="color:#f92672">.</span>name <span style="color:#f92672">==</span> comp_name:
+            desired_compartment_id <span style="color:#f92672">=</span> comp<span style="color:#f92672">.</span>id
+    <span style="color:#66d9ef">return</span> desired_compartment_id
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">generate_key_pair</span>():
+    os<span style="color:#f92672">.</span>mkdir(<span style="color:#e6db74">&#34;keys&#34;</span>)
+    key <span style="color:#f92672">=</span> RSA<span style="color:#f92672">.</span>generate(<span style="color:#ae81ff">2048</span>)
+    private_key <span style="color:#f92672">=</span> key<span style="color:#f92672">.</span>export_key(<span style="color:#e6db74">&#34;PEM&#34;</span>)
+    file_out <span style="color:#f92672">=</span> open(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>keys_dir<span style="color:#e6db74">}</span><span style="color:#e6db74">/private.pem&#34;</span>, <span style="color:#e6db74">&#34;wb&#34;</span>)
+    file_out<span style="color:#f92672">.</span>write(private_key)
+    file_out<span style="color:#f92672">.</span>close()
+    os<span style="color:#f92672">.</span>chmod(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>keys_dir<span style="color:#e6db74">}</span><span style="color:#e6db74">/private.pem&#34;</span>, <span style="color:#ae81ff">0o600</span>)
+
+    public_key <span style="color:#f92672">=</span> key<span style="color:#f92672">.</span>publickey()<span style="color:#f92672">.</span>export_key(<span style="color:#e6db74">&#34;OpenSSH&#34;</span>)
+    file_out <span style="color:#f92672">=</span> open(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>keys_dir<span style="color:#e6db74">}</span><span style="color:#e6db74">/public.pem&#34;</span>, <span style="color:#e6db74">&#34;wb&#34;</span>)
+    file_out<span style="color:#f92672">.</span>write(public_key)
+    file_out<span style="color:#f92672">.</span>close()
+
+    <span style="color:#66d9ef">return</span> public_key<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>)
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_key_pair</span>(use_existing_keys<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>):
+    <span style="color:#66d9ef">if</span> use_existing_keys:
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>isfile(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>keys_dir<span style="color:#e6db74">}</span><span style="color:#e6db74">/private.pem&#34;</span>):
+            <span style="color:#66d9ef">return</span> generate_key_pair()
+        <span style="color:#66d9ef">else</span>:
+            <span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>keys_dir<span style="color:#e6db74">}</span><span style="color:#e6db74">/public.pem&#34;</span>, <span style="color:#e6db74">&#39;rb&#39;</span>) <span style="color:#66d9ef">as</span> f:
+                public_key <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>read()
+            <span style="color:#66d9ef">return</span> public_key<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>)
+    <span style="color:#66d9ef">else</span>:
+        <span style="color:#66d9ef">return</span> generate_key_pair()
+
+
+<span style="color:#66d9ef">if</span>  __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;desired_compartment_id = </span><span style="color:#e6db74">{</span>get_compartment_id()<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;availability_domain = </span><span style="color:#e6db74">{</span>get_availability_domain()<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+    print(get_key_pair())
+</code></pre></div><h4 id="update-mainpy-with-following-contents">update <code>main.py</code> with following contents</h4>
+<h5 id="mainpy-contents"><code>main.py</code> contents</h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#!/usr/bin/env python</span>
+
+<span style="color:#f92672">from</span> constructs <span style="color:#f92672">import</span> Construct
+<span style="color:#f92672">from</span> cdktf <span style="color:#f92672">import</span> App, TerraformOutput, TerraformStack
+<span style="color:#f92672">from</span> imports.oci <span style="color:#f92672">import</span> (CoreDhcpOptionsOptions,
+    CoreRouteTableRouteRules,
+    CoreVcn,
+    OciProvider,
+    CoreInstance,
+    CoreSubnet,
+    CoreDhcpOptions,
+    CoreDhcpOptionsOptions,
+    CoreInstanceCreateVnicDetails,
+    CoreInternetGateway,
+    CoreRouteTable,
+    CoreRouteTableAttachment,
+    )
+<span style="color:#f92672">from</span> account <span style="color:#f92672">import</span> get_compartment_id, get_availability_domain, get_key_pair, compartment_name, profile_name
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyStack</span>(TerraformStack):
+    <span style="color:#66d9ef">def</span> __init__(self, scope: Construct, ns: str):
+        super()<span style="color:#f92672">.</span>__init__(scope, ns)
+        desired_compartment_id: str <span style="color:#f92672">=</span> get_compartment_id(comp_name<span style="color:#f92672">=</span>compartment_name)
+        desired_availability_domain <span style="color:#f92672">=</span> get_availability_domain()
+        desired_image_id <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;ocid1.image.oc1.uk-london-1.aaaaaaaa7p27563e2wyhmn533gp7g3wbohrhjacsy3r5rpujyr6n6atqppuq&#34;</span>
+        public_key <span style="color:#f92672">=</span> get_key_pair()
+
+        <span style="color:#75715e"># define resources here</span>
+        OciProvider(self, <span style="color:#e6db74">&#34;oci&#34;</span>,
+                config_file_profile<span style="color:#f92672">=</span>profile_name)
+
+        vcn <span style="color:#f92672">=</span> CoreVcn(self, <span style="color:#e6db74">&#34;OCI_VCN&#34;</span>,
+                cidr_block<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;10.0.0.0/16&#34;</span>,
+                display_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;OCI_VCN&#34;</span>,
+                compartment_id<span style="color:#f92672">=</span>desired_compartment_id)
+
+        dhcp_options <span style="color:#f92672">=</span> CoreDhcpOptions(self, <span style="color:#e6db74">&#34;DHCP_OPTIONS&#34;</span>,
+                compartment_id<span style="color:#f92672">=</span>desired_compartment_id,
+                vcn_id<span style="color:#f92672">=</span>vcn<span style="color:#f92672">.</span>id,
+                options<span style="color:#f92672">=</span>[
+                    CoreDhcpOptionsOptions(
+                    type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;DomainNameServer&#34;</span>,
+                    server_type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;VcnLocalPlusInternet&#34;</span>)
+                ]
+            )
+
+        public_subnet <span style="color:#f92672">=</span> CoreSubnet(self, <span style="color:#e6db74">&#34;PUBLIC_SUBNET&#34;</span>,
+                cidr_block<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;10.0.0.0/24&#34;</span>,
+                vcn_id<span style="color:#f92672">=</span>vcn<span style="color:#f92672">.</span>id,
+                compartment_id<span style="color:#f92672">=</span>desired_compartment_id,
+                display_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;public_subnet&#34;</span>,
+                dhcp_options_id<span style="color:#f92672">=</span>dhcp_options<span style="color:#f92672">.</span>id)
+
+        internet_gateway <span style="color:#f92672">=</span> CoreInternetGateway(self, <span style="color:#e6db74">&#34;INTERNET_GATEWAY&#34;</span>,
+                compartment_id<span style="color:#f92672">=</span>desired_compartment_id,
+                vcn_id<span style="color:#f92672">=</span>vcn<span style="color:#f92672">.</span>id)
+
+        route_table <span style="color:#f92672">=</span> CoreRouteTable(self, <span style="color:#e6db74">&#34;ROUTE_TABLE&#34;</span>,
+                compartment_id<span style="color:#f92672">=</span>desired_compartment_id,
+                vcn_id<span style="color:#f92672">=</span>vcn<span style="color:#f92672">.</span>id,
+                route_rules<span style="color:#f92672">=</span>[
+                    CoreRouteTableRouteRules(
+                        network_entity_id<span style="color:#f92672">=</span>internet_gateway<span style="color:#f92672">.</span>id,
+                        destination<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;0.0.0.0/0&#34;</span>
+                        )
+                    ])
+        CoreRouteTableAttachment(self, <span style="color:#e6db74">&#34;ROUTE_ATTACHMENT&#34;</span>,
+                subnet_id<span style="color:#f92672">=</span>public_subnet<span style="color:#f92672">.</span>id,
+                route_table_id<span style="color:#f92672">=</span>route_table<span style="color:#f92672">.</span>id)
+
+
+        vm <span style="color:#f92672">=</span> CoreInstance(self, <span style="color:#e6db74">&#34;VM_INSTANCE&#34;</span>,
+                compartment_id<span style="color:#f92672">=</span>desired_compartment_id,
+                shape<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;VM.Standard.E2.1.Micro&#34;</span>,
+                availability_domain<span style="color:#f92672">=</span>desired_availability_domain,
+                image<span style="color:#f92672">=</span>desired_image_id,
+                create_vnic_details<span style="color:#f92672">=</span>[
+                    CoreInstanceCreateVnicDetails(
+                        subnet_id<span style="color:#f92672">=</span>public_subnet<span style="color:#f92672">.</span>id)
+                    ],
+                metadata<span style="color:#f92672">=</span>{
+                    <span style="color:#e6db74">&#34;ssh_authorized_keys&#34;</span>: public_key
+                    })
+
+        TerraformOutput(self, <span style="color:#e6db74">&#34;vcn&#34;</span>,
+                value<span style="color:#f92672">=</span>vcn<span style="color:#f92672">.</span>cidr_block)
+        TerraformOutput(self, <span style="color:#e6db74">&#34;public_subnet&#34;</span>,
+                value<span style="color:#f92672">=</span>public_subnet<span style="color:#f92672">.</span>cidr_block )
+        TerraformOutput(self, <span style="color:#e6db74">&#34;vm_public_ip&#34;</span>,
+                value<span style="color:#f92672">=</span>vm<span style="color:#f92672">.</span>public_ip)
+
+app <span style="color:#f92672">=</span> App()
+MyStack(app, <span style="color:#e6db74">&#34;oci_terraform_cdk_python&#34;</span>)
+
+app<span style="color:#f92672">.</span>synth()
+</code></pre></div><p>NOTE: <code>desired_image_id</code> in above script was obtained from <a href="https://docs.oracle.com/en-us/iaas/images/image/33995e8a-13e8-4ebe-8a27-8beae9e57043/">https://docs.oracle.com/en-us/iaas/images/image/33995e8a-13e8-4ebe-8a27-8beae9e57043/</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@248b335b1e23 oci_terraform_cdk_python<span style="color:#f92672">]</span><span style="color:#75715e"># ls</span>
+Pipfile  Pipfile.lock  account.py  cdktf.json  help  imports  main.py
+</code></pre></div><h4 id="check-what-will-be-deployed">check what will be deployed</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@248b335b1e23 oci_terraform_cdk_python<span style="color:#f92672">]</span><span style="color:#75715e"># cdktf diff</span>
+Stack: oci_terraform_cdk_python
+Resources
+ + OCI_CORE_DHCP_OPTION dhcp                oci_core_dhcp_options.dhcp
+   S
+ + OCI_CORE_INSTANCE    instance            oci_core_instance.instance
+ + OCI_CORE_INTERNET_GA InternetGateway     oci_core_internet_gateway.InternetGatew
+   TEWAY                                    ay
+ + OCI_CORE_ROUTE_TABLE route_table         oci_core_route_table.route_table
+ + OCI_CORE_ROUTE_TABLE RouteAttachment     oci_core_route_table_attachment.RouteAt
+   _ATTACHMENT                              tachment
+ + OCI_CORE_SUBNET      public_subnet       oci_core_subnet.public_subnet
+ + OCI_CORE_VCN         OCI_VCN             oci_core_vcn.OCI_VCN
+
+Diff: <span style="color:#ae81ff">7</span> to create, <span style="color:#ae81ff">0</span> to update, <span style="color:#ae81ff">0</span> to delete.
+</code></pre></div><h4 id="deploy-to-oci">deploy to OCI</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@248b335b1e23 oci_terraform_cdk_python<span style="color:#f92672">]</span><span style="color:#75715e"># cdktf deploy --auto-approve</span>
+Deploying Stack: oci_terraform_cdk_python
+Resources
+ ✔ OCI_CORE_DHCP_OPTION dhcp                oci_core_dhcp_options.dhcp
+   S
+ ✔ OCI_CORE_INSTANCE    instance            oci_core_instance.instance
+ ✔ OCI_CORE_INTERNET_GA InternetGateway     oci_core_internet_gateway.InternetGatew
+   TEWAY                                    ay
+ ✔ OCI_CORE_ROUTE_TABLE route_table         oci_core_route_table.route_table
+ ✔ OCI_CORE_ROUTE_TABLE RouteAttachment     oci_core_route_table_attachment.RouteAt
+   _ATTACHMENT                              tachment
+ ✔ OCI_CORE_SUBNET      public_subnet       oci_core_subnet.public_subnet
+ ✔ OCI_CORE_VCN         OCI_VCN             oci_core_vcn.OCI_VCN
+
+Summary: <span style="color:#ae81ff">7</span> created, <span style="color:#ae81ff">0</span> updated, <span style="color:#ae81ff">0</span> destroyed.
+
+Output: VM_public_ip <span style="color:#f92672">=</span> 150.230.119.194
+        publicSubnet <span style="color:#f92672">=</span> 10.0.0.0/24
+        vcn <span style="color:#f92672">=</span> 10.0.0.0/16
+<span style="color:#f92672">[</span>root@248b335b1e23 oci_terraform_cdk_python<span style="color:#f92672">]</span><span style="color:#75715e">#</span>
+</code></pre></div><p>Note: The public IP of the VM is there in above output.</p>
+<h4 id="verify-deployment-by-doing-ssh-into-the-vm">Verify deployment by doing ssh into the VM</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@248b335b1e23 oci_terraform_cdk_python<span style="color:#f92672">]</span><span style="color:#75715e"># ssh -i keys/private.pem opc@150.230.119.194</span>
+The authenticity of host <span style="color:#e6db74">&#39;150.230.119.194 (150.230.119.194)&#39;</span> can<span style="color:#e6db74">&#39;t be established.
+</span><span style="color:#e6db74">ED25519 key fingerprint is SHA256:5UKRn4VrJLhgkK40WaNmW7O0jgdAAsRE+1vNzDwFbAQ.
+</span><span style="color:#e6db74">This key is not known by any other names
+</span><span style="color:#e6db74">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+</span><span style="color:#e6db74">Warning: Permanently added &#39;</span>150.230.119.194<span style="color:#960050;background-color:#1e0010">&#39;</span> <span style="color:#f92672">(</span>ED25519<span style="color:#f92672">)</span> to the list of known hosts.
+<span style="color:#f92672">[</span>opc@instance20210921093338 ~<span style="color:#f92672">]</span>$ uptime
+ 09:35:49 up <span style="color:#ae81ff">1</span> min,  <span style="color:#ae81ff">1</span> user,  load average: 0.70, 0.25, 0.09
+<span style="color:#f92672">[</span>opc@instance20210921093338 ~<span style="color:#f92672">]</span>$
+</code></pre></div><h4 id="verify-the-idempotency">Verify the idempotency</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@248b335b1e23 oci_terraform_cdk_python<span style="color:#f92672">]</span><span style="color:#75715e"># cdktf deploy --auto-approve</span>
+No changes <span style="color:#66d9ef">for</span> Stack: oci_terraform_cdk_python
+</code></pre></div><h4 id="destroy-the-deployment">Destroy the deployment</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@248b335b1e23 oci_terraform_cdk_python<span style="color:#f92672">]</span><span style="color:#75715e"># cdktf destroy --auto-approve</span>
+Destroying Stack: oci_terraform_cdk_python
+Resources
+ ✔ OCI_CORE_DHCP_OPTION dhcp                oci_core_dhcp_options.dhcp
+   S
+ ✔ OCI_CORE_INSTANCE    instance            oci_core_instance.instance
+ ✔ OCI_CORE_INTERNET_GA InternetGateway     oci_core_internet_gateway.InternetGatew
+   TEWAY                                    ay
+ ✔ OCI_CORE_ROUTE_TABLE route_table         oci_core_route_table.route_table
+ ✔ OCI_CORE_ROUTE_TABLE RouteAttachment     oci_core_route_table_attachment.RouteAt
+   _ATTACHMENT                              tachment
+ ✔ OCI_CORE_SUBNET      public_subnet       oci_core_subnet.public_subnet
+ ✔ OCI_CORE_VCN         OCI_VCN             oci_core_vcn.OCI_VCN
+
+Summary: <span style="color:#ae81ff">7</span> destroyed.
+</code></pre></div><h4 id="repo-link">Repo link</h4>
+<p><a href="https://github.com/spareslant/oci_terraform_cdk_python.git">https://github.com/spareslant/oci_terraform_cdk_python.git</a></p>
+
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/terraform/" rel="tag">terraform</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/oci/" rel="tag">OCI</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/oci-cli/" rel="tag">oci-cli</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/cdk/" rel="tag">cdk</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/python/" rel="tag">python</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/terraform-cdk/" rel="tag">Terraform CDK</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/cdktf/" rel="tag">cdktf</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/oracle-cloud-infrastructure/" rel="tag">Oracle Cloud Infrastructure</a></li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<div class="authorbox__header">
+		<span class="authorbox__name"></span>
+	</div>
+</div>
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/posts/k8s-vagrant-private-registry-centos8-crio-automated-deployment/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">K8s Vagrant Private Registry Centos8 Crio Automated Deployment</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 SpareSlant.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
+</html>

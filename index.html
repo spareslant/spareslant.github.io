@@ -39,6 +39,28 @@
 	<article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
+			<a href="/posts/terraform-cdk-create-oci-oraclecloudinfrastructure-vm/" rel="bookmark">
+			Terraform CDK Create OCI OracleCloudInfraStructure VM
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2021-09-20T23:40:41">2021-09-20</time>
+</div>
+</div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Introduction We will be using terraform-cdk toolkit in this article. We shall be using an OCI (Oracle Cloud Infrastructure) account to spin up a VM.
+We shall be doing following.
+Manual steps to prepare cloud environment first (using oci-cli)  Create a new user account cdk-user (apart from the tenancy admin) and new compartment called as CDK for this user. cdk-user will have full privleges to CDK compartment. This is done as per Oracle recommended practices for OCI.
+	</div>
+	<div class="list__footer clearfix">
+		<a class="list__footer-readmore btn" href="/posts/terraform-cdk-create-oci-oraclecloudinfrastructure-vm/">Read more…</a>
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
 			<a href="/posts/k8s-vagrant-private-registry-centos8-crio-automated-deployment/" rel="bookmark">
 			K8s Vagrant Private Registry Centos8 Crio Automated Deployment
 			</a>
@@ -223,33 +245,11 @@ Auth URL : It may look like this http://10.0.2.15:5000/v2.0 UserName : This is a
 	<div class="list__footer clearfix">
 		<a class="list__footer-readmore btn" href="/posts/openstack-instances-using-goose-library/">Read more…</a>
 	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/posts/openstack-instances-using-gophercloud-nova-networking/" rel="bookmark">
-			Remote OpenStack instances using Gophercloud Library (using Nova Networking)
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
-	<time class="meta__text" datetime="2020-03-16T22:46:24">2020-03-16</time>
-</div>
-</div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		Introduction: Following program uses gophercloud library to spin instances in OpenStack environment.
-Requirments: An already running OpenStack environment. You can get a free playground for OpenStack to play with at http://trystack.org/. At minimum you need following information.
-Auth URL : It may look like this http://10.0.2.15:5000/v2.0 UserName : This is a user in OpenStack. default: admin Password : This is an API password. API password can be different from user password.
-	</div>
-	<div class="list__footer clearfix">
-		<a class="list__footer-readmore btn" href="/posts/openstack-instances-using-gophercloud-nova-networking/">Read more…</a>
-	</div>
 </article>
 </main>
 
 <div class="pagination">
-	<span class="pagination__item pagination__item--current">1/3</span>
+	<span class="pagination__item pagination__item--current">1/4</span>
 	<a class="pagination__item pagination__item--next btn" href="/page/2/">»</a>
 </div>
 
@@ -268,11 +268,11 @@ Auth URL : It may look like this http://10.0.2.15:5000/v2.0 UserName : This is a
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/posts/terraform-cdk-create-oci-oraclecloudinfrastructure-vm/">Terraform CDK Create OCI OracleCloudInfraStructure VM</a></li>
 			<li class="widget__item"><a class="widget__link" href="/posts/k8s-vagrant-private-registry-centos8-crio-automated-deployment/">K8s Vagrant Private Registry Centos8 Crio Automated Deployment</a></li>
 			<li class="widget__item"><a class="widget__link" href="/posts/k8s-vagrant-centos-stream-crio-automated-deployment/">K8s Vagrant Centos Stream Crio Automated Deployment</a></li>
 			<li class="widget__item"><a class="widget__link" href="/posts/edit-json-easily-programatically/">Edit Json Easily Programatically</a></li>
 			<li class="widget__item"><a class="widget__link" href="/posts/kubernetes-cluster-cri-o/">Kubernetes Cluster Using CRI-O</a></li>
-			<li class="widget__item"><a class="widget__link" href="/posts/kubernetes-cluster-containerd/">Kubernetes Cluster Using Containerd</a></li>
 		</ul>
 	</div>
 </div>
@@ -287,7 +287,8 @@ Auth URL : It may look like this http://10.0.2.15:5000/v2.0 UserName : This is a
 		<a class="widget-taglist__link widget__link btn" href="/tags/blogger-api" title="Blogger API">Blogger API (3)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/blogger-html" title="Blogger HTML">Blogger HTML (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/ca" title="Ca">Ca (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/cdk" title="Cdk">Cdk (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cdk" title="Cdk">Cdk (2)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cdktf" title="Cdktf">Cdktf (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/centos8-stream" title="Centos8 stream">Centos8 stream (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/cgroups" title="Cgroups">Cgroups (2)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/containerd" title="Containerd">Containerd (1)</a>
@@ -321,12 +322,15 @@ Auth URL : It may look like this http://10.0.2.15:5000/v2.0 UserName : This is a
 		<a class="widget-taglist__link widget__link btn" href="/tags/neutron" title="Neutron">Neutron (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/node.js" title="Node.Js">Node.Js (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/nova" title="Nova">Nova (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/oci" title="Oci">Oci (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/oci-cli" title="Oci CLI">Oci CLI (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/openssl" title="Openssl">Openssl (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/openstack" title="Openstack">Openstack (3)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/oracle-cloud-infrastructure" title="Oracle cloud infrastructure">Oracle cloud infrastructure (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/pdf-generation" title="Pdf generation">Pdf generation (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/pki" title="Pki">Pki (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/proxy" title="Proxy">Proxy (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/python" title="Python">Python (4)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python" title="Python">Python (5)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/recursion" title="Recursion">Recursion (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/reverse-proxy" title="Reverse proxy">Reverse proxy (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/rsyslog" title="Rsyslog">Rsyslog (1)</a>
@@ -342,7 +346,8 @@ Auth URL : It may look like this http://10.0.2.15:5000/v2.0 UserName : This is a
 		<a class="widget-taglist__link widget__link btn" href="/tags/ssl-reverse-proxy" title="Ssl reverse proxy">Ssl reverse proxy (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/syslog" title="Syslog">Syslog (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/terminal" title="Terminal">Terminal (1)</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/terraform" title="Terraform">Terraform (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/terraform" title="Terraform">Terraform (2)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/terraform-cdk" title="Terraform cdk">Terraform cdk (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/tmux" title="Tmux">Tmux (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/typescript" title="Typescript">Typescript (1)</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/vagrant" title="Vagrant">Vagrant (6)</a>

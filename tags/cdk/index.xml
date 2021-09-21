@@ -6,7 +6,18 @@
     <description>Recent content in cdk on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Mon, 28 Dec 2020 17:54:12 +0000</lastBuildDate><atom:link href="/tags/cdk/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 20 Sep 2021 23:40:41 +0100</lastBuildDate><atom:link href="/tags/cdk/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Terraform CDK Create OCI OracleCloudInfraStructure VM</title>
+      <link>/posts/terraform-cdk-create-oci-oraclecloudinfrastructure-vm/</link>
+      <pubDate>Mon, 20 Sep 2021 23:40:41 +0100</pubDate>
+      
+      <guid>/posts/terraform-cdk-create-oci-oraclecloudinfrastructure-vm/</guid>
+      <description>Introduction We will be using terraform-cdk toolkit in this article. We shall be using an OCI (Oracle Cloud Infrastructure) account to spin up a VM.
+We shall be doing following.
+Manual steps to prepare cloud environment first (using oci-cli)  Create a new user account cdk-user (apart from the tenancy admin) and new compartment called as CDK for this user. cdk-user will have full privleges to CDK compartment. This is done as per Oracle recommended practices for OCI.</description>
+    </item>
+    
     <item>
       <title>Terraform Cdk</title>
       <link>/posts/terraform-cdk/</link>
