@@ -66,9 +66,9 @@
 <p>This document will describe a simple strategy to logging for docker container using Rsyslog. Often we may have to run multiple containers on single machine. We may require logging for different container in different directories or files. This can be achieved using Rsyslog. Approach below is very generic and flexible and can be modified as per requirement easily.</p>
 <h2 id="running-docker-with-syslog-logging">Running Docker with syslog logging</h2>
 <p>I use following command to run docker container.</p>
-<pre><code>docker run --rm --log-driver=syslog  --log-opt tag=&quot;{{.ImageName}}/{{.Name}}/{{.ID}}&quot; ubuntu echo atestoutput
+<pre tabindex="0"><code>docker run --rm --log-driver=syslog  --log-opt tag=&quot;{{.ImageName}}/{{.Name}}/{{.ID}}&quot; ubuntu echo atestoutput
 </code></pre><p>Above command will append a line similar to following line in <code>/var/log/syslog</code> file.</p>
-<pre><code>Jun  7 15:58:27 machine docker/ubuntu/trusting_dubinsky/b7d1373fccaf[20642]: atestoutput
+<pre tabindex="0"><code>Jun  7 15:58:27 machine docker/ubuntu/trusting_dubinsky/b7d1373fccaf[20642]: atestoutput
 </code></pre><h2 id="what-we-want">What we want:</h2>
 <p>We want the logging of container to go in its own directory. E.g. We probably want that each docker container should log into <code>/var/log/company/dockerapps/containerName/docker.log</code>. For a few containers we may hard code into <code>rsyslog.conf</code> file. But for a number of containers, we will have to use more generic configuration of rsyslog.</p>
 <p>Take a look at pattern in above output i.e <code>docker/ubuntu/trusting_dubinsky/b7d1373fccaf[20642]</code>. This is called <code>syslog tag</code> and rsyslog will store this pattern in its property variable which can be accessed by referring to <code>syslogtag</code> in <code>rsyslog.conf</code> file. We will exploit this property to generate dynamic filenames and directory structure.</p>

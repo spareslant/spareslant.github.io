@@ -472,7 +472,7 @@ kube-system   kube-scheduler-master            1/1     Running   <span style="co
 <h3 id="apply-calico-networking">Apply <code>calico</code> networking</h3>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
 </code></pre></div><p>Following was the output</p>
-<pre><code>configmap/calico-config created
+<pre tabindex="0"><code>configmap/calico-config created
 customresourcedefinition.apiextensions.k8s.io/bgpconfigurations.crd.projectcalico.org created
 customresourcedefinition.apiextensions.k8s.io/bgppeers.crd.projectcalico.org created
 customresourcedefinition.apiextensions.k8s.io/blockaffinities.crd.projectcalico.org created
@@ -649,7 +649,7 @@ sudo apt-mark hold kubelet kubeadm kubectl
 <p>Run the following command in <code>worker1</code> node.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo kubeadm join --config<span style="color:#f92672">=</span>join-defaults.yml --node-name<span style="color:#f92672">=</span>worker1
 </code></pre></div><p>Following output was produced</p>
-<pre><code>[preflight] Running pre-flight checks
+<pre tabindex="0"><code>[preflight] Running pre-flight checks
 [preflight] Reading configuration from the cluster...
 [preflight] FYI: You can look at this config file with 'kubectl -n kube-system get cm kubeadm-config -o yaml'
 [kubelet-start] Writing kubelet configuration to file &quot;/var/lib/kubelet/config.yaml&quot;

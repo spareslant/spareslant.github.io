@@ -283,6 +283,15 @@ set nocompatible &amp;quot; be iMproved, required filetype off &amp;quot; requir
     </item>
     
     <item>
+      <title>Vim Tips and Tricks</title>
+      <link>/posts/vim-tips-tricks/</link>
+      <pubDate>Sun, 01 Sep 2019 20:24:26 +0100</pubDate>
+      
+      <guid>/posts/vim-tips-tricks/</guid>
+      <description>motion  CTRL-e =&amp;gt; move screen down with moving cursor. CTRL-y =&amp;gt; reverse * =&amp;gt; search whole word under the cursor in file. # =&amp;gt; search backwards H M L =&amp;gt; (50% screen scroll) High, Medium, Low cusror postion in current viewport of screen CTRL-d =&amp;gt; 25% screen scroll along with cursor. CTRL-u =&amp;gt; reverse CTRL-f =&amp;gt; full screen scroll along with cursor. CTRL-b =&amp;gt; reverse g_ =&amp;gt; move cursor to the end of line till first non-blank character.</description>
+    </item>
+    
+    <item>
       <title>Apache ReverseProxySSL SSLClientAuth</title>
       <link>/posts/apache-reverseproxyssl-sslclientauth/</link>
       <pubDate>Sun, 04 Aug 2019 14:54:01 +0100</pubDate>

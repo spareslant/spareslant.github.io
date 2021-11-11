@@ -520,7 +520,7 @@ messages<span style="color:#f92672">=</span><span style="color:#960050;backgroun
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vagrant ssh master
 kubectl get nodes -o wide
 </code></pre></div><p>you shall see following output:</p>
-<pre><code>NAME                      STATUS   ROLES                  AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE          KERNEL-VERSION          CONTAINER-RUNTIME
+<pre tabindex="0"><code>NAME                      STATUS   ROLES                  AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE          KERNEL-VERSION          CONTAINER-RUNTIME
 master.virtual.machine    Ready    control-plane,master   43m   v1.21.4   10.0.0.10     &lt;none&gt;        CentOS Stream 8   4.18.0-277.el8.x86_64   cri-o://1.21.2
 worker1.virtual.machine   Ready    &lt;none&gt;                 40m   v1.21.4   10.0.0.12     &lt;none&gt;        CentOS Stream 8   4.18.0-277.el8.x86_64   cri-o://1.21.2
 </code></pre><h2 id="adding-more-nodes">Adding more nodes</h2>

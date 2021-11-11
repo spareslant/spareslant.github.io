@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-gb">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Vim Tips and Tricks - SpareSlant Technical Blog</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/my.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="SpareSlant Technical Blog" rel="home">
+				<div class="logo__title">SpareSlant Technical Blog</div>
+				<div class="logo__tagline">SpareSlant tech blog</div>
+			</a>
+		</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Vim Tips and Tricks</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2019-09-01T20:24:26">2019-09-01</time>
+</div>
+</div>
+		</header>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li><a href="#motion">motion</a></li>
+    <li><a href="#change">change</a></li>
+    <li><a href="#save-and-quit">save and quit</a></li>
+    <li><a href="#delete-in-insert-mode">Delete in Insert mode.</a></li>
+    <li><a href="#delete-leading-white-space">Delete leading white space</a></li>
+    <li><a href="#help">Help</a></li>
+    <li><a href="#repeat-actions-from-register-in-insert-mode">repeat actions from register in insert mode.</a></li>
+    <li><a href="#paste-from-registers">Paste from registers</a></li>
+    <li><a href="#completion">Completion</a></li>
+    <li><a href="#buffers">buffers</a></li>
+    <li><a href="#filters">Filters</a></li>
+    <li><a href="#launch-vim-with-terminal">launch vim with terminal</a></li>
+    <li><a href="#system-clipboard-in-normal-mode">system clipboard in <code>NORMAL</code> mode</a></li>
+    <li><a href="#system-clipboard-in-command-mode">system clipboard in <code>COMMAND</code> mode</a></li>
+    <li><a href="#command-mode-without-arrows"><code>COMMAND</code> mode without arrows</a></li>
+    <li><a href="#move-lines-cut-lines">Move lines (cut lines)</a></li>
+    <li><a href="#reduce-multiple-blank-lines-to-one-blank-lime">reduce multiple blank lines to one blank lime</a></li>
+    <li><a href="#copy-line">Copy line</a></li>
+    <li><a href="#command-mode-commands"><code>COMMAND</code>-mode commands</a></li>
+    <li><a href="#marks">marks</a></li>
+    <li><a href="#tabs-in-insert-mode">tabs in insert mode</a></li>
+    <li><a href="#indent-a-code">indent a code</a></li>
+    <li><a href="#line-search-repeat">line search repeat</a></li>
+    <li><a href="#delete-and-yank-from-current-postion-till-a-match-flexible-match">delete and yank from current postion till a match (flexible match)</a></li>
+    <li><a href="#join-range-of-lines">Join range of lines</a></li>
+    <li><a href="#vim-dir-explorer">Vim Dir explorer</a></li>
+    <li><a href="#paste-a-command-output-in-the-file">Paste a command output in the file</a></li>
+    <li><a href="#vscode-change-escape-key-binding">vscode change escape key binding</a></li>
+    <li><a href="#window-operations">Window operations</a></li>
+    <li><a href="#vim-ide">VIM IDE</a></li>
+    <li><a href="#set-filetype">set filetype</a></li>
+    <li><a href="#to-delete-all-lines-from-a-file-matching-a-pattern">To delete all lines from a file matching a pattern</a></li>
+    <li><a href="#get-a-range-of-lines-6-8-from-another-file">get a range of lines (6-8) from another file</a></li>
+    <li><a href="#repeat-a-word-multiple-times">repeat a word multiple times</a></li>
+    <li><a href="#egrep-and-egrep--v">egrep and egrep -v</a></li>
+    <li><a href="#operation-on-first-occurence-of-match">operation on first occurence of match</a></li>
+    <li><a href="#operation-on-all-occurence-of-match">operation on all occurence of match</a></li>
+    <li><a href="#operations-on-all-the-lines-matching-a-pattern">operations on all the lines matching a pattern</a></li>
+    <li><a href="#operations-on-a-range-of-lines-matching-a-pattern">operations on a range of lines matching a pattern</a></li>
+    <li><a href="#insert-repeated-chars">insert repeated chars</a></li>
+    <li><a href="#highlight-all-the-trailing-whitespaces">Highlight all the trailing whitespaces</a></li>
+    <li><a href="#ex-command-index">ex-<code>COMMAND</code> index</a></li>
+    <li><a href="#search-and-editing">search and editing</a></li>
+    <li><a href="#create-folds">create folds</a></li>
+    <li><a href="#spell-suggesstion">spell suggesstion</a></li>
+    <li><a href="#search-and-perform-an-operation-on-all-searches">Search and perform an operation on all searches</a></li>
+    <li><a href="#search-and-replace-a-whole-word-in-normal-mode">Search and replace a whole word in <code>NORMAL</code> mode</a></li>
+    <li><a href="#search-and-replace-any-pattern-in-visualnormal-mode">Search and replace any pattern in <code>VISUAL</code>/<code>NORMAL</code> mode</a></li>
+    <li><a href="#search-and-replace-a-pattern-starting-from-existing-position-in-visual-mode---2nd-method">Search and replace a pattern (starting from existing position) in <code>VISUAL</code> mode - 2nd method</a></li>
+    <li><a href="#search-and-replace-in-visual-mode">Search and replace in <code>VISUAL</code> mode</a></li>
+    <li><a href="#search-and-replace-in-visual-mode---method-2">Search and replace in <code>VISUAL</code> mode - method-2</a></li>
+    <li><a href="#search-and-replace-in-visual-mode---method-3">Search and replace in <code>VISUAL</code> mode - method-3</a></li>
+    <li><a href="#put-quotes-around-a-word-using-macro">put quotes around a word using macro</a></li>
+    <li><a href="#put-quotes-around-a-word-using-visual-selection">put quotes around a word using <code>VISUAL</code> selection</a></li>
+    <li><a href="#split-all-lines-of-an-english-paragraph-in-its-own-lines-separately">split all lines of an english paragraph in its own lines separately</a></li>
+    <li><a href="#split-a-line-in-its-individual-words-on-its-own-separate-lines">split a line in its individual words on its own separate lines</a></li>
+    <li><a href="#vim-shell-compilerun-edit-cycle">VIM shell compile/run edit cycle</a></li>
+    <li><a href="#register-operations">Register operations:</a></li>
+    <li><a href="#repeat-register-operations">repeat register operations</a></li>
+    <li><a href="#how-to-cut-the-content-in-json">How to cut the content in json:</a></li>
+    <li><a href="#fzf-plugin-flow">FZF plugin flow</a></li>
+    <li><a href="#search-and-replace-interactively-in-multiple-files-using-quickfix">Search and replace interactively in multiple files using quickfix.</a></li>
+    <li><a href="#search-and-replace-interactively-in-multiple-files-using-standard-unix-tools-and-quickfix">Search and replace interactively in multiple files using standard unix tools and quickfix</a></li>
+    <li><a href="#search-and-replace-interactively-in-multiple-files-by-populating-quickfix-list-directly">Search and replace interactively in multiple files by populating quickfix list directly</a></li>
+    <li><a href="#search-and-replace-interactively-in-multiple-files-by-using-args">Search and replace interactively in multiple files by using args</a></li>
+    <li><a href="#replace-a-bunch-of-text-with-a-copied-text">replace a bunch of text with a copied text.</a></li>
+    <li><a href="#save-a-vim-session">Save a VIM session</a></li>
+    <li><a href="#moving-between-vim-tabs">Moving between VIM tabs</a></li>
+    <li><a href="#edit-a-pattern-in-a-text-file---example-1">Edit a pattern in a text file - example-1</a></li>
+    <li><a href="#edit-a-pattern-in-a-text-file---example-2">Edit a pattern in a text file - example-2</a></li>
+    <li><a href="#edit-a-pattern-in-a-text-file---example-3">Edit a pattern in a text file - example-3</a></li>
+    <li><a href="#using-vim-as-less">Using VIM as less</a></li>
+    <li><a href="#minimal-vim-configuration">Minimal vim configuration</a></li>
+    <li><a href="#invoke-vi-editor-in-bash-command-line-editing">invoke vi editor in bash command-line editing</a></li>
+    <li><a href="#special-keys-can-be-used-in-vimrc-in-command-mode-in-following-format">special keys can be used in vimrc in <code>COMMAND</code> mode in following format</a></li>
+    <li><a href="#create-vertical-line-in-a-block-of-text-using-macro">create vertical line in a block of text using macro</a>
+      <ul>
+        <li><a href="#edit-the-macro">Edit the macro</a></li>
+        <li><a href="#place-another-vertical-line-on-the-left-of-existing-line">Place another vertical line on the left of existing line.</a></li>
+      </ul>
+    </li>
+    <li><a href="#more-vertical-lines-using-ex-commands-on-right-side">More vertical lines using ex-<code>COMMAND</code>s on right side</a></li>
+    <li><a href="#draw-table-in-vim">Draw table in vim</a></li>
+  </ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<h2 id="motion">motion</h2>
+<ul>
+<li><code>CTRL-e</code> =&gt; move screen down with moving cursor. <code>CTRL-y</code> =&gt; reverse</li>
+<li><code>*</code> =&gt; search whole word under the cursor in file. <code>#</code> =&gt; search backwards</li>
+<li><code>H M L</code>  =&gt; (50% screen scroll) High, Medium, Low cusror postion in current viewport of screen</li>
+<li><code>CTRL-d</code> =&gt; 25% screen scroll along with cursor. <code>CTRL-u</code> =&gt; reverse</li>
+<li><code>CTRL-f</code> =&gt; full screen scroll along with cursor. <code>CTRL-b</code> =&gt; reverse</li>
+<li><code>g_</code> =&gt; move cursor to the end of line till first non-blank character.</li>
+<li><code>gE</code> =&gt; move cursor to the end of previous word. special chars are not treated special.</li>
+<li><code>50gg</code> =&gt; moves cursor to line 50 in <code>NORMAL</code> mode.</li>
+<li><code>:50</code> =&gt; moves cursor to line 50 in <code>COMMAND</code> mode</li>
+<li><code>zz</code> =&gt; center the window with cursor on text</li>
+<li><code>zt</code> =&gt; top of the window with cursor on text</li>
+<li><code>zb</code> =&gt; bottom  of the window with cursor on text</li>
+<li>To move among paragraphs =&gt; <code>{</code> and <code>}</code> or  <code> `{ </code> and <code> `} </code></li>
+<li>To move to start of end of highlisted text (in <code>VISUAL</code> mode): <code> `&lt; </code> and <code> `&gt; </code></li>
+<li>To move to a marked postion: <code> `&lt;marked char&gt;</code> (to mark: <code>m&lt;aChar&gt; </code>).</li>
+<li>To move between the changes done in file: <code>g;</code> and <code>g,</code></li>
+<li>To move between the jumps done in file: <code>CTRL-o</code> and <code>CTRL-i</code></li>
+<li>To move the cursor to its last postion when file was closed: <code>`&quot; </code></li>
+</ul>
+<h2 id="change">change</h2>
+<ul>
+<li>in vim type <code>:h word-motions</code></li>
+<li><code>cit</code> =&gt; change text in-between tags</li>
+<li><code>cf&lt;char&gt;</code> =&gt; search for a <!-- raw HTML omitted --> in forward direction and deletes the whole text including char and place in insert mode.</li>
+<li><code>cF&lt;char&gt;</code> =&gt; same as above in backward direction.</li>
+<li><code>ct&lt;char&gt;</code> =&gt; same as <code>cf&lt;char&gt;</code> but do not include the char.</li>
+<li><code>cT&lt;char&gt;</code> =&gt; do not include char in backward.</li>
+<li><code>~</code> =&gt; change the case of letter in <code>NORMAL</code> mode</li>
+<li><code>g-</code> =&gt; undo</li>
+<li><code>g+</code> =&gt; redo</li>
+<li><code>u</code> =&gt; undo</li>
+<li><code>CTRL-r</code> =&gt; redo</li>
+<li><code>e!&lt;enter&gt;</code> =&gt; undo all changes</li>
+</ul>
+<h2 id="save-and-quit">save and quit</h2>
+<ul>
+<li><code>ZZ</code> =&gt; Save and quit</li>
+<li><code>ZQ</code> =&gt; Quit without saving</li>
+</ul>
+<h2 id="delete-in-insert-mode">Delete in Insert mode.</h2>
+<ul>
+<li><code>CTRL-h</code> =&gt; deletes one char in backward direction</li>
+<li><code>CTRL-w</code> =&gt; deletes a word in backward direction.</li>
+<li><code>CTRL-u</code> =&gt; deletes till the start of line in backward direction.</li>
+</ul>
+<h2 id="delete-leading-white-space">Delete leading white space</h2>
+<ul>
+<li><code>^</code> =&gt; move the cursor to the first char of line. then press <code>d0</code> to remove the white space</li>
+</ul>
+<h2 id="help">Help</h2>
+<ul>
+<li><code>:help i_^N</code>  =&gt; insert-mode <code>CTRL-n</code> help</li>
+<li><code>:help c_^N</code>  =&gt; <code>COMMAND</code>-mode <code>CTRL-n</code> help</li>
+<li><code>:help :g</code> =&gt; <code>COMMAND</code>-mode g help</li>
+<li><code>:help g</code> =&gt; <code>NORMAL</code>-mode g help</li>
+<li><code>:help map-modes</code> =&gt; all modes</li>
+<li><code>:help :,</code> =&gt; <code>COMMAND</code> mode , help</li>
+<li><code>:help ^W</code> =&gt; help for windows,tab, switching between tabs and windows</li>
+<li><code>:help key-codes</code> =&gt; list of key-codes for special keys like <code>&lt;ESC&gt;</code>, <code>&lt;Up&gt;</code> etc</li>
+<li><code>:help autocmd-events</code> =&gt; list of all events</li>
+</ul>
+<h2 id="repeat-actions-from-register-in-insert-mode">repeat actions from register in insert mode.</h2>
+<ul>
+<li>in <code>NORMAL</code> mode, press<code>q&lt;achar&gt;</code> e.g. <code>qw</code> to start recording actions in <code>w</code> register. When finish come to <code>NORMAL</code> mode and press <code>q</code> again to register all the actions in <code>w</code> register. In order to repeat the actions in saved in <code>w</code> register, following are the two methods.
+<ul>
+<li>In order to repeat all the actions in exactly same manner, go to <code>NORMAL</code> mode and type <code>@w</code></li>
+<li>In order to paste all the chars in register, go to insert mode and type <code>CTRL-rw</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="paste-from-registers">Paste from registers</h2>
+<ul>
+<li><code>4yy</code> =&gt; copied text in <code>NORMAL</code> mode, and to paste this text in Insert mode use <code>CTRL-r&quot;</code></li>
+<li><code>:3,9y</code> =&gt; copies text in <code>COMMAND</code>-mode, and to paste this text in Insert mode use <code>CTRL-r&quot;</code></li>
+</ul>
+<h2 id="completion">Completion</h2>
+<ul>
+<li><code>CTRL-x CTRL-]</code> =&gt; Tag completion (ctags)</li>
+<li><code>CTRL-x CTRL-F</code> =&gt; Filename completions</li>
+<li><code>CTRL-x CTRL-o</code> =&gt; omni completions =&gt; <code>:pc</code> to close preview pane</li>
+<li><code>CTRL-x ctlr+p repeatedly</code> =&gt; To complete the lines from existing text</li>
+</ul>
+<h2 id="buffers">buffers</h2>
+<ul>
+<li><code>:ls</code> =&gt; list current buffers</li>
+<li><code>:b &lt;buffer number&gt;</code> =&gt; jump to that buffer (file)</li>
+<li><code>:edit /tmp/yummy | r! ls -l </code></li>
+<li><code>:ba</code> =&gt; open all buffers in current window</li>
+</ul>
+<h2 id="filters">Filters</h2>
+<ul>
+<li><code>:1,$ ! perl -wpl -e 's/Content/CONTENT/g'</code></li>
+</ul>
+<h2 id="launch-vim-with-terminal">launch vim with terminal</h2>
+<ul>
+<li>run command =&gt; <code>vim +term</code>. This opens two horizontally stacked windows with terminal opened in upper window.</li>
+<li><code>CTRL-w w</code> =&gt; swith to other unwanted window</li>
+<li><code>CTRL-w q</code> =&gt; close this unwanted window</li>
+</ul>
+<h2 id="system-clipboard-in-normal-mode">system clipboard in <code>NORMAL</code> mode</h2>
+<ul>
+<li><code>&quot;*yy</code> =&gt; copies text in <code>*</code> register. now you can use system <code>CTRL-v</code> to paste outside vim.</li>
+<li><code>&quot;*dd</code> =&gt; similar to above</li>
+</ul>
+<h2 id="system-clipboard-in-command-mode">system clipboard in <code>COMMAND</code> mode</h2>
+<ul>
+<li><code>:4,8y+</code> =&gt; copies the range of lines in <code>+</code> buffer which represents system clipboard</li>
+<li><code>+</code> and <code>*</code> both represents system clipboard</li>
+</ul>
+<h2 id="command-mode-without-arrows"><code>COMMAND</code> mode without arrows</h2>
+<ul>
+<li>In <code>NORMAL</code> mode <code>q:</code> opens a vim window with the command history. You can work in it like any other vim buffer. Enter executes a command.</li>
+<li><code>q/</code> and <code>q?</code> do the same for searches.</li>
+<li>Also, while you are typing a command, you can press <code>CTRL-f</code> to open the command-line window and continue editing the command there.</li>
+</ul>
+<h2 id="move-lines-cut-lines">Move lines (cut lines)</h2>
+<ul>
+<li><code>:.m-3</code> =&gt; moves current line 2 lines above.</li>
+<li><code>:5,7m 21</code> =&gt; moves line 5-7 after line 21</li>
+</ul>
+<h2 id="reduce-multiple-blank-lines-to-one-blank-lime">reduce multiple blank lines to one blank lime</h2>
+<ul>
+<li><code>:38,$s!\n\+!^M^M!g</code>  =&gt; <code>^M</code> can be entered by <code>&lt;CTRL-v&gt;&lt;CTRL-ENTER&gt;</code></li>
+<li><code>:38,$s/\n\+/\r\r/g</code> =&gt; same as above</li>
+</ul>
+<h2 id="copy-line">Copy line</h2>
+<ul>
+<li><code>:21t-1</code> =&gt; copies line at line-no:21 and paste it in current position.</li>
+</ul>
+<h2 id="command-mode-commands"><code>COMMAND</code>-mode commands</h2>
+<ul>
+<li><code>:reg</code> =&gt; list registers and its contents</li>
+<li><code>:jumps</code> =&gt; list all jumps. (<code>CTRL-]</code> and <code>CTRL-o</code>)</li>
+<li><code>changes</code> =&gt; list all changes</li>
+<li><code>:@:</code> =&gt; Repeat last command run in <code>COMMAND</code>-mode</li>
+</ul>
+<h2 id="marks">marks</h2>
+<ul>
+<li><code>ma</code> =&gt; created a mark named <code>a</code> at a given line</li>
+<li><code> `a </code> =&gt; move back to the marked position.</li>
+</ul>
+<h2 id="tabs-in-insert-mode">tabs in insert mode</h2>
+<ul>
+<li><code>crtl+t</code> =&gt; insert indent in insert mode</li>
+<li><code>crtl+d</code> =&gt; delete indent in insert mode</li>
+</ul>
+<h2 id="indent-a-code">indent a code</h2>
+<ul>
+<li><code>=i{</code> =&gt; indent a code inside {} pair excluding &lsquo;{&rsquo; and &lsquo;}&rsquo; characters.</li>
+<li><code>=a{</code> =&gt; indent a code inside {} pair including &lsquo;{&rsquo; and &lsquo;}&rsquo; characters.</li>
+<li><code>:38,$g/oo/&gt;</code> =&gt; indent all those lines in line range from 38 till end, that matches a pattern <code>oo</code></li>
+<li><code>:38,$g/oo/&gt;&gt;&gt;&gt;</code> =&gt; indent 4 times all those lines in line range from 38 till end, that matches a pattern <code>oo</code></li>
+<li><code>vjj=</code> =&gt; re-indent in <code>VISUAL</code> style</li>
+<li><code>5,10 norm ==</code> =&gt; re-indent using ex-<code>COMMAND</code> mode.</li>
+<li><code>:s/\s\+//g | norm ==</code> =&gt; remove white-space between words and reindent it</li>
+</ul>
+<h2 id="line-search-repeat">line search repeat</h2>
+<ul>
+<li><code>fx</code> =&gt; searches for char <code>x</code> in line</li>
+<li><code>;</code> =&gt; repeat the above search and <code>,</code> searches backwards</li>
+<li><code>tx</code> =&gt; same as <code>fx</code> but cursor stops before <code>x</code></li>
+<li><code>Tx</code> =&gt; reverse of <code>tx</code></li>
+</ul>
+<h2 id="delete-and-yank-from-current-postion-till-a-match-flexible-match">delete and yank from current postion till a match (flexible match)</h2>
+<ul>
+<li><code>y/pattern</code> =&gt; copied from current cursor postion till the pattern match</li>
+<li><code>d/pattern</code> =&gt; delete from current cursor position till the pattern macth</li>
+</ul>
+<h2 id="join-range-of-lines">Join range of lines</h2>
+<ul>
+<li><code>3J</code> =&gt; join three lines</li>
+<li><code>:4,5j</code> =&gt; join lines from 4 to 5</li>
+</ul>
+<h2 id="vim-dir-explorer">Vim Dir explorer</h2>
+<ul>
+<li>open vim and run <code>:Lexplore</code>, then <code>:vertical resize 40</code></li>
+<li>optional settings: <code>let g:netrw_browse_split = &lt;number&gt;</code></li>
+</ul>
+<h2 id="paste-a-command-output-in-the-file">Paste a command output in the file</h2>
+<ul>
+<li><code>:read ! ls -l</code> =&gt; will paste the output of <code>ls -l</code> command into current cursor position</li>
+</ul>
+<h2 id="vscode-change-escape-key-binding">vscode change escape key binding</h2>
+<ul>
+<li>in vscode =&gt; settings =&gt; vim: Handle Keys =&gt; Add following</li>
+</ul>
+<pre tabindex="0"><code>&quot;vim.insertModeKeyBindingNonRecursive&quot; : [
+   {
+      &quot;before&quot;: [&quot;j&quot;, &quot;k&quot;],
+      &quot;after&quot;: [&quot;&lt;ESC&gt;&quot;]
+   }
+],
+</code></pre><h2 id="window-operations">Window operations</h2>
+<ul>
+<li><code>CTRL-w =</code> =&gt; resizes all windows equally</li>
+<li><code>CTRL-w p</code> =&gt; move back to previous window</li>
+<li><code>CTRL-w &lt;HJKL&gt;</code> =&gt; move windows</li>
+<li><a href="https://vimhelp.org/windows.txt.html#window-resize">https://vimhelp.org/windows.txt.html#window-resize</a></li>
+<li>To change width =&gt; <code>CTRL-w 5&lt;</code> or <code>CTRL-w 6&gt;</code></li>
+<li>To change height =&gt; <code>CTRL-w 5+</code> or <code>CTRL-w 6-</code></li>
+<li><code>CTRL-w s</code> =&gt; horizontal split</li>
+<li><code>CTRL-w v</code> =&gt; vertical split</li>
+<li><code>CTRL-w T</code> =&gt; move current window to new tab</li>
+</ul>
+<h2 id="vim-ide">VIM IDE</h2>
+<ul>
+<li>start vim</li>
+<li>Open dir browser on left =&gt;  <code>:Lexplore</code></li>
+<li>resize dir browser =&gt; <code>:vertical resize 30</code> or <code>CTRL-w [-+]</code></li>
+<li>open new file in new split window when <code>ENTER</code> is pressed on a file in dir window =&gt; <code>:let g:netrw_browse_split = 2</code></li>
+<li>switch to new window =&gt; <code>CTRL-w w</code></li>
+<li>create a new file in vertical split =&gt; <code>:vs afile.txt</code></li>
+<li>open terminal =&gt; <code>:term</code></li>
+<li>Bring terminal down =&gt; <code>CTRL-w J</code>
+<ul>
+<li>Enter terminal <code>NORMAL</code> mode =&gt; <code>CTRL-w N</code></li>
+<li>to adjust height of terminal =&gt; <code>CTRL-w :resize 40</code></li>
+<li><code>CTRL-w |</code> =&gt; maximizes width of window</li>
+<li><code>CTRL-w =</code> =&gt; restores all window sizes to equal proportions.</li>
+</ul>
+</li>
+<li><code>CTRL-w q</code>  =&gt; closes window</li>
+<li><code>&lt;num&gt;CTRL-w</code> =&gt; make current window height to max</li>
+<li><code>&lt;num&gt;CTRL-w |</code> =&gt; make currrent window width to max</li>
+<li><code>&lt;num&gt;CTRL-w =</code> =&gt; make all windows of equal size.</li>
+<li><code>&lt;num&gt;CTRL-w [+-]</code> =&gt; window resize vertically</li>
+<li><code>&lt;num&gt;CTRL-w [&lt;&gt;]</code> =&gt; window resize horizontally.</li>
+<li><code>z&lt;number&gt;&lt;ENTER&gt; =&gt; resizes current window vertically as per &lt;number&gt;</code></li>
+<li>Go to explorer winow using <code>CTRL-w w</code> and press <code>i</code> to change view. Keep on pressing <code>i</code> to see different viees.</li>
+<li><code>set splitbelow</code> to open new window below the current</li>
+<li><code>set splitright</code> to open new window on the right of the current window.</li>
+<li>change file(buffer) in current window =&gt; <code>b! &lt;buffer number&gt;</code></li>
+<li><code>:only</code> =&gt; close all other buffers and open only the current one</li>
+</ul>
+<p><a href="https://vimhelp.org/pi_netrw.txt.html">https://vimhelp.org/pi_netrw.txt.html</a></p>
+<p><a href="https://vimhelp.org/windows.txt.html#window-resize">https://vimhelp.org/windows.txt.html#window-resize</a></p>
+<p><a href="https://vimhelp.org/terminal.txt.html">https://vimhelp.org/terminal.txt.html</a></p>
+<h2 id="set-filetype">set filetype</h2>
+<ul>
+<li><code>:set ft=sh</code>  =&gt; sets filetype to a shell script</li>
+</ul>
+<h2 id="to-delete-all-lines-from-a-file-matching-a-pattern">To delete all lines from a file matching a pattern</h2>
+<ul>
+<li><code>:g/profile/d</code></li>
+<li><code>:g!/profile/d</code> =&gt; reverse of above command.</li>
+</ul>
+<h2 id="get-a-range-of-lines-6-8-from-another-file">get a range of lines (6-8) from another file</h2>
+<ul>
+<li><code>:read ! perl -wnl -e 'if ($. &gt;= 6 &amp;&amp;  $. &lt;= 8) {print}' second.rs</code></li>
+</ul>
+<h2 id="repeat-a-word-multiple-times">repeat a word multiple times</h2>
+<ul>
+<li><code>&lt;ESC&gt;20iyummy&lt;ESC&gt;</code></li>
+</ul>
+<h2 id="egrep-and-egrep--v">egrep and egrep -v</h2>
+<ul>
+<li><code>:g/found/v/notfound/{cmd}</code></li>
+</ul>
+<h2 id="operation-on-first-occurence-of-match">operation on first occurence of match</h2>
+<ul>
+<li><code>:g/yummy/.norm nwi_zzz</code>  appends <code>zzz</code> at the <code>end of every word</code> containing yummy (just first occurence)</li>
+<li><code>:g/yummy/.norm 10nwi_zzz</code> =&gt; repeat nwi_zzz 10 times on a line.</li>
+</ul>
+<h2 id="operation-on-all-occurence-of-match">operation on all occurence of match</h2>
+<ul>
+<li><code>:%s/yummy/&amp;_zzz/g</code> appends <code>zzz</code> at the <code>end of every matching word</code> containing yummy</li>
+</ul>
+<h2 id="operations-on-all-the-lines-matching-a-pattern">operations on all the lines matching a pattern</h2>
+<ul>
+<li><code>:g/yummy/t21</code>  =&gt; copy all lines matching yummy to line 21 onwards</li>
+<li><code>:g/yummy/m21</code>  =&gt; move all lines matching yummy to line 21 onwards</li>
+</ul>
+<h2 id="operations-on-a-range-of-lines-matching-a-pattern">operations on a range of lines matching a pattern</h2>
+<ul>
+<li><code>:186,209g/^set statusline/.norm 0iyummy</code></li>
+<li><code>:12,17g/omitempty/m8</code> =&gt; In line range 12,17 move all lines having omitempty to line 8</li>
+<li><code>38,46g/oo/ s/some/SOME/g</code> =&gt; in the line range 38,46 find all lines with <code>oo</code> pattern and replace some with SOME in those found lines.</li>
+<li><code>:38,$  w /tmp/yummy</code> =&gt; copy a range of lines to a file (creates the file if doesn&rsquo;t exis)</li>
+<li><code>:38,$g/oo/  . w! &gt;&gt; /tmp/yummy</code> =&gt; copy lines to file /tmp/yummy in line range from 38 till end of file which has matched pattern of <code>oo</code></li>
+<li><code>/pattern1/,/pattern2/ {ex-cmd}</code> =&gt; operation on the range of lines.</li>
+<li><code>:38,$g/./s/^/#/g</code> =&gt; from line 38 till end, comment all lines but do not comment empty line.</li>
+<li><code>:10,16g/omit/ | s/json/JSON/</code></li>
+</ul>
+<h2 id="insert-repeated-chars">insert repeated chars</h2>
+<ul>
+<li><code>30i*&lt;ESC&gt;</code> =&gt; inserts 30 * chars</li>
+<li><code>30i&lt;SPACE&gt;&lt;ESC&gt;</code> =&gt; inserts 30 spaces</li>
+<li><code>:normal! 50iabc &lt;CTRL-v&gt;&lt;ESC&gt;</code> =&gt; inserts <code>abc </code> 50 times. After <code>abc&lt;SPACE&gt;</code> press <code>CTRL-v</code> and then <code>escacpe</code> to insert escape.</li>
+</ul>
+<h2 id="highlight-all-the-trailing-whitespaces">Highlight all the trailing whitespaces</h2>
+<ul>
+<li><code>/\s\+$&lt;ENTER&gt;</code></li>
+</ul>
+<h2 id="ex-command-index">ex-<code>COMMAND</code> index</h2>
+<ul>
+<li><a href="http://vimdoc.sourceforge.net/htmldoc/vimindex.html#ex-cmd-index">http://vimdoc.sourceforge.net/htmldoc/vimindex.html#ex-cmd-index</a></li>
+</ul>
+<h2 id="search-and-editing">search and editing</h2>
+<ul>
+<li><a href="http://vimdoc.sourceforge.net/htmldoc/usr_10.html#10.4">http://vimdoc.sourceforge.net/htmldoc/usr_10.html#10.4</a></li>
+<li>Remove trailing white spaces for lines</li>
+<li><code>:59,60s/\s\+$//gc</code></li>
+</ul>
+<h2 id="create-folds">create folds</h2>
+<ul>
+<li><code>zf{motion}</code> =&gt; <code>zf}</code> =&gt; creates fold of a paragraph</li>
+<li><code>8zf</code> =&gt; creates fold of 8 lines</li>
+<li><code>:3,52fold</code> =&gt; creates fold from lines 3 till 52</li>
+<li><code>za</code> =&gt; toggles open and close folds</li>
+<li><code>zE</code> =&gt; eleminiate all folds</li>
+<li><code>zO</code> =&gt; open all folds</li>
+</ul>
+<h2 id="spell-suggesstion">spell suggesstion</h2>
+<ul>
+<li><code>z=</code></li>
+</ul>
+<h2 id="search-and-perform-an-operation-on-all-searches">Search and perform an operation on all searches</h2>
+<ul>
+<li><code>/yummy</code>  =&gt; search for something first</li>
+<li><code>qqq</code> =&gt; clear q register. 1st <code>q</code> &ndash;&gt; starts recording, 2nd <code>q</code> &ndash;&gt; name of the reg ro record into, 3rd <code>q</code> &mdash;&gt; stop recording. Now <code>q</code> register is empty. we could have used <code>qaq</code> as well, in this case register is <code>a</code></li>
+<li><code>qq</code> =&gt; start recording actions in <code>q</code> register. Now type <code>eai_zzz&lt;ESC&gt;n</code>. This is going to append <code>_zzz</code> to the end word containing the string <code>yummy</code>. type <code>q</code> again to stop recording. <code>&lt;ESC&gt;</code> can be entered by pressing <code>CTRL-v</code>  <code>&lt;ESC&gt;</code> or <code>CTRL-v</code> <code>CTRL-[</code></li>
+<li>now press <code>@q</code> to run the macro on next search. Keep in repeating @q in order to apply macro on next search. After pressing <code>@q</code> first time, you can repeat <code>@q</code> by using <code>@@</code>.</li>
+<li>NOTE: you do not need to press <code>n</code> to move to next search. However you can press n to skip search.</li>
+</ul>
+<h2 id="search-and-replace-a-whole-word-in-normal-mode">Search and replace a whole word in <code>NORMAL</code> mode</h2>
+<ul>
+<li>use <code>*</code> or <code>g*</code> to take current cursor word in search register. <code>*</code> =&gt; matches only whole word. <code>g*</code> matches word in any pattern.</li>
+<li>pressing <code>*</code> or <code>g*</code> moves you to the next match. To go back to previous location press <code>#</code> or <code>g#</code>.</li>
+<li>once back in original position. use <code>cw</code> to change the word. press <!-- raw HTML omitted --> and press <code>n</code> to search for next match and then press <code>.</code> (dot). keep on pressing <code>n</code> followed by <code>.</code>(dot) to replace all the occurrences.</li>
+</ul>
+<h2 id="search-and-replace-any-pattern-in-visualnormal-mode">Search and replace any pattern in <code>VISUAL</code>/<code>NORMAL</code> mode</h2>
+<ul>
+<li>search the word first using <code>/wordtosearch</code></li>
+<li>press <code>n</code> and go to that word or <code>N</code> to go backward. [This step is not required]</li>
+<li>press <code>v</code> to go in <code>VISUAL</code> mode and select pattern using motion keys like <code>l,h,w,b</code> etc.</li>
+<li>now press <code>c</code> to replace the word and press <code>&lt;ESC&gt;</code></li>
+<li>press <code>n</code> to go to next word and press <code>.</code> (dot) and replace the word</li>
+</ul>
+<h2 id="search-and-replace-a-pattern-starting-from-existing-position-in-visual-mode---2nd-method">Search and replace a pattern (starting from existing position) in <code>VISUAL</code> mode - 2nd method</h2>
+<ul>
+<li>press <code>v</code> to go in <code>VISUAL</code> mode, and start selecting pattern using motion keys like <code>l,h,w,b</code> etc. e.g <code>vEE</code> (to select two words that may have non-word chars)</li>
+<li>press <code>c</code> now to cut the content in <code>&quot;</code> register and start in insert mode</li>
+<li>edit the text and when finished press <code>&lt;ESC&gt;</code> to go in <code>NORMAL</code> mode.</li>
+<li>press <code>/</code> to go in search mode and press <code>CTRL-r &quot;</code> to paste the cut contents and press <!-- raw HTML omitted -->. This will move the cursor to the next searched pattern.</li>
+<li>now press <code>.</code> to replace the pattern</li>
+<li>press <code>n</code> to move to next search and press <code>.</code> to replace it again.</li>
+</ul>
+<h2 id="search-and-replace-in-visual-mode">Search and replace in <code>VISUAL</code> mode</h2>
+<ul>
+<li>select the block of text with <code>CTRL-v</code></li>
+<li>press <code>&lt;ESC&gt;</code></li>
+<li><code>:%s/\%Vpattern/replacedPatterm/g</code></li>
+<li>Above will replace only in visually selected area.</li>
+<li>after pressing <code>&lt;ESC&gt;</code>, do this to search in visually selected area <code>/\%Vpattern</code></li>
+</ul>
+<h2 id="search-and-replace-in-visual-mode---method-2">Search and replace in <code>VISUAL</code> mode - method-2</h2>
+<ul>
+<li>select the block of text with <code>CTRL-v</code></li>
+<li>press <code>c</code> (delete and insert)</li>
+<li>type the text you want</li>
+<li>press <code>&lt;ESC&gt;</code>. It will replace the text you typed on the very first selected line</li>
+</ul>
+<h2 id="search-and-replace-in-visual-mode---method-3">Search and replace in <code>VISUAL</code> mode - method-3</h2>
+<ul>
+<li>select the block of text with <code>CTRL-v</code></li>
+<li>press <code>r</code></li>
+<li>type the character you want to fill <code>VISUAL</code> block with.</li>
+<li>press <code>&lt;ESC&gt;</code>. It will replace the entire <code>VISUAL</code> block the the single character only.</li>
+</ul>
+<h2 id="put-quotes-around-a-word-using-macro">put quotes around a word using macro</h2>
+<ul>
+<li><code>qqq</code> =&gt; clear q register</li>
+<li>go to a word by pressing <code>w</code>. Now press <code>qq</code> to start recording macro. Now type <code>ebi&quot;&lt;ESC&gt;ea&quot;&lt;ESC&gt;</code>. This will insert quotes around a word. now press <code>q</code> to stop recording macro</li>
+<li>now go to any word which you want to surround with quotes and press <code>@q</code>. To perform the same action on another word you can keep on typing <code>@@</code>.</li>
+</ul>
+<h2 id="put-quotes-around-a-word-using-visual-selection">put quotes around a word using <code>VISUAL</code> selection</h2>
+<ul>
+<li><code>qqq</code> =&gt; clear q register</li>
+<li>go to a word by pressing w. press <code>v</code> to start character <code>VISUAL</code> mode.</li>
+<li>keep on pressing <code>w</code> to keep on selecting words. or <code>l</code> to select character-wise. you can use arrows keys as well.</li>
+<li>once you have selected the text. press <code>qq</code> to start recording in <code>q</code> register.</li>
+<li>press <code>&lt;ESC&gt;</code></li>
+<li>press <code> `&gt;  </code>   to go the end of selection. press <code>a</code> to go in insert mode. insert double quote i.e <code>&quot;</code></li>
+<li>press <code>&lt;ESC&gt;</code></li>
+<li>press <code> `&lt;  </code> to go to start of selection. press <code>i</code> to go in insert mode. insert double quote i.e <code>&quot;</code></li>
+<li>press <code>&lt;ESC&gt;</code></li>
+<li>press <code> `&gt;  </code> to go back to the end of selection. press <code>ll</code> to move cursor to the end of selection.</li>
+<li>press <code>q</code>again to stop recording.</li>
+<li>now go to any other position in file. visually select the text. press <code>&lt;ESC&gt;</code> and then <code>@q</code> to apply quotes to selected text.</li>
+</ul>
+<h2 id="split-all-lines-of-an-english-paragraph-in-its-own-lines-separately">split all lines of an english paragraph in its own lines separately</h2>
+<ul>
+<li><code>:s/\./\.&lt;CTRL-v&gt;&lt;CTRL-ENTER&gt;/gc</code></li>
+</ul>
+<h2 id="split-a-line-in-its-individual-words-on-its-own-separate-lines">split a line in its individual words on its own separate lines</h2>
+<ul>
+<li><code>s/\(\w\+\)/\1&lt;CTRL-v&gt;&lt;CTRL-ENTER&gt;/gc</code></li>
+</ul>
+<h2 id="vim-shell-compilerun-edit-cycle">VIM shell compile/run edit cycle</h2>
+<ul>
+<li>
+<p>open file =&gt; <code>vim some.py</code></p>
+</li>
+<li>
+<p>run the python script =&gt; <code>:e! /tmp/output-1 | r! python3 #</code> =&gt; This command will print output/error into a new buffer (file) called <code>/tmp/yummy</code> and swicthes to that buffer.</p>
+</li>
+<li>
+<p>open python buffer in separate window =&gt; <code>vertical sb #</code> =&gt; without vertical keyword it will split horizontally.</p>
+</li>
+<li>
+<p>to list buffers =&gt; <code>:ls</code></p>
+</li>
+<li>
+<p>to switch buffer in current active window =&gt; <code>b! &lt;number&gt;</code></p>
+</li>
+<li>
+<p>run python script again with output in different buffer =&gt; <code>e! /tmp/output-2 | r! python3 #</code> =&gt; This makes <code>/tmp/outout-2</code> buffer to replace some.py window</p>
+</li>
+<li>
+<p>Bring back some.py in current window: <code>b! #</code></p>
+</li>
+<li>
+<p>To hide a buffer =&gt; <code>:hide</code></p>
+</li>
+<li>
+<p>To delete a buffer =&gt; <code>:ls</code> and then <code>:bd! &lt;number&gt;</code></p>
+</li>
+<li>
+<p>Go to other window =&gt; <code>CTRL-w w</code></p>
+</li>
+<li>
+<p>open <code>/tmp/output-2</code> buffer horizontally in this window =&gt; <code>:sb 3</code></p>
+</li>
+<li>
+<p>switch to <code>some.py</code> window and run python script again with output going to <code>/tmp/output-1</code> =&gt; <code>:e! /tmp/output-1 | r! python3 #</code> =&gt; This replaces current some.py window with lastest output</p>
+</li>
+<li>
+<p>bring back some.py =&gt; <code>b! #</code></p>
+</li>
+<li>
+<p>following can also be used and should be much simpler</p>
+</li>
+<li>
+<p><code>:vsplit  /tmp/some-new | r! python3 -m json.tool #</code> =&gt; opens <code>/tmp/some-new</code> in new vertical window. You can keep on repeating above command. and it will open a new window every time. You can close the previous window by switching to it using <code>CTRL-w w</code> and then <code>:hide</code></p>
+</li>
+<li>
+<p>you can list all buffers with <code>:ls</code></p>
+</li>
+<li>
+<p>you can open a buffer in current window using <code>:b! &lt;number&gt;</code></p>
+</li>
+<li>
+<p>you can split window on either right or left using <code>:set splitright!</code> or <code>:set splitright</code></p>
+</li>
+</ul>
+<h2 id="register-operations">Register operations:</h2>
+<ul>
+<li>in <code>NORMAL</code>-mode: <code>&quot;ayy</code> =&gt; copies current line in register <code>a</code></li>
+<li>in <code>NORMAL</code>-mode: <code>&quot;ap</code>  =&gt; paste the contents of register <code>a</code> below the current line</li>
+<li>in insert-mode: <code>CTRL-r a</code> =&gt; paste the contents of register in current position.</li>
+<li><code>&quot;</code> is the default register.</li>
+<li><code>:</code> is register which stores commands entered in ex-<code>COMMAND</code> mode.</li>
+<li>in <code>NORMAL</code>-mode: <code>@a</code> =&gt; will execute the contents of register.</li>
+<li>in <code>NORMAL</code>-mode: <code>@:</code> =&gt; will execute the contents of register <code>:</code>, hence commands entered in <code>COMMAND</code>-mode will be executed.(last ex-<code>COMMAND</code>)</li>
+</ul>
+<h2 id="repeat-register-operations">repeat register operations</h2>
+<ul>
+<li>start recording a macro in <code>NORMAL</code> mode.
+<ul>
+<li><code>qaq</code> =&gt; clears register <code>a</code></li>
+<li><code>qa</code>  =&gt; starts recording key-strokes in register <code>a</code></li>
+<li><code>d/:</code> =&gt; deletes till <code>:</code> found in line of text.</li>
+<li><code>q</code>   =&gt; stops recording.</li>
+</ul>
+</li>
+<li>go to ex-<code>COMMAND</code> mode:
+<ul>
+<li><code>:.,+5 normal @a</code> =&gt; delete text till <code>:</code> found in all lines starting from current and till next 5 lines.</li>
+</ul>
+</li>
+</ul>
+<h2 id="how-to-cut-the-content-in-json">How to cut the content in json:</h2>
+<p>Following is the json</p>
+<pre tabindex="0"><code>&quot;devDependencies&quot;: {
+    &quot;@types/diff&quot;: &quot;4.0.2&quot;,
+    &quot;@types/diff-match-patch&quot;: &quot;1.0.32&quot;,
+    &quot;@types/glob&quot;: &quot;7.1.3&quot;,
+    &quot;@types/lodash&quot;: &quot;4.14.157&quot;,
+    &quot;@types/mocha&quot;: &quot;8.0.0&quot;,
+    &quot;@types/node&quot;: &quot;12.12.31&quot;,
+    &quot;@types/sinon&quot;: &quot;9.0.4&quot;,
+    &quot;@types/vscode&quot;: &quot;1.37.0&quot;,
+    &quot;clean-webpack-plugin&quot;: &quot;3.0.0&quot;,
+}
+</code></pre><p>we want to cut the column before <code>:</code> and paste is somewhere else.</p>
+<ul>
+<li>
+<p>we will be using two registers here (namely <code>a</code> and <code>b</code>). One (<code>a</code>) will record the actions and other (<code>b</code>) will record the cut content.</p>
+</li>
+<li>
+<p><code>qaq</code> and <code>qbq</code> =&gt; clear the contents of register <code>a</code> and <code>b</code></p>
+</li>
+<li>
+<p>place the cursor on line 2.</p>
+</li>
+<li>
+<p><code>qa</code> =&gt; start recording the action.</p>
+</li>
+<li>
+<p>make movement adjustment first before cutting/yanking the content. i.e press <code>^</code> to bring cursor where the line starts.</p>
+</li>
+<li>
+<p>now press <code>&quot;B</code> to keep the record of cut contents. Please note that we are using <code>B</code> (capital B) here. Capital named register allows to append into existing register <code>b</code>. If we use <code>&quot;b</code>, then on next cut, contents of <code>b</code> will be lost. Please also note that contents will eventually go into <code>b</code> register if you use either <code>&quot;B</code> abd <code>&quot;b</code>. Using <code>B</code> just indicates that we do not want the contents in register <code>b</code> to be overwritten.</p>
+</li>
+<li>
+<p>now press <code>d/:&lt;ENTER&gt;</code> =&gt; This will delete the content till <code>:</code> found in the line of text. As we have specified <code>&quot;B</code> in previous step, these contents will go in <code>b</code> register and append mode.</p>
+</li>
+<li>
+<p>press <code>q</code> to stop recording actions in register <code>a</code></p>
+</li>
+<li>
+<p>go to ex-<code>COMMAND</code>-mode and run following</p>
+</li>
+<li>
+<p><code>:.+1,+5 normal @a</code> =&gt; This will apply the actions from current line and next 5 lines and append the deleted content in register <code>b</code>.</p>
+</li>
+<li>
+<p><code>:reg</code> =&gt; to check the content of all registers</p>
+</li>
+<li>
+<p>contents will now look like this now.</p>
+</li>
+</ul>
+<pre tabindex="0"><code>&quot;devDependencies&quot;: {
+    : &quot;4.0.2&quot;,
+    : &quot;1.0.32&quot;,
+    : &quot;7.1.3&quot;,
+    : &quot;4.14.157&quot;,
+    : &quot;8.0.0&quot;,
+    : &quot;12.12.31&quot;,
+    &quot;@types/sinon&quot;: &quot;9.0.4&quot;,
+    &quot;@types/vscode&quot;: &quot;1.37.0&quot;,
+    &quot;clean-webpack-plugin&quot;: &quot;3.0.0&quot;,
+}
+</code></pre><ul>
+<li>Now go to the line where you want to paste the cut content.</li>
+<li>press <code>&quot;bp</code> or <code>CTRL-r b</code>. I moved to the last line and now contents look like this.</li>
+</ul>
+<pre tabindex="0"><code>&quot;devDependencies&quot;: {
+    : &quot;4.0.2&quot;,
+    : &quot;1.0.32&quot;,
+    : &quot;7.1.3&quot;,
+    : &quot;4.14.157&quot;,
+    : &quot;8.0.0&quot;,
+    : &quot;12.12.31&quot;,
+    &quot;@types/sinon&quot;: &quot;9.0.4&quot;,
+    &quot;@types/vscode&quot;: &quot;1.37.0&quot;,
+    &quot;clean-webpack-plugin&quot;: &quot;3.0.0&quot;,
+}
+&quot;@types/diff&quot;&quot;@types/diff-match-patch&quot;&quot;@types/glob&quot;&quot;@types/lodash&quot;&quot;@types/mocha&quot;&quot;@types/node&quot;
+</code></pre><ul>
+<li>In order to put above one line content in different lines, run following command in ex-<code>COMMAND</code> mode. Make sure your cursor is on that line.</li>
+<li><code>:. ! perl -wpl -e 's/(&quot;.+?&quot;)/$1\n/g' </code></li>
+<li>or run this command =&gt; <code>:s/&quot;&quot;/&quot;&lt;CTRL-v&gt;&lt;CTRL-ENTER&gt;&quot;/g</code></li>
+<li>now contents will look like this.</li>
+</ul>
+<pre tabindex="0"><code>&quot;devDependencies&quot;: {
+    : &quot;4.0.2&quot;,
+    : &quot;1.0.32&quot;,
+    : &quot;7.1.3&quot;,
+    : &quot;4.14.157&quot;,
+    : &quot;8.0.0&quot;,
+    : &quot;12.12.31&quot;,
+    &quot;@types/sinon&quot;: &quot;9.0.4&quot;,
+    &quot;@types/vscode&quot;: &quot;1.37.0&quot;,
+    &quot;clean-webpack-plugin&quot;: &quot;3.0.0&quot;,
+}
+&quot;@types/diff&quot;
+&quot;@types/diff-match-patch&quot;
+&quot;@types/glob&quot;
+&quot;@types/lodash&quot;
+&quot;@types/mocha&quot;
+&quot;@types/node&quot;
+</code></pre><ul>
+<li>Now if you wish you can put back this block back to its original position.</li>
+<li><code>:set virtualedit=all</code></li>
+<li><code>CTRL-v </code> and select the whole block and press <code>y</code> to copy or <code>d</code> to delete. I pressed <code>y</code>.</li>
+<li>Place the cursor at line 2 before <code>:</code> and press <code>p</code>. Contents will look like this now.</li>
+</ul>
+<pre tabindex="0"><code>&quot;devDependencies&quot;: {
+    &quot;@types/diff&quot;            : &quot;4.0.2&quot;,
+    &quot;@types/diff-match-patch&quot;: &quot;1.0.32&quot;,
+    &quot;@types/glob&quot;            : &quot;7.1.3&quot;,
+    &quot;@types/lodash&quot;          : &quot;4.14.157&quot;,
+    &quot;@types/mocha&quot;           : &quot;8.0.0&quot;,
+    &quot;@types/node&quot;            : &quot;12.12.31&quot;,
+    &quot;@types/sinon&quot;: &quot;9.0.4&quot;,
+    &quot;@types/vscode&quot;: &quot;1.37.0&quot;,
+    &quot;clean-webpack-plugin&quot;: &quot;3.0.0&quot;,
+}
+&quot;@types/diff&quot;
+&quot;@types/diff-match-patch&quot;
+&quot;@types/glob&quot;
+&quot;@types/lodash&quot;
+&quot;@types/mocha&quot;
+&quot;@types/node&quot;
+</code></pre><h2 id="fzf-plugin-flow">FZF plugin flow</h2>
+<ul>
+<li>To List all files in current directory</li>
+<li><code>:Files</code>  <code>:Files!</code> (Full screen, use shit-arrows to scroll in preview windows)</li>
+<li>To list git modified files</li>
+<li><code>:GFiles?</code> <code>:GFiles!?</code> (Full screen mode.)</li>
+<li>Git status</li>
+<li><code>:Gstatus</code></li>
+</ul>
+<h2 id="search-and-replace-interactively-in-multiple-files-using-quickfix">Search and replace interactively in multiple files using quickfix.</h2>
+<ul>
+<li>make sure <code>fzf.vim</code> and <code>ripgrep</code> is installed.</li>
+<li>Search for pattern and select all matched file in <code>quickfix</code> list.</li>
+<li><code>:Rg pattern</code>  =&gt; now select all files and press <code>&lt;ENTER&gt;.</code> A <code>quickfix</code> window will open listing all the files</li>
+<li>now run following command to replace the pattern</li>
+<li><code>:cfdo %s/pattern/NEW_PATTERN/gc | update</code></li>
+<li>you can view <code>quickfix</code> list manually as well via <code>clist</code> or <code>copen</code> command.</li>
+<li>use <code>cnext</code> =&gt; to move to next match in quickfix window</li>
+<li>in <code>NORMAL</code> mode use <code>@:</code> to repeat last executing ex-<code>COMMAND</code>, ie. in this case :cnext</li>
+<li>After <code>@:</code>, use <code>@@</code> to keep repeating ex-<code>COMMAND</code> in <code>NORMAL</code> mode.</li>
+<li>If you want to remove entries from <code>quickfix</code> window then swith to quickfix window by pressing <code>CTRL-w w</code> and then <code>:set modifiable</code>. Now you can run <code>NORMAL</code> vim commands here, like <code>dd</code> or <code>:g/&lt;pattern&gt;/d</code></li>
+</ul>
+<h2 id="search-and-replace-interactively-in-multiple-files-using-standard-unix-tools-and-quickfix">Search and replace interactively in multiple files using standard unix tools and quickfix</h2>
+<ul>
+<li><code>vim -q &lt;(egrep -n -R yummy *) -c ':copen'</code> =&gt; This command will search for pattern <code>yummy</code> in all the files recursively in current directory and populate the <code>quickfix</code> list.</li>
+<li>now run following command to replace the pattern</li>
+<li><code>:cfdo %s/pattern/NEW_PATTERN/gc | update</code></li>
+</ul>
+<h2 id="search-and-replace-interactively-in-multiple-files-by-populating-quickfix-list-directly">Search and replace interactively in multiple files by populating quickfix list directly</h2>
+<ul>
+<li><code>vim -c ':set errorformat+=%f | :cexpr system(&quot;ls&quot;) | copen'</code> =&gt; This populated <code>quickfix</code> list with the filenames in current directory.</li>
+<li>Note: We are not using <code>vim -q</code> to populate <code>quickfix</code> and also we changed the <code>errorformat</code> so that plain file list can be navigated in <code>quickfix</code> list.</li>
+<li>now run following command to replace the pattern</li>
+<li><code>:cfdo %s/pattern/NEW_PATTERN/gc | update</code></li>
+</ul>
+<h2 id="search-and-replace-interactively-in-multiple-files-by-using-args">Search and replace interactively in multiple files by using args</h2>
+<ul>
+<li><code>vim * -c ':argdo %s/YAHOO/yummy/gc | update'</code> =&gt; This command will open all files in current directory and tries to replace text YAHOO with yummy interactively.</li>
+</ul>
+<h2 id="replace-a-bunch-of-text-with-a-copied-text">replace a bunch of text with a copied text.</h2>
+<ul>
+<li>Copy some text in vim first either using <code>VISUAL</code> mode or via <code>line1,line2y</code></li>
+<li><code>:75,79d | .normal k&quot;0p</code> =&gt; This command will delete the contents between 75 and 79 lines and insert the text copied in previous step. Content copied in previous step may be bigger and larger than the deleted content and it fits nicely</li>
+</ul>
+<h2 id="save-a-vim-session">Save a VIM session</h2>
+<ul>
+<li><code>:mksession saved_session.vim</code></li>
+<li><code>vim -S header-files-work.vim</code> to restore the session. or use <code>:source saved_session.vim</code></li>
+</ul>
+<h2 id="moving-between-vim-tabs">Moving between VIM tabs</h2>
+<ul>
+<li><code>gt</code></li>
+<li><code>g&lt;TAB&gt;</code></li>
+</ul>
+<h2 id="edit-a-pattern-in-a-text-file---example-1">Edit a pattern in a text file - example-1</h2>
+<p>Convert following line</p>
+<pre tabindex="0"><code>           [&quot;from&quot;, &quot;person&quot;, &quot;hobbies&quot;, &quot;2&quot;, &quot;0&quot;, &quot;outdoor&quot;]
+</code></pre><p>into</p>
+<pre tabindex="0"><code>inputPath = &quot;/from/person/hobbies/2/0/outdoor&quot;
+</code></pre><ul>
+<li><code>:s/&quot;//g | s/, /\//g | s/\[/&quot;\//g | s/\]/&quot;/g | .normal IinputPath = CTRLvCTRL[==CTRLvCTRL[</code>
+<strong>Note</strong>: <code>CTRLvCTRL[</code> =&gt; places <!-- raw HTML omitted --> and  == is for indentation</li>
+</ul>
+<h2 id="edit-a-pattern-in-a-text-file---example-2">Edit a pattern in a text file - example-2</h2>
+<p>Convert following line</p>
+<pre tabindex="0"><code>            , &quot;Travel&quot;) 
+</code></pre><p>into</p>
+<pre tabindex="0"><code>inputPathValue = &quot;Travel&quot;
+</code></pre><ul>
+<li><code>:s/, // | s /)//g | normal IinputPathValue = ^[&lt;&lt;....]</code></li>
+</ul>
+<p><strong>Note:</strong> <code>&lt;&lt;</code> is for left indentation and <code>...</code> are repeating the last command</p>
+<h2 id="edit-a-pattern-in-a-text-file---example-3">Edit a pattern in a text file - example-3</h2>
+<p>Convert following line</p>
+<pre tabindex="0"><code>             [&quot;from&quot;, &quot;mars&quot;, &quot;plan&quot;, &quot;locality&quot;], &quot;City&quot;)
+</code></pre><p>into</p>
+<pre tabindex="0"><code>  inputPath = &quot;/from/mars/plan/locality&quot;
+ 	inputPathValue = &quot;City&quot;
+</code></pre><ul>
+<li><code>.normal f]a^M^[k:s/&quot;//g | s/, /\//g | s/\[/&quot;\//g | s/\]/&quot;/g | .normal IinputPath = ^[==^[j:s/, // | s /)//g | normal IinputPathValue = ^[&lt;&lt;....^[ </code></li>
+</ul>
+<h2 id="using-vim-as-less">Using VIM as less</h2>
+<ul>
+<li>cat <code>&lt;somefile&gt;</code> | vim -R -</li>
+</ul>
+<h2 id="minimal-vim-configuration">Minimal vim configuration</h2>
+<pre tabindex="0"><code>set nocompatible
+set sw=2
+set ts=2
+set softtabstop=2
+set hlsearch
+set incsearch
+set autoindent
+set expandtab
+set backspace=indent,eol,start
+syntax on
+filetype on
+filetype plugin indent on
+</code></pre><h2 id="invoke-vi-editor-in-bash-command-line-editing">invoke vi editor in bash command-line editing</h2>
+<ul>
+<li><code>export VISUAL=/usr/bin/vim</code> or <code>export EDITOR=vim</code></li>
+<li>In <code>emacs</code> editing mode in zsh/bash press <code>CTRL-x CTRL-e</code> command line to invoke temp vim editor.</li>
+<li>In <code>vi</code> editing mode in zsh/bash press v (two times) and the line will be opened in a temp file</li>
+<li>In <code>vi</code> editing mode in order to delete a word backword use <code>daW</code>and then use <code>.</code> command to repeat the deletion</li>
+</ul>
+<h2 id="special-keys-can-be-used-in-vimrc-in-command-mode-in-following-format">special keys can be used in vimrc in <code>COMMAND</code> mode in following format</h2>
+<ul>
+<li>
+<p><code>&lt;space&gt;</code></p>
+</li>
+<li>
+<p><code>&lt;c-d&gt;</code></p>
+</li>
+<li>
+<p><code>&lt;esc&gt;</code></p>
+</li>
+<li>
+<p><code>&lt;leader&gt;</code></p>
+</li>
+<li>
+<p><code>&lt;localleader&gt;</code></p>
+</li>
+<li>
+<p><code>&lt;cr&gt;</code></p>
+</li>
+<li>
+<p><code>&lt;nop&gt;</code></p>
+</li>
+<li>
+<p><code>&lt;buffer&gt;</code></p>
+</li>
+<li>
+<p><code>&lt;left&gt;</code></p>
+</li>
+<li>
+<p><code>&lt;cword&gt;</code> =&gt; the word under the cursor</p>
+</li>
+<li>
+<p><code>&lt;cWORD&gt;</code></p>
+</li>
+<li>
+<p><code>normal!</code> doesn&rsquo;t recognize &ldquo;special characters&rdquo; like <code>&lt;cr&gt;</code>. There are a number of ways around this, but the easiest to use and read is execute</p>
+</li>
+<li>
+<p>variables starting with an <code>@</code> are registers. <code>@@</code> is the &ldquo;unnamed&rdquo; register <code>:</code> the one that Vim places text into when you yank or delete without specify a particular register.</p>
+</li>
+</ul>
+<h2 id="create-vertical-line-in-a-block-of-text-using-macro">create vertical line in a block of text using macro</h2>
+<p>We will place commented vertical linein the following block of rust code.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">references_example_1</span>() {
+    println!(<span style="color:#e6db74">&#34;======== references_example_1 ========&#34;</span>);
+    <span style="color:#66d9ef">let</span> a <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;yummy;
+</span><span style="color:#e6db74">    let mut b = &amp;a;                                                                                                                                                                                                 
+</span><span style="color:#e6db74">    println!(&#34;</span>a <span style="color:#f92672">=</span> {}, b <span style="color:#f92672">=</span> {}<span style="color:#e6db74">&#34;, a, b);
+</span><span style="color:#e6db74">    // a = &#34;</span>hotmail<span style="color:#e6db74">&#34;;
+</span><span style="color:#e6db74">    b = &amp;&#34;</span>oracle<span style="color:#e6db74">&#34;;
+</span><span style="color:#e6db74">    println!(&#34;</span>a <span style="color:#f92672">=</span> {}, b <span style="color:#f92672">=</span> {}<span style="color:#960050;background-color:#1e0010">&#34;</span>, a, b);
+
+}
+</code></pre></div><ul>
+<li>place the cursor on line 3 (this where we want to start commenting)</li>
+<li>We shall store the action in a register named <code>z</code>.</li>
+<li>Go in <code>NORMAL</code> mode.</li>
+<li>press <code>qzq</code> to empty the register <code>z</code>.</li>
+<li>press <code>qz</code> to start recording in register <code>z</code>.</li>
+<li>Now press the following sequence of keys to place the first vertical line comment.</li>
+<li><code>$50a&lt;SPACE&gt;&lt;ESC&gt;45|d$a// |&lt;ESC&gt;j</code> =&gt; this will place // | at the current line at coloumn number 45 and move the cursor to next line.</li>
+<li>50 is the <code>width of the max spanned row</code> + 2 in the paragraph.</li>
+<li>press <code>q</code> to stop recording.</li>
+<li>now press <code>@z</code> to place <code>// |</code> in current line. It will move the cursor to next line.</li>
+<li>now keep on pressing <code>@@</code> to keep entering <code>// |</code> in subsequent lines.</li>
+<li>final text will look like below.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">references_example_1</span>() {
+    println!(<span style="color:#e6db74">&#34;======== references_example_1 ========&#34;</span>);
+    <span style="color:#66d9ef">let</span> a <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;yummy;                         // |
+</span><span style="color:#e6db74">    let mut b = &amp;a;                         // |
+</span><span style="color:#e6db74">                                            // |
+</span><span style="color:#e6db74">    println!(&#34;</span>a <span style="color:#f92672">=</span> {}, b <span style="color:#f92672">=</span> {}<span style="color:#e6db74">&#34;, a, b);       // |
+</span><span style="color:#e6db74">    // a = &#34;</span>hotmail<span style="color:#e6db74">&#34;;                       // |
+</span><span style="color:#e6db74">    b = &amp;&#34;</span>oracle<span style="color:#e6db74">&#34;;                          // |
+</span><span style="color:#e6db74">    println!(&#34;</span>a <span style="color:#f92672">=</span> {}, b <span style="color:#f92672">=</span> {}<span style="color:#960050;background-color:#1e0010">&#34;</span>, a, b);       <span style="color:#75715e">// |
+</span><span style="color:#75715e"></span>
+}
+</code></pre></div><ul>
+<li>Explanation of <code>$50a&lt;SPACE&gt;&lt;ESC&gt;45|d$a// |&lt;ESC&gt;j</code>
+<ul>
+<li><code>$</code> =&gt; moves the end of current line.</li>
+<li><code>50a&lt;SPACE&gt;&lt;ESC&gt;</code> =&gt; inserts 50 spaces from the end of current line.</li>
+<li><code>45|</code> =&gt; moves the cursor to column 45. Note 45 is counted right from the left edge of the screen not from the end of line.</li>
+<li><code>d$</code> =&gt; from 45 column onwards delete any extra spaces introduced by <code>50a&lt;SPACE&gt;&lt;ESC&gt;</code> command.</li>
+<li><code>a</code> =&gt; go in insert mode and start appending</li>
+<li><code>// |&lt;ESC&gt;</code> =&gt; the actual text to be inserted at column 45.</li>
+<li><code>j</code> =&gt; move the cursor to the next line.</li>
+</ul>
+</li>
+</ul>
+<h3 id="edit-the-macro">Edit the macro</h3>
+<ul>
+<li>If we want to the place the <code>// |</code> at line <code>40</code> we can edit the macro with following steps.</li>
+<li>In the above step, we had created the macro in <code>z</code> register.</li>
+<li>Somewhere in empty place in vim, run the following command in <code>NORMAL</code> mode.</li>
+<li><code>&quot;zp</code> =&gt; paste the contents of <code>z</code> register in current cursor position. It will look like this =&gt; <code>$50a ^[&lt;80&gt;&lt;fd&gt;a45|d$a// |^[j</code></li>
+<li>Edit the <code>45</code> number to your desired number.</li>
+<li>press <code>v</code> to go in <code>VISUAL</code> mode and keep pressing <code>l</code> till the end (upto <code>j</code>).</li>
+<li>press <code>&quot;zy</code> =&gt; to copy the highlighted text in <code>z</code> register.</li>
+<li>Now you can use <code>@z</code> to insert <code>// |</code> at column <code>45</code> in the lines.</li>
+<li>you can delete the line where you pasted the content from macro.</li>
+</ul>
+<h3 id="place-another-vertical-line-on-the-left-of-existing-line">Place another vertical line on the left of existing line.</h3>
+<ul>
+<li>Above we inserted <code>// |</code> at column <code>45</code>. Now we want to insert <code>|| /</code> at <code>39</code> at the left this vertical wall</li>
+<li>We will be recording sequence in <code>q</code> macro.</li>
+<li>press <code>qqq</code> to empty the <code>q</code> register.</li>
+<li>press <code>qq</code> again to start recording in <code>q</code> register.</li>
+<li>Now go to line <code>3</code> again and press following key sequences.</li>
+<li><code>39|R// |&lt;ESC&gt;j</code> =&gt; this will place <code>// |</code> at the cloumn <code>39</code> and moves cursor to next line.</li>
+<li>press <code>q</code> to stop recording.</li>
+<li>Now press <code>@q</code> to insert <code>// |</code> in current line and move the cursor to next (automatically).</li>
+<li>Now keep on pressing <code>@@</code> to keep on inserting <code>// |</code> in subsequent lines.</li>
+<li>final result will look like below</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">references_example_1</span>() {
+    println!(<span style="color:#e6db74">&#34;======== references_example_1 ========&#34;</span>);
+    <span style="color:#66d9ef">let</span> a <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;yummy;                   // |  // |
+</span><span style="color:#e6db74">    let mut b = &amp;a;                   // |  // |
+</span><span style="color:#e6db74">                                      // |  // |
+</span><span style="color:#e6db74">    println!(&#34;</span>a <span style="color:#f92672">=</span> {}, b <span style="color:#f92672">=</span> {}<span style="color:#e6db74">&#34;, a, b); // |  // |
+</span><span style="color:#e6db74">    // a = &#34;</span>hotmail<span style="color:#e6db74">&#34;;                 // |  // |
+</span><span style="color:#e6db74">    b = &amp;&#34;</span>oracle<span style="color:#e6db74">&#34;;                    // |  // |
+</span><span style="color:#e6db74">    println!(&#34;</span>a <span style="color:#f92672">=</span> {}, b <span style="color:#f92672">=</span> {}<span style="color:#960050;background-color:#1e0010">&#34;</span>, a, b); <span style="color:#75715e">// |  // |
+</span><span style="color:#75715e"></span>
+}
+
+</code></pre></div><h2 id="more-vertical-lines-using-ex-commands-on-right-side">More vertical lines using ex-<code>COMMAND</code>s on right side</h2>
+<ul>
+<li>
+<p>We want to create vertical lines of different texts</p>
+</li>
+<li>
+<p><code>:execute &quot;normal! $40a \&lt;ESC&gt;39|d$a//\&lt;ESC&gt;20a \&lt;ESC&gt;j&quot;</code> =&gt; inserts <code>//</code> at 39 coloumn and inserts 20 blank spaces after <code>//</code> as well. Inserting extra blank space is required in order to insert text on right side.</p>
+</li>
+<li>
+<p>Now in <code>NORMAL</code> mode you can type @@ to repeat above command, and it will keep on inserting <code>//</code> in subsequent lines. However next ex-<code>COMMAND</code> will overwrite <code>@</code> register.</p>
+</li>
+<li>
+<p>Second option: is to take above ex-<code>COMMAND</code> in register and execute register in <code>NORMAL</code> mode. We shall take this ex-<code>COMMAND</code> in <code>r</code> register.</p>
+<ul>
+<li>write above ex-<code>COMMAND</code> like this =&gt; <code>:execute &quot;normal! $40a \&lt;ESC&gt;39|d$a//\&lt;ESC&gt;20a \&lt;ESC&gt;j&quot;&lt;ctl+v&gt;&lt;CTRL-ENTER&gt;</code>. <code>CTRL-v</code> and <code>CTRL-ENTER</code> are literal key press. This will look like below.</li>
+<li><code>:execute &quot;normal! $40a \&lt;ESC&gt;39|d$a//\&lt;ESC&gt;20a \&lt;ESC&gt;j&quot;^M</code></li>
+<li>In <code>NORMAL</code> mode, press <code>v</code> and select the above ex-<code>COMMAND</code> text (using l repeatedly) till <code>^</code> point only.</li>
+<li>Now press <code>&quot;ry</code> to copy this text in <code>r</code> register.</li>
+<li>Now go to line where you want to insert <code>//</code> and press <code>@r</code> (in <code>NORMAL</code>) mode.</li>
+<li>Now keep on pressing <code>@@</code> to keep on inserting <code>// |</code> in subsequent lines.</li>
+</ul>
+</li>
+<li>
+<p>Third option: is to take above ex-<code>COMMAND</code> in register and execute register in <code>COMMAND</code> mode. We shall take this ex-<code>COMMAND</code> in <code>r</code> register.</p>
+<ul>
+<li>write above ex-<code>COMMAND</code> like this =&gt; <code>:execute &quot;normal! $40a \&lt;ESC&gt;39|d$a//\&lt;ESC&gt;20a \&lt;ESC&gt;j&quot;</code></li>
+<li>In <code>NORMAL</code> mode, press <code>v</code> and select the above ex-<code>COMMAND</code> text (using l repeatedly) till &quot; point only.</li>
+<li>Now press <code>&quot;ry</code> to copy this text in <code>r</code> register.</li>
+<li>Now go to line where you want to insert <code>//</code> and go to <code>COMMAND</code> mode and press <code>:@r</code> and press <code>ENTER</code> key in the end.</li>
+<li>Go to <code>COMMAND</code> mode and press <code>:@:</code> to repeat the last ex-<code>COMMAND</code>.</li>
+<li>Keep on repeating <code>@@</code> in <code>NORMAL</code> mode to keep on inserting <code>// |</code> in subsequent lines.</li>
+</ul>
+</li>
+<li>
+<p>We will be storing following 4 command in their own respective registers.</p>
+</li>
+<li>
+<p><code>:execute &quot;normal! $40a \&lt;ESC&gt;39|d$a//\&lt;ESC&gt;20a \&lt;ESC&gt;j&quot;^M</code>  =&gt; store it in register <code>r</code>. <code>^M</code> is actually <code>&lt;CTRL-v&gt;&lt;CTRL-ENTER&gt;</code> key sequence</p>
+</li>
+<li>
+<p><code>:execute &quot;normal! 43|\&lt;ESC&gt;R|a\&lt;ESC&gt;j&quot;^M</code> =&gt; store it in register <code>a</code>. <code>^M</code> is actually <code>&lt;CTRL-v&gt;&lt;CTRL-ENTER&gt;</code> key sequence</p>
+</li>
+<li>
+<p><code>:execute &quot;normal! 47|\&lt;ESC&gt;R|b\&lt;ESC&gt;j&quot;^M</code> =&gt; store it in register <code>b</code>. <code>^M</code> is actually <code>&lt;CTRL-v&gt;&lt;CTRL-ENTER&gt;</code> key sequence</p>
+</li>
+<li>
+<p><code>:execute &quot;normal! 51|\&lt;ESC&gt;R|c\&lt;ESC&gt;j&quot;^M</code> =&gt; store it in register <code>c</code>. <code>^M</code> is actually <code>&lt;CTRL-v&gt;&lt;CTRL-ENTER&gt;</code> key sequence</p>
+</li>
+<li>
+<p>We have following text</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">references_example_2</span>() {
+    println!(<span style="color:#e6db74">&#34;======== references_example_2 ========&#34;</span>);
+    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> a <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;yummy&#34;</span>;
+    <span style="color:#66d9ef">let</span> b <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span><span style="color:#66d9ef">mut</span> a;
+    println!(<span style="color:#e6db74">&#34;a = {}, b = {}&#34;</span>, a, b);
+    println!(<span style="color:#e6db74">&#34;b = {}&#34;</span>, b);
+    <span style="color:#f92672">*</span>b <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;oracle&#34;</span>;
+    println!(<span style="color:#e6db74">&#34;b = {}&#34;</span>, b);
+
+    <span style="color:#66d9ef">let</span> c <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>a;
+
+    println!(<span style="color:#e6db74">&#34;a = {}&#34;</span>, a);
+
+    println!(<span style="color:#e6db74">&#34;b = {}&#34;</span>, b);
+
+
+    println!(<span style="color:#e6db74">&#34;c = {}&#34;</span>, c);
+
+}
+</code></pre></div><p>Above text will be converted into</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">references_example_2</span>() {
+    println!(<span style="color:#e6db74">&#34;======== references_example_2 ========&#34;</span>);
+    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> a <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;yummy&#34;</span>;
+    <span style="color:#66d9ef">let</span> b <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span><span style="color:#66d9ef">mut</span> a;                   <span style="color:#75715e">//      |b
+</span><span style="color:#75715e"></span>                                      <span style="color:#75715e">//      |b
+</span><span style="color:#75715e"></span>    println!(<span style="color:#e6db74">&#34;a = {}, b = {}&#34;</span>, a, b); <span style="color:#75715e">//  |a  |b
+</span><span style="color:#75715e"></span>                                      <span style="color:#75715e">//  |a  |b
+</span><span style="color:#75715e"></span>    println!(<span style="color:#e6db74">&#34;b = {}&#34;</span>, b);            <span style="color:#75715e">//  |a  |b
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">*</span>b <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;oracle&#34;</span>;                    <span style="color:#75715e">//  |a  |b
+</span><span style="color:#75715e"></span>    println!(<span style="color:#e6db74">&#34;b = {}&#34;</span>, b);            <span style="color:#75715e">//  |a  |b
+</span><span style="color:#75715e"></span>                                      <span style="color:#75715e">//  |a  |b
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> c <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>a;                       <span style="color:#75715e">//  |a  |b  |c
+</span><span style="color:#75715e"></span>                                      <span style="color:#75715e">//  |a  |b  |c
+</span><span style="color:#75715e"></span>    println!(<span style="color:#e6db74">&#34;a = {}&#34;</span>, a);            <span style="color:#75715e">//  |a  |b  |c
+</span><span style="color:#75715e"></span>                                      <span style="color:#75715e">//      |b  |c
+</span><span style="color:#75715e"></span>    println!(<span style="color:#e6db74">&#34;b = {}&#34;</span>, b);            <span style="color:#75715e">//      |b  |c
+</span><span style="color:#75715e"></span>                                      <span style="color:#75715e">//          |c
+</span><span style="color:#75715e"></span>                                      <span style="color:#75715e">//          |c
+</span><span style="color:#75715e"></span>    println!(<span style="color:#e6db74">&#34;c = {}&#34;</span>, c);            <span style="color:#75715e">//          |c
+</span><span style="color:#75715e"></span>
+}
+</code></pre></div><h2 id="draw-table-in-vim">Draw table in vim</h2>
+<ul>
+<li>In INSERT mode type <code>|</code></li>
+<li>go in  <code>NORMAL</code> mode and type <code>yy20p</code> =&gt; this draws the vertical line.</li>
+<li>Keep in <code>NORMAL</code> mode and type <code>gg</code> =&gt; brings you to the top of file</li>
+<li>press <code>CTRL-v</code> to go in BLOCK <code>VISUAL</code> mode</li>
+<li>press <code>G</code> (shift-g) to select the vertical line till the end.</li>
+<li>now copy this vertical line in register a by pressing <code>&quot;ay</code> =&gt; this also moves the cursor to the top of file.</li>
+<li>Now create a macro in <code>q</code> register. In <code>NORMAL</code> mode, press <code>qqq</code> to first clear the <code>q</code> register. then press <code>qq</code> again to start recording.</li>
+<li>Now press <code>15a&lt;SPACE&gt;&lt;ESC&gt;</code> to insert 15 spaces in the first line. Note: you have to literally press <code>&lt;SPACE&gt;</code> and <code>&lt;ESC&gt;</code> key sequences here</li>
+<li>Now press <code>&quot;ap</code> =&gt; to paste the vertical line at 17th coloumn.</li>
+<li>Now press <code>q</code> to stop recording.</li>
+<li>Now press <code>@q</code> to insert vertical 33rd coloumn</li>
+<li>Now press <code>@@</code> to insert vertical 49th coloumn</li>
+<li>Now press <code>@@</code> to insert vertical 65th coloumn</li>
+<li>Now press <code>@@</code> to insert vertical 81st coloumn and so on&hellip;
+result will be like this:</li>
+</ul>
+<pre tabindex="0"><code>|               |               |               |               |               |
+|               |               |               |               |               |
+|               |               |               |               |               |
+|               |               |               |               |               |
+|               |               |               |               |               |
+|               |               |               |               |               |
+|               |               |               |               |               |
+|               |               |               |               |               |
+|               |               |               |               |               |
+|               |               |               |               |               |
+|               |               |               |               |               |
+|               |               |               |               |               |
+|               |               |               |               |               |
+|               |               |               |               |               |
+|               |               |               |               |               |
+|               |               |               |               |               |
+|               |               |               |               |               |
+|               |               |               |               |               |
+|               |               |               |               |               |
+|               |               |               |               |               |
+|               |               |               |               |               |
+</code></pre>
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/vim/" rel="tag">vim</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/fzf/" rel="tag">fzf</a></li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<div class="authorbox__header">
+		<span class="authorbox__name"></span>
+	</div>
+</div>
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/posts/apache-reverseproxyssl-sslclientauth/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Apache ReverseProxySSL SSLClientAuth</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/posts/vim-vagrant-plugin/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">Vim Vagrant Plugin using Vundle</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 SpareSlant.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
+</html>

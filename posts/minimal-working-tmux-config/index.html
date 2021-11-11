@@ -62,7 +62,7 @@
 <div class="content post__content clearfix">
 			<h2 id="minimal-working-tmux-config">Minimal working tmux config</h2>
 <p>Populate <code>$HOME/.tmux.conf</code> with following contents</p>
-<pre><code>set -g default-terminal &quot;screen-256color&quot;
+<pre tabindex="0"><code>set -g default-terminal &quot;screen-256color&quot;
 set -g history-limit 99999
 # setw -g status-utf8 on
 
@@ -119,7 +119,7 @@ set-option -g mouse on
 <strong>Note</strong> To change the title of window run this command <code>ctrl-b :rename-window MyTitle2</code> or <code>ctrl-b ,</code> and then type MyTitle2.
 <strong>Note</strong> If pane title changes after pressing enter or after doing ssh, that means shell prompt is sending escape sequence to set the terminal title. In order to disable this behaviour, set the simple terminal promt. e.g. <code>PS1=&quot;\u@\h:\w\n$ &quot;</code> and then set pane title. Window title once set do not change.</p>
 <h3 id="another-minimal-config">Another minimal config</h3>
-<pre><code>set-option -g mouse on
+<pre tabindex="0"><code>set-option -g mouse on
 set-option -g mode-keys vi
 set-option -g status-style bg=default
 </code></pre>

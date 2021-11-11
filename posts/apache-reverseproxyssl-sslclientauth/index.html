@@ -266,7 +266,7 @@ Listen <span style="color:#ae81ff">7771</span>
 </code></pre></div><p><strong>Note:</strong> You may need to tweak selinux policy for apache to run at 7771 port. I had disabled selinux for this excersize.</p>
 <h3 id="make-client-apache-and-gunicorn-addresses-resolvable">Make client, apache and gunicorn addresses resolvable</h3>
 <p>As <code>root</code> user enter the following line in <code>/etc/resolv.conf</code> file above all <code>nameserver</code> lines.</p>
-<pre><code>nameserver 127.0.0.1
+<pre tabindex="0"><code>nameserver 127.0.0.1
 </code></pre><p>Run a temp DNS server in foreground.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo dnsmasq --no-daemon <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>--listen-address<span style="color:#f92672">=</span>127.0.0.1 <span style="color:#ae81ff">\
@@ -377,7 +377,7 @@ curl: <span style="color:#f92672">(</span>56<span style="color:#f92672">)</span>
 		<a class="post-nav__link" href="/posts/deploy-hugosite-to-github/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Deploy HugoSite to Github</p></a>
 	</div>
 	<div class="post-nav__item post-nav__item--next">
-		<a class="post-nav__link" href="/posts/vim-vagrant-plugin/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">Vim Vagrant Plugin using Vundle</p></a>
+		<a class="post-nav__link" href="/posts/vim-tips-tricks/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">Vim Tips and Tricks</p></a>
 	</div>
 </nav>
 

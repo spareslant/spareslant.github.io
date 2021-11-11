@@ -117,7 +117,7 @@ $ echo <span style="color:#e6db74">&#34;10&#34;</span> &gt; caDatabase/serial
 <li><code>opensslConf/server_san_names.cnf</code></li>
 <li><code>opensslConf/client_san_names.cnf</code></li>
 </ul>
-<pre><code>$ cat opensslConf/CA_openssl.cnf 
+<pre tabindex="0"><code>$ cat opensslConf/CA_openssl.cnf 
 HOME			= .
 oid_section		= new_oids
 
@@ -212,7 +212,7 @@ subjectKeyIdentifier=hash
 authorityKeyIdentifier=keyid:always,issuer
 basicConstraints = critical,CA:true
 nsCertType = sslCA, emailCA
-</code></pre><pre><code>$ cat opensslConf/csr_openssl.cnf 
+</code></pre><pre tabindex="0"><code>$ cat opensslConf/csr_openssl.cnf 
 [ req ]
 default_bits		= 2048
 default_md		= sha256
@@ -261,10 +261,10 @@ nsComment			= &quot;OpenSSL Generated Certificate&quot;
 subjectKeyIdentifier=hash
 extendedKeyUsage = clientAuth
 subjectAltName = @san_names
-</code></pre><pre><code>$ cat opensslConf/server_san_names.cnf 
+</code></pre><pre tabindex="0"><code>$ cat opensslConf/server_san_names.cnf 
 [ san_names ]
 DNS.1 = myhost.full.domain.name
-</code></pre><pre><code>$ cat opensslConf/client_san_names.cnf 
+</code></pre><pre tabindex="0"><code>$ cat opensslConf/client_san_names.cnf 
 [ san_names ]
 DNS.1 = client.full.domain.name
 </code></pre><h2 id="create-self-signed-ca-certificate">Create self signed CA certificate.</h2>
@@ -288,7 +288,7 @@ Verifying - Enter PEM pass phrase:
 myCA.crt
 myCAkey.pem
 </code></pre></div><h2 id="check-ca-certificate">Check CA certificate</h2>
-<pre><code>$ openssl x509 -in caCert/myCA.crt -text -noout
+<pre tabindex="0"><code>$ openssl x509 -in caCert/myCA.crt -text -noout
 
 Certificate:
     Data:
@@ -351,7 +351,7 @@ Certificate:
          26:20:ca:37:84:04:41:61:22:f3:87:fc:76:3c:72:ef:f7:d6:
          f7:e6:61:b7
 </code></pre><h2 id="verify-ca-certificate">Verify CA certificate</h2>
-<pre><code>$ openssl verify -verbose  caCert/myCA.crt
+<pre tabindex="0"><code>$ openssl verify -verbose  caCert/myCA.crt
 
 emailAddress = user@junkemail.com, C = GB, ST = London, L = City of London, O = My Organization, OU = Engg, CN = root CA
 error 18 at 0 depth lookup: self signed certificate
@@ -362,7 +362,7 @@ error caCert/myCA.crt: verification failed
 
 caCert/myCA.crt: OK
 </code></pre></div><h2 id="create-a-csr-request-for-server">Create a CSR request for server.</h2>
-<pre><code>$ openssl req \
+<pre tabindex="0"><code>$ openssl req \
 -config &lt;(cat opensslConf/csr_openssl.cnf&lt;/span&gt; opensslConf/&lt;span class=&quot;hlb&quot;&gt;server_san_names.cnf) \
 -new \
 -newkey rsa:2048 \
@@ -382,7 +382,7 @@ writing new private key to 'privateKeys/serverKey.pem'
 </code></pre><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ls -1 CSRs/
 server.csr
 </code></pre></div><h2 id="create-a-csr-request-for-client">Create a CSR request for client.</h2>
-<pre><code>$ openssl req \
+<pre tabindex="0"><code>$ openssl req \
 -config &lt;(cat opensslConf/csr_openssl.cnf&lt;/span&gt; opensslConf/&lt;span class=&quot;hlb&quot;&gt;client_san_names.cnf) \
 -new \
 -newkey rsa:2048 \
@@ -409,7 +409,7 @@ total <span style="color:#ae81ff">8</span>
 -rw-rw-r--. <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1350</span> Aug  <span style="color:#ae81ff">3</span> 13:03 myClient.csr
 -rw-rw-r--. <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1358</span> Aug  <span style="color:#ae81ff">3</span> 12:17 server.csr
 </code></pre></div><h3 id="check-server-csr-request">Check Server CSR request</h3>
-<pre><code>$ openssl req -in CSRs/server.csr -text -noout
+<pre tabindex="0"><code>$ openssl req -in CSRs/server.csr -text -noout
 
 Certificate Request:
     Data:
@@ -471,7 +471,7 @@ Certificate Request:
          63:f8:b5:2a:1e:fc:1d:b5:1f:01:2c:93:72:48:78:b8:ec:2c:
          ca:44:5a:e8
 </code></pre><h3 id="check-client-csr-request">Check client CSR request</h3>
-<pre><code>$ openssl req -in CSRs/myClient.csr -text -noout
+<pre tabindex="0"><code>$ openssl req -in CSRs/myClient.csr -text -noout
 
 Certificate Request:
     Data:
@@ -533,7 +533,7 @@ Certificate Request:
          08:01:ec:46:2b:0c:76:65:61:c9:4e:cb:17:60:bf:72:55:6d:
          44:73:25:66
 </code></pre><h2 id="sign-server-csr-and-generate-server-certificate">Sign Server CSR and generate server certificate</h2>
-<pre><code>$ openssl ca \
+<pre tabindex="0"><code>$ openssl ca \
 -config opensslConf/CA_openssl.cnf \
 -policy policy_anything \
 -cert caCert/myCA.crt \
@@ -585,7 +585,7 @@ total <span style="color:#ae81ff">16</span>
 -rw-rw-r--. <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">5035</span> Aug  <span style="color:#ae81ff">3</span> 12:40 10.pem
 -rw-rw-r--. <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">5035</span> Aug  <span style="color:#ae81ff">3</span> 12:40 serverCert.pem
 </code></pre></div><h3 id="check-signed-server-certificate">check signed server certificate</h3>
-<pre><code>$ openssl x509 -in newCreatedCerts/serverCert.pem -text -noout
+<pre tabindex="0"><code>$ openssl x509 -in newCreatedCerts/serverCert.pem -text -noout
 
 Certificate:
     Data:
@@ -656,7 +656,7 @@ Certificate:
 
 newCreatedCerts/serverCert.pem: OK
 </code></pre></div><h2 id="sign-client-csr-and-generate-client-certificate">Sign client CSR and generate client certificate</h2>
-<pre><code>$ openssl ca \
+<pre tabindex="0"><code>$ openssl ca \
 -config opensslConf/CA_openssl.cnf \
 -policy policy_anything \
 -cert caCert/myCA.crt \
@@ -710,7 +710,7 @@ total <span style="color:#ae81ff">32</span>
 -rw-rw-r--. <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">5034</span> Aug  <span style="color:#ae81ff">3</span> 13:18 myClientCert.pem
 -rw-rw-r--. <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">5035</span> Aug  <span style="color:#ae81ff">3</span> 12:40 serverCert.pem
 </code></pre></div><h3 id="check-client-certificate">check client certificate</h3>
-<pre><code> $ openssl x509 -in newCreatedCerts/myClientCert.pem -text -noout 
+<pre tabindex="0"><code> $ openssl x509 -in newCreatedCerts/myClientCert.pem -text -noout 
 
 Certificate:
     Data:
@@ -802,11 +802,11 @@ Using default temp DH parameters
 ACCEPT
 </code></pre></div><h4 id="fetch-atesthtml-file-insecurely">Fetch <code>atest.html</code> file <code>insecurely</code>.</h4>
 <p>insecure fetch</p>
-<pre><code>$ curl https://localhost:9999/serveContent/atest.html --insecure
+<pre tabindex="0"><code>$ curl https://localhost:9999/serveContent/atest.html --insecure
 openssl page served.
 </code></pre><h4 id="fetch-atesthtml-file-securely">Fetch <code>atest.html</code> file <code>securely</code>.</h4>
 <p>secure fetch</p>
-<pre><code>$ curl https://localhost:9999/serveContent/atest.html --cacert caCert/myCA.crt
+<pre tabindex="0"><code>$ curl https://localhost:9999/serveContent/atest.html --cacert caCert/myCA.crt
 
 curl: (60) SSL: no alternative certificate subject name matches target host name 'localhost'
 More details here: https://curl.haxx.se/docs/sslcerts.html
@@ -823,10 +823,10 @@ curl: <span style="color:#f92672">(</span>6<span style="color:#f92672">)</span> 
 </code></pre></div><h4 id="fixing-dns-resolution-for-myhostfulldomainname">Fixing DNS resolution for <code>myhost.full.domain.name</code></h4>
 <p>fix DNS resolution
 As <code>root</code> user enter the following line in <code>/etc/resolv.conf</code> file above all <code>nameserver</code> lines.</p>
-<pre><code>nameserver 127.0.0.1
+<pre tabindex="0"><code>nameserver 127.0.0.1
 </code></pre><h4 id="start-a-temp-dns-server-as-following">Start a temp <code>DNS</code> server as following</h4>
 <p>DNS server starting.</p>
-<pre><code>$ sudo dnsmasq --no-daemon --listen-address=127.0.0.1 --address=/full.domain.name/127.0.0.1 --log-queries
+<pre tabindex="0"><code>$ sudo dnsmasq --no-daemon --listen-address=127.0.0.1 --address=/full.domain.name/127.0.0.1 --log-queries
 
 dnsmasq: started, version 2.80 cachesize 150
 dnsmasq: compile time options: IPv6 GNU-getopt DBus no-i18n IDN2 DHCP DHCPv6 no-Lua TFTP no-conntrack ipset auth DNSSEC loop-detect inotify dumpfile
@@ -838,11 +838,11 @@ dnsmasq: read /etc/hosts - 2 addresses
 myhost.full.domain.name has address 127.0.0.1
 </code></pre></div><h4 id="fetch-atesthtml-file-securely-after-dns-resolution-fix">Fetch <code>atest.html</code> file securely after DNS resolution fix.</h4>
 <p>secure fetch.</p>
-<pre><code>$ curl https://myhost.full.domain.name:9999/serveContent/atest.html --cacert caCert/myCA.crt
+<pre tabindex="0"><code>$ curl https://myhost.full.domain.name:9999/serveContent/atest.html --cacert caCert/myCA.crt
 openssl page served.
 </code></pre><h2 id="attemps-to-connect-and-fetch-a-page-from-server-with-mutual-auth">Attemps to connect and fetch a page from server (WITH mutual auth)</h2>
 <h3 id="start-openssl-server-in-client-verification-mode">Start openssl server in client verification mode.</h3>
-<pre><code>$ openssl s_server \
+<pre tabindex="0"><code>$ openssl s_server \
 -accept 9999 \
 -CAfile caCert/myCA.crt \
 -cert newCreatedCerts/serverCert.pem \
