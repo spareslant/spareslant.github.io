@@ -6,7 +6,17 @@
     <description>Recent content on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Mon, 20 Sep 2021 23:40:41 +0100</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 14 Nov 2021 13:52:39 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Multiple Stacks TerraformCDK Python Oracle Cloud Infrastructure (OCI)</title>
+      <link>/posts/multiple-stacks-terraformcdk-python-oci/</link>
+      <pubDate>Sun, 14 Nov 2021 13:52:39 +0000</pubDate>
+      
+      <guid>/posts/multiple-stacks-terraformcdk-python-oci/</guid>
+      <description>Introduction We will be creating a public facing VM in Oracle Cloud Infrastructure (OCI) using terraform cdk toolkit. We will be writing terraform code in Python and we will be using terraform stacks.
+What will be done in terraform stack  We will create a stack priv_user_compartment to create a privileged user cdk-user and a compartment CDK. This user will have full admin rights in this compartment. We will create a stack network to create VCN, subnets, internet gateway, dhcp options, route tables etc.</description>
+    </item>
+    
     <item>
       <title>Terraform CDK Create OCI OracleCloudInfraStructure VM</title>
       <link>/posts/terraform-cdk-create-oci-oraclecloudinfrastructure-vm/</link>

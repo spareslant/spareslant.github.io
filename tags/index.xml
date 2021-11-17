@@ -6,20 +6,11 @@
     <description>Recent content in Tags on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Mon, 20 Sep 2021 23:40:41 +0100</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>cdk</title>
-      <link>/tags/cdk/</link>
-      <pubDate>Mon, 20 Sep 2021 23:40:41 +0100</pubDate>
-      
-      <guid>/tags/cdk/</guid>
-      <description></description>
-    </item>
-    
+    <lastBuildDate>Sun, 14 Nov 2021 13:52:39 +0000</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>cdktf</title>
       <link>/tags/cdktf/</link>
-      <pubDate>Mon, 20 Sep 2021 23:40:41 +0100</pubDate>
+      <pubDate>Sun, 14 Nov 2021 13:52:39 +0000</pubDate>
       
       <guid>/tags/cdktf/</guid>
       <description></description>
@@ -28,7 +19,7 @@
     <item>
       <title>OCI</title>
       <link>/tags/oci/</link>
-      <pubDate>Mon, 20 Sep 2021 23:40:41 +0100</pubDate>
+      <pubDate>Sun, 14 Nov 2021 13:52:39 +0000</pubDate>
       
       <guid>/tags/oci/</guid>
       <description></description>
@@ -37,7 +28,7 @@
     <item>
       <title>oci-cli</title>
       <link>/tags/oci-cli/</link>
-      <pubDate>Mon, 20 Sep 2021 23:40:41 +0100</pubDate>
+      <pubDate>Sun, 14 Nov 2021 13:52:39 +0000</pubDate>
       
       <guid>/tags/oci-cli/</guid>
       <description></description>
@@ -46,16 +37,25 @@
     <item>
       <title>Oracle Cloud Infrastructure</title>
       <link>/tags/oracle-cloud-infrastructure/</link>
-      <pubDate>Mon, 20 Sep 2021 23:40:41 +0100</pubDate>
+      <pubDate>Sun, 14 Nov 2021 13:52:39 +0000</pubDate>
       
       <guid>/tags/oracle-cloud-infrastructure/</guid>
       <description></description>
     </item>
     
     <item>
+      <title>pipenv</title>
+      <link>/tags/pipenv/</link>
+      <pubDate>Sun, 14 Nov 2021 13:52:39 +0000</pubDate>
+      
+      <guid>/tags/pipenv/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>python</title>
       <link>/tags/python/</link>
-      <pubDate>Mon, 20 Sep 2021 23:40:41 +0100</pubDate>
+      <pubDate>Sun, 14 Nov 2021 13:52:39 +0000</pubDate>
       
       <guid>/tags/python/</guid>
       <description></description>
@@ -64,7 +64,7 @@
     <item>
       <title>terraform</title>
       <link>/tags/terraform/</link>
-      <pubDate>Mon, 20 Sep 2021 23:40:41 +0100</pubDate>
+      <pubDate>Sun, 14 Nov 2021 13:52:39 +0000</pubDate>
       
       <guid>/tags/terraform/</guid>
       <description></description>
@@ -73,9 +73,27 @@
     <item>
       <title>Terraform CDK</title>
       <link>/tags/terraform-cdk/</link>
-      <pubDate>Mon, 20 Sep 2021 23:40:41 +0100</pubDate>
+      <pubDate>Sun, 14 Nov 2021 13:52:39 +0000</pubDate>
       
       <guid>/tags/terraform-cdk/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Terraform Stack</title>
+      <link>/tags/terraform-stack/</link>
+      <pubDate>Sun, 14 Nov 2021 13:52:39 +0000</pubDate>
+      
+      <guid>/tags/terraform-stack/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cdk</title>
+      <link>/tags/cdk/</link>
+      <pubDate>Mon, 20 Sep 2021 23:40:41 +0100</pubDate>
+      
+      <guid>/tags/cdk/</guid>
       <description></description>
     </item>
     

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-gb">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Multiple Stacks TerraformCDK Python Oracle Cloud Infrastructure (OCI) - SpareSlant Technical Blog</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/my.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="SpareSlant Technical Blog" rel="home">
+				<div class="logo__title">SpareSlant Technical Blog</div>
+				<div class="logo__tagline">SpareSlant tech blog</div>
+			</a>
+		</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Multiple Stacks TerraformCDK Python Oracle Cloud Infrastructure (OCI)</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2021-11-14T13:52:39">2021-11-14</time>
+</div>
+</div>
+		</header>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li><a href="#what-will-be-done-in-terraform-stack">What will be done in terraform stack</a></li>
+    <li><a href="#development-environment">Development Environment</a>
+      <ul>
+        <li><a href="#install-python-via-pyenv">Install <code>python</code> via <code>pyenv</code></a></li>
+        <li><a href="#install-pipenv">Install <code>pipenv</code></a></li>
+        <li><a href="#install-terraform-using-tfenv">Install <code>terraform</code> using tfenv</a></li>
+        <li><a href="#install-nodejs-via-nvm">Install <code>node.js</code> via <code>nvm</code></a></li>
+        <li><a href="#install-cdktf-cli">Install <code>cdktf-cli</code></a></li>
+      </ul>
+    </li>
+    <li><a href="#prepare-coding-directory-if-starting-from-scratch">Prepare coding directory (if starting from scratch)</a>
+      <ul>
+        <li><a href="#initiate-cdktf-project">Initiate <code>cdktf</code> project</a></li>
+        <li><a href="#install-required-packages-oci-sdk-and-others-using-pipenv">Install required packages (<code>oci sdk</code> and others) using <code>pipenv</code></a></li>
+      </ul>
+    </li>
+    <li><a href="#prepare-coding-directory-if-cloning-the-repo">Prepare coding directory (if cloning the repo)</a>
+      <ul>
+        <li><a href="#clone-repo">Clone repo</a></li>
+        <li><a href="#install-required-pip-modules-using-pipenv">Install required pip modules using pipenv</a></li>
+        <li><a href="#download-oci-terraform-modules-libraries">Download OCI terraform modules libraries</a></li>
+      </ul>
+    </li>
+    <li><a href="#prepare-oci-environment">Prepare OCI environment</a>
+      <ul>
+        <li><a href="#configure-tenancy-admin-account-to-access-oci-via-apis">Configure Tenancy Admin account to access OCI via APIs</a></li>
+        <li><a href="#verify-connectivity-to-oci">Verify connectivity to OCI</a></li>
+      </ul>
+    </li>
+    <li><a href="#prepare-terraform-code-to-execute">Prepare terraform code to execute</a></li>
+    <li><a href="#deploy-stacks">Deploy stacks</a>
+      <ul>
+        <li><a href="#list-stacks">list stacks</a></li>
+        <li><a href="#deploy-first-stack-priv_user_compartment">Deploy first stack <code>priv_user_compartment</code></a></li>
+        <li><a href="#deploy-second-stack-network">Deploy second stack <code>network</code></a></li>
+        <li><a href="#deploy-third-stack-vm_instance">Deploy third stack <code>vm_instance</code></a></li>
+        <li><a href="#destroy-stacks-reverse-order-of-deployment">destroy stacks (reverse order of deployment)</a></li>
+      </ul>
+    </li>
+    <li><a href="#how-is-passing-information-among-stacks-working">How is passing information among stacks working</a>
+      <ul>
+        <li><a href="#in-file-mainpy">In file <code>main.py</code></a></li>
+        <li><a href="#in-file-privuserandcompartmentpy">In file <code>privUserAndCompartment.py</code></a></li>
+        <li><a href="#in-file-networkpy">In file <code>network.py</code></a></li>
+        <li><a href="#in-file-systemsandappspy">In file <code>systemsAndApps.py</code></a></li>
+      </ul>
+    </li>
+    <li><a href="#observations">Observations</a></li>
+  </ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<h1 id="introduction">Introduction</h1>
+<p>We will be creating a public facing VM in Oracle Cloud Infrastructure (OCI) using terraform cdk toolkit. We will be writing terraform code in <code>Python</code> and we will be using <code>terraform stacks</code>.</p>
+<h2 id="what-will-be-done-in-terraform-stack">What will be done in terraform stack</h2>
+<ul>
+<li>We will create a stack <code>priv_user_compartment</code> to create a privileged user <code>cdk-user</code> and a compartment <code>CDK</code>. This user will have full admin rights in this compartment.</li>
+<li>We will create a stack <code>network</code> to create <code>VCN</code>, <code>subnets</code>, <code>internet gateway</code>, <code>dhcp options</code>, <code>route tables</code> etc. in above created <code>compartment</code>. This stack will use above created user&rsquo;s credentials (<code>cdk-user</code>) NOT tenancy admin credentials.</li>
+<li>We will create a stack <code>vm_instance</code> to create a internet facing VM in above created <code>VCN</code> and <code>compartment</code> and this stack uses above created user&rsquo;s credentials <code>cdk-user</code> to do so.</li>
+<li>Code will be passing information from one stack to another.</li>
+</ul>
+<h2 id="development-environment">Development Environment</h2>
+<ul>
+<li>OS used: MacOS Monterey (12.0.1)</li>
+<li>Python version used: 3.10.0</li>
+<li>Package manager: brew</li>
+<li>Pipenv: We will be using <code>pipenv</code></li>
+</ul>
+<p><strong>Note:</strong> <code>pipenv</code> creates python virtual environment behind the scenes.</p>
+<h3 id="install-python-via-pyenv">Install <code>python</code> via <code>pyenv</code></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">brew install pyenv
+pyenv install 3.10.0
+pyenv global 3.10.0
+</code></pre></div><h3 id="install-pipenv">Install <code>pipenv</code></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pip install pipenv
+</code></pre></div><h3 id="install-terraform-using-tfenv">Install <code>terraform</code> using tfenv</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">brew install tfenv
+tfenv install 1.0.11
+tfenv use 1.0.11
+</code></pre></div><h3 id="install-nodejs-via-nvm">Install <code>node.js</code> via <code>nvm</code></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">brew install nvm
+nvm install --lts
+nvm use --lts
+$ node --version
+v16.13.0
+nvm alias default 16.13.0
+</code></pre></div><h3 id="install-cdktf-cli">Install <code>cdktf-cli</code></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">npm install --global cdktf-cli
+
+$ cdktf --version
+0.7.0
+</code></pre></div><h2 id="prepare-coding-directory-if-starting-from-scratch">Prepare coding directory (if starting from scratch)</h2>
+<h3 id="initiate-cdktf-project">Initiate <code>cdktf</code> project</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir oci_multi_stack_terraform_cdk_python
+cd oci_multi_stack_terraform_cdk_python
+cdktf init --template<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;python&#34;</span> --local
+</code></pre></div><p>Above command will initiate a <code>pipenv</code>. To see the location of virtualenv that pipenv created run this command <code> pipenv --venv</code>.</p>
+<h3 id="install-required-packages-oci-sdk-and-others-using-pipenv">Install required packages (<code>oci sdk</code> and others) using <code>pipenv</code></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pipenv install pycryptodome oci oci-cli
+</code></pre></div><h4 id="files-in-current-direcotry">Files in current direcotry</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cdktf.json  help  main.py  Pipfile  Pipfile.lock
+</code></pre></div><h2 id="prepare-coding-directory-if-cloning-the-repo">Prepare coding directory (if cloning the repo)</h2>
+<h3 id="clone-repo">Clone repo</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git clone https://github.com/spareslant/oci_multi_stack_terraform_cdk_python.git
+cd oci_multi_stack_terraform_cdk_python
+</code></pre></div><h3 id="install-required-pip-modules-using-pipenv">Install required pip modules using pipenv</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pipenv sync
+</code></pre></div><h3 id="download-oci-terraform-modules-libraries">Download OCI terraform modules libraries</h3>
+<h4 id="add-terraform-provider-information-in-cdktfjson-file">Add terraform provider information in <code>cdktf.json</code> file</h4>
+<p><strong>Note:</strong> No need for this step if using cloned repo as working directory.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#f92672">&#34;language&#34;</span>: <span style="color:#e6db74">&#34;python&#34;</span>,
+  <span style="color:#f92672">&#34;app&#34;</span>: <span style="color:#e6db74">&#34;pipenv run python main.py&#34;</span>,
+  <span style="color:#f92672">&#34;projectId&#34;</span>: <span style="color:#e6db74">&#34;4fcb470a-7301-4f20-b90d-94dbd6efdc48&#34;</span>,
+  <span style="color:#f92672">&#34;terraformProviders&#34;</span>: [
+    <span style="color:#e6db74">&#34;oci@~&gt; 4.52.0&#34;</span>,
+    <span style="color:#e6db74">&#34;cloudinit@~&gt; 2.2.0&#34;</span>,
+    <span style="color:#e6db74">&#34;tls@~&gt; 3.1.0&#34;</span>,
+    <span style="color:#e6db74">&#34;local@~&gt; 2.1.0&#34;</span>,
+    <span style="color:#e6db74">&#34;external@~&gt; 2.1.0&#34;</span>
+  ],
+  <span style="color:#f92672">&#34;terraformModules&#34;</span>: [],
+  <span style="color:#f92672">&#34;codeMakerOutput&#34;</span>: <span style="color:#e6db74">&#34;imports&#34;</span>,
+  <span style="color:#f92672">&#34;context&#34;</span>: {
+    <span style="color:#f92672">&#34;excludeStackIdFromLogicalIds&#34;</span>: <span style="color:#e6db74">&#34;true&#34;</span>,
+<span style="color:#f92672">&#34;allowSepCharsInLogicalIds&#34;</span>: <span style="color:#e6db74">&#34;true&#34;</span>
+  }
+}
+</code></pre></div><h4 id="get-terraform-libraries">Get terraform libraries</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cdktf get
+</code></pre></div><h4 id="files-in-current-direcotry-1">Files in current direcotry</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ /bin/ls
+Pipfile                 cdktf.json              imports                 package-lock.json
+Pipfile.lock            help                    main.py                 package.json
+</code></pre></div><h2 id="prepare-oci-environment">Prepare OCI environment</h2>
+<ul>
+<li>You need an <code>OCI</code> account. Its free. SignUp at <a href="https://cloud.oracle.com">https://cloud.oracle.com</a>. This sign-up account is called <code>Tenancy Admin</code> account.</li>
+<li>Login to this <code>Tenancy Admin</code> account. Make sure you have selected <code>Oracle Cloud Infrastructure Direct Sign-In</code> option on the login page.</li>
+<li>click hamburger icon on the top-left corner
+<ul>
+<li>click <code>Identity &amp; Security</code></li>
+<li>click <code>users</code></li>
+<li>click your email ID here (the one you used for sign-up)</li>
+<li>click <code>API Keys</code></li>
+<li>click <code>Add API Key</code></li>
+<li>select <code>Generate API Key Pair</code></li>
+<li>click <code>Download private key</code></li>
+<li>click <code>Add</code> button</li>
+<li>Copy the content in <code>Configuration File Preview</code> and save it. We need it later on.</li>
+<li>click <code>close</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="configure-tenancy-admin-account-to-access-oci-via-apis">Configure Tenancy Admin account to access OCI via APIs</h3>
+<p>You can run <code>oci setup config</code> command to setup the oci config. But we will be following direct manual method as we already have config saved in previous step when we prepared the oci envrionment.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir ~/.oci
+chmod g-rwx,o-rwx /root/.oci
+
+ls -ld /root/.oci/
+drwx------ <span style="color:#ae81ff">2</span> root root <span style="color:#ae81ff">4096</span> Sep <span style="color:#ae81ff">20</span> 23:36 /root/.oci/
+
+touch ~/.oci/tenancyAdmin_private_api_key.pem
+vim ~/.oci/tenancyAdmin_private_api_key.pem
+</code></pre></div><p>Paste the contents from file that you downloaded during the step <code>download private key</code> above in file <code>~/.oci/tenancyAdmin_private_api_key.pem</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">chmod <span style="color:#ae81ff">600</span> ~/.oci/tenancyAdmin_private_api_key.pem
+touch ~/.oci/config
+chmod <span style="color:#ae81ff">600</span> ~/.oci/config
+vim  ~/.oci/config
+</code></pre></div><p>Paste the contents from file that you saved during the step <code>Configuration file preview</code> above in file <code>~/.oci/config</code></p>
+<p>Contents of <code>~/.oci/config</code> will be similar to the following.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#66d9ef">[DEFAULT]</span>
+<span style="color:#a6e22e">user</span><span style="color:#f92672">=</span><span style="color:#e6db74">ocid1.user.oc1..&lt;a very long string&gt;</span>
+<span style="color:#a6e22e">fingerprint</span><span style="color:#f92672">=</span><span style="color:#e6db74">xx:yy:11:22:33:44:d4:56:b6:67:89:b7:b1:7f:4f:7a</span>
+<span style="color:#a6e22e">tenancy</span><span style="color:#f92672">=</span><span style="color:#e6db74">ocid1.tenancy.oc1..&lt;a very long string&gt;</span>
+<span style="color:#a6e22e">region</span><span style="color:#f92672">=</span><span style="color:#e6db74">uk-london-1</span>
+<span style="color:#a6e22e">key_file</span><span style="color:#f92672">=</span><span style="color:#e6db74">~/.oci/tenancyAdmin_private_api_key.pem</span>
+</code></pre></div><p>Please note <code>key_file=</code> above.</p>
+<h3 id="verify-connectivity-to-oci">Verify connectivity to OCI</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd oci_multi_stack_terraform_cdk_python
+pipenv shell
+oci iam user list
+exit
+</code></pre></div><p>Above command (<code>oci iam user list</code>) must run successfully.</p>
+<h2 id="prepare-terraform-code-to-execute">Prepare terraform code to execute</h2>
+<p>Populate following files with contents as mentioned in this git repo.</p>
+<ul>
+<li><code>common.py</code></li>
+<li><code>main.py</code></li>
+<li><code>local_utils.py</code></li>
+<li><code>privUserAndCompartment.py</code></li>
+<li><code>network.py</code></li>
+<li><code>systemsAndApps.py</code></li>
+<li><code>cdktf.json</code></li>
+</ul>
+<h2 id="deploy-stacks">Deploy stacks</h2>
+<h3 id="list-stacks">list stacks</h3>
+<pre tabindex="0"><code>$ cdktf list
+
+WARNING!!!!!!!!: Terraform might have written a new oci config file at /Users/gpal/.oci/config.cdk-user. Terraform will manage this file automatically.
+
+Stack name                      Path
+dummy_hosting_stack             cdktf.out/stacks/dummy_hosting_stack
+priv_user_compartment           cdktf.out/stacks/priv_user_compartment
+vm_instance                     cdktf.out/stacks/vm_instance
+network                         cdktf.out/stacks/network
+</code></pre><p><strong>Note:</strong> Listing of stacks is not in order. You need to run the each stack separately. Hence if there is depencies among stacks then you need to remember the order of deployment and destruction of stacks.</p>
+<h3 id="deploy-first-stack-priv_user_compartment">Deploy first stack <code>priv_user_compartment</code></h3>
+<pre tabindex="0"><code>$ cdktf deploy priv_user_compartment --auto-approve
+
+WARNING!!!!!!!!: Terraform might have written a new oci config file at ~/.oci/config.cdk-user. Terraform will manage this file automatically.
+
+Deploying Stack: priv_user_compartment
+Resources
+ ✔ LOCAL_FILE           cdk-user_private_ke local_file.cdk-user_private_key_file
+                        y_file
+ ✔ LOCAL_FILE           cdk-user_public_key local_file.cdk-user_public_key_file
+                        _file
+ ✔ LOCAL_FILE           oci_config_file     local_file.oci_config_file
+ ✔ OCI_IDENTITY_API_KEY cdk-user_api_keys   oci_identity_api_key.cdk-user_api_keys
+ ✔ OCI_IDENTITY_COMPART CDK_compartment     oci_identity_compartment.CDK_compartmen
+   MENT                                     t
+ ✔ OCI_IDENTITY_GROUP   cdk-group           oci_identity_group.cdk-group
+ ✔ OCI_IDENTITY_POLICY  cdk-group_policy    oci_identity_policy.cdk-group_policy
+ ✔ OCI_IDENTITY_USER    cdk-user            oci_identity_user.cdk-user
+ ✔ OCI_IDENTITY_USER_GR cdk-user_cdk-group_ oci_identity_user_group_membership.cdk-
+   OUP_MEMBERSHIP       membership          user_cdk-group_membership
+ ✔ TLS_PRIVATE_KEY      cdk-user_keys       tls_private_key.cdk-user_keys
+
+Summary: 10 created, 0 updated, 0 destroyed.
+</code></pre><h3 id="deploy-second-stack-network">Deploy second stack <code>network</code></h3>
+<pre tabindex="0"><code>$ cdktf deploy network --auto-approve
+
+
+WARNING!!!!!!!!: Terraform might have written a new oci config file at ~/.oci/config.cdk-user. Terraform will manage this file automatically.
+
+Deploying Stack: network
+Resources
+ ✔ OCI_CORE_ROUTE_TABLE cdk_route_table     oci_core_route_table.cdk_route_table
+ ✔ OCI_CORE_ROUTE_TABLE cdk_route_attachmen oci_core_route_table_attachment.cdk_rou
+   _ATTACHMENT          t                   te_attachment
+
+Summary: 2 created, 0 updated, 0 destroyed.
+
+</code></pre><h3 id="deploy-third-stack-vm_instance">Deploy third stack <code>vm_instance</code></h3>
+<pre tabindex="0"><code>$ cdktf deploy vm_instance --auto-approve
+
+
+WARNING!!!!!!!!: Terraform might have written a new oci config file at ~/.oci/config.cdk-user. Terraform will manage this file automatically.
+
+Deploying Stack: vm_instance
+Resources
+ ✔ LOCAL_FILE           cdk_vm_private_key_ local_file.cdk_vm_private_key_file
+                        file
+ ✔ OCI_CORE_INSTANCE    cdk_vm_instance     oci_core_instance.cdk_vm_instance
+ ✔ TLS_PRIVATE_KEY      cdk_vm_keys         tls_private_key.cdk_vm_keys
+
+Summary: 3 created, 0 updated, 0 destroyed.
+
+Output: cdk_vm_public_ip = xxx.yyy.zzz.vvv
+</code></pre><h3 id="destroy-stacks-reverse-order-of-deployment">destroy stacks (reverse order of deployment)</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cdktf destroy vm_instance --auto-approve
+cdktf destroy network --auto-approve
+cdktf destroy priv_user_compartment --auto-approve
+</code></pre></div><h2 id="how-is-passing-information-among-stacks-working">How is passing information among stacks working</h2>
+<h3 id="in-file-mainpy">In file <code>main.py</code></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RunStack</span>(TerraformStack):
+
+    <span style="color:#66d9ef">def</span> __init__(self, scope: Construct, ns: str):
+        super()<span style="color:#f92672">.</span>__init__(scope, ns)
+
+        priv_user <span style="color:#f92672">=</span> PrivilegedUser(self, <span style="color:#e6db74">&#34;priv_user_compartment&#34;</span>)
+
+        <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">user_comp_remote_state</span>(scope, id):
+            state_file<span style="color:#f92672">=</span><span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>dirname(os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>abspath(__file__))<span style="color:#e6db74">}</span><span style="color:#e6db74">/terraform.</span><span style="color:#e6db74">{</span>priv_user<span style="color:#f92672">.</span>name()<span style="color:#e6db74">}</span><span style="color:#e6db74">.tfstate&#34;</span>
+            <span style="color:#66d9ef">return</span> DataTerraformRemoteStateLocal(scope, id,
+                path<span style="color:#f92672">=</span>state_file)
+
+        network <span style="color:#f92672">=</span> Network(app, <span style="color:#e6db74">&#34;network&#34;</span>,
+                priv_user<span style="color:#f92672">.</span>priv_compartment,
+                user_comp_remote_state)
+
+        <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">network_remote_state</span>(scope, id):
+            state_file<span style="color:#f92672">=</span><span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>dirname(os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>abspath(__file__))<span style="color:#e6db74">}</span><span style="color:#e6db74">/terraform.</span><span style="color:#e6db74">{</span>network<span style="color:#f92672">.</span>name()<span style="color:#e6db74">}</span><span style="color:#e6db74">.tfstate&#34;</span>
+            <span style="color:#66d9ef">return</span> DataTerraformRemoteStateLocal(scope, id,
+                path<span style="color:#f92672">=</span>state_file)
+
+        VmInstance(self, <span style="color:#e6db74">&#34;vm_instance&#34;</span>,
+               priv_user<span style="color:#f92672">.</span>priv_compartment,
+               network<span style="color:#f92672">.</span>network_public_subnet,
+               user_comp_remote_state,
+               network_remote_state) 
+</code></pre></div><h3 id="in-file-privuserandcompartmentpy">In file <code>privUserAndCompartment.py</code></h3>
+<ul>
+<li><code>priv_user_compartment</code> stack is exposing <code>priv_compartment</code> using <code>TerraformOutput</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PrivilegedUser</span>(TerraformStack):
+
+    priv_compartment <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>
+
+    <span style="color:#66d9ef">def</span> __init__(self, scope: Construct, ns: str):
+        super()<span style="color:#f92672">.</span>__init__(scope, ns)
+
+        self<span style="color:#f92672">.</span>priv_compartment <span style="color:#f92672">=</span> TerraformOutput(self, <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>priv_compartment<span style="color:#e6db74">}</span><span style="color:#e6db74">_id&#34;</span>,
+                value<span style="color:#f92672">=</span>comp<span style="color:#f92672">.</span>id)<span style="color:#f92672">.</span>friendly_unique_id
+</code></pre></div><h3 id="in-file-networkpy">In file <code>network.py</code></h3>
+<ul>
+<li><code>network</code> stack is using exposed <code>priv_compartment</code> from <code>priv_user_compartment</code> stack.</li>
+<li><code>network</code> stack is also exposing <code>network_public_subnet</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Network</span>(TerraformStack):
+
+    network_public_subnet <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>
+
+    <span style="color:#66d9ef">def</span> __init__(self, scope: Construct, ns: str, priv_compartment , remote_state):
+        super()<span style="color:#f92672">.</span>__init__(scope, ns)
+
+        terraform_state <span style="color:#f92672">=</span> remote_state(self, ns)
+        priv_compartment_id <span style="color:#f92672">=</span> terraform_state<span style="color:#f92672">.</span>get_string(priv_compartment)
+
+        self<span style="color:#f92672">.</span>network_public_subnet <span style="color:#f92672">=</span> TerraformOutput(self, <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>unique_id<span style="color:#e6db74">}</span><span style="color:#e6db74">_network_public_subnet&#34;</span>,
+                value<span style="color:#f92672">=</span>public_subnet<span style="color:#f92672">.</span>id)<span style="color:#f92672">.</span>friendly_unique_id
+
+</code></pre></div><h3 id="in-file-systemsandappspy">In file <code>systemsAndApps.py</code></h3>
+<ul>
+<li><code>vm_instance</code> instance stack is using exposed <code>priv_compartment</code> from <code>priv_user_compartment</code> stack</li>
+<li><code>vm_instance</code> instance stack is using exposed <code>network_public_subnet</code> from <code>network</code> stack</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">VmInstance</span>(TerraformStack):
+    <span style="color:#66d9ef">def</span> __init__(self, scope: Construct, ns: str,
+            priv_compartment,
+            public_subnet,
+            user_comp_remote_state,
+            network_remote_state):
+        super()<span style="color:#f92672">.</span>__init__(scope, ns)
+
+        u_terraform_state <span style="color:#f92672">=</span> user_comp_remote_state(self, ns)
+        n_terraform_state <span style="color:#f92672">=</span> network_remote_state(self, ns <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;_network&#34;</span>)
+        priv_compartment_id <span style="color:#f92672">=</span> u_terraform_state<span style="color:#f92672">.</span>get_string(priv_compartment)
+        public_subnet_id <span style="color:#f92672">=</span> n_terraform_state<span style="color:#f92672">.</span>get_string(public_subnet)
+</code></pre></div><h2 id="observations">Observations</h2>
+<ul>
+<li>Stacks inter-dependency is not very easy to implement yet.</li>
+<li>Each Stack has to be deployed separately. No one command to deploy all stacks</li>
+<li>Passing information among stack is cumbersome.</li>
+<li>Terraform-cdk is still in development. Limitations may disappear as it evolves in future.</li>
+</ul>
+
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/oci/" rel="tag">OCI</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/terraform-cdk/" rel="tag">Terraform CDK</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/terraform/" rel="tag">terraform</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/terraform-stack/" rel="tag">Terraform Stack</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/python/" rel="tag">Python</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/pipenv/" rel="tag">pipenv</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/oci-cli/" rel="tag">oci-cli</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/oracle-cloud-infrastructure/" rel="tag">Oracle Cloud Infrastructure</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/cdktf/" rel="tag">cdktf</a></li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<div class="authorbox__header">
+		<span class="authorbox__name"></span>
+	</div>
+</div>
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/posts/terraform-cdk-create-oci-oraclecloudinfrastructure-vm/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Terraform CDK Create OCI OracleCloudInfraStructure VM</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 SpareSlant.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
+</html>
