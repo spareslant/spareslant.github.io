@@ -85,6 +85,7 @@
         <li><a href="#deploy-first-stack-priv_user_compartment">Deploy first stack <code>priv_user_compartment</code></a></li>
         <li><a href="#deploy-second-stack-network">Deploy second stack <code>network</code></a></li>
         <li><a href="#deploy-third-stack-vm_instance">Deploy third stack <code>vm_instance</code></a></li>
+        <li><a href="#test-the-deployment">Test the deployment</a></li>
         <li><a href="#destroy-stacks-reverse-order-of-deployment">destroy stacks (reverse order of deployment)</a></li>
       </ul>
     </li>
@@ -309,7 +310,11 @@ Resources
 Summary: 3 created, 0 updated, 0 destroyed.
 
 Output: cdk_vm_public_ip = xxx.yyy.zzz.vvv
-</code></pre><h3 id="destroy-stacks-reverse-order-of-deployment">destroy stacks (reverse order of deployment)</h3>
+</code></pre><p><strong>Note:</strong> Above deployment has created a <code>keys/private_key.pem</code> for above created VM.</p>
+<h3 id="test-the-deployment">Test the deployment</h3>
+<p>Login to VM</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh -i keys/private_key.pem opc@IP_Address_of_above_created_VM
+</code></pre></div><h3 id="destroy-stacks-reverse-order-of-deployment">destroy stacks (reverse order of deployment)</h3>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cdktf destroy vm_instance --auto-approve
 cdktf destroy network --auto-approve
 cdktf destroy priv_user_compartment --auto-approve
