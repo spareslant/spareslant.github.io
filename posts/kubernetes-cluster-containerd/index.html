@@ -242,7 +242,7 @@ containerd config default | sudo tee /etc/containerd/config.toml
 
 sudo systemctl restart containerd
 </code></pre></div><h3 id="make-systemd-cgroup-drive-for-containerd">Make systemd cgroup drive for containerd</h3>
-<p>Please note that <code>cgroupfs</code> cgroup driver comes from <code>containerd</code>. But we want <code>systemd</code> to be the cgroup driver for <code>containerd</code>. As per documentation (<a href="https://kubernetes.io/docs/setup/production-environment/container-runtimes/#cgroup-drivers),">https://kubernetes.io/docs/setup/production-environment/container-runtimes/#cgroup-drivers),</a> having two cgroup drivers can cause some issues.</p>
+<p>Please note that <code>cgroupfs</code> cgroup driver comes from <code>containerd</code>. But we want <code>systemd</code> to be the cgroup driver for <code>containerd</code>. As per documentation (<a href="https://kubernetes.io/docs/setup/production-environment/container-runtimes/#cgroup-drivers)">https://kubernetes.io/docs/setup/production-environment/container-runtimes/#cgroup-drivers)</a>, having two cgroup drivers can cause some issues.</p>
 <p>Add following to the <code>/etc/containerd/config.toml</code> file to make <code>systemd</code> cgroup driver instead of <code>cgroupfs</code>.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff">       [plugins.&#34;io.containerd.grpc.v1.cri&#34;.containerd.runtimes]
          [plugins.&#34;io.containerd.grpc.v1.cri&#34;.containerd.runtimes.runc]
@@ -611,7 +611,7 @@ containerd config default | sudo tee /etc/containerd/config.toml
 
 sudo systemctl restart containerd
 </code></pre></div><h3 id="make-systemd-cgroup-drive-for-containerd-1">Make systemd cgroup drive for containerd</h3>
-<p>Please note that <code>cgroupfs</code> cgroup driver comes from <code>containerd</code>. But we want <code>systemd</code> to be the cgroup driver for <code>containerd</code> as well. As per documentation (<a href="https://kubernetes.io/docs/setup/production-environment/container-runtimes/#cgroup-drivers),">https://kubernetes.io/docs/setup/production-environment/container-runtimes/#cgroup-drivers),</a> having two cgroup drivers can cause some issues.</p>
+<p>Please note that <code>cgroupfs</code> cgroup driver comes from <code>containerd</code>. But we want <code>systemd</code> to be the cgroup driver for <code>containerd</code> as well. As per documentation (<a href="https://kubernetes.io/docs/setup/production-environment/container-runtimes/#cgroup-drivers)">https://kubernetes.io/docs/setup/production-environment/container-runtimes/#cgroup-drivers)</a>, having two cgroup drivers can cause some issues.</p>
 <p>Add following to the <code>/etc/containerd/config.toml</code> file to make <code>systemd</code> cgroup driver instead of <code>cgroupfs</code>.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff">       [plugins.&#34;io.containerd.grpc.v1.cri&#34;.containerd.runtimes]
          [plugins.&#34;io.containerd.grpc.v1.cri&#34;.containerd.runtimes.runc]
@@ -763,7 +763,7 @@ Commercial support is available at
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2021 SpareSlant.
+			&copy; 2022 SpareSlant.
 			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
 		</div>
 	</div>

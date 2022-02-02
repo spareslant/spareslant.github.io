@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Multiple Stacks TerraformCDK Python Oracle Cloud Infrastructure (OCI) - SpareSlant Technical Blog</title>
+	<title>(Version-2) Multiple Stacks TerraformCDK Python Oracle Cloud Infrastructure (OCI) - SpareSlant Technical Blog</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
 	
@@ -36,11 +36,11 @@
 <main class="main" role="main">
 	<article class="post">
 		<header class="post__header">
-			<h1 class="post__title">Multiple Stacks TerraformCDK Python Oracle Cloud Infrastructure (OCI)</h1>
+			<h1 class="post__title">(Version-2) Multiple Stacks TerraformCDK Python Oracle Cloud Infrastructure (OCI)</h1>
 			<div class="post__meta meta">
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
-	<time class="meta__text" datetime="2021-11-14T13:52:39">2021-11-14</time>
+	<time class="meta__text" datetime="2022-02-02T00:00:30">2022-02-02</time>
 </div>
 </div>
 		</header>
@@ -83,6 +83,8 @@
       <ul>
         <li><a href="#list-stacks">list stacks</a></li>
         <li><a href="#deploy-first-stack-priv_user_compartment">Deploy first stack <code>priv_user_compartment</code></a></li>
+        <li><a href="#list-stacks-again">list stacks again</a></li>
+        <li><a href="#re-run-priv_user_compartment-deployment-again">re-run <code>priv_user_compartment</code> deployment again</a></li>
         <li><a href="#deploy-second-stack-network">Deploy second stack <code>network</code></a></li>
         <li><a href="#deploy-third-stack-vm_instance">Deploy third stack <code>vm_instance</code></a></li>
         <li><a href="#test-the-deployment">Test the deployment</a></li>
@@ -104,7 +106,12 @@
 </div>
 <div class="content post__content clearfix">
 			<h1 id="introduction">Introduction</h1>
-<p>We will be creating a public facing VM in Oracle Cloud Infrastructure (OCI) using terraform cdk toolkit. We will be writing terraform code in <code>Python</code> and we will be using <code>terraform stacks</code>.</p>
+<p>Terraform has released a new version of <code>cdktf = 0.9.0</code>. This version makes cross referencing across stacks easy. This document will explore this feature. It is built upon previous version of code mentioned below.</p>
+<ul>
+<li>previous version of code</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">https://github.com/spareslant/oci_multi_stack_terraform_cdk_python
+</code></pre></div><p>We will be creating a public facing VM in Oracle Cloud Infrastructure (OCI) using terraform cdk toolkit. We will be writing terraform code in <code>Python</code> and we will be using <code>terraform stacks</code>.</p>
 <h2 id="what-will-be-done-in-terraform-stack">What will be done in terraform stack</h2>
 <ul>
 <li>We will create a stack <code>priv_user_compartment</code> to create a privileged user <code>cdk-user</code> and a compartment <code>CDK</code>. This user will have full admin rights in this compartment.</li>
@@ -128,20 +135,20 @@ pyenv global 3.10.0
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pip install pipenv
 </code></pre></div><h3 id="install-terraform-using-tfenv">Install <code>terraform</code> using tfenv</h3>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">brew install tfenv
-tfenv install 1.0.11
-tfenv use 1.0.11
+tfenv install 1.1.4
+tfenv use 1.1.4
 </code></pre></div><h3 id="install-nodejs-via-nvm">Install <code>node.js</code> via <code>nvm</code></h3>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">brew install nvm
 nvm install --lts
 nvm use --lts
 $ node --version
 v16.13.0
-nvm alias default 16.13.0
+nvm alias default 16.13.2
 </code></pre></div><h3 id="install-cdktf-cli">Install <code>cdktf-cli</code></h3>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">npm install --global cdktf-cli
 
 $ cdktf --version
-0.7.0
+0.9.0
 </code></pre></div><h2 id="prepare-coding-directory-if-starting-from-scratch">Prepare coding directory (if starting from scratch)</h2>
 <h3 id="initiate-cdktf-project">Initiate <code>cdktf</code> project</h3>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir oci_multi_stack_terraform_cdk_python
@@ -154,8 +161,8 @@ cdktf init --template<span style="color:#f92672">=</span><span style="color:#e6d
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cdktf.json  help  main.py  Pipfile  Pipfile.lock
 </code></pre></div><h2 id="prepare-coding-directory-if-cloning-the-repo">Prepare coding directory (if cloning the repo)</h2>
 <h3 id="clone-repo">Clone repo</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git clone https://github.com/spareslant/oci_multi_stack_terraform_cdk_python.git
-cd oci_multi_stack_terraform_cdk_python
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git clone https://github.com/spareslant/oci_multi_stack_terraform_cdk_python_v2.git
+cd oci_multi_stack_terraform_cdk_python_v2
 </code></pre></div><h3 id="install-required-pip-modules-using-pipenv">Install required pip modules using pipenv</h3>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pipenv sync
 </code></pre></div><h3 id="download-oci-terraform-modules-libraries">Download OCI terraform modules libraries</h3>
@@ -164,13 +171,12 @@ cd oci_multi_stack_terraform_cdk_python
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
   <span style="color:#f92672">&#34;language&#34;</span>: <span style="color:#e6db74">&#34;python&#34;</span>,
   <span style="color:#f92672">&#34;app&#34;</span>: <span style="color:#e6db74">&#34;pipenv run python main.py&#34;</span>,
-  <span style="color:#f92672">&#34;projectId&#34;</span>: <span style="color:#e6db74">&#34;4fcb470a-7301-4f20-b90d-94dbd6efdc48&#34;</span>,
   <span style="color:#f92672">&#34;terraformProviders&#34;</span>: [
-    <span style="color:#e6db74">&#34;oci@~&gt; 4.52.0&#34;</span>,
+    <span style="color:#e6db74">&#34;oci@~&gt; 4.61.0&#34;</span>,
     <span style="color:#e6db74">&#34;cloudinit@~&gt; 2.2.0&#34;</span>,
     <span style="color:#e6db74">&#34;tls@~&gt; 3.1.0&#34;</span>,
     <span style="color:#e6db74">&#34;local@~&gt; 2.1.0&#34;</span>,
-    <span style="color:#e6db74">&#34;external@~&gt; 2.1.0&#34;</span>
+    <span style="color:#e6db74">&#34;external@~&gt; 2.2.0&#34;</span>
   ],
   <span style="color:#f92672">&#34;terraformModules&#34;</span>: [],
   <span style="color:#f92672">&#34;codeMakerOutput&#34;</span>: <span style="color:#e6db74">&#34;imports&#34;</span>,
@@ -248,19 +254,16 @@ exit
 <h2 id="deploy-stacks">Deploy stacks</h2>
 <h3 id="list-stacks">list stacks</h3>
 <pre tabindex="0"><code>$ cdktf list
-
 WARNING!!!!!!!!: Terraform might have written a new oci config file at /Users/gpal/.oci/config.cdk-user. Terraform will manage this file automatically.
 
 Stack name                      Path
 dummy_hosting_stack             cdktf.out/stacks/dummy_hosting_stack
 priv_user_compartment           cdktf.out/stacks/priv_user_compartment
-vm_instance                     cdktf.out/stacks/vm_instance
-network                         cdktf.out/stacks/network
-</code></pre><p><strong>Note:</strong> Listing of stacks is not in order. You need to run the each stack separately. Hence if there is depencies among stacks then you need to remember the order of deployment and destruction of stacks.</p>
+</code></pre><p><strong>Note-1:</strong> Listing of stacks is not in order. You need to run the each stack separately. Hence if there is depencies among stacks then you need to remember the order of deployment and destruction of stacks.</p>
+<p><strong>Note-2:</strong> Deployment of <code>priv_user_compartment</code> creates an oci config file for <code>cdk-user</code>. After this deployment, you should see two more stacks.</p>
 <h3 id="deploy-first-stack-priv_user_compartment">Deploy first stack <code>priv_user_compartment</code></h3>
-<pre tabindex="0"><code>$ cdktf deploy priv_user_compartment --auto-approve
-
-WARNING!!!!!!!!: Terraform might have written a new oci config file at ~/.oci/config.cdk-user. Terraform will manage this file automatically.
+<pre tabindex="0"><code>cdktf deploy priv_user_compartment --auto-approve
+WARNING!!!!!!!!: Terraform might have written a new oci config file at /Users/gpal/.oci/config.cdk-user. Terraform will manage this file automatically.
 
 Deploying Stack: priv_user_compartment
 Resources
@@ -280,20 +283,56 @@ Resources
  ✔ TLS_PRIVATE_KEY      cdk-user_keys       tls_private_key.cdk-user_keys
 
 Summary: 10 created, 0 updated, 0 destroyed.
-</code></pre><h3 id="deploy-second-stack-network">Deploy second stack <code>network</code></h3>
+
+Output: CDK_id = ocid1.compartment.oc1..aaaaaaaaaabbbbbbbbbbbbbbbbbbbbbccccccccccccccccc
+        cdk-group_id = ocid1.group.oc1..aaaaaaaaebbbbbbbbbbbbbcccccccccccccccdddddd
+        cdk-user_fingerprint = aa:bb:cc:11:22:33:44:55:a1:a2:a3:a4:b1:b2:b3:b5
+        cdk-user_id = ocid1.user.oc1..aaaaaaaabbbbbbbbccccccccccccccdddddddd
+        cdk-user_private_key = &lt;sensitive&gt;
+</code></pre><p><strong>Note:</strong> For unknown reason, perhaps bug, above output is missing an entry. That entry is must exist, otherwise subsequent stack deployments will fail which are dependent on this stack. We will list the stack deployments first in next step and re-run the deployment of <code>priv_user_compartment</code> again.</p>
+<h3 id="list-stacks-again">list stacks again</h3>
+<pre tabindex="0"><code>$ cdktf list
+WARNING!!!!!!!!: Terraform might have written a new oci config file at /Users/gpal/.oci/config.cdk-user. Terraform will manage this file automatically.
+
+Stack name                      Path
+dummy_hosting_stack             cdktf.out/stacks/dummy_hosting_stack
+priv_user_compartment           cdktf.out/stacks/priv_user_compartment
+network                         cdktf.out/stacks/network
+vm_instance                     cdktf.out/stacks/vm_instance
+</code></pre><p><strong>Note:</strong> Two more stacks have appeared now.</p>
+<h3 id="re-run-priv_user_compartment-deployment-again">re-run <code>priv_user_compartment</code> deployment again</h3>
+<pre tabindex="0"><code>$ cdktf deploy priv_user_compartment --auto-approve
+WARNING!!!!!!!!: Terraform might have written a new oci config file at /Users/gpal/.oci/config.cdk-user. Terraform will manage this file automatically.
+
+Deploying Stack: priv_user_compartment
+
+Output: CDK_id = ocid1.compartment.oc1..aaaaaaaaaabbbbbbbbbbbbbbbbbbbbbccccccccccccccccc
+        cdk-group_id = ocid1.group.oc1..aaaaaaaaebbbbbbbbbbbbbcccccccccccccccdddddd
+        cdk-user_fingerprint = aa:bb:cc:11:22:33:44:55:a1:a2:a3:a4:b1:b2:b3:b5
+        cdk-user_id = ocid1.user.oc1..aaaaaaaabbbbbbbbccccccccccccccdddddddd
+        cdk-user_private_key = &lt;sensitive&gt;
+        cross-stack-output-oci_identity_compartmentCDK_compartmentid = &lt;sensitive&gt;
+</code></pre><p><strong>Note:</strong> A new entry has come up in above output.</p>
+<h3 id="deploy-second-stack-network">Deploy second stack <code>network</code></h3>
 <pre tabindex="0"><code>$ cdktf deploy network --auto-approve
-
-
-WARNING!!!!!!!!: Terraform might have written a new oci config file at ~/.oci/config.cdk-user. Terraform will manage this file automatically.
+WARNING!!!!!!!!: Terraform might have written a new oci config file at /Users/gpal/.oci/config.cdk-user. Terraform will manage this file automatically.
 
 Deploying Stack: network
 Resources
+ ✔ OCI_CORE_DHCP_OPTION DHCP_OPTIONS        oci_core_dhcp_options.DHCP_OPTIONS
+   S
+ ✔ OCI_CORE_INTERNET_GA cdk_internet_gatewa oci_core_internet_gateway.cdk_internet_
+   TEWAY                y                   gateway
  ✔ OCI_CORE_ROUTE_TABLE cdk_route_table     oci_core_route_table.cdk_route_table
  ✔ OCI_CORE_ROUTE_TABLE cdk_route_attachmen oci_core_route_table_attachment.cdk_rou
    _ATTACHMENT          t                   te_attachment
+ ✔ OCI_CORE_SUBNET      cdk_public_subnet   oci_core_subnet.cdk_public_subnet
+ ✔ OCI_CORE_VCN         cdk_vcn             oci_core_vcn.cdk_vcn
 
-Summary: 2 created, 0 updated, 0 destroyed.
+Summary: 6 created, 0 updated, 0 destroyed.
 
+Output: cdk_network_public_subnet = ocid1.subnet.oc1.uk-london-1.aaaaaaaabbbbbbbbbbbbccccccccccdddddddddddddd
+        cross-stack-output-oci_core_subnetcdk_public_subnetid = &lt;sensitive&gt;
 </code></pre><h3 id="deploy-third-stack-vm_instance">Deploy third stack <code>vm_instance</code></h3>
 <pre tabindex="0"><code>$ cdktf deploy vm_instance --auto-approve
 
@@ -326,27 +365,57 @@ cdktf destroy priv_user_compartment --auto-approve
         super()<span style="color:#f92672">.</span>__init__(scope, ns)
 
         priv_user <span style="color:#f92672">=</span> PrivilegedUser(self, <span style="color:#e6db74">&#34;priv_user_compartment&#34;</span>)
+        priv_user<span style="color:#f92672">.</span>message()
 
-        <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">user_comp_remote_state</span>(scope, id):
-            state_file<span style="color:#f92672">=</span><span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>dirname(os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>abspath(__file__))<span style="color:#e6db74">}</span><span style="color:#e6db74">/terraform.</span><span style="color:#e6db74">{</span>priv_user<span style="color:#f92672">.</span>name()<span style="color:#e6db74">}</span><span style="color:#e6db74">.tfstate&#34;</span>
-            <span style="color:#66d9ef">return</span> DataTerraformRemoteStateLocal(scope, id,
-                path<span style="color:#f92672">=</span>state_file)
+        <span style="color:#66d9ef">if</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>exists(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>os<span style="color:#f92672">.</span>environ[<span style="color:#e6db74">&#39;HOME&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">/.oci/config.cdk-user&#34;</span>):
 
-        network <span style="color:#f92672">=</span> Network(app, <span style="color:#e6db74">&#34;network&#34;</span>,
-                priv_user<span style="color:#f92672">.</span>priv_compartment,
-                user_comp_remote_state)
+            network <span style="color:#f92672">=</span> Network(self, <span style="color:#e6db74">&#34;network&#34;</span>,
+                    priv_user<span style="color:#f92672">.</span>priv_compartment)
 
-        <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">network_remote_state</span>(scope, id):
-            state_file<span style="color:#f92672">=</span><span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>dirname(os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>abspath(__file__))<span style="color:#e6db74">}</span><span style="color:#e6db74">/terraform.</span><span style="color:#e6db74">{</span>network<span style="color:#f92672">.</span>name()<span style="color:#e6db74">}</span><span style="color:#e6db74">.tfstate&#34;</span>
-            <span style="color:#66d9ef">return</span> DataTerraformRemoteStateLocal(scope, id,
-                path<span style="color:#f92672">=</span>state_file)
+            VmInstance(self, <span style="color:#e6db74">&#34;vm_instance&#34;</span>,
+                   priv_user<span style="color:#f92672">.</span>priv_compartment,
+                   network<span style="color:#f92672">.</span>network_public_subnet)
+</code></pre></div><h4 id="diff-comparison-to-the-previous-version">diff comparison to the previous version</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff">$ diff -b -u oci_multi_stack_terraform_cdk_python/main.py oci_multi_stack_terraform_cdk_python_v2/main.py
+<span style="color:#f92672">--- oci_multi_stack_terraform_cdk_python/main.py        2021-11-17 00:50:25.000000000 +0000
+</span><span style="color:#f92672"></span><span style="color:#a6e22e">+++ oci_multi_stack_terraform_cdk_python_v2/main.py     2022-02-01 23:52:07.000000000 +0000
+</span><span style="color:#a6e22e"></span><span style="color:#75715e">@@ -1,5 +1,5 @@
+</span><span style="color:#75715e"></span> #!/usr/bin/env python
+<span style="color:#f92672">-from cdktf import App, DataTerraformRemoteStateLocal
+</span><span style="color:#f92672"></span><span style="color:#a6e22e">+from cdktf import App
+</span><span style="color:#a6e22e"></span> from constructs import Construct
+ from cdktf import TerraformStack
 
-        VmInstance(self, <span style="color:#e6db74">&#34;vm_instance&#34;</span>,
-               priv_user<span style="color:#f92672">.</span>priv_compartment,
-               network<span style="color:#f92672">.</span>network_public_subnet,
-               user_comp_remote_state,
-               network_remote_state) 
-</code></pre></div><h3 id="in-file-privuserandcompartmentpy">In file <code>privUserAndCompartment.py</code></h3>
+<span style="color:#75715e">@@ -18,27 +18,14 @@
+</span><span style="color:#75715e"></span>         priv_user = PrivilegedUser(self, &#34;priv_user_compartment&#34;)
+         priv_user.message()
+
+<span style="color:#f92672">-        def user_comp_remote_state(scope, id):
+</span><span style="color:#f92672">-            state_file=f&#34;{os.path.dirname(os.path.abspath(__file__))}/terraform.{priv_user.name()}.tfstate&#34;
+</span><span style="color:#f92672">-            return DataTerraformRemoteStateLocal(scope, id,
+</span><span style="color:#f92672">-                path=state_file)
+</span><span style="color:#f92672">-
+</span><span style="color:#f92672"></span>         if os.path.exists(f&#34;{os.environ[&#39;HOME&#39;]}/.oci/config.cdk-user&#34;):
+
+<span style="color:#f92672">-            network = Network(app, &#34;network&#34;,
+</span><span style="color:#f92672">-                    priv_user.priv_compartment,
+</span><span style="color:#f92672">-                    user_comp_remote_state)
+</span><span style="color:#f92672">-
+</span><span style="color:#f92672">-            def network_remote_state(scope, id):
+</span><span style="color:#f92672">-                state_file=f&#34;{os.path.dirname(os.path.abspath(__file__))}/terraform.{network.name()}.tfstate&#34;
+</span><span style="color:#f92672">-                return DataTerraformRemoteStateLocal(scope, id,
+</span><span style="color:#f92672">-                    path=state_file)
+</span><span style="color:#f92672"></span><span style="color:#a6e22e">+            network = Network(self, &#34;network&#34;,
+</span><span style="color:#a6e22e">+                    priv_user.priv_compartment)
+</span><span style="color:#a6e22e"></span>
+             VmInstance(self, &#34;vm_instance&#34;,
+                    priv_user.priv_compartment,
+<span style="color:#f92672">-                   network.network_public_subnet,
+</span><span style="color:#f92672">-                   user_comp_remote_state,
+</span><span style="color:#f92672">-                   network_remote_state)
+</span><span style="color:#f92672"></span><span style="color:#a6e22e">+                   network.network_public_subnet)
+</span></code></pre></div><p><strong>Note:</strong> new version need less code.</p>
+<h3 id="in-file-privuserandcompartmentpy">In file <code>privUserAndCompartment.py</code></h3>
 <ul>
 <li><code>priv_user_compartment</code> stack is exposing <code>priv_compartment</code> using <code>TerraformOutput</code></li>
 </ul>
@@ -357,8 +426,34 @@ cdktf destroy priv_user_compartment --auto-approve
     <span style="color:#66d9ef">def</span> __init__(self, scope: Construct, ns: str):
         super()<span style="color:#f92672">.</span>__init__(scope, ns)
 
-        self<span style="color:#f92672">.</span>priv_compartment <span style="color:#f92672">=</span> TerraformOutput(self, <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>priv_compartment<span style="color:#e6db74">}</span><span style="color:#e6db74">_id&#34;</span>,
-                value<span style="color:#f92672">=</span>comp<span style="color:#f92672">.</span>id)<span style="color:#f92672">.</span>friendly_unique_id
+        comp <span style="color:#f92672">=</span> IdentityCompartment(self, <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>priv_compartment<span style="color:#e6db74">}</span><span style="color:#e6db74">_compartment&#34;</span>,
+                name<span style="color:#f92672">=</span>priv_compartment,
+                description<span style="color:#f92672">=</span><span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>priv_compartment<span style="color:#e6db74">}</span><span style="color:#e6db74"> compartment&#34;</span>,
+                enable_delete<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,
+                compartment_id<span style="color:#f92672">=</span>tenancyID)
+        self<span style="color:#f92672">.</span>priv_compartment <span style="color:#f92672">=</span> comp
+</code></pre></div><h4 id="diff-comparison-to-the-previous-version-1">diff comparison to the previous version</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff">$ diff -b -u oci_multi_stack_terraform_cdk_python/privUserAndCompartment.py oci_multi_stack_terraform_cdk_python_v2/privUserAndCompartment.py
+<span style="color:#f92672">--- oci_multi_stack_terraform_cdk_python/privUserAndCompartment.py      2021-11-17 00:38:33.000000000 +0000
+</span><span style="color:#f92672"></span><span style="color:#a6e22e">+++ oci_multi_stack_terraform_cdk_python_v2/privUserAndCompartment.py   2022-02-01 23:28:04.000000000 +0000
+</span><span style="color:#a6e22e"></span><span style="color:#75715e">@@ -54,6 +54,8 @@
+</span><span style="color:#75715e"></span>                 description=f&#34;{priv_compartment} compartment&#34;,
+                 enable_delete=True,
+                 compartment_id=tenancyID)
+<span style="color:#a6e22e">+        self.priv_compartment = comp
+</span><span style="color:#a6e22e">+
+</span><span style="color:#a6e22e"></span>         user = IdentityUser(self, f&#34;{priv_user}&#34;,
+                 name=priv_user,
+                 description=f&#34;{priv_user} user&#34;,
+<span style="color:#75715e">@@ -77,7 +79,7 @@
+</span><span style="color:#75715e"></span>                 user_id=user.id,
+                 key_value=api_keys.public_key_pem)
+
+<span style="color:#f92672">-        self.priv_compartment = TerraformOutput(self, f&#34;{priv_compartment}_id&#34;,
+</span><span style="color:#f92672"></span><span style="color:#a6e22e">+        TerraformOutput(self, f&#34;{priv_compartment}_id&#34;,
+</span><span style="color:#a6e22e"></span>                 value=comp.id).friendly_unique_id
+
+         TerraformOutput(self, f&#34;{priv_user}_id&#34;,
 </code></pre></div><h3 id="in-file-networkpy">In file <code>network.py</code></h3>
 <ul>
 <li><code>network</code> stack is using exposed <code>priv_compartment</code> from <code>priv_user_compartment</code> stack.</li>
@@ -368,15 +463,59 @@ cdktf destroy priv_user_compartment --auto-approve
 
     network_public_subnet <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>
 
-    <span style="color:#66d9ef">def</span> __init__(self, scope: Construct, ns: str, priv_compartment , remote_state):
+    <span style="color:#66d9ef">def</span> __init__(self, scope: Construct, ns: str, priv_compartment):
         super()<span style="color:#f92672">.</span>__init__(scope, ns)
 
-        terraform_state <span style="color:#f92672">=</span> remote_state(self, ns)
-        priv_compartment_id <span style="color:#f92672">=</span> terraform_state<span style="color:#f92672">.</span>get_string(priv_compartment)
+        priv_compartment_id <span style="color:#f92672">=</span> priv_compartment<span style="color:#f92672">.</span>id
 
-        self<span style="color:#f92672">.</span>network_public_subnet <span style="color:#f92672">=</span> TerraformOutput(self, <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>unique_id<span style="color:#e6db74">}</span><span style="color:#e6db74">_network_public_subnet&#34;</span>,
-                value<span style="color:#f92672">=</span>public_subnet<span style="color:#f92672">.</span>id)<span style="color:#f92672">.</span>friendly_unique_id
+        public_subnet <span style="color:#f92672">=</span> CoreSubnet(self, <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>unique_id<span style="color:#e6db74">}</span><span style="color:#e6db74">_public_subnet&#34;</span>,
+                cidr_block<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;10.0.0.0/24&#34;</span>,
+                vcn_id<span style="color:#f92672">=</span>vcn<span style="color:#f92672">.</span>id,
+                compartment_id<span style="color:#f92672">=</span>priv_compartment_id,
+                display_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;public_subnet&#34;</span>,
+                dhcp_options_id<span style="color:#f92672">=</span>dhcp_options<span style="color:#f92672">.</span>id)
 
+        self<span style="color:#f92672">.</span>network_public_subnet <span style="color:#f92672">=</span> public_subnet
+</code></pre></div><h4 id="diff-comparison-to-the-previous-version-2">diff comparison to the previous version</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff">$ diff -b -u oci_multi_stack_terraform_cdk_python/network.py oci_multi_stack_terraform_cdk_python_v2/network.py
+<span style="color:#f92672">--- oci_multi_stack_terraform_cdk_python/network.py     2021-11-28 18:37:53.000000000 +0000
+</span><span style="color:#f92672"></span><span style="color:#a6e22e">+++ oci_multi_stack_terraform_cdk_python_v2/network.py  2022-02-01 23:28:05.000000000 +0000
+</span><span style="color:#a6e22e"></span><span style="color:#75715e">@@ -25,7 +25,7 @@
+</span><span style="color:#75715e"></span>
+     network_public_subnet = None
+
+<span style="color:#f92672">-    def __init__(self, scope: Construct, ns: str, priv_compartment , remote_state):
+</span><span style="color:#f92672"></span><span style="color:#a6e22e">+    def __init__(self, scope: Construct, ns: str, priv_compartment):
+</span><span style="color:#a6e22e"></span>         super().__init__(scope, ns)
+
+         (fingerprint,
+<span style="color:#75715e">@@ -34,8 +34,7 @@
+</span><span style="color:#75715e"></span>             tenancy_ocid,
+             user_ocid) = user_creds(priv_user_profile_name, priv_user_oci_config_file)
+
+<span style="color:#f92672">-        terraform_state = remote_state(self, ns)
+</span><span style="color:#f92672">-        priv_compartment_id = terraform_state.get_string(priv_compartment)
+</span><span style="color:#f92672"></span><span style="color:#a6e22e">+        priv_compartment_id = priv_compartment.id
+</span><span style="color:#a6e22e"></span>
+         # define resources here
+         OciProvider(self, &#34;oci&#34;,
+<span style="color:#75715e">@@ -66,6 +65,7 @@
+</span><span style="color:#75715e"></span>                 compartment_id=priv_compartment_id,
+                 display_name=&#34;public_subnet&#34;,
+                 dhcp_options_id=dhcp_options.id)
+<span style="color:#a6e22e">+        self.network_public_subnet = public_subnet
+</span><span style="color:#a6e22e"></span>
+         internet_gateway = CoreInternetGateway(self, f&#34;{unique_id}_internet_gateway&#34;,
+                 compartment_id=priv_compartment_id,
+<span style="color:#75715e">@@ -84,7 +84,7 @@
+</span><span style="color:#75715e"></span>                 subnet_id=public_subnet.id,
+                 route_table_id=route_table.id)
+
+<span style="color:#f92672">-        self.network_public_subnet = TerraformOutput(self, f&#34;{unique_id}_network_public_subnet&#34;,
+</span><span style="color:#f92672"></span><span style="color:#a6e22e">+        TerraformOutput(self, f&#34;{unique_id}_network_public_subnet&#34;,
+</span><span style="color:#a6e22e"></span>                 value=public_subnet.id).friendly_unique_id
+
+     def name(self):
 </code></pre></div><h3 id="in-file-systemsandappspy">In file <code>systemsAndApps.py</code></h3>
 <ul>
 <li><code>vm_instance</code> instance stack is using exposed <code>priv_compartment</code> from <code>priv_user_compartment</code> stack</li>
@@ -385,21 +524,45 @@ cdktf destroy priv_user_compartment --auto-approve
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">VmInstance</span>(TerraformStack):
     <span style="color:#66d9ef">def</span> __init__(self, scope: Construct, ns: str,
             priv_compartment,
-            public_subnet,
-            user_comp_remote_state,
-            network_remote_state):
+            public_subnet):
         super()<span style="color:#f92672">.</span>__init__(scope, ns)
 
-        u_terraform_state <span style="color:#f92672">=</span> user_comp_remote_state(self, ns)
-        n_terraform_state <span style="color:#f92672">=</span> network_remote_state(self, ns <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;_network&#34;</span>)
-        priv_compartment_id <span style="color:#f92672">=</span> u_terraform_state<span style="color:#f92672">.</span>get_string(priv_compartment)
-        public_subnet_id <span style="color:#f92672">=</span> n_terraform_state<span style="color:#f92672">.</span>get_string(public_subnet)
-</code></pre></div><h2 id="observations">Observations</h2>
+        (fingerprint,
+            private_key_path,
+            region,
+            tenancy_ocid,
+            user_ocid) <span style="color:#f92672">=</span> user_creds(priv_user_profile_name, priv_user_oci_config_file)
+
+        priv_compartment_id <span style="color:#f92672">=</span> priv_compartment<span style="color:#f92672">.</span>id
+        public_subnet_id <span style="color:#f92672">=</span> public_subnet<span style="color:#f92672">.</span>id
+</code></pre></div><h4 id="diff-comparison-to-the-previous-version-3">diff comparison to the previous version</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff">$ diff -b -u oci_multi_stack_terraform_cdk_python/systemsAndApps.py oci_multi_stack_terraform_cdk_python_v2/systemsAndApps.py
+<span style="color:#f92672">--- oci_multi_stack_terraform_cdk_python/systemsAndApps.py      2021-11-17 00:49:45.000000000 +0000
+</span><span style="color:#f92672"></span><span style="color:#a6e22e">+++ oci_multi_stack_terraform_cdk_python_v2/systemsAndApps.py   2022-02-01 23:28:04.000000000 +0000
+</span><span style="color:#a6e22e"></span><span style="color:#75715e">@@ -22,9 +22,7 @@
+</span><span style="color:#75715e"></span> class VmInstance(TerraformStack):
+     def __init__(self, scope: Construct, ns: str,
+             priv_compartment,
+<span style="color:#f92672">-            public_subnet,
+</span><span style="color:#f92672">-            user_comp_remote_state,
+</span><span style="color:#f92672">-            network_remote_state):
+</span><span style="color:#f92672"></span><span style="color:#a6e22e">+            public_subnet):
+</span><span style="color:#a6e22e"></span>         super().__init__(scope, ns)
+
+         (fingerprint,
+<span style="color:#75715e">@@ -33,10 +31,8 @@
+</span><span style="color:#75715e"></span>             tenancy_ocid,
+             user_ocid) = user_creds(priv_user_profile_name, prv_user_oci_config_file)
+
+<span style="color:#f92672">-        u_terraform_state = user_comp_remote_state(self, ns)
+</span><span style="color:#f92672">-        n_terraform_state = network_remote_state(self, ns + &#34;_network&#34;)
+</span><span style="color:#f92672">-        priv_compartment_id = u_terraform_state.get_string(priv_compartment)
+</span><span style="color:#f92672">-        public_subnet_id = n_terraform_state.get_string(public_subnet)
+</span><span style="color:#f92672"></span><span style="color:#a6e22e">+        priv_compartment_id = priv_compartment.id
+</span><span style="color:#a6e22e">+        public_subnet_id = public_subnet.id
+</span></code></pre></div><h2 id="observations">Observations</h2>
 <ul>
-<li>Stacks inter-dependency is not very easy to implement yet.</li>
-<li>Each Stack has to be deployed separately. No one command to deploy all stacks</li>
-<li>Passing information among stack is cumbersome.</li>
-<li>Terraform-cdk is still in development. Limitations may disappear as it evolves in future.</li>
+<li>Passing information among stack has become much easier now.</li>
 </ul>
 
 		</div>
@@ -431,10 +594,7 @@ cdktf destroy priv_user_compartment --auto-approve
 
 <nav class="post-nav flex">
 	<div class="post-nav__item post-nav__item--prev">
-		<a class="post-nav__link" href="/posts/terraform-cdk-create-oci-oraclecloudinfrastructure-vm/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Terraform CDK Create OCI OracleCloudInfraStructure VM</p></a>
-	</div>
-	<div class="post-nav__item post-nav__item--next">
-		<a class="post-nav__link" href="/posts/v2-multiple-stacks-terraformcdk-python-oci/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">(Version-2) Multiple Stacks TerraformCDK Python Oracle Cloud Infrastructure (OCI)</p></a>
+		<a class="post-nav__link" href="/posts/multiple-stacks-terraformcdk-python-oci/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Multiple Stacks TerraformCDK Python Oracle Cloud Infrastructure (OCI)</p></a>
 	</div>
 </nav>
 

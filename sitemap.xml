@@ -2,43 +2,46 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>/tags/cdktf/</loc>
-    <lastmod>2021-11-14T13:52:39+00:00</lastmod>
+    <loc>/posts/v2-multiple-stacks-terraformcdk-python-oci/</loc>
+    <lastmod>2022-02-02T00:00:30+00:00</lastmod>
   </url><url>
-    <loc>/posts/multiple-stacks-terraformcdk-python-oci/</loc>
-    <lastmod>2021-11-14T13:52:39+00:00</lastmod>
+    <loc>/tags/cdktf/</loc>
+    <lastmod>2022-02-02T00:00:30+00:00</lastmod>
   </url><url>
     <loc>/tags/oci/</loc>
-    <lastmod>2021-11-14T13:52:39+00:00</lastmod>
+    <lastmod>2022-02-02T00:00:30+00:00</lastmod>
   </url><url>
     <loc>/tags/oci-cli/</loc>
-    <lastmod>2021-11-14T13:52:39+00:00</lastmod>
+    <lastmod>2022-02-02T00:00:30+00:00</lastmod>
   </url><url>
     <loc>/tags/oracle-cloud-infrastructure/</loc>
-    <lastmod>2021-11-14T13:52:39+00:00</lastmod>
+    <lastmod>2022-02-02T00:00:30+00:00</lastmod>
   </url><url>
     <loc>/tags/pipenv/</loc>
-    <lastmod>2021-11-14T13:52:39+00:00</lastmod>
+    <lastmod>2022-02-02T00:00:30+00:00</lastmod>
   </url><url>
     <loc>/posts/</loc>
-    <lastmod>2021-11-14T13:52:39+00:00</lastmod>
+    <lastmod>2022-02-02T00:00:30+00:00</lastmod>
   </url><url>
     <loc>/tags/python/</loc>
-    <lastmod>2021-11-14T13:52:39+00:00</lastmod>
+    <lastmod>2022-02-02T00:00:30+00:00</lastmod>
   </url><url>
     <loc>/</loc>
-    <lastmod>2021-11-14T13:52:39+00:00</lastmod>
+    <lastmod>2022-02-02T00:00:30+00:00</lastmod>
   </url><url>
     <loc>/tags/</loc>
-    <lastmod>2021-11-14T13:52:39+00:00</lastmod>
+    <lastmod>2022-02-02T00:00:30+00:00</lastmod>
   </url><url>
     <loc>/tags/terraform/</loc>
-    <lastmod>2021-11-14T13:52:39+00:00</lastmod>
+    <lastmod>2022-02-02T00:00:30+00:00</lastmod>
   </url><url>
     <loc>/tags/terraform-cdk/</loc>
-    <lastmod>2021-11-14T13:52:39+00:00</lastmod>
+    <lastmod>2022-02-02T00:00:30+00:00</lastmod>
   </url><url>
     <loc>/tags/terraform-stack/</loc>
+    <lastmod>2022-02-02T00:00:30+00:00</lastmod>
+  </url><url>
+    <loc>/posts/multiple-stacks-terraformcdk-python-oci/</loc>
     <lastmod>2021-11-14T13:52:39+00:00</lastmod>
   </url><url>
     <loc>/tags/cdk/</loc>

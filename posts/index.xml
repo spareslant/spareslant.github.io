@@ -6,7 +6,17 @@
     <description>Recent content in Posts on SpareSlant Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Sun, 14 Nov 2021 13:52:39 +0000</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 02 Feb 2022 00:00:30 +0000</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>(Version-2) Multiple Stacks TerraformCDK Python Oracle Cloud Infrastructure (OCI)</title>
+      <link>/posts/v2-multiple-stacks-terraformcdk-python-oci/</link>
+      <pubDate>Wed, 02 Feb 2022 00:00:30 +0000</pubDate>
+      
+      <guid>/posts/v2-multiple-stacks-terraformcdk-python-oci/</guid>
+      <description>Introduction Terraform has released a new version of cdktf = 0.9.0. This version makes cross referencing across stacks easy. This document will explore this feature. It is built upon previous version of code mentioned below.
+ previous version of code  https://github.com/spareslant/oci_multi_stack_terraform_cdk_python We will be creating a public facing VM in Oracle Cloud Infrastructure (OCI) using terraform cdk toolkit. We will be writing terraform code in Python and we will be using terraform stacks.</description>
+    </item>
+    
     <item>
       <title>Multiple Stacks TerraformCDK Python Oracle Cloud Infrastructure (OCI)</title>
       <link>/posts/multiple-stacks-terraformcdk-python-oci/</link>
